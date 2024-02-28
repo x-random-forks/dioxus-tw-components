@@ -1,0 +1,23 @@
+[package]
+name = "dioxus_test"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+futures = "0.3.30"
+reqwest = { version = "0.11.24", features = ["json"] }
+serde = "1.0.196"
+serde_json = "1.0.113"
+console_error_panic_hook = "0.1.7"
+log = "0.4.17"
+tracing-wasm = "0.2.1"
+tracing = "0.1.40"
+
+dioxus = { git = "https://github.com/DioxusLabs/dioxus.git", rev = "0c4c0e70e54f9802d4ebc1aca4c53004cc0e35d3", features = [
+    "web",
+] }
+dioxus-web = { git = "https://github.com/DioxusLabs/dioxus.git", rev = "0c4c0e70e54f9802d4ebc1aca4c53004cc0e35d3" }
+dioxus-router = { git = "https://github.com/DioxusLabs/dioxus.git", rev = "0c4c0e70e54f9802d4ebc1aca4c53004cc0e35d3", features = [
+    "web",
+] }
+dioxus-logger = "0.4.1"
