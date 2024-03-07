@@ -1,5 +1,5 @@
 
-            let event_name,ptr,id,bubbles,field,value,ns,len;
+            let ns,bubbles,ptr,id,event_name,value,field,len;
             export class JSChannel {
                 constructor(r) {
                     this.d=r;
@@ -11,7 +11,7 @@
                     this.e = null;
                     this.z = null;
                     this.metaflags = null;
-                    this.evt = [];
+                    this.u32buf=null;this.u32bufp=null;this.evt = [];
                     this.evt_cache_hit = null;
                     this.evt_cache_idx;
                     this.get_evt = function() {
@@ -24,7 +24,7 @@
                         else{
                             return this.evt[this.evt_cache_idx&4294967167];
                         }
-                    };this.u16buf=null;this.u16bufp=null;this.u32buf=null;this.u32bufp=null;this.attr = [];
+                    };this.attr = [];
                     this.attr_cache_hit = null;
                     this.attr_cache_idx;
                     this.get_attr = function() {
@@ -37,7 +37,7 @@
                         else{
                             return this.attr[this.attr_cache_idx&4294967167];
                         }
-                    };this.s = "";this.lsp = null;this.sp = null;this.sl = null;this.c = new TextDecoder();this.u8buf=null;this.u8bufp=null;this.ns_cache = [];
+                    };this.u16buf=null;this.u16bufp=null;this.u8buf=null;this.u8bufp=null;this.ns_cache = [];
                     this.ns_cache_cache_hit = null;
                     this.ns_cache_cache_idx;
                     this.get_ns_cache = function() {
@@ -50,7 +50,7 @@
                         else{
                             return this.ns_cache[this.ns_cache_cache_idx&4294967167];
                         }
-                    };
+                    };this.s = "";this.lsp = null;this.sp = null;this.sl = null;this.c = new TextDecoder();
                     this.setAttributeInner = function (node, field, value, ns) {
   const name = field;
   if (ns === "style") {
@@ -267,15 +267,19 @@ function truthy(val) {
                         this.ls=this.m.getUint32(this.d+6*4,true);
                     }
                     this.p=this.ls;
-                    if ((this.metaflags>>>4)&1){
-                this.t = this.m.getUint32(this.d+4*4,true);
-                this.u16buf=new Uint16Array(this.m.buffer,this.t,((this.m.buffer.byteLength-this.t)-(this.m.buffer.byteLength-this.t)%2)/2);
-            }
-            this.u16bufp=0;if ((this.metaflags>>>3)&1){
+                    if ((this.metaflags>>>3)&1){
                 this.t = this.m.getUint32(this.d+3*4,true);
                 this.u32buf=new Uint32Array(this.m.buffer,this.t,((this.m.buffer.byteLength-this.t)-(this.m.buffer.byteLength-this.t)%4)/4);
             }
-            this.u32bufp=0;if (this.metaflags&1){
+            this.u32bufp=0;if ((this.metaflags>>>4)&1){
+                this.t = this.m.getUint32(this.d+4*4,true);
+                this.u16buf=new Uint16Array(this.m.buffer,this.t,((this.m.buffer.byteLength-this.t)-(this.m.buffer.byteLength-this.t)%2)/2);
+            }
+            this.u16bufp=0;if ((this.metaflags>>>5)&1){
+                this.t = this.m.getUint32(this.d+5*4,true);
+                this.u8buf=new Uint8Array(this.m.buffer,this.t,((this.m.buffer.byteLength-this.t)-(this.m.buffer.byteLength-this.t)%1)/1);
+            }
+            this.u8bufp=0;if (this.metaflags&1){
                 this.lsp = this.m.getUint32(this.d+1*4,true);
             }
             if ((this.metaflags>>>2)&1) {
@@ -301,11 +305,7 @@ function truthy(val) {
                     this.s = this.c.decode(new DataView(this.m.buffer, this.lsp, this.sl));
                 }
             }
-            this.sp=0;if ((this.metaflags>>>5)&1){
-                this.t = this.m.getUint32(this.d+5*4,true);
-                this.u8buf=new Uint8Array(this.m.buffer,this.t,((this.m.buffer.byteLength-this.t)-(this.m.buffer.byteLength-this.t)%1)/1);
-            }
-            this.u8bufp=0;
+            this.sp=0;
                     for(;;){
                         this.op=this.m.getUint32(this.p,true);
                         this.p+=4;

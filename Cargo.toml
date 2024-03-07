@@ -1,7 +1,11 @@
+workspace = { members = ["component-derive"] }
 [package]
-name = "dioxus_test"
+name = "dioxus_components_bin"
 version = "0.1.0"
 edition = "2021"
+
+# [lib]
+# name = "dioxus_comps"
 
 [dependencies]
 futures = "0.3.30"
@@ -12,12 +16,11 @@ console_error_panic_hook = "0.1.7"
 log = "0.4.17"
 tracing-wasm = "0.2.1"
 tracing = "0.1.40"
-
-dioxus = { git = "https://github.com/DioxusLabs/dioxus.git", rev = "0c4c0e70e54f9802d4ebc1aca4c53004cc0e35d3", features = [
+dioxus = { git = "https://github.com/DioxusLabs/dioxus.git", rev = "912885bfe2685ac0cfc30cceb75a0f2040861e47", features = [
     "web",
 ] }
-dioxus-web = { git = "https://github.com/DioxusLabs/dioxus.git", rev = "0c4c0e70e54f9802d4ebc1aca4c53004cc0e35d3" }
-dioxus-router = { git = "https://github.com/DioxusLabs/dioxus.git", rev = "0c4c0e70e54f9802d4ebc1aca4c53004cc0e35d3", features = [
-    "web",
-] }
+dioxus-web = { git = "https://github.com/DioxusLabs/dioxus.git", rev = "912885bfe2685ac0cfc30cceb75a0f2040861e47" }
 dioxus-logger = "0.4.1"
+console = "0.15.8"
+
+component-derive = { path = "component-derive" }
