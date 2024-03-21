@@ -18,16 +18,17 @@
         --border: 240 5.9% 90%;
         --input: 240 5.9% 90%;
         --ring: 346.8 77.2% 49.8%;
+        /* Control global shadow */
+        /* See: https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow */
+        --global-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.3);
         /* Control global border radius */
         /* Can be px, em, rem, %, */
         /* Can also control each corner independently  */
         --global-radius: 10px;
-        /* Control global shadow */
-        /* See: https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow */
-        --global-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.3);
     }
 
     .dark {
+        /* Colors */
         --background: 20 14.3% 4.1%;
         --foreground: 0 0% 95%;
         --primary: 346.8 77.2% 49.8%;
