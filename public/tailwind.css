@@ -685,11 +685,12 @@ video {
   border-width: 1px;
   border-color: hsl(var(--primary));
   background-color: transparent;
+  color: hsl(var(--foreground));
 }
 
 .btn-outline:hover {
   background-color: hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
+  color: hsl(var(--foreground));
 }
 
 /* Button : Size */
@@ -769,6 +770,10 @@ video {
   border-color: hsl(var(--primary));
 }
 
+.bg-background {
+  background-color: hsl(var(--background));
+}
+
 .bg-input {
   background-color: hsl(var(--input));
 }
@@ -828,6 +833,10 @@ video {
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.text-foreground {
+  color: hsl(var(--foreground));
 }
 
 .text-primary-foreground {

@@ -66,7 +66,7 @@ impl ButtonSize {
     fn class_string(&self) -> String {
         match self {
             ButtonSize::Sm => "btn-sm",
-            //
+            // Default
             ButtonSize::Md => "",
             ButtonSize::Lg => "btn-lg",
             ButtonSize::Xl => "btn-xl",

@@ -34,7 +34,7 @@ fn App() -> Element {
 
     rsx!(
         // Set darkmode there
-        body { class: "{dark}",
+        body { class: "{dark} bg-background",
             div {
                 Button { onclick: lightswitch_closure, "LightSwitch" }
             }

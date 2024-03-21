@@ -22,7 +22,7 @@
     }
 
     .btn-outline {
-        @apply btn-base border border-primary bg-transparent hover:bg-primary hover:text-primary-foreground;
+        @apply btn-base border border-primary bg-transparent text-foreground hover:bg-primary hover:text-foreground;
     }
 
     /* Button : Size */
