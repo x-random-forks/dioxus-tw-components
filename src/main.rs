@@ -22,9 +22,10 @@ fn main() {
 }
 
 fn App() -> Element {
+    // This should be a global context in something like an AppState
     let mut dark = use_signal(|| "".to_string());
     let lightswitch_closure = move |_| {
-        log::debug!("Lightswitch clicked");
+        log::debug!("LightSwitch clicked");
         if dark() == "" {
             dark.set("dark".to_string());
         } else {
@@ -33,7 +34,6 @@ fn App() -> Element {
     };
 
     rsx!(
-        // Set darkmode there
         body { class: "{dark} bg-background",
             div {
                 Button { onclick: lightswitch_closure, "LightSwitch" }
@@ -50,6 +50,7 @@ fn TestButton() -> Element {
             Button { variant: ButtonVariant::Primary, "Primary" }
             Button { variant: ButtonVariant::Secondary, "Secondary" }
             Button { variant: ButtonVariant::Outline, "Outline" }
+            Button { variant: ButtonVariant::Ghost, "Ghost" }
         }
         div { class: "",
             Button { size: ButtonSize::Sm, "Sm" }

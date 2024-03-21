@@ -37,6 +37,7 @@ pub enum ButtonVariant {
     Primary,
     Secondary,
     Outline,
+    Ghost,
 }
 
 // Variant Trait ?
@@ -48,6 +49,7 @@ impl ButtonVariant {
             ButtonVariant::Primary => "btn-primary",
             ButtonVariant::Secondary => "btn-secondary",
             ButtonVariant::Outline => "btn-outline",
+            ButtonVariant::Ghost => "btn-ghost",
         }
         .to_string()
     }

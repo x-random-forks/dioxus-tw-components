@@ -5,9 +5,11 @@
         /* Core */
         @apply text-center;
         /* Text */
-        @apply text-sm font-medium;
+        @apply text-base font-medium;
         /* Radius */
-        @apply rounded-radius;
+        @apply rounded-global-radius;
+        /* Shadow */
+        @apply shadow-global-shadow;
         /* Disabled */
         @apply disabled:opacity-50 disabled:cursor-not-allowed;
     }
@@ -23,6 +25,10 @@
 
     .btn-outline {
         @apply btn-base border border-primary bg-transparent text-foreground hover:bg-primary hover:text-foreground;
+    }
+
+    .btn-ghost {
+        @apply btn-base bg-transparent hover:bg-accent hover:text-accent-foreground;
     }
 
     /* Button : Size */

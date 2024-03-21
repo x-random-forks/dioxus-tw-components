@@ -456,7 +456,8 @@ video {
   --border: 240 5.9% 90%;
   --input: 240 5.9% 90%;
   --ring: 346.8 77.2% 49.8%;
-  --radius: 0px;
+  --global-radius: 5px;
+  --global-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.3);
 }
 
 .dark {
@@ -582,11 +583,15 @@ video {
   /* Core */
   text-align: center;
   /* Text */
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
   font-weight: 500;
   /* Radius */
-  border-radius: var(--radius);
+  border-radius: var(--global-radius);
+  /* Shadow */
+  --tw-shadow: var(--global-shadow);
+  --tw-shadow-colored: var(--global-shadow);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   /* Disabled */
 }
 
@@ -606,11 +611,15 @@ video {
   /* Core */
   text-align: center;
   /* Text */
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
   font-weight: 500;
   /* Radius */
-  border-radius: var(--radius);
+  border-radius: var(--global-radius);
+  /* Shadow */
+  --tw-shadow: var(--global-shadow);
+  --tw-shadow-colored: var(--global-shadow);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   /* Disabled */
 }
 
@@ -637,11 +646,15 @@ video {
   /* Core */
   text-align: center;
   /* Text */
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
   font-weight: 500;
   /* Radius */
-  border-radius: var(--radius);
+  border-radius: var(--global-radius);
+  /* Shadow */
+  --tw-shadow: var(--global-shadow);
+  --tw-shadow-colored: var(--global-shadow);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   /* Disabled */
 }
 
@@ -668,11 +681,15 @@ video {
   /* Core */
   text-align: center;
   /* Text */
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
   font-weight: 500;
   /* Radius */
-  border-radius: var(--radius);
+  border-radius: var(--global-radius);
+  /* Shadow */
+  --tw-shadow: var(--global-shadow);
+  --tw-shadow-colored: var(--global-shadow);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   /* Disabled */
 }
 
@@ -691,6 +708,41 @@ video {
 .btn-outline:hover {
   background-color: hsl(var(--primary));
   color: hsl(var(--foreground));
+}
+
+.btn-ghost {
+  /* Padding */
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  /* Core */
+  text-align: center;
+  /* Text */
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+  /* Radius */
+  border-radius: var(--global-radius);
+  /* Shadow */
+  --tw-shadow: var(--global-shadow);
+  --tw-shadow-colored: var(--global-shadow);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  /* Disabled */
+}
+
+.btn-ghost:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.btn-ghost {
+  background-color: transparent;
+}
+
+.btn-ghost:hover {
+  background-color: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
 }
 
 /* Button : Size */
@@ -730,8 +782,9 @@ video {
   /* Text */
   font-size: 0.875rem;
   line-height: 1.25rem;
+  color: hsl(var(--foreground));
   /* Background */
-  background-color: hsl(var(--input));
+  background-color: hsl(var(--background));
 }
 
 .textarea:hover {
@@ -750,8 +803,11 @@ video {
   padding-right: 0.75rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  /* Border */
+  border-width: 1px;
+  border-color: hsl(var(--input));
   /* Radius */
-  border-radius: var(--radius);
+  border-radius: var(--global-radius);
 }
 
 .flex {
@@ -772,10 +828,6 @@ video {
 
 .bg-background {
   background-color: hsl(var(--background));
-}
-
-.bg-input {
-  background-color: hsl(var(--input));
 }
 
 .bg-primary {
@@ -820,6 +872,11 @@ video {
   padding-bottom: 9px;
 }
 
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
 .text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
@@ -845,6 +902,10 @@ video {
 
 .text-secondary-foreground {
   color: hsl(var(--secondary-foreground));
+}
+
+.hover\:bg-accent:hover {
+  background-color: hsl(var(--accent));
 }
 
 .hover\:bg-primary:hover {

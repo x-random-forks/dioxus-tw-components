@@ -9,9 +9,6 @@ module.exports = {
     ],
     theme: {
         extend: {
-            borderRadius: {
-                "radius": 'var(--radius)',
-            },
             colors: {
                 "background": 'hsl(var(--background))',
                 "foreground": 'hsl(var(--foreground))',
@@ -24,6 +21,12 @@ module.exports = {
                 "border": 'hsl(var(--border))',
                 "input": 'hsl(var(--input))',
                 "ring": 'hsl(var(--ring))',
+            },
+            borderRadius: {
+                "global-radius": 'var(--global-radius)',
+            },
+            boxShadow: {
+                "global-shadow": 'var(--global-shadow)',
             }
         },
     },
