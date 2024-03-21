@@ -2,6 +2,7 @@
 
 use dioxus::prelude::*;
 
+pub mod atom;
 pub mod button;
 
 pub trait Component {

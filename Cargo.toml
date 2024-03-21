@@ -16,10 +16,11 @@ console_error_panic_hook = "0.1.7"
 log = "0.4.17"
 tracing-wasm = "0.2.1"
 tracing = "0.1.40"
-dioxus = { git = "https://github.com/DioxusLabs/dioxus.git", rev = "912885bfe2685ac0cfc30cceb75a0f2040861e47", features = [
+dioxus = { git = "https://github.com/DioxusLabs/dioxus.git", rev = "4bb807a3cef2ad518f4670389b873d2871eb6eb3", features = [
     "web",
 ] }
-dioxus-web = { git = "https://github.com/DioxusLabs/dioxus.git", rev = "912885bfe2685ac0cfc30cceb75a0f2040861e47" }
+dioxus-web = { git = "https://github.com/DioxusLabs/dioxus.git", rev = "4bb807a3cef2ad518f4670389b873d2871eb6eb3" }
+dioxus-router = { git = "https://github.com/DioxusLabs/dioxus.git", rev = "4bb807a3cef2ad518f4670389b873d2871eb6eb3" }
 dioxus-logger = "0.4.1"
 console = "0.15.8"
 

@@ -444,6 +444,18 @@ video {
   display: none;
 }
 
+:root {
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+  --primary: 346.8 77.2% 49.8%;
+  --primary-foreground: 355.7 100% 97.3%;
+  --secondary: 240 4.8% 95.9%;
+  --secondary-foreground: 240 5.9% 10%;
+  --accent: 240 4.8% 95.9%;
+  --accent-foreground: 240 5.9% 10%;
+  --radius: 1rem;
+}
+
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -544,12 +556,160 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
-.static {
-  position: static;
+.btn-base {
+  /* Padding */
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  /* Core */
+  text-align: center;
+  /* Text */
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  /* Radius */
+  /* Disabled */
+}
+
+.btn-base:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Button : Variant */
+
+.btn-primary {
+  /* Padding */
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  /* Core */
+  text-align: center;
+  /* Text */
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  /* Radius */
+  /* Disabled */
+}
+
+.btn-primary:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.btn-primary {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+.btn-primary:hover {
+  background-color: hsl(var(--primary) / 0.9);
+}
+
+.btn-secondary {
+  /* Padding */
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  /* Core */
+  text-align: center;
+  /* Text */
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  /* Radius */
+  /* Disabled */
+}
+
+.btn-secondary:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.btn-secondary {
+  background-color: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
+}
+
+.btn-secondary:hover {
+  background-color: hsl(var(--secondary) / 0.9);
+}
+
+.btn-outline {
+  /* Padding */
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  /* Core */
+  text-align: center;
+  /* Text */
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  /* Radius */
+  /* Disabled */
+}
+
+.btn-outline:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.btn-outline {
+  border-width: 1px;
+  border-color: hsl(var(--primary));
+  background-color: transparent;
+}
+
+.btn-outline:hover {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+/* Button : Size */
+
+.btn-sm {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.btn-lg {
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.btn-xl {
+  padding-left: 2.25rem;
+  padding-right: 2.25rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
 }
 
 .rounded {
   border-radius: 0.25rem;
+}
+
+.border {
+  border-width: 1px;
+}
+
+.border-primary {
+  border-color: hsl(var(--primary));
 }
 
 .bg-blue-500 {
@@ -557,9 +717,21 @@ video {
   background-color: rgb(59 130 246 / var(--tw-bg-opacity));
 }
 
-.bg-green-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
+.bg-primary {
+  background-color: hsl(var(--primary));
+}
+
+.bg-secondary {
+  background-color: hsl(var(--secondary));
+}
+
+.bg-transparent {
+  background-color: transparent;
+}
+
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
 }
 
 .px-4 {
@@ -567,13 +739,61 @@ video {
   padding-right: 1rem;
 }
 
+.px-5 {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.px-7 {
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+}
+
+.px-9 {
+  padding-left: 2.25rem;
+  padding-right: 2.25rem;
+}
+
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
 
+.py-\[9px\] {
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
 .font-bold {
   font-weight: 700;
+}
+
+.text-primary-foreground {
+  color: hsl(var(--primary-foreground));
+}
+
+.text-secondary-foreground {
+  color: hsl(var(--secondary-foreground));
 }
 
 .text-white {
@@ -581,3 +801,10 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.hover\:bg-primary:hover {
+  background-color: hsl(var(--primary));
+}
+
+.disabled\:opacity-50:disabled {
+  opacity: 0.5;
+}

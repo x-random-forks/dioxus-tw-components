@@ -1,42 +1,42 @@
 #![allow(non_snake_case)]
 
 use dioxus::prelude::*;
-
-mod button;
-
-use button::Button;
+use dioxus_components_bin::atom::button::button::{Button, ButtonSize, ButtonVariant};
 
 pub trait Component {
     fn view(self) -> Element;
 }
 
 fn main() {
-    dioxus_logger::init(log::LevelFilter::Trace).expect("failed to init logger");
+    dioxus_logger::init(log::LevelFilter::Debug).expect("failed to init logger");
     console_error_panic_hook::set_once();
     tracing_wasm::set_as_global_default_with_config(
         tracing_wasm::WASMLayerConfigBuilder::default()
-            .set_max_level(tracing::Level::TRACE)
+            .set_max_level(tracing::Level::WARN)
             .build(),
     );
     launch(App);
 }
 
-// fn anon(e: Event<MouseData>) {}
-
-// create a component that renders a div with the text "Hello, world!"
 fn App() -> Element {
-    rsx! {
-        button {
-            class: "bg-green-500 text-white font-bold py-2 px-4 rounded",
-            onclick: |_| { log::debug!("clicked") },
-            "BUTTON"
+    rsx!(
+        div { class: "", TestButton {} }
+    )
+}
+
+fn TestButton() -> Element {
+    rsx!(
+        div { class: "",
+            Button { "Default" }
+            Button { variant: ButtonVariant::Primary, "Primary" }
+            Button { variant: ButtonVariant::Secondary, "Secondary" }
+            Button { variant: ButtonVariant::Outline, "Outline" }
         }
-        Button {
-            // check: true,
-            onclick: |_e| {
-                log::debug!("clicked");
-            },
-            "My Button"
+        div { class: "",
+            Button { size: ButtonSize::Sm, "Sm" }
+            Button { "Default" }
+            Button { size: ButtonSize::Lg, "Lg" }
+            Button { size: ButtonSize::Xl, "Xl" }
         }
-    }
+    )
 }

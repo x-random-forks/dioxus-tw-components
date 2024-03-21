@@ -8,7 +8,15 @@ module.exports = {
         "./dist/**/*.html",
     ],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                "primary": 'hsl(var(--primary))',
+                "primary-foreground": 'hsl(var(--primary-foreground))',
+                "secondary": 'hsl(var(--secondary))',
+                "secondary-foreground": 'hsl(var(--secondary-foreground))',
+                "radius": 'var(--radius)',
+            }
+        },
     },
     plugins: [],
 }
