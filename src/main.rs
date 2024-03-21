@@ -23,6 +23,7 @@ fn main() {
 
 fn App() -> Element {
     // This should be a global context in something like an AppState
+    // this is just for demonstration purpose
     let mut dark = use_signal(|| "".to_string());
     let lightswitch_closure = move |_| {
         log::debug!("LightSwitch clicked");
@@ -43,6 +44,8 @@ fn App() -> Element {
     )
 }
 
+// With the override class implemented, the user could just do something like
+// Button { class: Class("btn-primary btn-xl"), "My Button"}
 fn TestButton() -> Element {
     rsx!(
         div { class: "",

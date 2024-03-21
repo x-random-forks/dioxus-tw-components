@@ -12,6 +12,8 @@ pub struct ButtonProps {
     variant: ButtonVariant,
     #[props(default)]
     size: ButtonSize,
+    // We need a way of appending or overrding to the CSS class string
+    // Allow for more fine tuning by the user, also allow a more advanced user to completely skip both variant and size
 }
 
 impl Component for ButtonProps {
@@ -39,8 +41,6 @@ pub enum ButtonVariant {
     Outline,
     Ghost,
 }
-
-// Variant Trait ?
 
 impl ButtonVariant {
     fn class_string(&self) -> String {
