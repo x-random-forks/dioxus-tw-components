@@ -1,0 +1,14 @@
+@layer components {
+    .textarea {
+        /*  */
+        @apply flex min-h-[80px] w-full;
+        /* Text */
+        @apply text-sm;
+        /* Background */
+        @apply bg-input focus:brightness-105 hover:brightness-105;
+        /* Padding */
+        @apply px-3 py-2;
+        /* Radius */
+        @apply rounded-radius;
+    }
+}

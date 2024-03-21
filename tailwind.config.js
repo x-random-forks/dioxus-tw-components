@@ -9,12 +9,19 @@ module.exports = {
     ],
     theme: {
         extend: {
+            borderRadius: {
+                "radius": 'var(--radius)',
+            },
             colors: {
                 "primary": 'hsl(var(--primary))',
                 "primary-foreground": 'hsl(var(--primary-foreground))',
                 "secondary": 'hsl(var(--secondary))',
                 "secondary-foreground": 'hsl(var(--secondary-foreground))',
-                "radius": 'var(--radius)',
+                "accent": 'hsl(var(--accent))',
+                "accent-foreground": 'hsl(var(--accent-foreground))',
+                "border": 'hsl(var(--border))',
+                "input": 'hsl(var(--input))',
+                "ring": 'hsl(var(--ring))',
             }
         },
     },

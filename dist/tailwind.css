@@ -453,7 +453,24 @@ video {
   --secondary-foreground: 240 5.9% 10%;
   --accent: 240 4.8% 95.9%;
   --accent-foreground: 240 5.9% 10%;
-  --radius: 1rem;
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
+  --ring: 346.8 77.2% 49.8%;
+  --radius: 0px;
+}
+
+.dark {
+  --background: 20 14.3% 4.1%;
+  --foreground: 0 0% 95%;
+  --primary: 346.8 77.2% 49.8%;
+  --primary-foreground: 355.7 100% 97.3%;
+  --secondary: 240 3.7% 15.9%;
+  --secondary-foreground: 0 0% 98%;
+  --accent: 12 6.5% 15.1%;
+  --accent-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --ring: 346.8 77.2% 49.8%;
 }
 
 *, ::before, ::after {
@@ -569,6 +586,7 @@ video {
   line-height: 1.25rem;
   font-weight: 500;
   /* Radius */
+  border-radius: var(--radius);
   /* Disabled */
 }
 
@@ -592,6 +610,7 @@ video {
   line-height: 1.25rem;
   font-weight: 500;
   /* Radius */
+  border-radius: var(--radius);
   /* Disabled */
 }
 
@@ -622,6 +641,7 @@ video {
   line-height: 1.25rem;
   font-weight: 500;
   /* Radius */
+  border-radius: var(--radius);
   /* Disabled */
 }
 
@@ -652,6 +672,7 @@ video {
   line-height: 1.25rem;
   font-weight: 500;
   /* Radius */
+  border-radius: var(--radius);
   /* Disabled */
 }
 
@@ -700,8 +721,44 @@ video {
   line-height: 1.75rem;
 }
 
-.rounded {
-  border-radius: 0.25rem;
+.textarea {
+  /*  */
+  display: flex;
+  min-height: 80px;
+  width: 100%;
+  /* Text */
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  /* Background */
+  background-color: hsl(var(--input));
+}
+
+.textarea:hover {
+  --tw-brightness: brightness(1.05);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.textarea:focus {
+  --tw-brightness: brightness(1.05);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.textarea {
+  /* Padding */
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  /* Radius */
+  border-radius: var(--radius);
+}
+
+.flex {
+  display: flex;
+}
+
+.min-h-\[80px\] {
+  min-height: 80px;
 }
 
 .border {
@@ -712,9 +769,8 @@ video {
   border-color: hsl(var(--primary));
 }
 
-.bg-blue-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
+.bg-input {
+  background-color: hsl(var(--input));
 }
 
 .bg-primary {
@@ -732,11 +788,6 @@ video {
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
-}
-
-.px-4 {
-  padding-left: 1rem;
-  padding-right: 1rem;
 }
 
 .px-5 {
@@ -759,11 +810,6 @@ video {
   padding-bottom: 0.25rem;
 }
 
-.py-2 {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-
 .py-\[9px\] {
   padding-top: 9px;
   padding-bottom: 9px;
@@ -784,10 +830,6 @@ video {
   line-height: 1.75rem;
 }
 
-.font-bold {
-  font-weight: 700;
-}
-
 .text-primary-foreground {
   color: hsl(var(--primary-foreground));
 }
@@ -796,13 +838,13 @@ video {
   color: hsl(var(--secondary-foreground));
 }
 
-.text-white {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
 .hover\:bg-primary:hover {
   background-color: hsl(var(--primary));
+}
+
+.focus\:brightness-105:focus {
+  --tw-brightness: brightness(1.05);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .disabled\:opacity-50:disabled {

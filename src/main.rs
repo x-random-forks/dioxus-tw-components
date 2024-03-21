@@ -1,7 +1,10 @@
 #![allow(non_snake_case)]
 
 use dioxus::prelude::*;
-use dioxus_components_bin::atom::button::button::{Button, ButtonSize, ButtonVariant};
+use dioxus_components_bin::atom::{
+    button::button::{Button, ButtonSize, ButtonVariant},
+    textarea::textarea::TextArea,
+};
 
 pub trait Component {
     fn view(self) -> Element;
@@ -19,8 +22,24 @@ fn main() {
 }
 
 fn App() -> Element {
+    let mut dark = use_signal(|| "".to_string());
+    let lightswitch_closure = move |_| {
+        log::debug!("Lightswitch clicked");
+        if dark() == "" {
+            dark.set("dark".to_string());
+        } else {
+            dark.set("".to_string());
+        }
+    };
+
     rsx!(
-        div { class: "", TestButton {} }
+        // Set darkmode there
+        body { class: "{dark}",
+            div {
+                Button { onclick: lightswitch_closure, "LightSwitch" }
+            }
+            TestButton {}
+        }
     )
 }
 
@@ -38,5 +57,6 @@ fn TestButton() -> Element {
             Button { size: ButtonSize::Lg, "Lg" }
             Button { size: ButtonSize::Xl, "Xl" }
         }
+        div { class: "", TextArea {} }
     )
 }

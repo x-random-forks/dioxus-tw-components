@@ -23,6 +23,7 @@ impl Component for ButtonProps {
         rsx!(
             button {
                 class: "{class}",
+                onclick: move |e| { self.onclick.call(e) },
                 {self.children}
             }
         )
