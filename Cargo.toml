@@ -16,12 +16,10 @@ console_error_panic_hook = "0.1.7"
 log = "0.4.17"
 tracing-wasm = "0.2.1"
 tracing = "0.1.40"
-dioxus = { git = "https://github.com/DioxusLabs/dioxus.git", rev = "4bb807a3cef2ad518f4670389b873d2871eb6eb3", features = [
-    "web",
-] }
-dioxus-web = { git = "https://github.com/DioxusLabs/dioxus.git", rev = "4bb807a3cef2ad518f4670389b873d2871eb6eb3" }
-dioxus-router = { git = "https://github.com/DioxusLabs/dioxus.git", rev = "4bb807a3cef2ad518f4670389b873d2871eb6eb3" }
+
+dioxus = { git = "https://github.com/DioxusLabs/dioxus", features = ["web", "router"] }
 dioxus-logger = "0.4.1"
+manganis = "0.2.1"
 console = "0.15.8"
 
 component-derive = { path = "component-derive" }
