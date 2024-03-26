@@ -1,0 +1,18 @@
+@layer components {
+    .textinput {
+        /*  */
+        @apply flex w-full;
+        /* Text */
+        @apply text-sm text-foreground;
+        /* Background */
+        @apply bg-background focus:brightness-105 hover:brightness-105;
+        /* Padding */
+        @apply px-3 py-2;
+        /* Border */
+        @apply border border-input;
+        /* Radius */
+        @apply rounded-global-radius;
+        /* Disabled */
+        @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:brightness-100;
+    }
+}

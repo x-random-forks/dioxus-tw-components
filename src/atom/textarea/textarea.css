@@ -12,5 +12,7 @@
         @apply border border-input;
         /* Radius */
         @apply rounded-global-radius;
+        /* Disabled */
+        @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:brightness-100;
     }
 }
