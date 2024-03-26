@@ -1,12 +1,13 @@
 #![allow(non_snake_case)]
 
+use std::collections::HashMap;
+
 use dioxus::prelude::*;
 use dioxus_components_bin::atom::button::*;
-use dioxus_components_bin::atom::Label;
-use dioxus_components_bin::atom::RadioGroup;
-use dioxus_components_bin::atom::RadioItem;
-use dioxus_components_bin::atom::TextArea;
-use dioxus_components_bin::atom::TextInput;
+use dioxus_components_bin::atom::label::*;
+use dioxus_components_bin::atom::radiogroup::*;
+use dioxus_components_bin::atom::textarea::*;
+use dioxus_components_bin::atom::textinput::*;
 
 const _STYLE: &str = manganis::mg!(file("public/tailwind.css"));
 
@@ -39,7 +40,7 @@ fn App() -> Element {
             div {
                 Button { onclick: lightswitch_closure, "LightSwitch" }
             }
-            TestForm {}
+            div { TestForm {} }
         }
     )
 }
@@ -83,46 +84,40 @@ fn TestForm() -> Element {
 }
 
 fn TestRadio() -> Element {
+    let mut values = use_signal(HashMap::new);
     rsx!(
         div {
             form {
+                class: "border border-black w-96",
                 method: "POST",
                 id: "option-form",
                 onsubmit: move |event| {
-                    log::debug!("Form values {:#?}", event.values());
-                    log::debug!("Valid {:#?}", event.valid());
+                    log::debug!("Form values {:#?}", values());
+                    values.set(event.values());
                 },
-                // oninput: move |event| {
-                //     log::debug!("Form {:#?}", event);
-                // },
-                RadioGroup { name: "option",
-                    Label { r#for: "option", "Choose an option" }
-                    div { class: "",
-                        RadioItem { value: "option-1", name: "option" }
-                        Label { r#for: "option", "Option 1" }
-                    }
-                    div {
-                        RadioItem { value: "option-2", name: "option", checked: true }
-                        Label { r#for: "option", "Option 2" }
-                    }
-                    div {
-                        RadioItem { value: "option-3", name: "option", disabled: true }
-                        Label { r#for: "option", "Option 3" }
-                    }
+                oninput: move |event| {
+                    values.set(event.values());
+                },
+                RadioGroup { name: "gender", default_value: "male",
+                    Label { color: Primary, r#for: "gender", "Choose birth gender" }
+                    RadioItem { value: "male", name: "gender", required: true, "Male" }
+                    RadioItem { value: "female", name: "gender", "Female" }
+                    RadioItem { value: "other", name: "gender", "Other" }
+                    RadioItem { value: "disabled", name: "gender", disabled: true, "Disabled" }
                 }
-                RadioGroup { name: "gender",
-                    Label { r#for: "gender", "Birth gender" }
-                    div {
-                        RadioItem { value: "male", name: "gender", required: true }
-                        Label { r#for: "gender", "Male" }
-                    }
-                    div {
-                        RadioItem { value: "female", name: "gender" }
-                        Label { r#for: "gender", "Female" }
-                    }
+                div { class: "flex flex-col",
+                    Label { r#for: "user-name", "Your username" }
+                    TextInput { name: "username", placeholder: "username" }
                 }
-                Button { variant: Ghost(Primary), size: Sm, r#type: "submit", name: "option", "Submit" }
+                div {
+                    Label { r#for: "message", "Send us a message" }
+                    TextArea { name: "message", placeholder: "Your message..." }
+                }
+                div {
+                    Button { variant: Ghost(Primary), size: Sm, r#type: "submit", "Submit" }
+                }
             }
         }
+        div { "Values: {values:#?}" }
     )
 }

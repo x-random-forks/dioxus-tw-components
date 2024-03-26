@@ -1,13 +1,11 @@
 pub mod button;
 
-mod textarea;
-pub use textarea::props::TextArea;
+pub mod textarea;
 
-mod textinput;
-pub use textinput::props::TextInput;
+pub mod textinput;
 
-mod radiogroup;
-pub use radiogroup::props::{RadioGroup, RadioItem};
+pub mod radiogroup;
 
-mod label;
-pub use label::props::Label;
+pub mod label;
+
+pub mod icon;

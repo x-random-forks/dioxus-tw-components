@@ -1,11 +1,14 @@
-use component_derive::Component;
-
+use self::styling::BaseClass;
+use crate::styling;
 use crate::*;
+use component_derive::Component;
 
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct TextInputProps {
     #[props(optional)]
     oninput: EventHandler<FormEvent>,
+    #[props(default)]
+    name: String,
     #[props(default = 0)]
     minlength: u32,
     #[props(default = 100)]
@@ -16,13 +19,14 @@ pub struct TextInputProps {
 
 impl Component for TextInputProps {
     fn view(self) -> Element {
-        let class = "textinput";
+        let class = class![BaseClass::<TextInputProps>::Default];
         rsx!(input {
-            class: "{class}",
             r#type: "text",
+            name: "{self.name}",
             minlength: "{self.minlength}",
             maxlength: "{self.maxlength}",
             placeholder: "{self.placeholder}",
+            class: "{class}",
             oninput: move |event| self.oninput.call(event)
         })
     }

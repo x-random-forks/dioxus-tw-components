@@ -1,1 +1,4 @@
-pub mod props;
+mod props;
+pub use props::*;
+
+pub mod style;

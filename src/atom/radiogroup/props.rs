@@ -1,6 +1,11 @@
 use component_derive::Component;
 
-use crate::*;
+use crate::{
+    atom::icon::{props::Icon, style::IconSvg},
+    *,
+};
+
+use self::styling::Color;
 
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct RadioGroupProps {
@@ -14,13 +19,16 @@ pub struct RadioGroupProps {
     // Orientation ?
 }
 
+// Struct used to track which RadioItem is currently checked
+struct RadioGroupSignal(String);
+
 impl Component for RadioGroupProps {
     fn view(self) -> Element {
+        use_context_provider(|| Signal::new(RadioGroupSignal(self.default_value)));
         let class = "flex flex-col";
-        rsx!(fieldset {
-            class:"{class}",
-            {self.children}
-        })
+        rsx!(
+            div { class: "{class}", {self.children} }
+        )
     }
 }
 
@@ -30,30 +38,68 @@ pub struct RadioItemProps {
     name: String,
     // What will be sent as name:value
     value: String,
-    // Is the button checked by default, if several are checked in RadioGroup, only the last one will be checked
-    #[props(default = false)]
-    checked: bool,
     // Applies to the whole RadioGroup, if true, the form will not be submitted if no RadioItem is checked
     #[props(default = false)]
     required: bool,
-    // Disables the radio button
+    // Disable the radio button
     #[props(default = false)]
     disabled: bool,
+    // Callback when the RadioItem is checked
+    #[props(default)]
+    oninput: EventHandler<FormEvent>,
+    children: Element,
     // Styling
+    #[props(default)]
+    color: Color,
 }
 
 impl Component for RadioItemProps {
     fn view(self) -> Element {
-        let class = "";
+        let mut parent_context = consume_context::<Signal<RadioGroupSignal>>();
 
-        rsx!(input {
-            name: "{self.name}",
-            value: "{self.value}",
-            checked: "{self.checked}",
-            required: "{self.required}",
-            disabled: "{self.disabled}",
-            r#type: "radio",
-            class: "{class}",
-        })
+        // TODO Should do both at the same time
+        let svg = if parent_context.read().0 == self.value {
+            IconSvg::CircleInnerCircle
+        } else {
+            IconSvg::HollowCircle
+        };
+
+        let checked = if parent_context.read().0 == self.value {
+            true
+        } else {
+            false
+        };
+
+        // TODO Will get rid of this when the last div is removed
+        let text_color = match self.color {
+            Color::Default => "text-foreground",
+            Color::Primary => "text-primary",
+            Color::Secondary => "text-secondary",
+            Color::Accent => "text-accent",
+            _ => "text-none",
+        };
+
+        rsx!(
+            label { class: "{self.name}",
+            div { class: "flex items-center",
+                input {
+                    name: "{self.name}",
+                    value: "{self.value}",
+                    checked: "{checked}",
+                    required: "{self.required}",
+                    disabled: "{self.disabled}",
+                    r#type: "radio",
+                    oninput: move |e| {
+                        parent_context.set(RadioGroupSignal(self.value.clone()));
+                        self.oninput.call(e);
+                    },
+                    class: "hidden"
+                }
+                    div { class: "size-4", Icon {svg: svg, color: self.color} }
+                    // TODO Move this into another comp
+                    div {class: "{text_color} font-medium", {self.children}}
+                }
+            }
+        )
     }
 }

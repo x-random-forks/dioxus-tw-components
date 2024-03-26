@@ -1,24 +1,27 @@
-use component_derive::Component;
-
+use self::styling::BaseClass;
+use crate::styling;
 use crate::*;
+use component_derive::Component;
 
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct TextAreaProps {
     #[props(optional)]
     oninput: EventHandler<FormEvent>,
-    #[props(default = "Type your message here...".to_string())]
+    #[props(default)]
+    name: String,
+    #[props(default = "Type your text here...".to_string())]
     placeholder: String,
     // Styling
 }
 
 impl Component for TextAreaProps {
     fn view(self) -> Element {
-        rsx!(
-            textarea {
-                placeholder: "{self.placeholder}",
-                class: "textarea",
-                oninput: move |event| self.oninput.call(event)
-            }
-        )
+        let class = class![BaseClass::<TextAreaProps>::Default];
+        rsx!(textarea {
+            placeholder: "{self.placeholder}",
+            name: "{self.name}",
+            class: "{class}",
+            oninput: move |event| self.oninput.call(event)
+        })
     }
 }
