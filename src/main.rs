@@ -93,20 +93,23 @@ fn TestRadio() -> Element {
                 id: "option-form",
                 onsubmit: move |event| {
                     log::debug!("Form values {:#?}", values());
+                    log::debug!("Valid :{}", event.valid());
+                    let test = &event.values()["username"].as_value();
+                    log::debug!("{:?}", test);
                     values.set(event.values());
                 },
-                oninput: move |event| {
-                    values.set(event.values());
-                },
+                // oninput: move |event| {
+                //     values.set(event.values());
+                // },
                 RadioGroup { name: "gender", default_value: "male",
-                    Label { color: Primary, r#for: "gender", "Choose birth gender" }
+                    Label { r#for: "gender", "Choose birth gender" }
                     RadioItem { value: "male", name: "gender", required: true, "Male" }
                     RadioItem { value: "female", name: "gender", "Female" }
                     RadioItem { value: "other", name: "gender", "Other" }
                     RadioItem { value: "disabled", name: "gender", disabled: true, "Disabled" }
                 }
                 div { class: "flex flex-col",
-                    Label { r#for: "user-name", "Your username" }
+                    Label { r#for: "username", "Your username" }
                     TextInput { name: "username", placeholder: "username" }
                 }
                 div {
@@ -114,7 +117,7 @@ fn TestRadio() -> Element {
                     TextArea { name: "message", placeholder: "Your message..." }
                 }
                 div {
-                    Button { variant: Ghost(Primary), size: Sm, r#type: "submit", "Submit" }
+                    Button {  variant: Ghost(Primary), size: Sm, r#type: "submit", "Submit" }
                 }
             }
         }

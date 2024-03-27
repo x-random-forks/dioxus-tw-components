@@ -3,8 +3,6 @@ use super::style::IconSvg;
 use crate::*;
 use component_derive::Component;
 
-pub use Color::{Accent, Default, Primary, Secondary};
-
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct IconProps {
     // Namespace of the svg
@@ -54,10 +52,7 @@ impl Component for IconProps {
 
         rsx!(
             svg {
-                // class:"fill-none stroke-primary stroke-1",
                 xmlns: "{self.xmlns}",
-                // width: "24",
-                // height: "24",
                 view_box: "0 0 24 24",
                 stroke_linecap: "round",
                 {svg}

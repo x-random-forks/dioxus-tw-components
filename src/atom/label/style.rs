@@ -17,7 +17,7 @@ impl std::fmt::Display for Color<LabelProps> {
             Color::Primary => "text-primary",
             Color::Secondary => "text-secondary",
             Color::Accent => "text-accent",
-            _ => "",
+            _ => "text-foreground",
         };
         write!(f, "{}", size)
     }

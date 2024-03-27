@@ -1,8 +1,8 @@
-use self::styling::Color;
-use crate::{styling::BaseClass, *};
+use self::styling::{BaseClass, Color};
+use crate::*;
 use component_derive::Component;
 
-pub use Color::*;
+pub use Color::{Accent, Primary, Secondary};
 
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct LabelProps {

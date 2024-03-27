@@ -29,6 +29,7 @@ pub struct ButtonProps {
 impl Component for ButtonProps {
     fn view(self) -> Element {
         let mut class = class!(BaseClass::<ButtonProps>::Default, self.size, self.class);
+
         // If variant is not default, use the variant class instead of color
         if self.variant != Variant::Default {
             class = class!(class, self.variant);
@@ -39,9 +40,4 @@ impl Component for ButtonProps {
             button { class: "{class}", onclick: move |e| { self.onclick.call(e) }, {self.children} }
         )
     }
-}
-
-pub enum ButtonOutline {
-    Off,
-    On,
 }

@@ -40,9 +40,9 @@ impl std::fmt::Display for Variant<ButtonProps> {
                 _ => "",
             },
             Variant::Ghost(color) => match color {
-                Color::Primary => "border-none text-primary hover:bg-primary/10",
-                Color::Secondary => "border-none text-secondary hover:bg-secondary/10",
-                Color::Accent => "border-none text-accent hover:bg-accent/10",
+                Color::Primary => "border-none text-primary hover:bg-primary/40",
+                Color::Secondary => "border-none text-secondary hover:bg-secondary/40",
+                Color::Accent => "border-none text-accent hover:bg-accent/40",
                 _ => "",
             },
             _ => "",

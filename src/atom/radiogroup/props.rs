@@ -1,9 +1,8 @@
-use component_derive::Component;
-
 use crate::{
-    atom::icon::{props::Icon, style::IconSvg},
+    atom::icon::{style::IconSvg, Icon},
     *,
 };
+use component_derive::Component;
 
 use self::styling::Color;
 
@@ -19,7 +18,7 @@ pub struct RadioGroupProps {
     // Orientation ?
 }
 
-// Struct used to track which RadioItem is currently checked
+// Struct used to track which RadioItem is currently checked within the RadioGroup
 struct RadioGroupSignal(String);
 
 impl Component for RadioGroupProps {
@@ -81,23 +80,23 @@ impl Component for RadioItemProps {
 
         rsx!(
             label { class: "{self.name}",
-            div { class: "flex items-center",
-                input {
-                    name: "{self.name}",
-                    value: "{self.value}",
-                    checked: "{checked}",
-                    required: "{self.required}",
-                    disabled: "{self.disabled}",
-                    r#type: "radio",
-                    oninput: move |e| {
-                        parent_context.set(RadioGroupSignal(self.value.clone()));
-                        self.oninput.call(e);
-                    },
-                    class: "hidden"
-                }
-                    div { class: "size-4", Icon {svg: svg, color: self.color} }
+                div { class: "flex items-center",
+                    input {
+                        name: "{self.name}",
+                        value: "{self.value}",
+                        checked: "{checked}",
+                        required: "{self.required}",
+                        disabled: "{self.disabled}",
+                        r#type: "radio",
+                        oninput: move |e| {
+                            parent_context.set(RadioGroupSignal(self.value.clone()));
+                            self.oninput.call(e);
+                        },
+                        class: "hidden"
+                    }
+                    div { class: "size-4", Icon { svg: svg, color: self.color } }
                     // TODO Move this into another comp
-                    div {class: "{text_color} font-medium", {self.children}}
+                    div { class: "{text_color} font-medium", {self.children} }
                 }
             }
         )
