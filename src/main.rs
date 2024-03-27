@@ -5,9 +5,10 @@ use std::collections::HashMap;
 use dioxus::prelude::*;
 use dioxus_components_bin::atom::button::*;
 use dioxus_components_bin::atom::label::*;
-use dioxus_components_bin::atom::radiogroup::*;
 use dioxus_components_bin::atom::textarea::*;
 use dioxus_components_bin::atom::textinput::*;
+use dioxus_components_bin::composite::radiogroup::*;
+use dioxus_components_bin::composite::select::*;
 
 const _STYLE: &str = manganis::mg!(file("public/tailwind.css"));
 
@@ -117,7 +118,23 @@ fn TestRadio() -> Element {
                     TextArea { name: "message", placeholder: "Your message..." }
                 }
                 div {
-                    Button {  variant: Ghost(Primary), size: Sm, r#type: "submit", "Submit" }
+                    Label { r#for: "animal", "Select an animal" }
+                    SelectGroup { name: "animal",
+                        SelectLabel { label: "Domestic",
+                            SelectItem { value: "dog", "Dog" }
+                            SelectItem { value: "cat", selected: true, "Cat" }
+                            SelectItem { value: "hamster", "Hamster" }
+                            SelectItem { value: "none", disabled: true, "None" }
+                        }
+                        SelectLabel { label: "Wild", disabled: true,
+                            SelectItem { value: "lion", "Lion" }
+                            SelectItem { value: "tiger", "Tiger" }
+                            SelectItem { value: "bear", "Bear" }
+                        }
+                    }
+                }
+                div {
+                    Button { variant: Ghost(Primary), size: Sm, r#type: "submit", "Submit" }
                 }
             }
         }

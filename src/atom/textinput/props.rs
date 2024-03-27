@@ -19,14 +19,16 @@ pub struct TextInputProps {
 impl Component for TextInputProps {
     fn view(self) -> Element {
         let class = class![BaseClass::<TextInputProps>::Default];
-        rsx!(input {
-            r#type: "text",
-            name: "{self.name}",
-            minlength: "{self.minlength}",
-            maxlength: "{self.maxlength}",
-            placeholder: "{self.placeholder}",
-            class: "{class}",
-            oninput: move |event| self.oninput.call(event)
-        })
+        rsx!(
+            input {
+                r#type: "text",
+                name: "{self.name}",
+                minlength: "{self.minlength}",
+                maxlength: "{self.maxlength}",
+                placeholder: "{self.placeholder}",
+                class: "{class}",
+                oninput: move |event| self.oninput.call(event)
+            }
+        )
     }
 }

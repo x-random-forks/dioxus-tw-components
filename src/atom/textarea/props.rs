@@ -16,11 +16,13 @@ pub struct TextAreaProps {
 impl Component for TextAreaProps {
     fn view(self) -> Element {
         let class = class![BaseClass::<TextAreaProps>::Default];
-        rsx!(textarea {
-            placeholder: "{self.placeholder}",
-            name: "{self.name}",
-            class: "{class}",
-            oninput: move |event| self.oninput.call(event)
-        })
+        rsx!(
+            textarea {
+                placeholder: "{self.placeholder}",
+                name: "{self.name}",
+                class: "{class}",
+                oninput: move |event| self.oninput.call(event)
+            }
+        )
     }
 }

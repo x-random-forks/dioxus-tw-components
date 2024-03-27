@@ -33,12 +33,14 @@ impl Component for IconProps {
         };
 
         let svg = match self.svg {
-            IconSvg::HollowCircle => rsx!(circle {
-                class: "{stroke_color} fill-none stroke-1",
-                cx: "12",
-                cy: "12",
-                r: "10"
-            }),
+            IconSvg::HollowCircle => rsx!(
+                circle {
+                    class: "{stroke_color} fill-none stroke-1",
+                    cx: "12",
+                    cy: "12",
+                    r: "10"
+                }
+            ),
             IconSvg::CircleInnerCircle => rsx!(
                 circle {
                     class: "{stroke_color} fill-none stroke-1",
