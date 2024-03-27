@@ -14,10 +14,10 @@ impl std::fmt::Display for BaseClass<LabelProps> {
 impl std::fmt::Display for Color<LabelProps> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let size = match self {
-            Color::Primary => "text-primary",
-            Color::Secondary => "text-secondary",
-            Color::Accent => "text-accent",
-            _ => "text-foreground",
+            Color::Primary => "text-primary peer-disabled:text-muted",
+            Color::Secondary => "text-secondary peer-disabled:text-muted",
+            Color::Accent => "text-accent peer-disabled:text-muted",
+            _ => "text-foreground peer-disabled:text-muted",
         };
         write!(f, "{}", size)
     }

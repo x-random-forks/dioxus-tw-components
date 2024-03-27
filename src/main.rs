@@ -164,10 +164,14 @@ fn TestRadio() -> Element {
                     FormRange { name: "rate", min: 0, max: 5, step: 1 }
                 }
                 div {
-                    Toggle { name: "newsletter", value: "newsletter", checked: true, "Subscribe to newsletter" }
+                    Toggle { name: "newsletter", value: "newsletter", checked: true,
+                        Label { r#for: "newsletter", "Subscribe to newsletter" }
+                    }
                 }
                 div {
-                    Toggle { name: "toggle1", value: "toggle1", checked: true, color: Secondary, "toggle1" }
+                    Toggle { name: "toggle1", value: "toggle1", checked: true, color: Secondary,
+                        Label { "toggle1" }
+                    }
                 }
                 div {
                     Toggle {
@@ -176,17 +180,23 @@ fn TestRadio() -> Element {
                         checked: true,
                         color: Accent,
                         size: Sm,
-                        "toggle2"
+                        Label { "toggle2" }
                     }
                 }
                 div {
-                    Toggle { name: "toggle3", value: "toggle3", disabled: true, size: Lg, "toggle3" }
+                    Toggle { name: "toggle3", value: "toggle3", disabled: true, size: Lg,
+                        Label { "toggle3" }
+                    }
                 }
                 div {
-                    Toggle { name: "cookie", value: "cookie", checked: false, "Use our cookie" }
+                    Toggle { name: "cookie", value: "cookie", checked: false,
+                        Label { "Use our cookie" }
+                    }
                 }
                 div {
-                    Checkbox { name: "terms", value: "yes", required: false, "Accept terms and conditions" }
+                    Checkbox { name: "terms", value: "yes", required: false,
+                        Label { "Accept terms and conditions" }
+                    }
                 }
                 div {
                     Button { variant: Ghost(Primary), size: Sm, r#type: "submit", "Submit" }

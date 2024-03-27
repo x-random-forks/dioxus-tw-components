@@ -14,6 +14,7 @@ impl std::fmt::Display for BaseClass<ToggleProps> {
 impl std::fmt::Display for Color<ToggleProps> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let size = match self {
+            // TODO more colors handled
             Color::Primary => "peer-checked:bg-primary peer-focus:ring-foreground",
             Color::Secondary => "peer-checked:bg-secondary peer-focus:ring-foreground",
             Color::Accent => "peer-checked:bg-accent peer-focus:ring-foreground",
@@ -26,9 +27,9 @@ impl std::fmt::Display for Color<ToggleProps> {
 impl std::fmt::Display for Size<ToggleProps> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let size = match self {
-            Size::Lg | Size::Xl => "w-9 h-5 after:top-[2px] after:start-[2px] after:h-4 after:w-4",
-            Size::Sm | Size::Xs => "w-11 h-6 after:top-[2px] after:start-[2px] after:h-5 after:w-5",
-            Size::Md | _ => "w-14 h-7 after:top-0.5 after:start-[4px] after:h-6 after:w-6",
+            Size::Lg | Size::Xl => "w-14 h-7 after:top-0.5 after:start-[4px] after:h-6 after:w-6",
+            Size::Sm | Size::Xs => "w-9 h-5 after:top-[2px] after:start-[2px] after:h-4 after:w-4",
+            Size::Md | _ => "w-11 h-6 after:top-[2px] after:start-[2px] after:h-5 after:w-5",
         };
         write!(f, "{}", size)
     }
