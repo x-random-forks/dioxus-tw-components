@@ -30,6 +30,22 @@ impl Component for SelectGroupProps {
     }
 }
 
+// What will be shown by default in the SelectGroup when nothing is selected yet
+#[derive(PartialEq, Props, Clone, Component)]
+pub struct SelectPlaceholderProps {
+    children: Element,
+    // Styling
+}
+
+impl Component for SelectPlaceholderProps {
+    fn view(self) -> Element {
+        let class = class!(BaseClass::<SelectPlaceholderProps>::Default);
+        rsx!(
+            option { disabled: true, selected: true, value: "", class: "{class}", {self.children} }
+        )
+    }
+}
+
 // SelectLabel is used to group SelectItems together under a common label
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct SelectLabelProps {
@@ -83,8 +99,5 @@ impl Component for SelectItemProps {
         )
     }
 }
-// SelectTrigger
+
 // SelectContent ?
-// SelectGroup ?
-// SelectLabel
-// SelectItem

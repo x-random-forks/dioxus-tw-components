@@ -121,9 +121,10 @@ fn TestRadio() -> Element {
                 div {
                     Label { r#for: "animal", "Select an animal" }
                     SelectGroup { name: "animal",
+                        SelectPlaceholder { "Select an animal" }
                         SelectLabel { label: "Domestic",
                             SelectItem { value: "dog", "Dog" }
-                            SelectItem { value: "cat", selected: true, "Cat" }
+                            SelectItem { value: "cat", "Cat" }
                             SelectItem { value: "hamster", "Hamster" }
                             SelectItem { value: "none", disabled: true, "None" }
                         }

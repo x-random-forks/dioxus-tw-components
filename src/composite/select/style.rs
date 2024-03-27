@@ -1,10 +1,21 @@
-use super::{SelectGroupProps, SelectItemProps, SelectLabelProps};
+use super::{SelectGroupProps, SelectItemProps, SelectLabelProps, SelectPlaceholderProps};
 use crate::styling::BaseClass;
 
 impl std::fmt::Display for BaseClass<SelectGroupProps> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let class = match self {
             BaseClass::Default => "flex flex-col w-full bg-input",
+            _ => "",
+        };
+        write!(f, "{}", class)
+    }
+}
+
+impl std::fmt::Display for BaseClass<SelectPlaceholderProps> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let class = match self {
+            // This hides the placeholder in the dropdown menu
+            BaseClass::Default => "hidden",
             _ => "",
         };
         write!(f, "{}", class)
