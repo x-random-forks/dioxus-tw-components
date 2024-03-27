@@ -18,6 +18,8 @@ module.exports = {
                 "secondary-foreground": 'hsl(var(--secondary-foreground))',
                 "accent": 'hsl(var(--accent))',
                 "accent-foreground": 'hsl(var(--accent-foreground))',
+                "muted": 'hsl(var(--muted))',
+                "muted-foreground": 'hsl(var(--muted-foreground))',
                 "border": 'hsl(var(--border))',
                 "input": 'hsl(var(--input))',
                 "ring": 'hsl(var(--ring))',

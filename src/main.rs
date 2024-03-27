@@ -9,6 +9,7 @@ use dioxus_components_bin::atom::formrange::*;
 use dioxus_components_bin::atom::input::*;
 use dioxus_components_bin::atom::label::*;
 use dioxus_components_bin::atom::textarea::*;
+use dioxus_components_bin::atom::toggle::*;
 use dioxus_components_bin::composite::radiogroup::*;
 use dioxus_components_bin::composite::select::*;
 use InputType::*;
@@ -161,6 +162,28 @@ fn TestRadio() -> Element {
                 div {
                     Label { r#for: "rate", "Rate us" }
                     FormRange { name: "rate", min: 0, max: 5, step: 1 }
+                }
+                div {
+                    Toggle { name: "newsletter", value: "newsletter", checked: true, "Subscribe to newsletter" }
+                }
+                div {
+                    Toggle { name: "toggle1", value: "toggle1", checked: true, color: Secondary, "toggle1" }
+                }
+                div {
+                    Toggle {
+                        name: "toggle2",
+                        value: "toggle2",
+                        checked: true,
+                        color: Accent,
+                        size: Sm,
+                        "toggle2"
+                    }
+                }
+                div {
+                    Toggle { name: "toggle3", value: "toggle3", disabled: true, size: Lg, "toggle3" }
+                }
+                div {
+                    Toggle { name: "cookie", value: "cookie", checked: false, "Use our cookie" }
                 }
                 div {
                     Checkbox { name: "terms", value: "yes", required: false, "Accept terms and conditions" }
