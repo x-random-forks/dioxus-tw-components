@@ -6,6 +6,7 @@ use component_derive::Component;
 pub struct SelectGroupProps {
     // What will be sent in the request eg name:value where value is represented by the selected SelectItem
     name: String,
+    // TODO Currently not woking
     #[props(default = false)]
     required: bool,
     #[props(default = false)]
@@ -21,8 +22,10 @@ impl Component for SelectGroupProps {
         let class = class!(BaseClass::<SelectGroupProps>::Default);
         rsx!(
             select {
-                class: "{class}",
                 name: "{self.name}",
+                required: "{self.required}",
+                disabled: "{self.disabled}",
+                class: "{class}",
                 oninput: move |e| self.oninput.call(e),
                 {self.children}
             }

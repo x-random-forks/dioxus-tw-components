@@ -4,6 +4,7 @@ use std::collections::HashMap;
 
 use dioxus::prelude::*;
 use dioxus_components_bin::atom::button::*;
+use dioxus_components_bin::atom::formrange::*;
 use dioxus_components_bin::atom::label::*;
 use dioxus_components_bin::atom::textarea::*;
 use dioxus_components_bin::atom::textinput::*;
@@ -145,7 +146,11 @@ fn TestRadio() -> Element {
                     Checkbox { name: "activities", value: "none", disabled: true, "None" }
                 }
                 div {
-                    Checkbox { name: "terms", value: "yes", required: true, "Accept terms and conditions" }
+                    Label { r#for: "rate", "Rate us" }
+                    FormRange { name: "rate", min: 0, max: 100, step: 10 }
+                }
+                div {
+                    Checkbox { name: "terms", value: "yes", required: false, "Accept terms and conditions" }
                 }
                 div {
                     Button { variant: Ghost(Primary), size: Sm, r#type: "submit", "Submit" }
