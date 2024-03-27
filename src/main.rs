@@ -4,13 +4,14 @@ use std::collections::HashMap;
 
 use dioxus::prelude::*;
 use dioxus_components_bin::atom::button::*;
+use dioxus_components_bin::atom::checkbox::*;
 use dioxus_components_bin::atom::formrange::*;
+use dioxus_components_bin::atom::input::*;
 use dioxus_components_bin::atom::label::*;
 use dioxus_components_bin::atom::textarea::*;
-use dioxus_components_bin::atom::textinput::*;
-use dioxus_components_bin::composite::checkbox::*;
 use dioxus_components_bin::composite::radiogroup::*;
 use dioxus_components_bin::composite::select::*;
+use InputType::*;
 
 const _STYLE: &str = manganis::mg!(file("public/tailwind.css"));
 
@@ -73,7 +74,6 @@ fn TestButton() -> Element {
             Button { size: Xl, "Xl" }
         }
         div { class: "", TextArea { oninput: keyboard_closure } }
-        div { class: "", TextInput { oninput: keyboard_closure } }
     )
 }
 
@@ -113,7 +113,20 @@ fn TestRadio() -> Element {
                 }
                 div { class: "flex flex-col",
                     Label { r#for: "username", "Your username" }
-                    TextInput { name: "username", placeholder: "username" }
+                    // TextInput { name: "username", placeholder: "username" }
+                    Input { r#type: Text, name: "username", placeholder: "username" }
+                }
+                div {
+                    Label { r#for: "email", "Your email" }
+                    Input { r#type: Email, name: "email", placeholder: "email" }
+                }
+                div {
+                    Label { r#for: "age", "Your age" }
+                    Input { r#type: Number, name: "age", placeholder: "age", min: 18, max: 100 }
+                }
+                div {
+                    Label { r#for: "date", "Your Piscine date" }
+                    Input { r#type: Date, name: "date", placeholder: "Piscine date" }
                 }
                 div {
                     Label { r#for: "message", "Send us a message" }
@@ -147,7 +160,7 @@ fn TestRadio() -> Element {
                 }
                 div {
                     Label { r#for: "rate", "Rate us" }
-                    FormRange { name: "rate", min: 0, max: 100, step: 10 }
+                    FormRange { name: "rate", min: 0, max: 5, step: 1 }
                 }
                 div {
                     Checkbox { name: "terms", value: "yes", required: false, "Accept terms and conditions" }

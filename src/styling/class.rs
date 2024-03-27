@@ -60,6 +60,8 @@ impl std::fmt::Display for Size {
     }
 }
 
+// List all of possible variants for every component,
+// Not every component need a variant and not every component has the same variant
 #[derive(Default, PartialEq, Clone, Debug, Copy)]
 pub enum Variant<T = ()> {
     #[default]
