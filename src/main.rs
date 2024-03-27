@@ -7,6 +7,7 @@ use dioxus_components_bin::atom::button::*;
 use dioxus_components_bin::atom::label::*;
 use dioxus_components_bin::atom::textarea::*;
 use dioxus_components_bin::atom::textinput::*;
+use dioxus_components_bin::composite::checkbox::*;
 use dioxus_components_bin::composite::radiogroup::*;
 use dioxus_components_bin::composite::select::*;
 
@@ -132,6 +133,18 @@ fn TestRadio() -> Element {
                             SelectItem { value: "bear", "Bear" }
                         }
                     }
+                }
+                div {
+                    Label { r#for: "activities", "Select your fav activities" }
+                    Checkbox { name: "activities", value: "reading", "Reading" }
+                    Checkbox { name: "activities", value: "coding", checked: true, "Coding" }
+                    Checkbox { name: "activities", value: "writing", "Writing" }
+                    Checkbox { name: "activities", value: "swimming", "Swimming" }
+                    Checkbox { name: "activities", value: "football", "Football" }
+                    Checkbox { name: "activities", value: "none", disabled: true, "None" }
+                }
+                div {
+                    Checkbox { name: "terms", value: "yes", required: true, "Accept terms and conditions" }
                 }
                 div {
                     Button { variant: Ghost(Primary), size: Sm, r#type: "submit", "Submit" }
