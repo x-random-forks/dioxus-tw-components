@@ -79,6 +79,7 @@ pub enum InputType {
     Number,
     Email,
     Date,
+    File,
 }
 
 impl std::fmt::Display for InputType {
@@ -88,6 +89,7 @@ impl std::fmt::Display for InputType {
             InputType::Number => "number",
             InputType::Email => "email",
             InputType::Date => "date",
+            InputType::File => "file",
         };
         write!(f, "{}", size)
     }

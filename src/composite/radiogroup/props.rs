@@ -96,7 +96,9 @@ impl Component for RadioItemProps {
                     }
                     div { class: "size-4", Icon { svg: svg, color: self.color } }
                     // TODO Move this into another comp
-                    div { class: "{text_color} font-medium peer-disabled:opacity-50", {self.children} }
+                    div { class: "{text_color} font-medium peer-disabled:opacity-50",
+                        {self.children}
+                    }
                 }
             }
         )

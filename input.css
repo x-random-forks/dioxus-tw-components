@@ -42,4 +42,8 @@
         --ring: 346.8 77.2% 49.8%;
         --global-shadow: 0 0px 0px 0px rgba(255, 255, 255, 0.3);
       }
+
+      .box.over {
+        border: 3px dotted #666;
+      }
 }

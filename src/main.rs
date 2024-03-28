@@ -43,11 +43,12 @@ fn App() -> Element {
             // div { TestFormRange{}}
             // div { TestRadio {} }
             // div { TestIcon {} }
-            // div { TestInput {} }
+            div { TestInput {} }
             // div { TestTextArea {}}
             // div { TestToggle {} }
             // div { TestLightSwitch {} }
-            div { TestRadioGroup {} }
+            // div { TestRadioGroup {} }
+            // div { TestDragDrop {} }
         }
     )
 }
@@ -155,6 +156,10 @@ fn TestInput() -> Element {
             div { class: "",
                 Input { r#type: Date, name: "date", placeholder: "Date" }
                 Input { r#type: Date, name: "date", placeholder: "Date", disabled: true }
+            }
+            div { class: "",
+                Input { r#type: File, name: "date", placeholder: "File" }
+                Input { r#type: File, name: "date", placeholder: "File", disabled: true }
             }
         }
     )
@@ -446,6 +451,77 @@ fn TestSelect() -> Element {
                     SelectItem { value: "bear", "Bear" }
                 }
             }
+        }
+    )
+}
+
+fn TestDragDrop() -> Element {
+    let class = "border-4 border-black bg-input w-96 cursor-move box";
+    let _ = use_resource(move || async move {
+        let mut eval = eval(
+            r#"
+            function handleDragStart(e) {
+                this.style.opacity = '0.4';
+              
+                dragSrcEl = this;
+              
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('text/html', this.innerHTML);
+              }
+              
+                function handleDragEnd(e) {
+                  this.style.opacity = '1';
+                  items.forEach(function (item) {
+                    item.classList.remove('over');
+                  });
+                }
+
+                function handleDragOver(e) {
+                    e.preventDefault();
+                    return false;
+                  }
+
+                  function handleDragEnter(e) {
+                    this.classList.add('over');
+                  }
+                
+                  function handleDragLeave(e) {
+                    this.classList.remove('over');
+                  }
+
+                  function handleDrop(e) {
+                    e.stopPropagation();
+                  
+                    if (dragSrcEl !== this) {
+                      dragSrcEl.innerHTML = this.innerHTML;
+                      this.innerHTML = e.dataTransfer.getData('text/html');
+                    }
+                  
+                    return false;
+                  }
+              
+                let items = document.querySelectorAll('.box');
+                items.forEach(function(item) {    
+                    item.addEventListener('dragstart', handleDragStart);
+                    item.addEventListener('dragover', handleDragOver);
+                    item.addEventListener('dragenter', handleDragEnter);
+                    item.addEventListener('dragleave', handleDragLeave);
+                    item.addEventListener('dragend', handleDragEnd);
+                    item.addEventListener('drop', handleDrop);
+                });
+        "#,
+        );
+    });
+
+    rsx!(
+        div { class: "grid grid-cols-3 gap-2",
+            div { draggable: true, class: "{class}", "VALENTIN" }
+            div { draggable: true, class: "{class}", "JULES" }
+            div { draggable: true, class: "{class}", "ANTHONY" }
+            div { draggable: true, class: "{class}", "JULIEN" }
+            div { draggable: true, class: "{class}", "JEANNE" }
+            div { draggable: true, class: "{class}", "MATHIEU" }
+
         }
     )
 }
