@@ -1,7 +1,6 @@
 #![allow(non_snake_case)]
 
 use std::collections::HashMap;
-use std::vec;
 
 use dioxus::prelude::*;
 use dioxus_components_bin::atom::button::*;
@@ -12,6 +11,7 @@ use dioxus_components_bin::atom::label::*;
 use dioxus_components_bin::atom::textarea::*;
 use dioxus_components_bin::atom::toggle::*;
 use dioxus_components_bin::composite::formlist::*;
+use dioxus_components_bin::composite::lightswitch::*;
 use dioxus_components_bin::composite::radiogroup::*;
 use dioxus_components_bin::composite::select::*;
 use InputType::*;
@@ -30,30 +30,20 @@ fn main() {
 }
 
 fn App() -> Element {
-    // This should be a global context in something like an AppState
-    // this is just for demonstration purpose
-    let mut dark = use_signal(|| "".to_string());
-    let lightswitch_closure = move |_| {
-        log::debug!("LightSwitch clicked");
-        if dark() == "" {
-            dark.set("dark".to_string());
-        } else {
-            dark.set("".to_string());
-        }
-    };
+    use_context_provider(|| Signal::new(LightSwitchSignal("".to_string())));
 
+    let dark_mode_context = consume_context::<Signal<LightSwitchSignal>>();
+    let dark = &dark_mode_context.read().0;
     rsx!(
         body { class: "{dark} bg-background",
             div {
-                Button { onclick: lightswitch_closure, "LightSwitch" }
+                LightSwitch {}
             }
             div { TestForm {} }
         }
     )
 }
 
-// With the override class implemented, the user could just do something like
-// Button { class: Class("btn-primary btn-xl"), "My Button"}
 fn TestButton() -> Element {
     let keyboard_closure = move |event: FormEvent| log::debug!("{}", event.value());
     rsx!(

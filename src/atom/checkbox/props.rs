@@ -1,10 +1,12 @@
-use self::styling::BaseClass;
+use self::styling::{BaseClass, Color};
 use crate::*;
 use component_derive::Component;
 
+pub use Color::{Accent, Primary, Secondary, Unset};
+
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct CheckboxProps {
-    // What will be sent in the request eg name:value where value is represented by the selected CheckboxItem
+    // Name of input field, associate with its value when sending the associated form
     name: String,
     value: String,
     #[props(default = false)]
@@ -17,11 +19,13 @@ pub struct CheckboxProps {
     #[props(optional)]
     oninput: EventHandler<FormEvent>,
     // Styling
+    #[props(default = Color::Primary)]
+    color: Color<CheckboxProps>,
 }
 
 impl Component for CheckboxProps {
     fn view(self) -> Element {
-        let class = class!(BaseClass::<CheckboxProps>::Default);
+        let class = class!(BaseClass::<CheckboxProps>::Default, self.color);
         rsx!(
             div { class: "",
                 input {

@@ -8,14 +8,18 @@ pub use Variant::{Default, Ghost, Outline};
 
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct ButtonProps {
-    #[props(optional)]
-    onclick: EventHandler<MouseEvent>,
     #[props(default = "button".to_string())]
     r#type: String,
     #[props(default)]
     name: String,
+    #[props(default = false)]
+    disabled: bool,
+    #[props(optional)]
+    onclick: EventHandler<MouseEvent>,
+    // What will be displayed inside the button
     children: Element,
     // Styling
+    // Custom css to append to the class attribute
     #[props(default)]
     class: String,
     #[props(default = Color::Primary)]
@@ -39,6 +43,7 @@ impl Component for ButtonProps {
         rsx!(
             button {
                 r#type: "{self.r#type}",
+                disabled: "{self.disabled}",
                 class: "{class}",
                 onclick: move |e| { self.onclick.call(e) },
                 {self.children}

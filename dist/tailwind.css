@@ -913,8 +913,20 @@ video {
   color: hsl(var(--secondary-foreground));
 }
 
+.accent-accent {
+  accent-color: hsl(var(--accent));
+}
+
 .accent-foreground {
   accent-color: hsl(var(--foreground));
+}
+
+.accent-primary {
+  accent-color: hsl(var(--primary));
+}
+
+.accent-secondary {
+  accent-color: hsl(var(--secondary));
 }
 
 .shadow-global-shadow {
@@ -1056,6 +1068,20 @@ video {
 .hover\:brightness-105:hover {
   --tw-brightness: brightness(1.05);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.focus\:ring-2:focus {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.focus\:ring-primary:focus {
+  --tw-ring-color: hsl(var(--primary));
+}
+
+.focus\:ring-offset-1:focus {
+  --tw-ring-offset-width: 1px;
 }
 
 .focus\:brightness-105:focus {
