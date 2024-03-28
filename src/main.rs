@@ -114,7 +114,6 @@ fn TestRadio() -> Element {
                 }
                 div { class: "flex flex-col",
                     Label { r#for: "username", "Your username" }
-                    // TextInput { name: "username", placeholder: "username" }
                     Input { r#type: Text, name: "username", placeholder: "username" }
                 }
                 div {
@@ -161,7 +160,7 @@ fn TestRadio() -> Element {
                 }
                 div {
                     Label { r#for: "rate", "Rate us" }
-                    FormRange { name: "rate", min: 0, max: 5, step: 1 }
+                    FormRange { name: "rate", min: 0, max: 100, step: 1 }
                 }
                 div {
                     Toggle { name: "newsletter", value: "newsletter", checked: true,

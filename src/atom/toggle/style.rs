@@ -15,9 +15,9 @@ impl std::fmt::Display for Color<ToggleProps> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let size = match self {
             // TODO more colors handled
-            Color::Primary => "peer-checked:bg-primary peer-focus:ring-foreground",
-            Color::Secondary => "peer-checked:bg-secondary peer-focus:ring-foreground",
-            Color::Accent => "peer-checked:bg-accent peer-focus:ring-foreground",
+            Color::Primary => "peer-checked:bg-primary peer-focus:ring-input",
+            Color::Secondary => "peer-checked:bg-secondary peer-focus:ring-input",
+            Color::Accent => "peer-checked:bg-accent peer-focus:ring-input",
             _ => "",
         };
         write!(f, "{}", size)

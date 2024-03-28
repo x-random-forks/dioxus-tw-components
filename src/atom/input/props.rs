@@ -35,6 +35,7 @@ pub struct InputProps {
     disabled: bool,
     #[props(default = false)]
     readonly: bool,
+    // Styling
 }
 
 impl Component for InputProps {

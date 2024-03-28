@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.4.2 | MIT License | https://tailwindcss.com
+! tailwindcss v3.4.3 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -610,14 +610,6 @@ video {
   position: relative;
 }
 
-.mb-5 {
-  margin-bottom: 1.25rem;
-}
-
-.ms-3 {
-  margin-inline-start: 0.75rem;
-}
-
 .flex {
   display: flex;
 }
@@ -665,10 +657,6 @@ video {
 
 .cursor-pointer {
   cursor: pointer;
-}
-
-.flex-row-reverse {
-  flex-direction: row-reverse;
 }
 
 .flex-col {
@@ -1115,8 +1103,8 @@ video {
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
-.peer:focus ~ .peer-focus\:ring-foreground {
-  --tw-ring-color: hsl(var(--foreground));
+.peer:focus ~ .peer-focus\:ring-input {
+  --tw-ring-color: hsl(var(--input));
 }
 
 .peer:disabled ~ .peer-disabled\:text-muted {
