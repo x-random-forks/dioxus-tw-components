@@ -16,7 +16,6 @@ use dioxus_components_bin::composite::formlist::*;
 use dioxus_components_bin::composite::lightswitch::*;
 use dioxus_components_bin::composite::radiogroup::*;
 use dioxus_components_bin::composite::select::*;
-use InputType::*;
 
 const _STYLE: &str = manganis::mg!(file("public/tailwind.css"));
 
@@ -44,11 +43,6 @@ fn App() -> Element {
             // div { TestRadio {} }
             // div { TestIcon {} }
             div { TestInput {} }
-            // div { TestTextArea {}}
-            // div { TestToggle {} }
-            // div { TestLightSwitch {} }
-            // div { TestRadioGroup {} }
-            // div { TestDragDrop {} }
         }
     )
 }
@@ -142,24 +136,28 @@ fn TestInput() -> Element {
     rsx!(
         div { class: "flex gap-4",
             div { class: "",
-                Input { r#type: Text, name: "text", placeholder: "Text" }
-                Input { r#type: Text, name: "text", placeholder: "Text", disabled: true }
+                div { class: "flex",
+                    Label{r#for:"text1", "Text" }
+                    div { class: "inline-flex items-center bg-input p-1", Label{ r#for:"text1", "Name"} }
+                    Input { r#type: "text", name: "text1", id:"text1", placeholder: "Text" }
+                }
+                Input { r#type: "text", name: "text", placeholder: "Text", disabled: true }
             }
             div { class: "",
-                Input { r#type: Email, name: "email", placeholder: "Email" }
-                Input { r#type: Email, name: "email", placeholder: "Email", disabled: true }
+                Input { r#type: "email", name: "email", placeholder: "Email" }
+                Input { r#type: "email", name: "email", placeholder: "Email", disabled: true }
             }
             div { class: "",
-                Input { r#type: Number, name: "number", placeholder: "Number" }
-                Input { r#type: Number, name: "number", placeholder: "Number", disabled: true }
+                Input { r#type: "number", name: "number", placeholder: "Number" }
+                Input { r#type: "number", name: "number", placeholder: "Number", disabled: true }
             }
             div { class: "",
-                Input { r#type: Date, name: "date", placeholder: "Date" }
-                Input { r#type: Date, name: "date", placeholder: "Date", disabled: true }
+                Input { r#type: "date", name: "date", placeholder: "Date" }
+                Input { r#type: "date", name: "date", placeholder: "Date", disabled: true }
             }
             div { class: "",
-                Input { r#type: File, name: "date", placeholder: "File" }
-                Input { r#type: File, name: "date", placeholder: "File", disabled: true }
+                Input { r#type: "file", name: "date", placeholder: "File" }
+                Input { r#type: "file", name: "date", placeholder: "File", disabled: true }
             }
         }
     )
@@ -224,19 +222,19 @@ fn TestForm() -> Element {
                 }
                 div { class: "flex flex-col",
                     Label { r#for: "username", "Your username" }
-                    Input { r#type: Text, name: "username", placeholder: "username" }
+                    Input { r#type: "text", name: "username", placeholder: "username" }
                 }
                 div {
                     Label { r#for: "email", "Your email" }
-                    Input { r#type: Email, name: "email", placeholder: "email" }
+                    Input { r#type: "email", name: "email", placeholder: "email" }
                 }
                 div {
                     Label { r#for: "age", "Your age" }
-                    Input { r#type: Number, name: "age", placeholder: "age", min: 18, max: 100 }
+                    Input { r#type: "number", name: "age", placeholder: "age", min: 18, max: 100 }
                 }
                 div {
                     Label { r#for: "date", "Your Piscine date" }
-                    Input { r#type: Date, name: "date", placeholder: "Piscine date" }
+                    Input { r#type: "date", name: "date", placeholder: "Piscine date" }
                 }
                 div {
                     Label { r#for: "message", "Send us a message" }
@@ -390,7 +388,7 @@ fn TestListForm() -> Element {
                 }
             }
             Label { r#for: "name-animal-{i}", "Type animal name" }
-            Input { r#type: Text, name: "name-animal-{i}", placeholder: "Animal name" }
+            Input { r#type: "text", name: "name-animal-{i}", placeholder: "Animal name" }
         ));
     }
 
@@ -521,7 +519,6 @@ fn TestDragDrop() -> Element {
             div { draggable: true, class: "{class}", "JULIEN" }
             div { draggable: true, class: "{class}", "JEANNE" }
             div { draggable: true, class: "{class}", "MATHIEU" }
-
         }
     )
 }

@@ -7,13 +7,15 @@ pub struct InputProps {
     #[props(optional)]
     oninput: EventHandler<FormEvent>,
     #[props(default)]
-    r#type: InputType,
+    r#type: String,
     // Name of input field, associate with its value when sending the associated form
     #[props(default)]
     name: String,
     // Initial value of the field
     #[props(default)]
     value: String,
+    #[props(default)]
+    id: String,
     // Min length of value(String) attribute (only for text, email)
     #[props(default = 0)]
     minlength: u32,
@@ -69,28 +71,5 @@ impl Component for InputProps {
                 oninput: move |event| self.oninput.call(event)
             }
         }
-    }
-}
-
-#[derive(Default, PartialEq, Clone)]
-pub enum InputType {
-    #[default]
-    Text,
-    Number,
-    Email,
-    Date,
-    File,
-}
-
-impl std::fmt::Display for InputType {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let size = match self {
-            InputType::Text => "text",
-            InputType::Number => "number",
-            InputType::Email => "email",
-            InputType::Date => "date",
-            InputType::File => "file",
-        };
-        write!(f, "{}", size)
     }
 }
