@@ -27,7 +27,7 @@ impl Component for CheckboxProps {
     fn view(self) -> Element {
         let class = class!(BaseClass::<CheckboxProps>::Default, self.color);
         rsx!(
-            div { class: "",
+            label { class: "cursor-pointer gap-x-1 flex items-center",
                 input {
                     name: "{self.name}",
                     value: "{self.value}",
@@ -38,7 +38,7 @@ impl Component for CheckboxProps {
                     class: "{class}",
                     oninput: move |e| self.oninput.call(e)
                 }
-                label { class: "disabled:font-xl", r#for: "{self.value}", {self.children} }
+                div { class: "peer-disabled:opacity-30", {self.children} }
             }
         )
     }

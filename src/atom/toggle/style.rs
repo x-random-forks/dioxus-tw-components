@@ -1,6 +1,8 @@
 use super::ToggleProps;
 use crate::styling::{BaseClass, Color, Size};
 
+// TODO Styling for disabled state
+
 impl std::fmt::Display for BaseClass<ToggleProps> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let class = match self {

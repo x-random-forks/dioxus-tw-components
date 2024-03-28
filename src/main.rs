@@ -6,6 +6,8 @@ use dioxus::prelude::*;
 use dioxus_components_bin::atom::button::*;
 use dioxus_components_bin::atom::checkbox::*;
 use dioxus_components_bin::atom::formrange::*;
+use dioxus_components_bin::atom::icon::style::IconSvg;
+use dioxus_components_bin::atom::icon::*;
 use dioxus_components_bin::atom::input::*;
 use dioxus_components_bin::atom::label::*;
 use dioxus_components_bin::atom::textarea::*;
@@ -32,18 +34,25 @@ fn main() {
 fn App() -> Element {
     use_context_provider(|| Signal::new(LightSwitchSignal("".to_string())));
 
-    let dark_mode_context = consume_context::<Signal<LightSwitchSignal>>();
-    let dark = &dark_mode_context.read().0;
+    let light_switch_context = use_context::<Signal<LightSwitchSignal>>();
+    let dark = &light_switch_context.read().0;
     rsx!(
         body { class: "{dark} bg-background",
-            div {
-                LightSwitch {}
-            }
-            div { TestForm {} }
+            div { LightSwitch {} }
+            // div { TestCheckbox {} }
+            // div { TestFormRange{}}
+            // div { TestRadio {} }
+            // div { TestIcon {} }
+            // div { TestInput {} }
+            // div { TestTextArea {}}
+            // div { TestToggle {} }
+            // div { TestLightSwitch {} }
+            div { TestRadioGroup {} }
         }
     )
 }
 
+// Atoms
 fn TestButton() -> Element {
     let keyboard_closure = move |event: FormEvent| log::debug!("{}", event.value());
     rsx!(
@@ -70,15 +79,121 @@ fn TestButton() -> Element {
     )
 }
 
-fn TestForm() -> Element {
+fn TestCheckbox() -> Element {
     rsx!(
-        div { class: "flex gap-4",
-            div { class: "", TestRadio {} }
+        div { class: "flex gap-2",
+            div { class: "",
+                Checkbox { name: "checkbox", value: "checkbox", color: Primary, "Primary" }
+            }
+            div { class: "",
+                Checkbox { name: "checkbox", value: "checkbox", color: Secondary, "Secondary" }
+            }
+            div { class: "",
+                Checkbox { name: "checkbox", value: "checkbox", color: Accent, "Accent" }
+            }
+            // div { class: "",
+            //     Checkbox { name: "checkbox", value: "checkbox", color: Accent, "Accent" }
+            // }
+            div { class: "",
+                Checkbox {
+                    name: "checkbox",
+                    value: "checkbox",
+                    color: Primary,
+                    checked: true,
+                    disabled: true,
+                    "Checkbox"
+                }
+            }
+            div { class: "",
+                Checkbox { name: "checkbox", value: "checkbox", color: Accent, disabled: true, "Checkbox" }
+            }
         }
     )
 }
 
-fn TestRadio() -> Element {
+fn TestFormRange() -> Element {
+    rsx!(
+        div { class: "flex",
+            div { class: "",
+                FormRange { name: "range", min: 0, max: 100, step: 1 }
+                FormRange { name: "range", min: 0, max: 100, step: 1, disabled: true }
+            }
+        }
+    )
+}
+
+fn TestIcon() -> Element {
+    rsx!(
+        div { class: "flex gap-4",
+            // TODO
+            // div { class: "size-8", Icon { svg: IconSvg::CircleInnerCircle, color: Default } }
+            div { class: "size-8", Icon { svg: IconSvg::CircleInnerCircle, color: Primary } }
+            div { class: "size-8", Icon { svg: IconSvg::CircleInnerCircle, color: Secondary } }
+            div { class: "size-8", Icon { svg: IconSvg::CircleInnerCircle, color: Accent } }
+            div { class: "size-8", Icon { svg: IconSvg::HollowCircle, color: Primary } }
+            div { class: "size-8", Icon { svg: IconSvg::HollowCircle, color: Secondary } }
+            div { class: "size-8", Icon { svg: IconSvg::HollowCircle, color: Accent } }
+        }
+    )
+}
+
+fn TestInput() -> Element {
+    rsx!(
+        div { class: "flex gap-4",
+            div { class: "",
+                Input { r#type: Text, name: "text", placeholder: "Text" }
+                Input { r#type: Text, name: "text", placeholder: "Text", disabled: true }
+            }
+            div { class: "",
+                Input { r#type: Email, name: "email", placeholder: "Email" }
+                Input { r#type: Email, name: "email", placeholder: "Email", disabled: true }
+            }
+            div { class: "",
+                Input { r#type: Number, name: "number", placeholder: "Number" }
+                Input { r#type: Number, name: "number", placeholder: "Number", disabled: true }
+            }
+            div { class: "",
+                Input { r#type: Date, name: "date", placeholder: "Date" }
+                Input { r#type: Date, name: "date", placeholder: "Date", disabled: true }
+            }
+        }
+    )
+}
+
+fn TestTextArea() -> Element {
+    rsx!(
+        div { class: "flex gap-4",
+            div { class: "",
+                TextArea { name: "textarea", placeholder: "TextArea" }
+                TextArea { name: "textarea", placeholder: "TextArea", disabled: true }
+            }
+        }
+    )
+}
+
+fn TestToggle() -> Element {
+    rsx!(
+        div { class: "flex gap-4",
+            div { class: "",
+                Toggle { name: "toggle", value: "toggle", checked: true, color: Primary, "Primary" }
+                Toggle { name: "toggle", value: "toggle", checked: true, color: Secondary, "Secondary" }
+                Toggle { name: "toggle", value: "toggle", checked: true, color: Accent, "Accent" }
+                Toggle {
+                    name: "toggle",
+                    value: "toggle",
+                    checked: true,
+                    color: Primary,
+                    disabled: true,
+                    "Disabled"
+                }
+                Toggle { name: "toggle", value: "toggle", checked: true, color: Primary, size: Sm, "Sm" }
+                Toggle { name: "toggle", value: "toggle", checked: true, color: Primary, size: Lg, "Lg" }
+            }
+        }
+    )
+}
+
+fn TestForm() -> Element {
     let mut values = use_signal(HashMap::new);
     rsx!(
         div {
@@ -198,6 +313,8 @@ fn TestRadio() -> Element {
     )
 }
 
+// Composites
+
 fn TestListForm() -> Element {
     let mut values = use_signal(HashMap::new);
     // let input1 = rsx!(
@@ -286,6 +403,47 @@ fn TestListForm() -> Element {
                     },
                     FormList { group_vec: group }
                     Button { r#type: "submit", "Submit" }
+                }
+            }
+        }
+    )
+}
+
+fn TestLightSwitch() -> Element {
+    rsx!(
+        div { class: "flex gap-4",
+            div { class: "", LightSwitch {} }
+        }
+    )
+}
+
+fn TestRadioGroup() -> Element {
+    rsx!(
+        RadioGroup { name: "gender", default_value: "male",
+            Label { r#for: "gender", "Choose birth gender" }
+            RadioItem { value: "male", name: "gender", required: true, "Male" }
+            RadioItem { value: "female", name: "gender", "Female" }
+            RadioItem { value: "other", name: "gender", "Other" }
+            RadioItem { value: "disabled", name: "gender", disabled: true, "Disabled" }
+        }
+    )
+}
+
+fn TestSelect() -> Element {
+    rsx!(
+        div { class: "flex w-96 gap-4",
+            SelectGroup { name: "animal",
+                SelectPlaceholder { "Select an animal" }
+                SelectLabel { label: "Domestic",
+                    SelectItem { value: "dog", "Dog" }
+                    SelectItem { value: "cat", "Cat" }
+                    SelectItem { value: "hamster", "Hamster" }
+                    SelectItem { value: "none", disabled: true, "None" }
+                }
+                SelectLabel { label: "Wild", disabled: true,
+                    SelectItem { value: "lion", "Lion" }
+                    SelectItem { value: "tiger", "Tiger" }
+                    SelectItem { value: "bear", "Bear" }
                 }
             }
         }

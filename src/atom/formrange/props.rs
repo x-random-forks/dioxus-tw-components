@@ -4,10 +4,10 @@ use component_derive::Component;
 
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct FormRangeProps {
-    #[props(optional)]
-    oninput: EventHandler<FormEvent>,
     // Name corresponds to the key with its corresponding value that will be sent in the request eg name:value
     name: String,
+    #[props(default = 50)]
+    value: i32,
     #[props(default = 0)]
     min: i32,
     #[props(default = 100)]
@@ -15,12 +15,14 @@ pub struct FormRangeProps {
     // Step when changing the value of the Range
     #[props(default = 1)]
     step: i32,
-    // TODO Description
+    #[props(default = false)]
+    disabled: bool,
+    #[props(optional)]
+    oninput: EventHandler<FormEvent>,
+    // TODO implemant <datalist>
     #[props(default = "".to_string())]
     list: String,
-    #[props(default = 50)]
-    default_value: i32,
-    // Styling
+    // Styling TODO
 }
 
 impl Component for FormRangeProps {
@@ -33,7 +35,8 @@ impl Component for FormRangeProps {
                 min: "{self.min}",
                 max: "{self.max}",
                 step: "{self.step}",
-                value: "{self.default_value}",
+                value: "{self.value}",
+                disabled: "{self.disabled}",
                 list: "{self.list}",
                 class: "{class}",
                 oninput: move |e| self.oninput.call(e)

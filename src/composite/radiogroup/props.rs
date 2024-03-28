@@ -44,9 +44,9 @@ pub struct RadioItemProps {
     #[props(default = false)]
     disabled: bool,
     // Callback when the RadioItem is checked
+    children: Element,
     #[props(optional)]
     oninput: EventHandler<FormEvent>,
-    children: Element,
     // Styling
     #[props(default)]
     color: Color,
@@ -92,11 +92,11 @@ impl Component for RadioItemProps {
                             parent_context.set(RadioGroupSignal(self.value.clone()));
                             self.oninput.call(e);
                         },
-                        class: "hidden"
+                        class: "hidden peer"
                     }
                     div { class: "size-4", Icon { svg: svg, color: self.color } }
                     // TODO Move this into another comp
-                    div { class: "{text_color} font-medium", {self.children} }
+                    div { class: "{text_color} font-medium peer-disabled:opacity-50", {self.children} }
                 }
             }
         )

@@ -33,7 +33,7 @@ impl Component for ToggleProps {
         let class = class!(BaseClass::<ToggleProps>::Default, self.color, self.size);
         rsx!(
             // Label that wraps the input and the toggle switch so the user can click on the switch or the children to interact with the input
-            label { class: "flex items-center cursor-pointer gap-x-2",
+            label { class: "peer flex items-center cursor-pointer gap-x-2",
                 input {
                     name: "{self.name}",
                     value: "{self.value}",
@@ -47,7 +47,7 @@ impl Component for ToggleProps {
                 }
                 // Div that renders the toggle switch
                 div { class: "{class}" }
-                {self.children}
+                div { class: "peer-disabled:opacity-40", {self.children} }
             }
         )
     }
