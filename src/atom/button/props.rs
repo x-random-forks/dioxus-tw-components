@@ -37,7 +37,12 @@ impl Component for ButtonProps {
             class = class!(class, self.color);
         }
         rsx!(
-            button { class: "{class}", onclick: move |e| { self.onclick.call(e) }, {self.children} }
+            button {
+                r#type: "{self.r#type}",
+                class: "{class}",
+                onclick: move |e| { self.onclick.call(e) },
+                {self.children}
+            }
         )
     }
 }

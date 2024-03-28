@@ -1,6 +1,7 @@
 #![allow(non_snake_case)]
 
 use std::collections::HashMap;
+use std::vec;
 
 use dioxus::prelude::*;
 use dioxus_components_bin::atom::button::*;
@@ -10,6 +11,7 @@ use dioxus_components_bin::atom::input::*;
 use dioxus_components_bin::atom::label::*;
 use dioxus_components_bin::atom::textarea::*;
 use dioxus_components_bin::atom::toggle::*;
+use dioxus_components_bin::composite::formlist::*;
 use dioxus_components_bin::composite::radiogroup::*;
 use dioxus_components_bin::composite::select::*;
 use InputType::*;
@@ -80,8 +82,7 @@ fn TestButton() -> Element {
 
 fn TestForm() -> Element {
     rsx!(
-        div { class: "",
-            "TestForm"
+        div { class: "flex gap-4",
             div { class: "", TestRadio {} }
         }
     )
@@ -91,6 +92,7 @@ fn TestRadio() -> Element {
     let mut values = use_signal(HashMap::new);
     rsx!(
         div {
+            "Test"
             form {
                 class: "border border-black w-96",
                 method: "POST",
@@ -98,8 +100,6 @@ fn TestRadio() -> Element {
                 onsubmit: move |event| {
                     log::debug!("Form values {:#?}", values());
                     log::debug!("Valid :{}", event.valid());
-                    let test = &event.values()["username"].as_value();
-                    log::debug!("{:?}", test);
                     values.set(event.values());
                 },
                 // oninput: move |event| {
@@ -156,7 +156,9 @@ fn TestRadio() -> Element {
                     Checkbox { name: "activities", value: "writing", "Writing" }
                     Checkbox { name: "activities", value: "swimming", "Swimming" }
                     Checkbox { name: "activities", value: "football", "Football" }
-                    Checkbox { name: "activities", value: "none", disabled: true, "None" }
+                    Checkbox { name: "activities", value: "none", disabled: true,
+                        Label { "None" }
+                    }
                 }
                 div {
                     Label { r#for: "rate", "Rate us" }
@@ -203,5 +205,99 @@ fn TestRadio() -> Element {
             }
         }
         div { "Values: {values:#?}" }
+    )
+}
+
+fn TestListForm() -> Element {
+    let mut values = use_signal(HashMap::new);
+    // let input1 = rsx!(
+    //     SelectGroup { name: "animal",
+    //         SelectPlaceholder { "Select an animal" }
+    //         SelectLabel { label: "Domestic",
+    //             SelectItem { value: "dog", "Dog" }
+    //             SelectItem { value: "cat", "Cat" }
+    //             SelectItem { value: "hamster", "Hamster" }
+    //             SelectItem { value: "none", disabled: true, "None" }
+    //         }
+    //         SelectLabel { label: "Wild", disabled: true,
+    //             SelectItem { value: "lion", "Lion" }
+    //             SelectItem { value: "tiger", "Tiger" }
+    //             SelectItem { value: "bear", "Bear" }
+    //         }
+    //     }
+    //     SelectGroup { name: "number-animal",
+    //         SelectPlaceholder { "Select number of animals" }
+    //         SelectLabel { label: "1-10",
+    //             SelectItem { value: "1", "1" }
+    //             SelectItem { value: "2", "2" }
+    //             SelectItem { value: "3", "3" }
+    //             SelectItem { value: "4", "4" }
+    //             SelectItem { value: "5", "5" }
+    //             SelectItem { value: "6", "6" }
+    //             SelectItem { value: "7", "7" }
+    //             SelectItem { value: "8", "8" }
+    //             SelectItem { value: "9", "9" }
+    //             SelectItem { value: "10", "10" }
+    //         }
+    //     }
+    //     Label { r#for: "name-animal", "Type animal name" }
+    //     Input { r#type: Text, name: "name-animal", placeholder: "Animal name" }
+    // );
+
+    // TODO Should do this in a Macro
+    let mut group = Vec::<Element>::new();
+    for i in 0..5 {
+        group.push(rsx!(
+            SelectGroup { name: "animal-{i}",
+                SelectPlaceholder { "Select an animal" }
+                SelectLabel { label: "Domestic",
+                    SelectItem { value: "dog", "Dog" }
+                    SelectItem { value: "cat", "Cat" }
+                    SelectItem { value: "hamster", "Hamster" }
+                    SelectItem { value: "none", disabled: true, "None" }
+                }
+                SelectLabel { label: "Wild", disabled: true,
+                    SelectItem { value: "lion", "Lion" }
+                    SelectItem { value: "tiger", "Tiger" }
+                    SelectItem { value: "bear", "Bear" }
+                }
+            }
+            SelectGroup { name: "number-animal-{i}",
+                SelectPlaceholder { "Select number of animals" }
+                SelectLabel { label: "1-10",
+                    SelectItem { value: "1", "1" }
+                    SelectItem { value: "2", "2" }
+                    SelectItem { value: "3", "3" }
+                    SelectItem { value: "4", "4" }
+                    SelectItem { value: "5", "5" }
+                    SelectItem { value: "6", "6" }
+                    SelectItem { value: "7", "7" }
+                    SelectItem { value: "8", "8" }
+                    SelectItem { value: "9", "9" }
+                    SelectItem { value: "10", "10" }
+                }
+            }
+            Label { r#for: "name-animal-{i}", "Type animal name" }
+            Input { r#type: Text, name: "name-animal-{i}", placeholder: "Animal name" }
+        ));
+    }
+
+    rsx!(
+        div {
+            "TestListForm"
+            div { class: "border border-black w-96",
+                form {
+                    // method: "POST",
+                    id: "id-group",
+                    onsubmit: move |event| {
+                        log::debug!("Form values {:#?}", values());
+                        log::debug!("Valid :{}", event.valid());
+                        values.set(event.values());
+                    },
+                    FormList { group_vec: group }
+                    Button { r#type: "submit", "Submit" }
+                }
+            }
+        }
     )
 }

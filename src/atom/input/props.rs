@@ -36,11 +36,22 @@ pub struct InputProps {
     #[props(default = false)]
     readonly: bool,
     // Styling
+
+    // For Listing, this overrides the default base class
+    // Temporary
+    #[props(default)]
+    groupclass: String,
 }
 
 impl Component for InputProps {
     fn view(self) -> Element {
-        let class = class![BaseClass::<InputProps>::Default];
+        // TODO
+        let class;
+        if self.groupclass.is_empty() {
+            class = class![BaseClass::<InputProps>::Default];
+        } else {
+            class = class![self.groupclass];
+        }
         rsx! {
             input {
                 r#type: "{self.r#type}",
