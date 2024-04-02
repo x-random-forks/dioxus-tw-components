@@ -37,6 +37,7 @@ impl Component for ButtonProps {
     fn view(self) -> Element {
         let mut class = class!(BaseClass::<ButtonProps>::BaseClass, self.size, self.class);
 
+        // TODO Clean this, should be able to integrate it with above statement
         // If variant is not default, use the variant class instead of color
         if self.variant != ButtonVariant::default() {
             class = class!(class, self.variant);

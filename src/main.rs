@@ -18,6 +18,10 @@ use dioxus_components_bin::composite::lightswitch::*;
 use dioxus_components_bin::composite::radiogroup::*;
 use dioxus_components_bin::composite::select::*;
 
+use website::app::App;
+
+mod website;
+
 const _STYLE: &str = manganis::mg!(file("public/tailwind.css"));
 
 fn main() {
@@ -29,20 +33,6 @@ fn main() {
             .build(),
     );
     launch(App);
-}
-
-fn App() -> Element {
-    use_context_provider(|| Signal::new(LightSwitchSignal("".to_string())));
-
-    let light_switch_context = use_context::<Signal<LightSwitchSignal>>();
-    let dark = &light_switch_context.read().0;
-    rsx!(
-        body { class: "{dark} bg-background",
-            div { LightSwitch {} }
-            div { TestButton {} }
-            div { TestSeparator {} }
-        }
-    )
 }
 
 // Atoms

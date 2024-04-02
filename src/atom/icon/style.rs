@@ -2,6 +2,7 @@
 pub enum IconSvg {
     HollowCircle,
     CircleInnerCircle,
+    GitHub,
     // Add more icon types here
     // Example:
     // ArrowUp,
