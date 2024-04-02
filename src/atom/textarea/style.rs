@@ -7,11 +7,13 @@ impl std::fmt::Display for BaseClass<TextAreaProps> {
             BaseClass::BaseClass => {
                 "
                 flex w-full \
-                text-sm text-foreground \
-                bg-input focus:brightness-105 hover:brightness-105 \
                 px-3 py-2 \
+                text-sm text-foreground \
+                bg-background \
                 border border-input \
                 rounded-global-radius \
+                hover:brightness-105 \
+                focus:brightness-105 \
                 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:brightness-100"
             }
             _ => "",

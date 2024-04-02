@@ -10,6 +10,7 @@ use dioxus_components_bin::atom::icon::style::IconSvg;
 use dioxus_components_bin::atom::icon::*;
 use dioxus_components_bin::atom::input::*;
 use dioxus_components_bin::atom::label::*;
+use dioxus_components_bin::atom::separator::*;
 use dioxus_components_bin::atom::textarea::*;
 use dioxus_components_bin::atom::toggle::*;
 use dioxus_components_bin::composite::formlist::*;
@@ -38,12 +39,7 @@ fn App() -> Element {
     rsx!(
         body { class: "{dark} bg-background",
             div { LightSwitch {} }
-            div {TestButton {}}
-            // div { TestCheckbox {} }
-            // div { TestFormRange{}}
-            // div { TestRadio {} }
-            // div { TestIcon {} }
-            div { TestInput {} }
+            div { TestSeparator {} }
         }
     )
 }
@@ -167,6 +163,24 @@ fn TestTextArea() -> Element {
             div { class: "",
                 TextArea { name: "textarea", placeholder: "TextArea" }
                 TextArea { name: "textarea", placeholder: "TextArea", disabled: true }
+            }
+        }
+    )
+}
+
+fn TestSeparator() -> Element {
+    rsx!(
+        div {
+            div { class: "inline-block",
+                p { "Dioxus comp lib" }
+                Separator { class: "my-4" }
+                div { class: "flex h-5 items-center space-x-4 text-sm",
+                    div { "AAAAA" }
+                    Separator { vertical: true }
+                    div { "BBBBBBBBBBBBBBBBBBBBBBB" }
+                    Separator { vertical: true }
+                    div { "ZZ" }
+                }
             }
         }
     )

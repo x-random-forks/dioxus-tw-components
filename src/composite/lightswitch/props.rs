@@ -1,7 +1,7 @@
 use crate::*;
 use component_derive::Component;
 
-use crate::atom::button::Button;
+use crate::atom::button::*;
 
 pub struct LightSwitchSignal(pub String);
 
