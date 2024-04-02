@@ -27,7 +27,7 @@ pub struct FormRangeProps {
 
 impl Component for FormRangeProps {
     fn view(self) -> Element {
-        let class = class!(BaseClass::<FormRangeProps>::Default);
+        let class = class!(BaseClass::<FormRangeProps>::BaseClass);
         rsx!(
             input {
                 r#type: "range",

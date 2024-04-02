@@ -4,7 +4,7 @@ use component_derive::Component;
 
 pub use Color::{Accent, Primary, Secondary, Unset};
 pub use Size::{Lg, Md, Sm, Xl, Xs};
-pub use Variant::{Default, Ghost, Outline};
+pub use Variant::{DefaultVariant, Ghost, Outline};
 
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct ButtonProps {
@@ -32,10 +32,10 @@ pub struct ButtonProps {
 
 impl Component for ButtonProps {
     fn view(self) -> Element {
-        let mut class = class!(BaseClass::<ButtonProps>::Default, self.size, self.class);
+        let mut class = class!(BaseClass::<ButtonProps>::BaseClass, self.size, self.class);
 
         // If variant is not default, use the variant class instead of color
-        if self.variant != Variant::Default {
+        if self.variant != Variant::default() {
             class = class!(class, self.variant);
         } else {
             class = class!(class, self.color);

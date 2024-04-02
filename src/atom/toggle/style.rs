@@ -6,7 +6,7 @@ use crate::styling::{BaseClass, Color, Size};
 impl std::fmt::Display for BaseClass<ToggleProps> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let class = match self {
-            BaseClass::Default => "relative bg-input peer peer-focus:outline-none peer-focus:ring-2 rounded-full peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:bg-white after:border-gray-300 after:border after:rounded-full after:transition-all",
+            BaseClass::BaseClass => "relative bg-input peer peer-focus:outline-none peer-focus:ring-2 rounded-full peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:bg-white after:border-gray-300 after:border after:rounded-full after:transition-all",
             _ => "",
         };
         write!(f, "{}", class)

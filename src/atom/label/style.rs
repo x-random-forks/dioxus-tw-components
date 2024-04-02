@@ -4,7 +4,7 @@ use crate::styling::{BaseClass, Color};
 impl std::fmt::Display for BaseClass<LabelProps> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let class = match self {
-            BaseClass::Default => "font-medium",
+            BaseClass::BaseClass => "font-medium",
             _ => "",
         };
         write!(f, "{}", class)

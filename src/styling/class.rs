@@ -7,7 +7,7 @@ macro_rules! class {
 
 #[derive(PartialEq, Clone, Debug, Copy)]
 pub enum BaseClass<T = ()> {
-    Default,
+    BaseClass,
     _Phantom(std::marker::PhantomData<T>),
 }
 
@@ -65,7 +65,7 @@ impl std::fmt::Display for Size {
 #[derive(Default, PartialEq, Clone, Debug, Copy)]
 pub enum Variant<T = ()> {
     #[default]
-    Default,
+    DefaultVariant,
     Outline(Color),
     Ghost(Color),
     _Phantom(std::marker::PhantomData<T>),

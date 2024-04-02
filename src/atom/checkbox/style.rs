@@ -4,7 +4,7 @@ use crate::styling::{BaseClass, Color};
 impl std::fmt::Display for BaseClass<CheckboxProps> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let class = match self {
-            BaseClass::Default => "peer",
+            BaseClass::BaseClass => "peer",
             _ => "",
         };
         write!(f, "{}", class)

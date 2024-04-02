@@ -24,7 +24,7 @@
         /* Control global border radius */
         /* Can be px, em, rem, %, */
         /* Can also control each corner independently  */
-        --global-radius: 0px;
+        --global-radius: 0.5rem;
     }
 
     .dark {

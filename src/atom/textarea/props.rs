@@ -27,7 +27,7 @@ pub struct TextAreaProps {
 
 impl Component for TextAreaProps {
     fn view(self) -> Element {
-        let class = class![BaseClass::<TextAreaProps>::Default];
+        let class = class![BaseClass::<TextAreaProps>::BaseClass];
         rsx!(
             textarea {
                 name: "{self.name}",

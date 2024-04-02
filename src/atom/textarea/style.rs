@@ -4,7 +4,7 @@ use crate::styling::BaseClass;
 impl std::fmt::Display for BaseClass<TextAreaProps> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let class = match self {
-            BaseClass::Default => {
+            BaseClass::BaseClass => {
                 "
                 flex w-full \
                 text-sm text-foreground \

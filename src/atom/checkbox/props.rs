@@ -25,7 +25,7 @@ pub struct CheckboxProps {
 
 impl Component for CheckboxProps {
     fn view(self) -> Element {
-        let class = class!(BaseClass::<CheckboxProps>::Default, self.color);
+        let class = class!(BaseClass::<CheckboxProps>::BaseClass, self.color);
         rsx!(
             label { class: "cursor-pointer gap-x-1 flex items-center",
                 input {

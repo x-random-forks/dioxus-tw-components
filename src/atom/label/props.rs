@@ -19,7 +19,7 @@ pub struct LabelProps {
 
 impl Component for LabelProps {
     fn view(self) -> Element {
-        let class = class!(BaseClass::<LabelProps>::Default, self.color);
+        let class = class!(BaseClass::<LabelProps>::BaseClass, self.color);
         rsx!(
             label { class: "{class}", r#for: "{self.r#for}", { self.children } }
         )

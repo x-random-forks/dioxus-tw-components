@@ -30,7 +30,7 @@ pub struct ToggleProps {
 
 impl Component for ToggleProps {
     fn view(self) -> Element {
-        let class = class!(BaseClass::<ToggleProps>::Default, self.color, self.size);
+        let class = class!(BaseClass::<ToggleProps>::BaseClass, self.color, self.size);
         rsx!(
             // Label that wraps the input and the toggle switch so the user can click on the switch or the children to interact with the input
             label { class: "peer flex items-center cursor-pointer gap-x-2",

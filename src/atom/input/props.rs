@@ -50,7 +50,7 @@ impl Component for InputProps {
         // TODO
         let class;
         if self.groupclass.is_empty() {
-            class = class![BaseClass::<InputProps>::Default];
+            class = class![BaseClass::<InputProps>::BaseClass];
         } else {
             class = class![self.groupclass];
         }

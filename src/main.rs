@@ -38,6 +38,7 @@ fn App() -> Element {
     rsx!(
         body { class: "{dark} bg-background",
             div { LightSwitch {} }
+            div {TestButton {}}
             // div { TestCheckbox {} }
             // div { TestFormRange{}}
             // div { TestRadio {} }
@@ -134,13 +135,10 @@ fn TestIcon() -> Element {
 
 fn TestInput() -> Element {
     rsx!(
+
         div { class: "flex gap-4",
             div { class: "",
-                div { class: "flex",
-                    Label{r#for:"text1", "Text" }
-                    div { class: "inline-flex items-center bg-input p-1", Label{ r#for:"text1", "Name"} }
-                    Input { r#type: "text", name: "text1", id:"text1", placeholder: "Text" }
-                }
+                div { class: "flex", Input { r#type: "text", name: "text1", id: "text1", placeholder: "Text" } }
                 Input { r#type: "text", name: "text", placeholder: "Text", disabled: true }
             }
             div { class: "",

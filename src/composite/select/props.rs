@@ -19,7 +19,7 @@ pub struct SelectGroupProps {
 
 impl Component for SelectGroupProps {
     fn view(self) -> Element {
-        let class = class!(BaseClass::<SelectGroupProps>::Default);
+        let class = class!(BaseClass::<SelectGroupProps>::BaseClass);
         rsx!(
             select {
                 name: "{self.name}",
@@ -42,7 +42,7 @@ pub struct SelectPlaceholderProps {
 
 impl Component for SelectPlaceholderProps {
     fn view(self) -> Element {
-        let class = class!(BaseClass::<SelectPlaceholderProps>::Default);
+        let class = class!(BaseClass::<SelectPlaceholderProps>::BaseClass);
         rsx!(
             option { disabled: true, selected: true, value: "", class: "{class}", {self.children} }
         )
@@ -62,7 +62,7 @@ pub struct SelectLabelProps {
 
 impl Component for SelectLabelProps {
     fn view(self) -> Element {
-        let class = class!(BaseClass::<SelectLabelProps>::Default);
+        let class = class!(BaseClass::<SelectLabelProps>::BaseClass);
         rsx!(
             optgroup {
                 label: "{self.label}",
@@ -90,7 +90,7 @@ pub struct SelectItemProps {
 
 impl Component for SelectItemProps {
     fn view(self) -> Element {
-        let class = class!(BaseClass::<SelectItemProps>::Default);
+        let class = class!(BaseClass::<SelectItemProps>::BaseClass);
         rsx!(
             option {
                 value: "{self.value}",

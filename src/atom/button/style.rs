@@ -4,12 +4,12 @@ use crate::styling::{BaseClass, Color, Size, Variant};
 impl std::fmt::Display for BaseClass<ButtonProps> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let class = match self {
-            BaseClass::Default => {
+            BaseClass::BaseClass => {
                 "text-center \
             text-base font-medium \
-            border border-1 \
             rounded-global-radius \
             shadow-global-shadow \
+            transition-colors \
             disabled:opacity-50 disabled:cursor-not-allowed"
             }
             _ => "",
@@ -34,15 +34,15 @@ impl std::fmt::Display for Variant<ButtonProps> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let size = match self {
             Variant::Outline(color) => match color {
-                Color::Primary => "border border-primary text-primary hover:bg-primary/10",
-                Color::Secondary => "border border-secondary text-secondary hover:bg-secondary/10",
-                Color::Accent => "border border-accent text-accent hover:bg-accent/10",
+                Color::Primary => "border border-primary text-primary hover:bg-primary/80 hover:text-primary-foreground",
+                Color::Secondary => "border border-secondary text-secondary hover:bg-secondary/80 hover:text-secondary-foreground",
+                Color::Accent => "border border-accent text-accent hover:bg-accent/80 hover:text-accent-foreground",
                 _ => "",
             },
             Variant::Ghost(color) => match color {
-                Color::Primary => "border-none text-primary hover:bg-primary/40",
-                Color::Secondary => "border-none text-secondary hover:bg-secondary/40",
-                Color::Accent => "border-none text-accent hover:bg-accent/40",
+                Color::Primary => "border-none text-primary hover:bg-primary/80 hover:text-primary-foreground",
+                Color::Secondary => "border-none text-secondary hover:bg-secondary/80 hover:text-secondary-foreground",
+                Color::Accent => "border-none text-accent hover:bg-accent/80 hover:text-accent-foreground",
                 _ => "",
             },
             _ => "",
