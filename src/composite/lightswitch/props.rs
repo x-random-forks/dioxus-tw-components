@@ -1,5 +1,6 @@
 use self::styling::Size;
-use crate::{atom::icon::*, *};
+use crate::{atom::icon::Icon, *};
+use atom::icon::style::IconSvg;
 use component_derive::Component;
 
 pub use Size::{Lg, Md, Sm, Xl, Xs};
@@ -10,8 +11,6 @@ pub struct LightSwitchSignal(pub String);
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct LightSwitchProps {
     // Styling
-    #[props(default = Size::Md)]
-    size: Size<LightSwitchProps>,
     #[props(default)]
     class: String,
 }
@@ -24,16 +23,17 @@ impl Component for LightSwitchProps {
             use_light_switch(light_switch_context);
         };
 
-        let class = class!(self.size, self.class);
+        let icon = get_day_icon(light_switch_context);
 
-        let icon = if light_switch_context.read().0.is_empty() {
-            Sun
-        } else {
-            Moon
-        };
+        let class = class!(self.class);
 
         rsx!(
-            button { class: "{class}", onclick: lightswitch_closure, Icon { svg: icon } }
+            button {
+                r#type: "button",
+                class: "{class}",
+                onclick: lightswitch_closure,
+                Icon { svg: icon }
+            }
         )
     }
 }
@@ -86,4 +86,12 @@ pub fn use_user_pref_light() {
             light_switch_context.write().0 = "".to_string();
         }
     });
+}
+
+fn get_day_icon(light_switch_context: Signal<LightSwitchSignal>) -> IconSvg {
+    if light_switch_context.read().0.is_empty() {
+        IconSvg::Sun
+    } else {
+        IconSvg::Moon
+    }
 }

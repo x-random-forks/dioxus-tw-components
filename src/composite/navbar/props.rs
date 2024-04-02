@@ -19,7 +19,7 @@ impl Component for NavbarProps {
         let class = class!(BaseClass::<NavbarProps>::BaseClass, self.class);
 
         // TODO Move this ?
-        let left_part_class = "flex items-center";
+        let left_part_class = "flex space-x-2 items-center ml-6";
         let right_part_class = "flex flex-1 items-center justify-end space-x-2";
         rsx!(
             nav { class: "{class}",

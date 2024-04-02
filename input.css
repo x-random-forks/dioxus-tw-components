@@ -17,7 +17,7 @@
         --muted-foreground: 240 3.8% 46.1%;
         --border: 240 5.9% 90%;
         --input: 240 5.9% 90%;
-        --ring: 346.8 77.2% 49.8%;
+        --ring: 240 10% 3.9%;
         /* Control global shadow */
         /* See: https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow */
         --global-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.3);
@@ -39,12 +39,30 @@
         --accent-foreground: 0 0% 98%;
         --border: 240 3.7% 15.9%;
         --input: 240 3.7% 15.9%;
-        --ring: 346.8 77.2% 49.8%;
+        --ring: 240 10% 3.9%;
         --global-shadow: 0 0px 0px 0px rgba(255, 255, 255, 0.3);
       }
-
-      .box.over {
-        border: 3px dotted #666;
-      }
-
 }
+
+/* TODO */
+@layer utilities {
+    .scrollbar::-webkit-scrollbar {
+      width: 8px;
+    }
+  
+    .scrollbar::-webkit-scrollbar-track {
+        background: var(--primary);
+        /* Does not work */
+    }
+  
+    .scrollbar::-webkit-scrollbar-thumb {
+      background: #e0cbcb;
+      border-radius: 10px;
+      /* border: 3px solid #f6f7ed; */
+    }
+  
+    .scrollbar::-webkit-scrollbar-thumb:hover {
+      /* background: var(--color-primary); */
+      background: #000000;
+    }
+  }
