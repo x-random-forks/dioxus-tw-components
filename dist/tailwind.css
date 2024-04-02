@@ -618,6 +618,10 @@ video {
   display: flex;
 }
 
+.inline-flex {
+  display: inline-flex;
+}
+
 .grid {
   display: grid;
 }
@@ -650,6 +654,10 @@ video {
 
 .h-7 {
   height: 1.75rem;
+}
+
+.h-10 {
+  height: 2.5rem;
 }
 
 .w-11 {
@@ -969,10 +977,62 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.ring-offset-background {
+  --tw-ring-offset-color: hsl(var(--background));
+}
+
 .transition-colors {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+.file\:m-1::file-selector-button {
+  margin: 0.25rem;
+}
+
+.file\:h-full::file-selector-button {
+  height: 100%;
+}
+
+.file\:h-px::file-selector-button {
+  height: 1px;
+}
+
+.file\:cursor-pointer::file-selector-button {
+  cursor: pointer;
+}
+
+.file\:rounded-global-radius::file-selector-button {
+  border-radius: var(--global-radius);
+}
+
+.file\:border-0::file-selector-button {
+  border-width: 0px;
+}
+
+.file\:border-none::file-selector-button {
+  border-style: none;
+}
+
+.file\:bg-transparent::file-selector-button {
+  background-color: transparent;
+}
+
+.file\:bg-input::file-selector-button {
+  background-color: hsl(var(--input));
+}
+
+.file\:p-2::file-selector-button {
+  padding: 0.5rem;
+}
+
+.file\:p-1::file-selector-button {
+  padding: 0.25rem;
+}
+
+.file\:font-medium::file-selector-button {
+  font-weight: 500;
 }
 
 .after\:absolute::after {
@@ -1134,6 +1194,11 @@ video {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
+.focus\:outline-none:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
 .focus\:ring-2:focus {
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
@@ -1152,8 +1217,16 @@ video {
   --tw-ring-color: hsl(var(--secondary));
 }
 
+.focus\:ring-ring:focus {
+  --tw-ring-color: hsl(var(--ring));
+}
+
 .focus\:ring-offset-1:focus {
   --tw-ring-offset-width: 1px;
+}
+
+.focus\:ring-offset-2:focus {
+  --tw-ring-offset-width: 2px;
 }
 
 .focus\:brightness-105:focus {
