@@ -1,5 +1,5 @@
 use super::ButtonProps;
-use crate::styling::{BaseClass, Color, Size, Variant};
+use crate::styling::{BaseClass, Color, Size};
 
 impl std::fmt::Display for BaseClass<ButtonProps> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -10,6 +10,7 @@ impl std::fmt::Display for BaseClass<ButtonProps> {
             rounded-global-radius \
             shadow-global-shadow \
             transition-colors \
+            duration-100 \
             disabled:opacity-50 disabled:cursor-not-allowed"
             }
             _ => "",
@@ -30,27 +31,6 @@ impl std::fmt::Display for Color<ButtonProps> {
     }
 }
 
-impl std::fmt::Display for Variant<ButtonProps> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let size = match self {
-            Variant::Outline(color) => match color {
-                Color::Primary => "border border-primary text-primary hover:bg-primary/80 hover:text-primary-foreground",
-                Color::Secondary => "border border-secondary text-secondary hover:bg-secondary/80 hover:text-secondary-foreground",
-                Color::Accent => "border border-accent text-accent hover:bg-accent/80 hover:text-accent-foreground",
-                _ => "",
-            },
-            Variant::Ghost(color) => match color {
-                Color::Primary => "border-none text-primary hover:bg-primary/80 hover:text-primary-foreground",
-                Color::Secondary => "border-none text-secondary hover:bg-secondary/80 hover:text-secondary-foreground",
-                Color::Accent => "border-none text-accent hover:bg-accent/80 hover:text-accent-foreground",
-                _ => "",
-            },
-            _ => "",
-        };
-        write!(f, "{}", size)
-    }
-}
-
 impl std::fmt::Display for Size<ButtonProps> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let size = match self {
@@ -60,6 +40,35 @@ impl std::fmt::Display for Size<ButtonProps> {
             Size::Xl => "px-8 py-4 text-xl",
             Size::Xs => "px-2.5 py-1.5 text-xs",
             _ => panic!("Never construct a Phantom"),
+        };
+        write!(f, "{}", size)
+    }
+}
+
+#[derive(Default, PartialEq, Clone)]
+pub enum ButtonVariant {
+    #[default]
+    DefaultVariant,
+    Ghost(Color),
+    Outline(Color),
+}
+
+impl std::fmt::Display for ButtonVariant {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let size = match self {
+            ButtonVariant::Outline(color) => match color {
+                Color::Primary => "border border-primary text-primary hover:bg-primary/80 hover:text-primary-foreground",
+                Color::Secondary => "border border-secondary text-secondary hover:bg-secondary/80 hover:text-secondary-foreground",
+                Color::Accent => "border border-accent text-accent hover:bg-accent/80 hover:text-accent-foreground",
+                _ => "",
+            },
+            ButtonVariant::Ghost(color) => match color {
+                Color::Primary => "border-none text-primary hover:bg-primary/80 hover:text-primary-foreground",
+                Color::Secondary => "border-none text-secondary hover:bg-secondary/80 hover:text-secondary-foreground",
+                Color::Accent => "border-none text-accent hover:bg-accent/80 hover:text-accent-foreground",
+                _ => "",
+            },
+            _ => "",
         };
         write!(f, "{}", size)
     }

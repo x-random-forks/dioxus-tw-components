@@ -18,14 +18,14 @@ pub struct IconProps {
 impl Component for IconProps {
     fn view(self) -> Element {
         let fill_color = match self.color {
-            Color::Default => "fill-foreground",
+            Color::DefaultColor => "fill-foreground",
             Color::Primary => "fill-primary",
             Color::Secondary => "fill-secondary",
             Color::Accent => "fill-accent",
             _ => "fill-none",
         };
         let stroke_color = match self.color {
-            Color::Default => "stroke-foreground",
+            Color::DefaultColor => "stroke-foreground",
             Color::Primary => "stroke-primary",
             Color::Secondary => "stroke-secondary",
             Color::Accent => "stroke-accent",

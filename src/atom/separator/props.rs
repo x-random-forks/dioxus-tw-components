@@ -13,11 +13,9 @@ pub struct SeparatorProps {
 
 impl Component for SeparatorProps {
     fn view(self) -> Element {
-        let orientation_class = get_orientation_class(self.vertical);
-
         let class = class!(
             BaseClass::<SeparatorProps>::BaseClass,
-            orientation_class,
+            get_orientation_class(self.vertical),
             self.class
         );
         rsx!( div { class: "{class}" } )

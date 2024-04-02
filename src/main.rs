@@ -39,6 +39,7 @@ fn App() -> Element {
     rsx!(
         body { class: "{dark} bg-background",
             div { LightSwitch {} }
+            div { TestButton {} }
             div { TestSeparator {} }
         }
     )

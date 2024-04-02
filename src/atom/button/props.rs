@@ -1,10 +1,12 @@
-use self::styling::{BaseClass, Color, Size, Variant};
+use self::styling::{BaseClass, Color, Size};
 use crate::*;
 use component_derive::Component;
 
+pub use ButtonVariant::{DefaultVariant, Ghost, Outline};
 pub use Color::{Accent, Primary, Secondary, Unset};
 pub use Size::{Lg, Md, Sm, Xl, Xs};
-pub use Variant::{DefaultVariant, Ghost, Outline};
+
+use super::style::ButtonVariant;
 
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct ButtonProps {
@@ -25,7 +27,8 @@ pub struct ButtonProps {
     #[props(default = Color::Primary)]
     color: Color<ButtonProps>,
     #[props(default)]
-    variant: Variant<ButtonProps>,
+    variant: ButtonVariant,
+    // variant: Variant<ButtonProps>,
     #[props(default = Size::Md)]
     size: Size<ButtonProps>,
 }
@@ -35,7 +38,7 @@ impl Component for ButtonProps {
         let mut class = class!(BaseClass::<ButtonProps>::BaseClass, self.size, self.class);
 
         // If variant is not default, use the variant class instead of color
-        if self.variant != Variant::default() {
+        if self.variant != ButtonVariant::default() {
             class = class!(class, self.variant);
         } else {
             class = class!(class, self.color);

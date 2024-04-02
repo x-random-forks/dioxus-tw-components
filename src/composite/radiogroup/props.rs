@@ -71,7 +71,7 @@ impl Component for RadioItemProps {
 
         // TODO Will get rid of this when the last div is removed
         let text_color = match self.color {
-            Color::Default => "text-foreground",
+            Color::DefaultColor => "text-foreground",
             Color::Primary => "text-primary",
             Color::Secondary => "text-secondary",
             Color::Accent => "text-accent",

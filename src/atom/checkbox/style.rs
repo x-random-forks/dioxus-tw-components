@@ -21,7 +21,7 @@ impl std::fmt::Display for Color<CheckboxProps> {
             Color::Accent => {
                 "accent-accent focus:ring-accent-foreground focus:ring-2 focus:ring-offset-1"
             }
-            Color::Default | _ => "",
+            Color::DefaultColor | _ => "",
         };
         write!(f, "{}", size)
     }
