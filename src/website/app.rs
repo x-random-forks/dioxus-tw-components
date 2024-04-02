@@ -17,11 +17,15 @@ pub fn App() -> Element {
 
 pub fn WrapperNav() -> Element {
     let right_part = rsx!(
-        div { class: "size-6",
-            a { href: "https://github.com/42Angouleme/SSCCE_dioxus", target:"_blank", Icon { svg: GitHub } }
-        }
         div { class: "w-48", Input { r#type: "search", placeholder: "Search" } }
-        LightSwitch {}
+        div { class: "size-10 rounded-global-radius p-2 transition-colors hover:bg-foreground/30",
+            a {
+                href: "https://github.com/42Angouleme/SSCCE_dioxus",
+                target: "_blank",
+                Icon { svg: GitHub }
+            }
+        }
+        LightSwitch { class: "size-10 p-2 flex items-center justify-center rounded-global-radius transition-colors hover:bg-foreground/30" }
     );
     let left_part = rsx!("Dioxus Comp Lib");
     rsx!(

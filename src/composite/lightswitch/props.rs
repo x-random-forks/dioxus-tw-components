@@ -1,13 +1,20 @@
-use crate::*;
+use self::styling::Size;
+use crate::{atom::icon::*, *};
 use component_derive::Component;
 
-use crate::atom::button::*;
+pub use Size::{Lg, Md, Sm, Xl, Xs};
 
 pub struct LightSwitchSignal(pub String);
 
 // TODO Doc
 #[derive(PartialEq, Props, Clone, Component)]
-pub struct LightSwitchProps {}
+pub struct LightSwitchProps {
+    // Styling
+    #[props(default = Size::Md)]
+    size: Size<LightSwitchProps>,
+    #[props(default)]
+    class: String,
+}
 
 impl Component for LightSwitchProps {
     fn view(self) -> Element {
@@ -17,10 +24,16 @@ impl Component for LightSwitchProps {
             use_light_switch(light_switch_context);
         };
 
+        let class = class!(self.size, self.class);
+
+        let icon = if light_switch_context.read().0.is_empty() {
+            Sun
+        } else {
+            Moon
+        };
+
         rsx!(
-            div {
-                Button { onclick: lightswitch_closure, "LightSwitch" }
-            }
+            button { class: "{class}", onclick: lightswitch_closure, Icon { svg: icon } }
         )
     }
 }
