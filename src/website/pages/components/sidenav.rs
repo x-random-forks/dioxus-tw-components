@@ -27,7 +27,13 @@ pub fn SideNavComp() -> Element {
         })
         .collect::<Vec<Element>>();
 
-    let composite_names = ["lightswitch", "scrollable"];
+    let composite_names = [
+        "lightswitch",
+        "scrollable",
+        "select",
+        "radiogroup",
+        "dropdown",
+    ];
     let composites = composite_names
         .iter()
         .map(|name| {
@@ -41,16 +47,16 @@ pub fn SideNavComp() -> Element {
     // log::debug!("test: {}", test);
 
     rsx!(
-        aside { class: "flex fixed",
-            Scrollable { class: "w-48 bg-accent",
-                h4 { "ATOMS" }
+        aside { class: "flex",
+            Scrollable { class: "w-48 flex flex-col space-y-2 px-4",
+                h5 { class: "h5", "ATOMS" }
                 for atom in atoms {
-                    div { class: "", {atom} }
+                    div { class: "hover:underline", {atom} }
                 }
                 Separator {}
-                h4 { "COMPOSITES" }
+                h5 { class: "h5", "COMPOSITES" }
                 for composite in composites {
-                    div { {composite} }
+                    div { class: "hover:underline", {composite} }
                 }
             }
             div { class: "flex-1 p-10 text-2xl font-bold", Outlet::<Route> {} }

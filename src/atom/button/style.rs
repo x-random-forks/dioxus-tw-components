@@ -17,14 +17,18 @@ pub struct ButtonClass {
 pub enum ButtonVariant {
     #[tw(
         default,
-        class = "bg-primary text-primary-foreground hover:bg-primary/90"
+        class = "bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 active:shadow"
     )]
     Primary,
-    #[tw(class = "bg-secondary text-secondary-foreground hover:bg-secondary/90")]
+    #[tw(
+        class = "bg-secondary text-secondary-foreground hover:bg-secondary/90 active:bg-secondary/80 active:shadow"
+    )]
     Secondary,
-    #[tw(class = "border border-input bg-background hover:bg-accent hover:text-accent-foreground")]
+    #[tw(
+        class = "border border-input bg-background hover:bg-accent/80 hover:text-accent-foreground active:bg-accent active:shadow"
+    )]
     Outline,
-    #[tw(class = "border-none text-foreground hover:bg-accent")]
+    #[tw(class = "border-none text-foreground hover:bg-accent/80 active:bg-accent active:shadow")]
     Ghost,
 }
 

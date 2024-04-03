@@ -94,9 +94,11 @@ impl Component for RadioItemProps {
                         },
                         class: "hidden peer"
                     }
-                    div { class: "size-4", Icon { svg: svg, color: self.color } }
+                    div { class: "size-4 peer-disabled:cursor-not-allowed",
+                        Icon { svg: svg, color: self.color }
+                    }
                     // TODO Move this into another comp
-                    div { class: "{text_color} font-medium peer-disabled:opacity-50",
+                    div { class: "{text_color} font-medium peer-disabled:opacity-50 peer-disabled:cursor-not-allowed",
                         {self.children}
                     }
                 }

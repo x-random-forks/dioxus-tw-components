@@ -1,5 +1,14 @@
 mod scrollablepage;
 pub use scrollablepage::ScrollablePage;
 
-mod lightswitch;
-pub use lightswitch::LightSwitchPage;
+mod lightswitchpage;
+pub use lightswitchpage::LightSwitchPage;
+
+mod selectpage;
+pub use selectpage::SelectPage;
+
+mod radiogrouppage;
+pub use radiogrouppage::RadioGroupPage;
+
+mod dropdownpage;
+pub use dropdownpage::DropdownPage;

@@ -1,3 +1,4 @@
+pub mod dropdown;
 pub mod formlist;
 pub mod lightswitch;
 pub mod navbar;

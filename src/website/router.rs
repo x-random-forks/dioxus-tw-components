@@ -32,10 +32,16 @@ pub enum Route {
             TogglePage {},
             #[route("/component/atom/typography")]
             TypographyPage {},
+            #[route("/component/composite/dropdown")]
+            DropdownPage {},
             #[route("/component/composite/lightswitch")]
             LightSwitchPage {},
+            #[route("/component/composite/radiogroup")]
+            RadioGroupPage {},
             #[route("/component/composite/scrollable")]
             ScrollablePage {},
+            #[route("/component/composite/select")]
+            SelectPage {},
         #[end_layout]
     #[route("/..route")]
     NotFound {}

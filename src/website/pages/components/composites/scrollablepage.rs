@@ -6,10 +6,10 @@ pub fn ScrollablePage() -> Element {
         div { class: "h-screen flex flex-col gap-2",
             "SCROLLABLE PAGE"
             Scrollable { class: "h-64 w-64 bg-gray-200",
-                div { class: "h-64 w-full bg-gray-300", "SCROLLABLE CONTENT" }
-                div { class: "h-64 w-full bg-gray-300", "SCROLLABLE CONTENT" }
-                div { class: "h-64 w-full bg-gray-300", "SCROLLABLE CONTENT" }
-                div { class: "h-64 w-full bg-gray-300", "SCROLLABLE CONTENT" }
+                div { class: "h-64 w-full bg-gray-300 border border-black", "SCROLLABLE CONTENT" }
+                div { class: "h-64 w-full bg-gray-300 border border-black", "SCROLLABLE CONTENT" }
+                div { class: "h-64 w-full bg-gray-300 border border-black", "SCROLLABLE CONTENT" }
+                div { class: "h-64 w-full bg-gray-300 border border-black", "SCROLLABLE CONTENT" }
             }
         }
     )
