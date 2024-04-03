@@ -9,11 +9,13 @@ pub fn App() -> Element {
     let light_switch_context = use_context::<Signal<LightSwitchSignal>>();
     let dark = &light_switch_context.read().0;
     rsx!(
-        body { class: "{dark} bg-background text-foreground min-h-screen", Router::<Route> {} }
+        div { class: "{dark} bg-background text-foreground min-h-screen flex flex-col",
+            Router::<Route> {}
+        }
     )
 }
 
 #[component]
 pub fn HomePage() -> Element {
-    rsx!( div { class: "", "Hello, World!" } )
+    rsx!( section { class: "mx-auto flex flex-col items-center", div {"Hello, World!"} } )
 }

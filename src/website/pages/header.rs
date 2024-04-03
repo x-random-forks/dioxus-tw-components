@@ -23,10 +23,11 @@ pub fn Header() -> Element {
         Link { to: "/", div { class: "text-foreground font-bold", "Dioxus Lib Comp" } }
         Link { to: "/component/atom/button", "Component" }
     );
-    let header_class = "sticky w-full top-0 left-0 z-30 backdrop-filter backdrop-blur bg-background/80 overflow-y-hidden";
+
+    let header_class = "sticky w-full top-0 left-0 z-30 border-border border-b backdrop-filter backdrop-blur bg-background/80 overflow-y-hidden items-center justify-between";
 
     rsx!(
         header { class: "{header_class}", Navbar { left_part: left_part, right_part: right_part } }
-        main { class: "flex-1", Outlet::<Route> {} }
+        main { class: "flex-1", div { class: "relative container", Outlet::<Route> {} }}
     )
 }
