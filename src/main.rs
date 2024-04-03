@@ -3,7 +3,6 @@
 use std::collections::HashMap;
 
 use dioxus::prelude::*;
-use dioxus_components_bin::atom::button::*;
 use dioxus_components_bin::atom::checkbox::*;
 use dioxus_components_bin::atom::formrange::*;
 use dioxus_components_bin::atom::icon::style::IconSvg;
@@ -18,9 +17,8 @@ use dioxus_components_bin::composite::lightswitch::*;
 use dioxus_components_bin::composite::radiogroup::*;
 use dioxus_components_bin::composite::select::*;
 
-use website::app::App;
-
 mod website;
+use website::app::App;
 
 const _STYLE: &str = manganis::mg!(file("public/tailwind.css"));
 

@@ -467,7 +467,7 @@ video {
   /* Control global border radius */
   /* Can be px, em, rem, %, */
   /* Can also control each corner independently  */
-  --global-radius: 0.5rem;
+  --global-radius: 10px;
 }
 
 .dark {
@@ -484,6 +484,108 @@ video {
   --input: 240 3.7% 15.9%;
   --ring: 240 10% 3.9%;
   --global-shadow: 0 0px 0px 0px rgba(255, 255, 255, 0.3);
+}
+
+.h1 {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: 800;
+}
+
+@media (min-width: 768px) {
+  .h1 {
+    font-size: 3rem;
+    line-height: 1;
+  }
+}
+
+.h2 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 700;
+}
+
+@media (min-width: 768px) {
+  .h2 {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+}
+
+.h3 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .h3 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+}
+
+.h4 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .h4 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+}
+
+.h5 {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .h5 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
+.h6 {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .h6 {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+}
+
+.paragraph {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+}
+
+.span {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+}
+
+.anchor {
+  cursor: pointer;
+  color: hsl(var(--foreground) / 0.7);
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.anchor:hover {
+  color: hsl(var(--foreground));
 }
 
 *, ::before, ::after {
@@ -640,10 +742,6 @@ video {
   border-width: 0;
 }
 
-.static {
-  position: static;
-}
-
 .fixed {
   position: fixed;
 }
@@ -733,6 +831,10 @@ video {
   height: 1.5rem;
 }
 
+.h-64 {
+  height: 16rem;
+}
+
 .h-7 {
   height: 1.75rem;
 }
@@ -753,18 +855,6 @@ video {
   height: 100vh;
 }
 
-.h-3 {
-  height: 0.75rem;
-}
-
-.h-2 {
-  height: 0.5rem;
-}
-
-.h-64 {
-  height: 16rem;
-}
-
 .min-h-screen {
   min-height: 100vh;
 }
@@ -781,6 +871,10 @@ video {
   width: 12rem;
 }
 
+.w-64 {
+  width: 16rem;
+}
+
 .w-9 {
   width: 2.25rem;
 }
@@ -795,14 +889,6 @@ video {
 
 .w-full {
   width: 100%;
-}
-
-.w-8 {
-  width: 2rem;
-}
-
-.w-64 {
-  width: 16rem;
 }
 
 .max-w-screen-2xl {
@@ -877,6 +963,12 @@ video {
   --tw-space-x-reverse: 0;
   margin-right: calc(1rem * var(--tw-space-x-reverse));
   margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-y-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
 }
 
 .overflow-y-auto {
@@ -956,6 +1048,16 @@ video {
   background-color: hsl(var(--border));
 }
 
+.bg-gray-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
+.bg-gray-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+}
+
 .bg-input {
   background-color: hsl(var(--input));
 }
@@ -966,16 +1068,6 @@ video {
 
 .bg-secondary {
   background-color: hsl(var(--secondary));
-}
-
-.bg-gray-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
-}
-
-.bg-gray-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
 }
 
 .fill-accent {
@@ -1242,8 +1334,16 @@ video {
 
 /* TODO */
 
-.file\:rounded-global-radius::file-selector-button {
-  border-radius: var(--global-radius);
+.file\:items-center::file-selector-button {
+  align-items: center;
+}
+
+.file\:justify-center::file-selector-button {
+  justify-content: center;
+}
+
+.file\:rounded-sm::file-selector-button {
+  border-radius: 0.125rem;
 }
 
 .file\:border-0::file-selector-button {
@@ -1288,16 +1388,6 @@ video {
   top: 2px;
 }
 
-.after\:start-\[1px\]::after {
-  content: var(--tw-content);
-  inset-inline-start: 1px;
-}
-
-.after\:top-\[1px\]::after {
-  content: var(--tw-content);
-  top: 1px;
-}
-
 .after\:h-4::after {
   content: var(--tw-content);
   height: 1rem;
@@ -1313,16 +1403,6 @@ video {
   height: 1.5rem;
 }
 
-.after\:h-3::after {
-  content: var(--tw-content);
-  height: 0.75rem;
-}
-
-.after\:h-2::after {
-  content: var(--tw-content);
-  height: 0.5rem;
-}
-
 .after\:w-4::after {
   content: var(--tw-content);
   width: 1rem;
@@ -1336,11 +1416,6 @@ video {
 .after\:w-6::after {
   content: var(--tw-content);
   width: 1.5rem;
-}
-
-.after\:w-3::after {
-  content: var(--tw-content);
-  width: 0.75rem;
 }
 
 .after\:rounded-full::after {
@@ -1395,6 +1470,11 @@ video {
 
 .hover\:text-accent-foreground:hover {
   color: hsl(var(--accent-foreground));
+}
+
+.hover\:text-blue-700:hover {
+  --tw-text-opacity: 1;
+  color: rgb(29 78 216 / var(--tw-text-opacity));
 }
 
 .hover\:brightness-105:hover {

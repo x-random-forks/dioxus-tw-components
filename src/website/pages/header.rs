@@ -21,7 +21,7 @@ pub fn Header() -> Element {
 
     let left_part = rsx!(
         Link { to: "/", div { class: "text-foreground font-bold", "Dioxus Lib Comp" } }
-        Link { to: "/component/atom/button", "Component" }
+        Link { class: "anchor", to: "/component/atom/button", "Component" }
     );
 
     let header_class = "sticky w-full top-0 left-0 z-30 border-border border-b backdrop-filter backdrop-blur bg-background/80 overflow-y-hidden items-center justify-between";

@@ -24,3 +24,6 @@ pub use textareapage::TextAreaPage;
 
 mod togglepage;
 pub use togglepage::TogglePage;
+
+mod typography;
+pub use typography::TypographyPage;

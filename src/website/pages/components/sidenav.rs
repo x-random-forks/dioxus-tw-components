@@ -15,6 +15,7 @@ pub fn SideNavComp() -> Element {
         "separator",
         "textarea",
         "toggle",
+        "typography",
     ];
 
     let atoms = atom_names

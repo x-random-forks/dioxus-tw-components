@@ -1,24 +1,19 @@
-use super::LabelProps;
-use crate::styling::{BaseClass, Color};
+use tailwind_fuse::*;
 
-impl std::fmt::Display for BaseClass<LabelProps> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let class = match self {
-            BaseClass::BaseClass => "font-medium",
-            _ => "",
-        };
-        write!(f, "{}", class)
-    }
+#[derive(TwClass, Clone, Copy)]
+#[tw(class = r#"font-medium  peer-disabled:text-muted"#)]
+pub struct LabelClass {
+    pub color: LabelColor,
 }
 
-impl std::fmt::Display for Color<LabelProps> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let size = match self {
-            Color::Primary => "text-primary peer-disabled:text-muted",
-            Color::Secondary => "text-secondary peer-disabled:text-muted",
-            Color::Accent => "text-accent peer-disabled:text-muted",
-            _ => "text-foreground peer-disabled:text-muted",
-        };
-        write!(f, "{}", size)
-    }
+#[derive(TwVariant, PartialEq)]
+pub enum LabelColor {
+    #[tw(class = "text-primary")]
+    Primary,
+    #[tw(class = "text-secondary")]
+    Secondary,
+    #[tw(class = "text-accent-foreground")]
+    Accent,
+    #[tw(default, class = "text-foreground")]
+    Default,
 }

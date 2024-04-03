@@ -30,6 +30,8 @@ pub enum Route {
             TextAreaPage {},
             #[route("/component/atom/toggle")]
             TogglePage {},
+            #[route("/component/atom/typography")]
+            TypographyPage {},
             #[route("/component/composite/lightswitch")]
             LightSwitchPage {},
             #[route("/component/composite/scrollable")]

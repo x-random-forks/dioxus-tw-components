@@ -5,7 +5,7 @@ pub fn LightSwitchPage() -> Element {
     rsx!(
         div { class: "h-screen",
             "LIGHT SWITCH PAGE"
-            div { class: "", LightSwitch {class: "size-10"} }
+            div { class: "", LightSwitch { class: "size-10" } }
         }
     )
 }

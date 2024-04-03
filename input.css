@@ -24,7 +24,7 @@
         /* Control global border radius */
         /* Can be px, em, rem, %, */
         /* Can also control each corner independently  */
-        --global-radius: 0.5rem;
+        --global-radius: 10px;
     }
 
     .dark {
@@ -42,8 +42,44 @@
         --ring: 240 10% 3.9%;
         --global-shadow: 0 0px 0px 0px rgba(255, 255, 255, 0.3);
       }
-}
 
+      .h1 {
+        @apply text-4xl font-extrabold md:text-5xl;
+      }
+      
+      .h2 {
+        @apply text-3xl font-bold md:text-4xl;
+      }
+
+      .h3 {
+        @apply text-2xl font-semibold md:text-3xl;
+      }
+      
+      .h4 {
+        @apply text-xl font-semibold md:text-2xl;
+      }
+      
+      .h5 {
+        @apply text-lg font-semibold md:text-xl;
+      }
+      
+      .h6 {
+        @apply text-base font-semibold md:text-lg;
+      }
+
+      .paragraph {
+        @apply text-sm font-normal;
+      }
+
+      .span {
+        @apply text-sm font-normal;
+      }
+
+      .anchor {
+        @apply text-foreground/70 hover:text-foreground transition-colors cursor-pointer;
+      }
+    }
+    
 /* TODO */
 @layer utilities {
     .scrollbar::-webkit-scrollbar {
