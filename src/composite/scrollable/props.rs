@@ -1,6 +1,8 @@
-use self::styling::BaseClass;
-use crate::*;
+use super::style::*;
+use crate::Component;
 use component_derive::Component;
+use dioxus::prelude::*;
+use tailwind_fuse::*;
 
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct ScrollableProps {
@@ -12,7 +14,7 @@ pub struct ScrollableProps {
 
 impl Component for ScrollableProps {
     fn view(self) -> Element {
-        let class = class!(BaseClass::<ScrollableProps>::BaseClass, self.class);
+        let class = ScrollableClass::builder().with_class(self.class);
 
         rsx!(
             div { class: "{class}", {self.children} }

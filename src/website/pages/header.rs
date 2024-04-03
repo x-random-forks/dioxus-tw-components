@@ -28,6 +28,8 @@ pub fn Header() -> Element {
 
     rsx!(
         header { class: "{header_class}", Navbar { left_part: left_part, right_part: right_part } }
-        main { class: "flex-1", div { class: "relative container", Outlet::<Route> {} }}
+        main { class: "flex-1",
+            div { class: "relative container", Outlet::<Route> {} }
+        }
     )
 }

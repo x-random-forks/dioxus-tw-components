@@ -1,16 +1,12 @@
-use self::styling::{BaseClass, Color, Size};
-use crate::*;
+use super::style::*;
+use crate::Component;
 use component_derive::Component;
+use dioxus::prelude::*;
+use tailwind_fuse::*;
 
-pub use ButtonVariant::{DefaultVariant, Ghost, Outline};
-pub use Color::{Accent, Primary, Secondary, Unset};
-pub use Size::{Lg, Md, Sm, Xl, Xs};
-
-use super::style::ButtonVariant;
-
-#[derive(PartialEq, Props, Clone, Component)]
+#[derive(Props, Clone, PartialEq, Component)]
 pub struct ButtonProps {
-    #[props(default = "button".to_string())]
+    #[props(default)]
     r#type: String,
     #[props(default)]
     name: String,
@@ -18,38 +14,31 @@ pub struct ButtonProps {
     disabled: bool,
     #[props(optional)]
     onclick: EventHandler<MouseEvent>,
-    // What will be displayed inside the button
     children: Element,
     // Styling
-    // Custom css to append to the class attribute
+    #[props(default = ButtonSize::Md)]
+    size: ButtonSize,
+    #[props(default = ButtonVariant::Primary)]
+    variant: ButtonVariant,
     #[props(default)]
     class: String,
-    #[props(default = Color::Primary)]
-    color: Color<ButtonProps>,
-    #[props(default)]
-    variant: ButtonVariant,
-    // variant: Variant<ButtonProps>,
-    #[props(default = Size::Md)]
-    size: Size<ButtonProps>,
+    // color: ButtonColor,
 }
 
 impl Component for ButtonProps {
     fn view(self) -> Element {
-        let mut class = class!(BaseClass::<ButtonProps>::BaseClass, self.size, self.class);
+        let class = ButtonClass::builder()
+            .variant(self.variant)
+            .size(self.size)
+            .with_class(self.class);
 
-        // TODO Clean this, should be able to integrate it with above statement
-        // If variant is not default, use the variant class instead of color
-        if self.variant != ButtonVariant::default() {
-            class = class!(class, self.variant);
-        } else {
-            class = class!(class, self.color);
-        }
         rsx!(
             button {
                 r#type: "{self.r#type}",
-                disabled: "{self.disabled}",
+                name: "{self.name}",
+                disabled: self.disabled,
+                onclick: move |e| self.onclick.call(e),
                 class: "{class}",
-                onclick: move |e| { self.onclick.call(e) },
                 {self.children}
             }
         )

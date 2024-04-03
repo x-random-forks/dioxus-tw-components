@@ -10,3 +10,19 @@ impl std::fmt::Display for BaseClass<SeparatorProps> {
         write!(f, "{}", class)
     }
 }
+
+use tailwind_fuse::*;
+
+#[derive(TwClass, Clone, Copy)]
+#[tw(class = r#"bg-border shrink-0"#)]
+pub struct SeparatorClass {
+    vertical: SeparatorOrientation,
+}
+
+#[derive(TwVariant, PartialEq)]
+pub enum SeparatorOrientation {
+    #[tw(default, class = "w-full h-[1px]")]
+    Horizontal,
+    #[tw(class = "h-full w-[1px]")]
+    Vertical,
+}

@@ -17,5 +17,7 @@ pub fn App() -> Element {
 
 #[component]
 pub fn HomePage() -> Element {
-    rsx!( section { class: "mx-auto flex flex-col items-center", div {"Hello, World!"} } )
+    rsx!(
+        section { class: "mx-auto flex flex-col items-center", div { "Hello, World!" } }
+    )
 }

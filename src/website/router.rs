@@ -3,6 +3,7 @@ use dioxus::prelude::*;
 use super::pages::{components::sidenav::SideNavComp, header::Header};
 use crate::website::app::HomePage;
 use crate::website::pages::components::atoms::*;
+use crate::website::pages::components::composites::*;
 
 #[derive(Routable, Clone)]
 #[rustfmt::skip]
@@ -29,6 +30,10 @@ pub enum Route {
             TextAreaPage {},
             #[route("/component/atom/toggle")]
             TogglePage {},
+            #[route("/component/composite/lightswitch")]
+            LightSwitchPage {},
+            #[route("/component/composite/scrollable")]
+            ScrollablePage {},
         #[end_layout]
     #[route("/..route")]
     NotFound {}

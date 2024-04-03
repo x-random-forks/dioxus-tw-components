@@ -1,13 +1,15 @@
-use self::styling::{BaseClass, Color};
-use crate::*;
+use super::style::*;
+use crate::Component;
 use component_derive::Component;
-
-pub use Color::{Accent, Primary, Secondary, Unset};
+use dioxus::prelude::*;
+use tailwind_fuse::*;
 
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct CheckboxProps {
     // Name of input field, associate with its value when sending the associated form
+    #[props(default)]
     name: String,
+    #[props(default)]
     value: String,
     #[props(default = false)]
     checked: bool,
@@ -19,22 +21,27 @@ pub struct CheckboxProps {
     #[props(optional)]
     oninput: EventHandler<FormEvent>,
     // Styling
-    #[props(default = Color::Primary)]
-    color: Color<CheckboxProps>,
+    #[props(default)]
+    color: CheckboxColor,
+    #[props(default)]
+    class: String,
 }
 
 impl Component for CheckboxProps {
     fn view(self) -> Element {
-        let class = class!(BaseClass::<CheckboxProps>::BaseClass, self.color);
+        let class = CheckboxClass::builder()
+            .color(self.color)
+            .with_class(self.class);
+
         rsx!(
             label { class: "cursor-pointer gap-x-1 flex items-center",
                 input {
                     name: "{self.name}",
                     value: "{self.value}",
                     r#type: "checkbox",
-                    checked: "{self.checked}",
-                    disabled: "{self.disabled}",
-                    required: "{self.required}",
+                    checked: self.checked,
+                    disabled: self.disabled,
+                    required: self.required,
                     class: "{class}",
                     oninput: move |e| self.oninput.call(e)
                 }

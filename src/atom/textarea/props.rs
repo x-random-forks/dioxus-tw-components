@@ -1,6 +1,8 @@
-use self::styling::BaseClass;
-use crate::*;
+use super::style::*;
+use crate::Component;
 use component_derive::Component;
+use dioxus::prelude::*;
+use tailwind_fuse::*;
 
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct TextAreaProps {
@@ -23,11 +25,14 @@ pub struct TextAreaProps {
     #[props(optional)]
     oninput: EventHandler<FormEvent>,
     // Styling
+    #[props(default)]
+    class: String,
 }
 
 impl Component for TextAreaProps {
     fn view(self) -> Element {
-        let class = class![BaseClass::<TextAreaProps>::BaseClass];
+        let class = TextAreaClass::builder().with_class(self.class);
+
         rsx!(
             textarea {
                 name: "{self.name}",

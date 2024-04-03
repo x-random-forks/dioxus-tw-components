@@ -1,12 +1,5 @@
-use super::FormRangeProps;
-use crate::styling::BaseClass;
+use tailwind_fuse::*;
 
-impl std::fmt::Display for BaseClass<FormRangeProps> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let class = match self {
-            BaseClass::BaseClass => "w-full accent-foreground",
-            _ => "",
-        };
-        write!(f, "{}", class)
-    }
-}
+#[derive(TwClass, Clone, Copy)]
+#[tw(class = r#"w-full accent-foreground"#)]
+pub struct FormRangeClass {}

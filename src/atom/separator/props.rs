@@ -1,6 +1,8 @@
-use self::styling::BaseClass;
-use crate::*;
+use super::style::*;
+use crate::Component;
 use component_derive::Component;
+use dioxus::prelude::*;
+use tailwind_fuse::*;
 
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct SeparatorProps {
@@ -13,20 +15,13 @@ pub struct SeparatorProps {
 
 impl Component for SeparatorProps {
     fn view(self) -> Element {
-        let class = class!(
-            BaseClass::<SeparatorProps>::BaseClass,
-            get_orientation_class(self.vertical),
-            self.class
-        );
-        rsx!( div { class: "{class}" } )
-    }
-}
+        let class = SeparatorClass::builder()
+            .vertical(match self.vertical {
+                true => SeparatorOrientation::Vertical,
+                false => SeparatorOrientation::Horizontal,
+            })
+            .with_class(self.class);
 
-// TODO Move this to style.rs
-fn get_orientation_class(vertical: bool) -> &'static str {
-    if vertical {
-        "h-full w-[1px]"
-    } else {
-        "w-full h-[1px]"
+        rsx!( div { class: "{class}" } )
     }
 }

@@ -1,38 +1,33 @@
-use super::ToggleProps;
-use crate::styling::{BaseClass, Color, Size};
+use tailwind_fuse::*;
 
-// TODO Styling for disabled state
-
-impl std::fmt::Display for BaseClass<ToggleProps> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let class = match self {
-            BaseClass::BaseClass => "relative bg-input peer peer-focus:outline-none peer-focus:ring-2 rounded-full peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:bg-white after:border-gray-300 after:border after:rounded-full after:transition-all",
-            _ => "",
-        };
-        write!(f, "{}", class)
-    }
+#[derive(TwClass, Clone, Copy)]
+#[tw(
+    class = r#"relative bg-input peer peer-focus:outline-none peer-focus:ring-2 rounded-full peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:bg-white after:border-gray-300 after:border after:rounded-full after:transition-all peer-checked:bg-primary peer-focus:ring-input"#
+)]
+pub struct ToggleClass {
+    pub color: ToggleColor,
+    pub size: ToggleSize,
 }
 
-impl std::fmt::Display for Color<ToggleProps> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let size = match self {
-            // TODO more colors handled
-            Color::Primary => "peer-checked:bg-primary peer-focus:ring-input",
-            Color::Secondary => "peer-checked:bg-secondary peer-focus:ring-input",
-            Color::Accent => "peer-checked:bg-accent peer-focus:ring-input",
-            _ => "",
-        };
-        write!(f, "{}", size)
-    }
+#[derive(TwVariant, PartialEq)]
+pub enum ToggleColor {
+    #[tw(default, class = "peer-checked:bg-primary peer-focus:ring-input")]
+    Primary,
+    #[tw(class = "peer-checked:bg-secondary peer-focus:ring-input")]
+    Secondary,
+    #[tw(class = "peer-checked:bg-accent peer-focus:ring-input")]
+    Accent,
 }
 
-impl std::fmt::Display for Size<ToggleProps> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let size = match self {
-            Size::Lg | Size::Xl => "w-14 h-7 after:top-0.5 after:start-[4px] after:h-6 after:w-6",
-            Size::Sm | Size::Xs => "w-9 h-5 after:top-[2px] after:start-[2px] after:h-4 after:w-4",
-            Size::Md | _ => "w-11 h-6 after:top-[2px] after:start-[2px] after:h-5 after:w-5",
-        };
-        write!(f, "{}", size)
-    }
+#[derive(TwVariant, PartialEq)]
+pub enum ToggleSize {
+    #[tw(class = "w-14 h-7 after:top-0.5 after:start-[4px] after:h-6 after:w-6")]
+    Lg,
+    #[tw(
+        default,
+        class = "w-11 h-6 after:top-[2px] after:start-[2px] after:h-5 after:w-5"
+    )]
+    Md,
+    #[tw(class = "w-9 h-5 after:top-[2px] after:start-[2px] after:h-4 after:w-4")]
+    Sm,
 }

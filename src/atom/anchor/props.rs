@@ -1,5 +1,6 @@
 use self::styling::BaseClass;
 use crate::*;
+
 use component_derive::Component;
 
 #[derive(PartialEq, Props, Clone, Component)]
@@ -14,6 +15,6 @@ pub struct AnchorProps {
 impl Component for AnchorProps {
     fn view(self) -> Element {
         let class = class!(BaseClass::<AnchorProps>::BaseClass, self.class);
-        rsx!(a { class: "{class}" })
+        rsx!( a { class: "{class}" } )
     }
 }

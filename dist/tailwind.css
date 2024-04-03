@@ -450,7 +450,7 @@ video {
   /* HSL Colors */
   --background: 0 0% 100%;
   --foreground: 240 10% 3.9%;
-  --primary: 346.8 77.2% 49.8%;
+  --primary: 292 100% 30%;
   --primary-foreground: 355.7 100% 97.3%;
   --secondary: 123 100% 22%;
   --secondary-foreground: 123 100% 70%;
@@ -668,14 +668,14 @@ video {
   z-index: 30;
 }
 
-.my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
+}
+
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .ml-6 {
@@ -753,6 +753,18 @@ video {
   height: 100vh;
 }
 
+.h-3 {
+  height: 0.75rem;
+}
+
+.h-2 {
+  height: 0.5rem;
+}
+
+.h-64 {
+  height: 16rem;
+}
+
 .min-h-screen {
   min-height: 100vh;
 }
@@ -783,6 +795,14 @@ video {
 
 .w-full {
   width: 100%;
+}
+
+.w-8 {
+  width: 2rem;
+}
+
+.w-64 {
+  width: 16rem;
 }
 
 .max-w-screen-2xl {
@@ -948,6 +968,16 @@ video {
   background-color: hsl(var(--secondary));
 }
 
+.bg-gray-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
+.bg-gray-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+}
+
 .fill-accent {
   fill: hsl(var(--accent));
 }
@@ -1015,14 +1045,14 @@ video {
   padding-right: 0.75rem;
 }
 
-.px-4 {
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
 .px-5 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
+}
+
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 .px-8 {
@@ -1043,6 +1073,11 @@ video {
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
 }
 
 .py-4 {
@@ -1117,6 +1152,11 @@ video {
   color: hsl(var(--accent-foreground));
 }
 
+.text-blue-500 {
+  --tw-text-opacity: 1;
+  color: rgb(59 130 246 / var(--tw-text-opacity));
+}
+
 .text-foreground {
   color: hsl(var(--foreground));
 }
@@ -1135,11 +1175,6 @@ video {
 
 .text-secondary-foreground {
   color: hsl(var(--secondary-foreground));
-}
-
-.text-blue-500 {
-  --tw-text-opacity: 1;
-  color: rgb(59 130 246 / var(--tw-text-opacity));
 }
 
 .accent-accent {
@@ -1181,8 +1216,8 @@ video {
   transition-duration: 150ms;
 }
 
-.duration-100 {
-  transition-duration: 100ms;
+.duration-150 {
+  transition-duration: 150ms;
 }
 
 .scrollbar::-webkit-scrollbar {
@@ -1253,6 +1288,16 @@ video {
   top: 2px;
 }
 
+.after\:start-\[1px\]::after {
+  content: var(--tw-content);
+  inset-inline-start: 1px;
+}
+
+.after\:top-\[1px\]::after {
+  content: var(--tw-content);
+  top: 1px;
+}
+
 .after\:h-4::after {
   content: var(--tw-content);
   height: 1rem;
@@ -1268,6 +1313,16 @@ video {
   height: 1.5rem;
 }
 
+.after\:h-3::after {
+  content: var(--tw-content);
+  height: 0.75rem;
+}
+
+.after\:h-2::after {
+  content: var(--tw-content);
+  height: 0.5rem;
+}
+
 .after\:w-4::after {
   content: var(--tw-content);
   width: 1rem;
@@ -1281,6 +1336,11 @@ video {
 .after\:w-6::after {
   content: var(--tw-content);
   width: 1.5rem;
+}
+
+.after\:w-3::after {
+  content: var(--tw-content);
+  width: 0.75rem;
 }
 
 .after\:rounded-full::after {
@@ -1317,28 +1377,16 @@ video {
   content: var(--tw-content);
 }
 
-.hover\:bg-accent\/80:hover {
-  background-color: hsl(var(--accent) / 0.8);
-}
-
-.hover\:bg-accent\/90:hover {
-  background-color: hsl(var(--accent) / 0.9);
+.hover\:bg-accent:hover {
+  background-color: hsl(var(--accent));
 }
 
 .hover\:bg-foreground\/30:hover {
   background-color: hsl(var(--foreground) / 0.3);
 }
 
-.hover\:bg-primary\/80:hover {
-  background-color: hsl(var(--primary) / 0.8);
-}
-
 .hover\:bg-primary\/90:hover {
   background-color: hsl(var(--primary) / 0.9);
-}
-
-.hover\:bg-secondary\/80:hover {
-  background-color: hsl(var(--secondary) / 0.8);
 }
 
 .hover\:bg-secondary\/90:hover {
@@ -1347,14 +1395,6 @@ video {
 
 .hover\:text-accent-foreground:hover {
   color: hsl(var(--accent-foreground));
-}
-
-.hover\:text-primary-foreground:hover {
-  color: hsl(var(--primary-foreground));
-}
-
-.hover\:text-secondary-foreground:hover {
-  color: hsl(var(--secondary-foreground));
 }
 
 .hover\:brightness-105:hover {
@@ -1404,6 +1444,10 @@ video {
 
 .disabled\:cursor-not-allowed:disabled {
   cursor: not-allowed;
+}
+
+.disabled\:bg-muted:disabled {
+  background-color: hsl(var(--muted));
 }
 
 .disabled\:opacity-50:disabled {

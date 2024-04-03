@@ -1,9 +1,8 @@
-use self::styling::{BaseClass, Color, Size};
-use crate::*;
+use super::style::*;
+use crate::Component;
 use component_derive::Component;
-
-pub use Color::{Accent, Primary, Secondary};
-pub use Size::{Lg, Md, Sm};
+use dioxus::prelude::*;
+use tailwind_fuse::*;
 
 // Specifically stylised input type checkbox
 // The input use the tailwind peer class, you can use at your advantage to style the children
@@ -22,15 +21,21 @@ pub struct ToggleProps {
     #[props(optional)]
     oninput: EventHandler<FormEvent>,
     // Styling
-    #[props(default = Color::Primary)]
-    color: Color<ToggleProps>,
-    #[props(default = Size::Md)]
-    size: Size<ToggleProps>,
+    #[props(default)]
+    color: ToggleColor,
+    #[props(default)]
+    size: ToggleSize,
+    #[props(default)]
+    class: String,
 }
 
 impl Component for ToggleProps {
     fn view(self) -> Element {
-        let class = class!(BaseClass::<ToggleProps>::BaseClass, self.color, self.size);
+        let class = ToggleClass::builder()
+            .color(self.color)
+            .size(self.size)
+            .with_class(self.class);
+
         rsx!(
             // Label that wraps the input and the toggle switch so the user can click on the switch or the children to interact with the input
             label { class: "peer flex items-center cursor-pointer gap-x-2",

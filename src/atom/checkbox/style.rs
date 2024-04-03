@@ -1,28 +1,20 @@
-use super::CheckboxProps;
-use crate::styling::{BaseClass, Color};
+use tailwind_fuse::*;
 
-impl std::fmt::Display for BaseClass<CheckboxProps> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let class = match self {
-            BaseClass::BaseClass => "peer",
-            _ => "",
-        };
-        write!(f, "{}", class)
-    }
+#[derive(TwClass, Clone, Copy)]
+#[tw(class = "peer")]
+pub struct CheckboxClass {
+    pub color: CheckboxColor,
 }
 
-impl std::fmt::Display for Color<CheckboxProps> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let size = match self {
-            Color::Primary => "accent-primary focus:ring-primary focus:ring-2 focus:ring-offset-1",
-            Color::Secondary => {
-                "accent-secondary focus:ring-secondary focus:ring-2 focus:ring-offset-1"
-            }
-            Color::Accent => {
-                "accent-accent focus:ring-accent-foreground focus:ring-2 focus:ring-offset-1"
-            }
-            Color::DefaultColor | _ => "",
-        };
-        write!(f, "{}", size)
-    }
+#[derive(TwVariant, PartialEq)]
+pub enum CheckboxColor {
+    #[tw(
+        default,
+        class = "accent-primary focus:ring-primary focus:ring-2 focus:ring-offset-1"
+    )]
+    Primary,
+    #[tw(class = "accent-secondary focus:ring-secondary focus:ring-2 focus:ring-offset-1")]
+    Secondary,
+    #[tw(class = "accent-accent focus:ring-accent-foreground focus:ring-2 focus:ring-offset-1")]
+    Accent,
 }

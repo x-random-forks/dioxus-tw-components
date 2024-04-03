@@ -36,62 +36,36 @@ fn main() {
 }
 
 // Atoms
-fn TestButton() -> Element {
-    let keyboard_closure = move |event: FormEvent| log::debug!("{}", event.value());
-    rsx!(
-        div { class: "",
-            Button { color: Unset, "Unset" }
-            Button { color: Primary, "Primary" }
-            Button { color: Secondary, "Secondary" }
-            Button { color: Accent, "Accent" }
-            Button { variant: Outline(Primary), "Outline" }
-            Button { variant: Outline(Secondary), "Outline Secondary" }
-            Button { variant: Outline(Accent), "Outline Accent" }
-            Button { variant: Ghost(Primary), "Ghost" }
-            Button { variant: Ghost(Secondary), "Ghost Secondary" }
-            Button { variant: Ghost(Accent), "Ghost Accent" }
-            Button { size: Xs, variant: Ghost(Primary), "Ghost Primary Xs" }
-        }
-        div { class: "",
-            Button { size: Sm, "Sm" }
-            Button { "Default" }
-            Button { size: Lg, "Lg" }
-            Button { size: Xl, "Xl" }
-        }
-        div { class: "", TextArea { oninput: keyboard_closure } }
-    )
-}
+// fn TestButton() -> Element {
+//     let keyboard_closure = move |event: FormEvent| log::debug!("{}", event.value());
+//     rsx!(
+//         div { class: "",
+//             Button { color: Unset, "Unset" }
+//             Button { color: Primary, "Primary" }
+//             Button { color: Secondary, "Secondary" }
+//             Button { color: Accent, "Accent" }
+//             Button { variant: Outline(Primary), "Outline" }
+//             Button { variant: Outline(Secondary), "Outline Secondary" }
+//             Button { variant: Outline(Accent), "Outline Accent" }
+//             Button { variant: Ghost(Primary), "Ghost" }
+//             Button { variant: Ghost(Secondary), "Ghost Secondary" }
+//             Button { variant: Ghost(Accent), "Ghost Accent" }
+//             Button { size: Xs, variant: Ghost(Primary), "Ghost Primary Xs" }
+//         }
+//         div { class: "",
+//             Button { size: Sm, "Sm" }
+//             Button { "Default" }
+//             Button { size: Lg, "Lg" }
+//             Button { size: Xl, "Xl" }
+//         }
+//         div { class: "", TextArea { oninput: keyboard_closure } }
+//     )
+// }
 
 fn TestCheckbox() -> Element {
-    rsx!(
-        div { class: "flex gap-2",
-            div { class: "",
-                Checkbox { name: "checkbox", value: "checkbox", color: Primary, "Primary" }
-            }
-            div { class: "",
-                Checkbox { name: "checkbox", value: "checkbox", color: Secondary, "Secondary" }
-            }
-            div { class: "",
-                Checkbox { name: "checkbox", value: "checkbox", color: Accent, "Accent" }
-            }
-            // div { class: "",
-            //     Checkbox { name: "checkbox", value: "checkbox", color: Accent, "Accent" }
-            // }
-            div { class: "",
-                Checkbox {
-                    name: "checkbox",
-                    value: "checkbox",
-                    color: Primary,
-                    checked: true,
-                    disabled: true,
-                    "Checkbox"
-                }
-            }
-            div { class: "",
-                Checkbox { name: "checkbox", value: "checkbox", color: Accent, disabled: true, "Checkbox" }
-            }
-        }
-    )
+    rsx!(div {
+        class: "flex gap-2"
+    })
 }
 
 fn TestFormRange() -> Element {
@@ -179,23 +153,23 @@ fn TestSeparator() -> Element {
 
 fn TestToggle() -> Element {
     rsx!(
-        div { class: "flex gap-4",
-            div { class: "",
-                Toggle { name: "toggle", value: "toggle", checked: true, color: Primary, "Primary" }
-                Toggle { name: "toggle", value: "toggle", checked: true, color: Secondary, "Secondary" }
-                Toggle { name: "toggle", value: "toggle", checked: true, color: Accent, "Accent" }
-                Toggle {
-                    name: "toggle",
-                    value: "toggle",
-                    checked: true,
-                    color: Primary,
-                    disabled: true,
-                    "Disabled"
-                }
-                Toggle { name: "toggle", value: "toggle", checked: true, color: Primary, size: Sm, "Sm" }
-                Toggle { name: "toggle", value: "toggle", checked: true, color: Primary, size: Lg, "Lg" }
-            }
-        }
+        // div { class: "flex gap-4",
+        //     div { class: "",
+        //         Toggle { name: "toggle", value: "toggle", checked: true, color: Primary, "Primary" }
+        //         Toggle { name: "toggle", value: "toggle", checked: true, color: Secondary, "Secondary" }
+        //         Toggle { name: "toggle", value: "toggle", checked: true, color: Accent, "Accent" }
+        //         Toggle {
+        //             name: "toggle",
+        //             value: "toggle",
+        //             checked: true,
+        //             color: Primary,
+        //             disabled: true,
+        //             "Disabled"
+        //         }
+        //         Toggle { name: "toggle", value: "toggle", checked: true, color: Primary, size: Sm, "Sm" }
+        //         Toggle { name: "toggle", value: "toggle", checked: true, color: Primary, size: Lg, "Lg" }
+        //     }
+        // }
     )
 }
 
@@ -281,24 +255,24 @@ fn TestForm() -> Element {
                     }
                 }
                 div {
-                    Toggle { name: "toggle1", value: "toggle1", checked: true, color: Secondary,
-                        Label { "toggle1" }
-                    }
+                //     Toggle { name: "toggle1", value: "toggle1", checked: true, color: Secondary,
+                //         Label { "toggle1" }
+                //     }
+                // }
+                // div {
+                //     Toggle {
+                //         name: "toggle2",
+                //         value: "toggle2",
+                //         checked: true,
+                //         color: Accent,
+                //         size: Sm,
+                //         Label { "toggle2" }
+                //     }
                 }
                 div {
-                    Toggle {
-                        name: "toggle2",
-                        value: "toggle2",
-                        checked: true,
-                        color: Accent,
-                        size: Sm,
-                        Label { "toggle2" }
-                    }
-                }
-                div {
-                    Toggle { name: "toggle3", value: "toggle3", disabled: true, size: Lg,
-                        Label { "toggle3" }
-                    }
+                    // Toggle { name: "toggle3", value: "toggle3", disabled: true, size: Lg,
+                    //     Label { "toggle3" }
+                    // }
                 }
                 div {
                     Toggle { name: "cookie", value: "cookie", checked: false,
@@ -311,7 +285,7 @@ fn TestForm() -> Element {
                     }
                 }
                 div {
-                    Button { variant: Ghost(Primary), size: Sm, r#type: "submit", "Submit" }
+                    // Button { variant: Ghost(Primary), size: Sm, r#type: "submit", "Submit" }
                 }
             }
         }
@@ -408,7 +382,6 @@ fn TestListForm() -> Element {
                         values.set(event.values());
                     },
                     FormList { group_vec: group }
-                    Button { r#type: "submit", "Submit" }
                 }
             }
         }

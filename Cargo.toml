@@ -21,5 +21,6 @@ dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "f6c3b2745e9506d7
 dioxus-logger = "0.4.1"
 manganis = "0.2.1"
 console = "0.15.8"
+tailwind_fuse = { version = "0.2.0", features = ["variant"] }
 
 component-derive = { path = "component-derive" }

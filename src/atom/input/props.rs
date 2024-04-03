@@ -1,6 +1,8 @@
-use self::styling::BaseClass;
-use crate::*;
+use super::style::*;
+use crate::Component;
 use component_derive::Component;
+use dioxus::prelude::*;
+use tailwind_fuse::*;
 
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct InputProps {
@@ -38,7 +40,8 @@ pub struct InputProps {
     #[props(default = false)]
     readonly: bool,
     // Styling
-
+    #[props(default)]
+    class: String,
     // For Listing, this overrides the default base class
     // Temporary
     #[props(default)]
@@ -47,13 +50,14 @@ pub struct InputProps {
 
 impl Component for InputProps {
     fn view(self) -> Element {
-        // TODO
-        let class;
-        if self.groupclass.is_empty() {
-            class = class![BaseClass::<InputProps>::BaseClass];
-        } else {
-            class = class![self.groupclass];
-        }
+        let class = InputClass::builder().with_class(self.class);
+        // Old
+        // let class;
+        // if self.groupclass.is_empty() {
+        //     class = class![BaseClass::<InputProps>::BaseClass];
+        // } else {
+        //     class = class![self.groupclass];
+        // }
         rsx! {
             input {
                 r#type: "{self.r#type}",

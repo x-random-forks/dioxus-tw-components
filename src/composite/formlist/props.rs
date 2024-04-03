@@ -55,23 +55,23 @@ impl Component for FormListProps {
                 div { class: "h-4" }
             ));
 
-        let button_closure_plus = move |_| {
-            log::debug!("Plus Button Clicked");
-            if num_to_render() < vec_size {
-                num_to_render += 1;
-            }
-        };
-        let button_closure_minus = move |_| {
-            log::debug!("Minus Button Clicked");
-            if num_to_render() > 1 {
-                num_to_render -= 1;
-            }
-        };
+        // let button_closure_plus = move |_| {
+        //     log::debug!("Plus Button Clicked");
+        //     if num_to_render() < vec_size {
+        //         num_to_render += 1;
+        //     }
+        // };
+        // let button_closure_minus = move |_| {
+        //     log::debug!("Minus Button Clicked");
+        //     if num_to_render() > 1 {
+        //         num_to_render -= 1;
+        //     }
+        // };
 
         rsx!(
-            Button { r#type: "button", color: Accent, onclick: button_closure_plus, "+" }
-            Button { r#type: "button", color: Accent, onclick: button_closure_minus, "-" }
-            {rendered_group_vec}
+            // Button { r#type: "button", color: Accent, onclick: button_closure_plus, "+" }
+            // Button { r#type: "button", color: Accent, onclick: button_closure_minus, "-" }
+            { rendered_group_vec }
         )
     }
 }
