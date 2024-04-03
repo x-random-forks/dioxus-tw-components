@@ -28,11 +28,12 @@ pub fn SideNavComp() -> Element {
         .collect::<Vec<Element>>();
 
     let composite_names = [
+        "dropdown",
         "lightswitch",
+        "modal",
+        "radiogroup",
         "scrollable",
         "select",
-        "radiogroup",
-        "dropdown",
     ];
     let composites = composite_names
         .iter()

@@ -1,5 +1,5 @@
 use super::style::*;
-use crate::{atom::button::*, Component};
+use crate::Component;
 use component_derive::Component;
 use dioxus::prelude::*;
 use tailwind_fuse::*;

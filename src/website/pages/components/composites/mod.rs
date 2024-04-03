@@ -12,3 +12,6 @@ pub use radiogrouppage::RadioGroupPage;
 
 mod dropdownpage;
 pub use dropdownpage::DropdownPage;
+
+mod modalpage;
+pub use modalpage::ModalPage;

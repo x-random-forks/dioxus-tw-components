@@ -36,6 +36,8 @@ pub enum Route {
             DropdownPage {},
             #[route("/component/composite/lightswitch")]
             LightSwitchPage {},
+            #[route("/component/composite/modal")]
+            ModalPage {},
             #[route("/component/composite/radiogroup")]
             RadioGroupPage {},
             #[route("/component/composite/scrollable")]
