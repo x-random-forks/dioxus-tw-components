@@ -4,6 +4,7 @@ use dioxus::prelude::*;
 
 pub mod atom;
 pub mod composite;
+pub mod layout;
 pub mod styling;
 
 pub trait Component {

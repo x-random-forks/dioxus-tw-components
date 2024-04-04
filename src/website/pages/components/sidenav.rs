@@ -54,7 +54,7 @@ pub fn SideNavComp() -> Element {
     // log::debug!("test: {}", test);
 
     rsx!(
-        aside { class: "flex",
+        aside { class: "fixed",
             Scrollable { class: "w-48 flex flex-col space-y-2 px-4",
                 h5 { class: "h5", "ATOMS" }
                 for atom in atoms {
@@ -66,7 +66,7 @@ pub fn SideNavComp() -> Element {
                     div { class: "hover:underline", {composite} }
                 }
             }
-            div { class: "flex-1 p-10 text-2xl font-bold", Outlet::<Route> {} }
+            div { class: "", Outlet::<Route> {} }
         }
     )
 }

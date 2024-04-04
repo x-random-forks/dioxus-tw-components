@@ -2,6 +2,7 @@ use dioxus::prelude::*;
 use dioxus_components_bin::{
     atom::{icon::*, input::*},
     composite::{lightswitch::*, navbar::*},
+    layout::{header::HeaderLayout, mainlayout::MainLayout},
 };
 
 use crate::website::router::Route;
@@ -27,12 +28,8 @@ pub fn Header() -> Element {
         LightSwitch { class: "size-10 p-2 flex items-center justify-center rounded-global-radius transition-colors hover:bg-foreground/30" }
     );
 
-    let header_class = "sticky w-full top-0 left-0 z-30 border-border border-b backdrop-filter backdrop-blur bg-background/80 overflow-y-hidden flex items-center justify-center";
-
     rsx!(
-        header { class: "{header_class}", Navbar { left_part: left_part, right_part: right_part } }
-        main { class: "flex-1",
-            div { class: "relative container", Outlet::<Route> {} }
-        }
+        HeaderLayout { Navbar { left_part: left_part, right_part: right_part } }
+        MainLayout { Outlet::<Route> {} }
     )
 }
