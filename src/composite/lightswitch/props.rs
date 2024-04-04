@@ -1,9 +1,6 @@
-use self::styling::Size;
 use crate::{atom::icon::Icon, *};
 use atom::icon::style::IconSvg;
 use component_derive::Component;
-
-pub use Size::{Lg, Md, Sm, Xl, Xs};
 
 pub struct LightSwitchSignal(pub String);
 

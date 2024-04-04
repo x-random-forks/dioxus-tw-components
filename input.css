@@ -79,6 +79,7 @@
         @apply text-foreground/70 hover:text-foreground transition-colors cursor-pointer;
       }
 
+      /* TODO MODAL */
       dialog {
         @apply inline;
       }

@@ -588,6 +588,8 @@ video {
   color: hsl(var(--foreground));
 }
 
+/* TODO MODAL */
+
 dialog {
   display: inline;
 }
@@ -748,10 +750,6 @@ dialog:not(:target):not([open]) {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
-}
-
-.pointer-events-none {
-  pointer-events: none;
 }
 
 .fixed {
