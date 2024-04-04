@@ -33,6 +33,7 @@ impl Component for ProgressTrackProps {
 pub struct ProgressBarProps {
     #[props(default = 50)]
     progress: u8,
+    children: Element,
     // Styling
     #[props(default)]
     color: ProgressBarColor,
@@ -46,6 +47,40 @@ impl Component for ProgressBarProps {
             .color(self.color)
             .with_class(self.class);
 
-        rsx!( div { class: "{class}", style: "width: {self.progress}%" } )
+        rsx!(
+            div { class: "{class}", style: "width: {self.progress}%",
+                div { {self.children} }
+            }
+        )
+    }
+}
+
+#[derive(PartialEq, Props, Clone, Component)]
+pub struct ProgressLabelProps {
+    #[props(default = 50)]
+    progress: u8,
+    #[props(default = true)]
+    show_percentage: bool,
+    // Styling
+    #[props(default)]
+    color: ProgressLabelColor,
+    #[props(default)]
+    class: String,
+}
+
+impl Component for ProgressLabelProps {
+    fn view(self) -> Element {
+        let class = ProgressLabelClass::builder()
+            .color(self.color)
+            .with_class(self.class);
+
+        rsx!(
+            span { class: "{class}",
+                {self.progress.to_string()},
+                if self.show_percentage {
+                    "%"
+                }
+            }
+        )
     }
 }
