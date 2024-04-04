@@ -27,3 +27,6 @@ pub use togglepage::TogglePage;
 
 mod typography;
 pub use typography::TypographyPage;
+
+mod codepage;
+pub use codepage::CodePage;

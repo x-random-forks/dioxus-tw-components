@@ -1,6 +1,7 @@
 pub mod anchor;
 pub mod button;
 pub mod checkbox;
+pub mod code;
 pub mod formrange;
 pub mod icon;
 pub mod input;

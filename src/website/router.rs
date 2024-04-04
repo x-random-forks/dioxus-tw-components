@@ -16,6 +16,8 @@ pub enum Route {
             ButtonPage {},
             #[route("/component/atom/checkbox")]
             CheckboxPage {},
+            #[route("/component/atom/code")]
+            CodePage {},
             #[route("/component/atom/formrange")]
             FormRangePage {},
             #[route("/component/atom/icon")]
