@@ -33,11 +33,13 @@ pub fn SideNavComp() -> Element {
         "formlist",
         "lightswitch",
         "modal",
+        "navbar",
         "progressbar",
         "radiogroup",
         "scrollable",
         "select",
     ];
+
     let composites = composite_names
         .iter()
         .map(|name| {

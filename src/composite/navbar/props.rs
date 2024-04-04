@@ -1,6 +1,8 @@
-use self::styling::BaseClass;
-use crate::*;
+use super::style::*;
+use crate::Component;
 use component_derive::Component;
+use dioxus::prelude::*;
+use tailwind_fuse::*;
 
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct NavbarProps {
@@ -16,7 +18,7 @@ pub struct NavbarProps {
 
 impl Component for NavbarProps {
     fn view(self) -> Element {
-        let class = class!(BaseClass::<NavbarProps>::BaseClass, self.class);
+        let class = NavbarClass::builder().with_class(self.class);
 
         // TODO Move this
         let left_part_class = "flex space-x-2 items-center ml-6";

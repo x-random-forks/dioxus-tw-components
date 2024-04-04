@@ -14,6 +14,8 @@ impl Component for CodeProps {
     fn view(self) -> Element {
         // let class = CodeClass::builder().with_class(self.class);
         let class = "";
-        rsx!(code { class: "{class}" })
+        rsx!(
+            pre { code { class: "{class}" } }
+        )
     }
 }

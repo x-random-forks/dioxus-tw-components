@@ -21,3 +21,6 @@ pub use formlistpage::FormListPage;
 
 mod progressbarpage;
 pub use progressbarpage::ProgressBarPage;
+
+mod navbarpage;
+pub use navbarpage::NavbarPage;

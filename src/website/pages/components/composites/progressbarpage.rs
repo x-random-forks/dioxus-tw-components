@@ -20,7 +20,7 @@ pub fn ProgressBarPage() -> Element {
                 Button { onclick: button_plus_closure, "+" }
                 Button { onclick: button_minus_closure, "-" }
             }
-            ProgressTrack { ProgressBar { progress: progress()} }
+            ProgressTrack { ProgressBar { progress: progress() } }
             ProgressTrack { ProgressBar { progress: progress(), color: ProgressBarColor::Secondary } }
             ProgressTrack { ProgressBar { progress: progress(), color: ProgressBarColor::Accent } }
         }

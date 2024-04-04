@@ -40,10 +40,12 @@ pub enum Route {
             FormListPage {},
             #[route("/component/composite/lightswitch")]
             LightSwitchPage {},
-            #[route("/component/composite/progressbar")]
-            ProgressBarPage {},
             #[route("/component/composite/modal")]
             ModalPage {},
+            #[route("/component/composite/navbar")]
+            NavbarPage {},
+            #[route("/component/composite/progressbar")]
+            ProgressBarPage {},
             #[route("/component/composite/radiogroup")]
             RadioGroupPage {},
             #[route("/component/composite/scrollable")]
