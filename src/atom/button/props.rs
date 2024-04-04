@@ -22,7 +22,6 @@ pub struct ButtonProps {
     size: ButtonSize,
     #[props(default)]
     class: String,
-    // color: ButtonColor,
 }
 
 impl Component for ButtonProps {

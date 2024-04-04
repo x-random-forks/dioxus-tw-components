@@ -24,3 +24,6 @@ pub use progressbarpage::ProgressBarPage;
 
 mod navbarpage;
 pub use navbarpage::NavbarPage;
+
+mod breadcrumbpage;
+pub use breadcrumbpage::BreadcrumbPage;

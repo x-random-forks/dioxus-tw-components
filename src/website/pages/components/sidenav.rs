@@ -29,6 +29,7 @@ pub fn SideNavComp() -> Element {
         .collect::<Vec<Element>>();
 
     let composite_names = [
+        "breadcrumb",
         "dropdown",
         "formlist",
         "lightswitch",

@@ -34,6 +34,8 @@ pub enum Route {
             TogglePage {},
             #[route("/component/atom/typography")]
             TypographyPage {},
+            #[route("/component/composite/breadcrumb")]
+            BreadcrumbPage {},
             #[route("/component/composite/dropdown")]
             DropdownPage {},
             #[route("/component/composite/formlist")]

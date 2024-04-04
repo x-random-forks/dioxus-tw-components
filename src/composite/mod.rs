@@ -1,3 +1,4 @@
+pub mod breadcrumb;
 pub mod dropdown;
 pub mod formlist;
 pub mod lightswitch;
