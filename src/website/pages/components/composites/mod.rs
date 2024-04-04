@@ -15,3 +15,9 @@ pub use dropdownpage::DropdownPage;
 
 mod modalpage;
 pub use modalpage::ModalPage;
+
+mod formlistpage;
+pub use formlistpage::FormListPage;
+
+mod progressbarpage;
+pub use progressbarpage::ProgressBarPage;

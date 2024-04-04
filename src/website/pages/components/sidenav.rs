@@ -29,8 +29,10 @@ pub fn SideNavComp() -> Element {
 
     let composite_names = [
         "dropdown",
+        "formlist",
         "lightswitch",
         "modal",
+        "progressbar",
         "radiogroup",
         "scrollable",
         "select",

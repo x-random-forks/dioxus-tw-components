@@ -16,10 +16,10 @@ pub struct ButtonProps {
     onclick: EventHandler<MouseEvent>,
     children: Element,
     // Styling
-    #[props(default = ButtonSize::Md)]
-    size: ButtonSize,
-    #[props(default = ButtonVariant::Primary)]
+    #[props(default)]
     variant: ButtonVariant,
+    #[props(default)]
+    size: ButtonSize,
     #[props(default)]
     class: String,
     // color: ButtonColor,

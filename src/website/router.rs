@@ -34,8 +34,12 @@ pub enum Route {
             TypographyPage {},
             #[route("/component/composite/dropdown")]
             DropdownPage {},
+            #[route("/component/composite/formlist")]
+            FormListPage {},
             #[route("/component/composite/lightswitch")]
             LightSwitchPage {},
+            #[route("/component/composite/progressbar")]
+            ProgressBarPage {},
             #[route("/component/composite/modal")]
             ModalPage {},
             #[route("/component/composite/radiogroup")]

@@ -39,9 +39,11 @@ impl Component for ModalProps {
         //     }
         // )
         rsx!(
-            a { class:"anchor", href:"#dialog", "Open dialog" }
-            dialog { id:"dialog", "DIALOG" a{href:"#!", "close"}}
-
+            a { class: "anchor", href: "#dialog", "Open dialog" }
+            dialog { id: "dialog",
+                "DIALOG"
+                a { href: "#!", "close" }
+            }
         )
     }
 }
