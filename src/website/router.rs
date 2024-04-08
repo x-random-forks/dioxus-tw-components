@@ -26,6 +26,8 @@ pub enum Route {
             InputPage {},
             #[route("/component/atom/label")]
             LabelPage {},
+            #[route("/component/atom/placeholder")]
+            PlaceholderPage {},
             #[route("/component/atom/separator")]
             SeparatorPage {},
             #[route("/component/atom/textarea")]

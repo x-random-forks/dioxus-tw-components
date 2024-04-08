@@ -25,8 +25,11 @@ pub use textareapage::TextAreaPage;
 mod togglepage;
 pub use togglepage::TogglePage;
 
-mod typography;
-pub use typography::TypographyPage;
+mod typographypage;
+pub use typographypage::TypographyPage;
 
 mod codepage;
 pub use codepage::CodePage;
+
+mod placeholderpage;
+pub use placeholderpage::PlaceholderPage;

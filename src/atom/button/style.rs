@@ -9,8 +9,8 @@ use tailwind_fuse::*;
             duration-150
             disabled:opacity-50 disabled:cursor-not-allowed"#)]
 pub struct ButtonClass {
-    pub variant: ButtonVariant,
-    pub size: ButtonSize,
+    variant: ButtonVariant,
+    size: ButtonSize,
 }
 
 #[derive(TwVariant, PartialEq)]

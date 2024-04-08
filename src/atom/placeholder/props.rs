@@ -4,22 +4,22 @@ use component_derive::Component;
 use dioxus::prelude::*;
 use tailwind_fuse::*;
 
-#[derive(PartialEq, Props, Clone, Component)]
-pub struct SeparatorProps {
-    #[props(default = false)]
-    vertical: bool,
+#[derive(Props, Clone, PartialEq, Component)]
+pub struct PlaceholderProps {
     // Styling
     #[props(default)]
-    color: SeparatorColor,
+    radius: PlaceholderRadius,
+    #[props(default = true)]
+    animation: bool,
     #[props(default)]
     class: String,
 }
 
-impl Component for SeparatorProps {
+impl Component for PlaceholderProps {
     fn view(self) -> Element {
-        let class = SeparatorClass::builder()
-            .vertical(self.vertical.into())
-            .color(self.color)
+        let class = PlaceholderClass::builder()
+            .radius(self.radius)
+            .animation(self.animation.into())
             .with_class(self.class);
 
         rsx!( div { class: "{class}" } )

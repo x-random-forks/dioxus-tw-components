@@ -15,6 +15,7 @@ pub fn SideNavComp() -> Element {
         "icon",
         "input",
         "label",
+        "placeholder",
         "separator",
         "textarea",
         "toggle",
