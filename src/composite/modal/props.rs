@@ -1,92 +1,131 @@
-use std::{ops::Deref, rc::Rc, sync::Arc};
-
 use super::style::*;
-use crate::{atom::button::*, Component};
+use crate::Component;
 use component_derive::Component;
-use dioxus::{
-    html::{
-        button,
-        geometry::euclid::{Point2D, Rect, Size2D},
-    },
-    prelude::*,
-};
+use dioxus::prelude::*;
 use tailwind_fuse::*;
 
+struct ModalState(bool);
+
+// Modal is used a wrapper for every other modal component, it also sets up a context for those components
 #[derive(Props, Clone, PartialEq, Component)]
 pub struct ModalProps {
+    children: Element,
+}
+
+impl Component for ModalProps {
+    fn view(self) -> Element {
+        use_context_provider(|| Signal::new(ModalState(false)));
+
+        rsx!({ self.children })
+    }
+}
+
+// Used to open the modal
+#[derive(Props, Clone, PartialEq, Component)]
+pub struct ModalTriggerProps {
     children: Element,
     // Styling
     #[props(default)]
     class: String,
 }
 
-impl Component for ModalProps {
+impl Component for ModalTriggerProps {
     fn view(self) -> Element {
-        let mut sig = use_signal(|| false);
-        let mut elem = use_signal(Vec::<Rc<MountedData>>::new);
-        // TODO
-        // let mut elemsingle = use_signal(|| Rc::<MountedData>::new);
-
-        let rect: Rect<f64, f64> = Rect::zero();
-        let mut rect_modal = use_signal(|| rect);
-
-        // let mut future = use_resource(move || async move {
-        //     if let Some(elem) = elem.last() {
-        //         let rec = elem.get_client_rect().await.unwrap();
-        //         log::debug!("elem: {:#?}", rec);
-
-        //         rect_modal.set(rec);
-        //     }
-        // });
-
-        let button_closure = move |_| {
-            sig.toggle();
-            log::debug!("sig: {:#?}", sig());
+        let trigger_closure = move |_: Event<MouseData>| {
+            toggle_modal(use_context::<Signal<ModalState>>());
         };
 
-        let modal_closure = move |event: Event<MouseData>| {
-            sig.toggle();
-            // let point = get_click_position(event);
-            // log::debug!("point: {:#?}", point);
-            // log::debug!("rec_sig: {:#?}", rect_modal());
-
-            // if rect_modal().contains(point) {
-            //     log::debug!("INSIDE");
-            // } else {
-            //     sig.toggle();
-            //     log::debug!("OUTSIDE");
-            // }
-        };
+        let class = ModalTriggerClass::builder().with_class(self.class);
 
         rsx!(
-            button { class: "border-4 border-black", onclick: button_closure, "Open modal" }
-            if sig() {
-                div { class: "fixed top-0 left-0 w-full h-full z-40 bg-[linear-gradient(_45deg,magenta,rebeccapurple,dodgerblue,green_)] opacity-75",
-                    onclick: modal_closure,
-                }
-                div {
-                    // onmounted: move |cx| {
-                    //     log::debug!("MOUNTED");
-                    //     elem.push(cx.data());
+            div { class: "{class}", onclick: trigger_closure, { self.children } }
+        )
+    }
+}
 
-                    //     let _ = use_resource(move || async move {
-                    //         if let Some(elem) = elem.last() {
-                    //             let rec = elem.get_client_rect().await.unwrap();
-                    //             log::debug!("elem: {:#?}", rec);
+#[derive(Props, Clone, PartialEq, Component)]
+pub struct ModalCancelProps {
+    children: Element,
+    // Styling
+    #[props(default)]
+    class: String,
+}
 
-                    //             rect_modal.set(rec);
-                    //         }
-                    //     });
-                    // },
-                    class: "fixed top-[50%] left-[50%] z-50 border-2 border-black bg-background",
-                    "LONG LONG LONG LONG LONG LONG LONG LONG CONTENT"
-                    button { class: "border-4 border-black", onclick: button_closure, "CLOSE ME" }
-                }
+impl Component for ModalCancelProps {
+    fn view(self) -> Element {
+        let trigger_closure = move |_: Event<MouseData>| {
+            toggle_modal(use_context::<Signal<ModalState>>());
+        };
+
+        let class = ModalCancelClass::builder().with_class(self.class);
+
+        rsx!(
+            div { class: "{class}", onclick: trigger_closure, {self.children} }
+        )
+    }
+}
+
+#[derive(Props, Clone, PartialEq, Component)]
+pub struct ModalContentProps {
+    children: Element,
+    // Styling
+    #[props(default)]
+    class: String,
+}
+
+impl Component for ModalContentProps {
+    fn view(self) -> Element {
+        let class = ModalContentClass::builder().with_class(self.class);
+
+        rsx!(
+            div { class: "{modal_state_to_string()} {class}", {self.children} }
+        )
+    }
+}
+
+#[derive(Props, Clone, PartialEq, Component)]
+pub struct ModalBackgroundProps {
+    // Set to true if you want the modal to close when the background is clicked
+    #[props(default = true)]
+    interactive: bool,
+    // Usefull if you want to render an image or smth else as the background
+    children: Element,
+    // Styling
+    #[props(default)]
+    class: String,
+}
+
+impl Component for ModalBackgroundProps {
+    fn view(self) -> Element {
+        let modal_closure = move |_: Event<MouseData>| {
+            if self.interactive {
+                toggle_modal(use_context::<Signal<ModalState>>());
+            }
+        };
+
+        let class = ModalBackgroundClass::builder().with_class(self.class);
+
+        rsx!(
+            div {
+                class: "{modal_state_to_string()} {class}",
+                onclick: modal_closure,
+                {self.children}
             }
         )
     }
 }
 
-fn get_click_position(event: Event<MouseData>) -> Point2D<f64, f64> {
-    event.deref().client_coordinates().cast_unit()
+fn toggle_modal(mut modal_context: Signal<ModalState>) {
+    if modal_context.read().0 {
+        modal_context.set(ModalState(false));
+    } else {
+        modal_context.set(ModalState(true));
+    }
+}
+
+fn modal_state_to_string() -> &'static str {
+    match use_context::<Signal<ModalState>>().read().0 {
+        true => "fixed",
+        false => "hidden",
+    }
 }

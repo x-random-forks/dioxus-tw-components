@@ -6,6 +6,10 @@ use component_derive::Component;
 
 use self::styling::Color;
 
+// Struct used to track which RadioItem is currently checked within the RadioGroup
+// And differentiate between multiple RadioGroups
+struct RadioGroupSignal(String);
+
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct RadioGroupProps {
     name: String,
@@ -18,13 +22,12 @@ pub struct RadioGroupProps {
     // Orientation ?
 }
 
-// Struct used to track which RadioItem is currently checked within the RadioGroup
-struct RadioGroupSignal(String);
-
 impl Component for RadioGroupProps {
     fn view(self) -> Element {
         use_context_provider(|| Signal::new(RadioGroupSignal(self.default_value)));
+
         let class = "flex flex-col";
+
         rsx!(
             div { class: "{class}", {self.children} }
         )
@@ -50,20 +53,22 @@ pub struct RadioItemProps {
     // Styling
     #[props(default)]
     color: Color,
+    #[props(default)]
+    class: String,
 }
 
 impl Component for RadioItemProps {
     fn view(self) -> Element {
-        let mut parent_context = consume_context::<Signal<RadioGroupSignal>>();
+        let mut radio_context = consume_context::<Signal<RadioGroupSignal>>();
 
         // TODO Should do both at the same time
-        let svg = if parent_context.read().0 == self.value {
+        let svg = if radio_context.read().0 == self.value {
             IconSvg::CircleInnerCircle
         } else {
             IconSvg::HollowCircle
         };
 
-        let checked = if parent_context.read().0 == self.value {
+        let checked = if radio_context.read().0 == self.value {
             true
         } else {
             false
@@ -89,7 +94,7 @@ impl Component for RadioItemProps {
                         disabled: "{self.disabled}",
                         r#type: "radio",
                         oninput: move |e| {
-                            parent_context.set(RadioGroupSignal(self.value.clone()));
+                            radio_context.set(RadioGroupSignal(self.value.clone()));
                             self.oninput.call(e);
                         },
                         class: "hidden peer"
