@@ -21,5 +21,5 @@ impl Component for DocsLayoutProps {
 }
 
 #[derive(TwClass, Clone, Copy)]
-#[tw(class = r#"w-full"#)]
+#[tw(class = r#"mx-auto w-full border"#)]
 pub struct DocsLayoutClass {}

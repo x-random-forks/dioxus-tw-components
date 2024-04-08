@@ -3,7 +3,7 @@ use dioxus_components_bin::atom::input::*;
 
 pub fn InputPage() -> Element {
     rsx!(
-        div { class: "h-screen flex flex-col space-y-2",
+        div { class: "flex flex-col space-y-2",
             "INPUT PAGE"
             div { Input { r#type: "text" } }
             div { Input { r#type: "date" } }

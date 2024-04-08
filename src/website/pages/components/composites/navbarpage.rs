@@ -15,9 +15,7 @@ pub fn NavbarPage() -> Element {
     );
 
     rsx!(
-        div { class: "",
             "NAVBAR PAGE"
             div { class: "border border-black", Navbar { left_part: left_part, right_part: right_part } }
-        }
     )
 }

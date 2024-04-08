@@ -48,7 +48,6 @@ pub fn FormListPage() -> Element {
 
     rsx!(
         "FORM LIST PAGE"
-        div { class: "h-screen text-sm font-normal",
             div {
                 form {
                     id: "id-formlist",
@@ -65,6 +64,5 @@ pub fn FormListPage() -> Element {
                 "Form Values"
                 div { class: "h-4", "{values:#?}" }
             }
-        }
     )
 }

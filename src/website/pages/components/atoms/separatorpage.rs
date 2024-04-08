@@ -3,7 +3,6 @@ use dioxus_components_bin::atom::separator::*;
 
 pub fn SeparatorPage() -> Element {
     rsx!(
-        div { class: "h-screen ",
             "SEPARATOR PAGE"
             div {
                 div { class: "inline-block",
@@ -17,7 +16,6 @@ pub fn SeparatorPage() -> Element {
                         div { "ZZ" }
                     }
                 }
-            }
         }
     )
 }

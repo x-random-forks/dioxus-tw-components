@@ -1,3 +1,5 @@
+use std::rc::Rc;
+
 use dioxus::prelude::*;
 use dioxus_components_bin::composite::lightswitch::LightSwitchSignal;
 
@@ -9,15 +11,11 @@ pub fn App() -> Element {
     let light_switch_context = use_context::<Signal<LightSwitchSignal>>();
     let dark = &light_switch_context.read().0;
     rsx!(
-        div { class: "{dark} bg-background text-foreground min-h-screen",
-            Router::<Route> {}
-        }
+        div { class: "{dark} bg-background text-foreground min-h-screen", Router::<Route> {} }
     )
 }
 
 #[component]
 pub fn HomePage() -> Element {
-    rsx!(
-        section { class: "mx-auto flex flex-col items-center font-sans antialiased", div { "Hello, World!" } }
-    )
+    rsx!("Hello World!")
 }

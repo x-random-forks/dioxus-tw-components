@@ -3,7 +3,6 @@ use dioxus_components_bin::composite::select::*;
 
 pub fn SelectPage() -> Element {
     rsx!(
-        div { class: "h-screen",
             "SELECT PAGE"
             div { class: "flex w-96 gap-4 text-base",
                 SelectGroup { name: "animal",
@@ -20,7 +19,6 @@ pub fn SelectPage() -> Element {
                         SelectItem { value: "bear", "Bear" }
                     }
                 }
-            }
         }
     )
 }

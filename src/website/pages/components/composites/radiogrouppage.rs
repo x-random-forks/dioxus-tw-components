@@ -3,7 +3,7 @@ use dioxus_components_bin::{atom::label::Label, composite::radiogroup::*};
 
 pub fn RadioGroupPage() -> Element {
     rsx!(
-        div { class: "h-screen flex flex-col gap-2 text-base",
+        div { class: "flex flex-col gap-2 text-base",
             "RADIO GROUP PAGE"
             RadioGroup { name: "gender", default_value: "male",
                 Label { r#for: "gender", "Choose birth gender" }

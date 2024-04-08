@@ -1,5 +1,7 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::{atom::separator::Separator, composite::scrollable::*};
+use dioxus_components_bin::{
+    atom::separator::Separator, composite::scrollable::*, layout::docslayout::DocsLayout,
+};
 
 use crate::website::router::Route;
 
@@ -50,11 +52,8 @@ pub fn SideNavComp() -> Element {
         })
         .collect::<Vec<Element>>();
 
-    // let test = use_route::<Route>().to_string();
-    // log::debug!("test: {}", test);
-
     rsx!(
-        aside { class: "fixed",
+        aside { class: "fixed top-14 z-30 -ml-2 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 md:sticky md:block",
             Scrollable { class: "w-48 flex flex-col space-y-2 px-4",
                 h5 { class: "h5", "ATOMS" }
                 for atom in atoms {
@@ -66,7 +65,9 @@ pub fn SideNavComp() -> Element {
                     div { class: "hover:underline", {composite} }
                 }
             }
-            div { class: "", Outlet::<Route> {} }
+        }
+        div { class: "relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]",
+            DocsLayout { Outlet::<Route> {} }
         }
     )
 }

@@ -3,7 +3,6 @@ use dioxus_components_bin::atom::label::*;
 
 pub fn LabelPage() -> Element {
     rsx!(
-        div { class: "h-screen ",
             "LABEL PAGE"
             div { class: "",
                 Label { "Default" }
@@ -11,6 +10,5 @@ pub fn LabelPage() -> Element {
                 Label { color: LabelColor::Secondary, "Secondary" }
                 Label { color: LabelColor::Accent, "Accent" }
             }
-        }
     )
 }

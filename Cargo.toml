@@ -17,7 +17,7 @@ log = "0.4.17"
 tracing-wasm = "0.2.1"
 tracing = "0.1.40"
 
-dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "aca38e6a34329c95a3279a00f113076570f5405a", features = ["web", "router"] }
+dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "7eccc7a104df013b06c104fc1275450d2747e78c", features = ["web", "router"] }
 dioxus-logger = "0.4.1"
 manganis = "0.2.1"
 console = "0.15.8"

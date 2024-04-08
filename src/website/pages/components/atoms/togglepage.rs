@@ -3,7 +3,6 @@ use dioxus_components_bin::atom::toggle::*;
 
 pub fn TogglePage() -> Element {
     rsx!(
-        div { class: "h-screen ",
             "TOGGLE PAGE"
             div { class: "flex gap-4",
                 div { class: "",
@@ -55,7 +54,6 @@ pub fn TogglePage() -> Element {
                         "Lg"
                     }
                 }
-            }
         }
     )
 }
