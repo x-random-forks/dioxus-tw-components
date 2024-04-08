@@ -6,8 +6,6 @@ use tailwind_fuse::*;
 
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct InputProps {
-    #[props(optional)]
-    oninput: EventHandler<FormEvent>,
     #[props(default)]
     r#type: String,
     // Name of input field, associate with its value when sending the associated form
@@ -39,18 +37,20 @@ pub struct InputProps {
     disabled: bool,
     #[props(default = false)]
     readonly: bool,
+
+    #[props(optional)]
+    oninput: EventHandler<FormEvent>,
+
     // Styling
     #[props(default)]
-    class: String,
-    // For Listing, this overrides the default base class
-    // Temporary
+    size: InputSize,
     #[props(default)]
-    groupclass: String,
+    class: String,
 }
 
 impl Component for InputProps {
     fn view(self) -> Element {
-        let class = InputClass::builder().with_class(self.class);
+        let class = InputClass::builder().size(self.size).with_class(self.class);
         // Old
         // let class;
         // if self.groupclass.is_empty() {

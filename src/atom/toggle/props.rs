@@ -17,9 +17,12 @@ pub struct ToggleProps {
     disabled: bool,
     #[props(default = false)]
     required: bool,
-    children: Element,
+
     #[props(optional)]
     oninput: EventHandler<FormEvent>,
+
+    children: Element,
+
     // Styling
     #[props(default)]
     color: ToggleColor,
@@ -47,12 +50,13 @@ impl Component for ToggleProps {
                     disabled: "{self.disabled}",
                     required: "{self.required}",
                     // Set this input to be hidden except for screen readers
+                    // We a custom visual toggle so we don't need the default input
                     class: "sr-only peer",
                     oninput: move |e| self.oninput.call(e)
                 }
                 // Div that renders the toggle switch
                 div { class: "{class}" }
-                div { class: "peer-disabled:opacity-40", {self.children} }
+                div { class: "peer-disabled:opacity-50", {self.children} }
             }
         )
     }

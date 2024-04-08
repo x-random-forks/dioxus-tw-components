@@ -63,16 +63,12 @@ pub struct ProgressLabelProps {
     show_percentage: bool,
     // Styling
     #[props(default)]
-    color: ProgressLabelColor,
-    #[props(default)]
     class: String,
 }
 
 impl Component for ProgressLabelProps {
     fn view(self) -> Element {
-        let class = ProgressLabelClass::builder()
-            .color(self.color)
-            .with_class(self.class);
+        let class = ProgressLabelClass::builder().with_class(self.class);
 
         rsx!(
             span { class: "{class}",

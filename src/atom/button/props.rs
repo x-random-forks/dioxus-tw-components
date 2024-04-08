@@ -12,9 +12,12 @@ pub struct ButtonProps {
     name: String,
     #[props(default = false)]
     disabled: bool,
+
     #[props(optional)]
     onclick: EventHandler<MouseEvent>,
+
     children: Element,
+
     // Styling
     #[props(default)]
     variant: ButtonVariant,

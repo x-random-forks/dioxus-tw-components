@@ -46,6 +46,7 @@ impl Component for ModalTriggerProps {
 #[derive(Props, Clone, PartialEq, Component)]
 pub struct ModalCancelProps {
     children: Element,
+
     // Styling
     #[props(default)]
     class: String,

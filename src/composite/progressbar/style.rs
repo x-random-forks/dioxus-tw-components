@@ -1,7 +1,7 @@
 use tailwind_fuse::*;
 
 #[derive(TwClass, Clone, Copy)]
-#[tw(class = r#"w-full rounded-global-radius"#)]
+#[tw(class = "w-full rounded-global-radius")]
 pub struct ProgressTrackClass {
     color: ProgressTrackColor,
     size: ProgressTrackSize,
@@ -11,10 +11,10 @@ pub struct ProgressTrackClass {
 pub enum ProgressTrackColor {
     #[tw(class = "bg-primary")]
     Primary,
-    #[tw(default, class = "bg-secondary")]
+    #[tw(default, class = "bg-input")]
     Secondary,
-    #[tw(class = "bg-accent")]
-    Accent,
+    #[tw(class = "bg-destructive")]
+    Destructive,
 }
 
 #[derive(TwVariant, PartialEq)]
@@ -30,7 +30,7 @@ pub enum ProgressTrackSize {
 }
 
 #[derive(TwClass, Clone, Copy)]
-#[tw(class = r#"h-full rounded-global-radius flex items-center justify-center"#)]
+#[tw(class = "h-full rounded-global-radius flex items-center justify-center")]
 pub struct ProgressBarClass {
     color: ProgressBarColor,
 }
@@ -41,25 +41,12 @@ pub enum ProgressBarColor {
     Primary,
     #[tw(class = "bg-secondary [&>*]:text-secondary-foreground")]
     Secondary,
-    #[tw(class = "bg-accent [&>*]:text-accent-foreground")]
-    Accent,
+    #[tw(class = "bg-destructive [&>*]:text-destructive-foreground")]
+    Destructive,
 }
 
+// By default the color is set by ProgressBar using [&>*] selector, you can override it by passing
+// your color of choice to ProgressLabel's class
 #[derive(TwClass, Clone, Copy)]
-#[tw(class = r#""#)]
-pub struct ProgressLabelClass {
-    color: ProgressLabelColor,
-}
-
-// By default the color is set by ProgressBar using [&>*] selector
-#[derive(TwVariant, PartialEq)]
-pub enum ProgressLabelColor {
-    #[tw(default, class = "")]
-    Default,
-    #[tw(class = "text-primary-foreground")]
-    Primary,
-    #[tw(class = "text-secondary-foreground")]
-    Secondary,
-    #[tw(class = "text-accent-foreground")]
-    Accent,
-}
+#[tw(class = "")]
+pub struct ProgressLabelClass {}

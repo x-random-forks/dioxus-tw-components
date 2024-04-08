@@ -1,4 +1,3 @@
-pub mod anchor;
 pub mod button;
 pub mod checkbox;
 pub mod code;

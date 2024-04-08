@@ -22,8 +22,10 @@ pub struct TextAreaProps {
     minlength: u32,
     #[props(default = 100000)]
     maxlength: u32,
+
     #[props(optional)]
     oninput: EventHandler<FormEvent>,
+
     // Styling
     #[props(default)]
     class: String,
@@ -39,6 +41,8 @@ impl Component for TextAreaProps {
                 value: "{self.value}",
                 placeholder: "{self.placeholder}",
                 disabled: "{self.disabled}",
+                required: "{self.required}",
+                readonly: "{self.readonly}",
                 minlength: "{self.minlength}",
                 maxlength: "{self.maxlength}",
                 class: "{class}",

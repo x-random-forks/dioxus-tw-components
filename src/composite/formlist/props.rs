@@ -9,28 +9,28 @@ pub struct FormListProps {
 
 impl Component for FormListProps {
     fn view(self) -> Element {
-        let mut num_to_render = use_signal(|| 1);
-        let vec_size = self.group_vec.len();
+        let mut group_to_render = use_signal(|| 1);
 
         let rendered_group_vec = self
             .group_vec
             .iter()
-            .take(num_to_render())
+            .take(group_to_render())
             .map(|x| rsx!(
                 { x }.clone(),
                 div { class: "h-4" }
             ));
 
+        let vec_size = self.group_vec.len();
         let button_closure_plus = move |_| {
             log::debug!("Plus Button Clicked");
-            if num_to_render() < vec_size {
-                num_to_render += 1;
+            if group_to_render() < vec_size {
+                group_to_render += 1;
             }
         };
         let button_closure_minus = move |_| {
             log::debug!("Minus Button Clicked");
-            if num_to_render() > 1 {
-                num_to_render -= 1;
+            if group_to_render() > 1 {
+                group_to_render -= 1;
             }
         };
 

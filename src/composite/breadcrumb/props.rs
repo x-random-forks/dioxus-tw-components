@@ -7,6 +7,7 @@ use tailwind_fuse::*;
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct BreadcrumbProps {
     children: Element,
+
     // Styling
     #[props(default)]
     class: String,
@@ -15,6 +16,7 @@ pub struct BreadcrumbProps {
 impl Component for BreadcrumbProps {
     fn view(self) -> Element {
         let class = BreadcrumbClass::builder().with_class(self.class);
+
         rsx!(
             ol { class: "{class}", { self.children } }
         )
@@ -24,6 +26,7 @@ impl Component for BreadcrumbProps {
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct BreadcrumbItemProps {
     children: Element,
+
     // Styling
     #[props(default)]
     class: String,
@@ -31,7 +34,8 @@ pub struct BreadcrumbItemProps {
 
 impl Component for BreadcrumbItemProps {
     fn view(self) -> Element {
-        let class = BreadcrumbSeparatorClass::builder().with_class(self.class);
+        let class = BreadcrumbItemClass::builder().with_class(self.class);
+
         rsx!(
             li { class: "{class}", { self.children } }
         )
@@ -40,7 +44,9 @@ impl Component for BreadcrumbItemProps {
 
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct BreadcrumbSeparatorProps {
+    // Used to pass a custom separator
     children: Element,
+
     // Styling
     #[props(default)]
     class: String,
@@ -49,6 +55,7 @@ pub struct BreadcrumbSeparatorProps {
 impl Component for BreadcrumbSeparatorProps {
     fn view(self) -> Element {
         let class = BreadcrumbSeparatorClass::builder().with_class(self.class);
+
         rsx!(
             li { class: "{class}", aria_hidden: "true",
                 if self.children == None {

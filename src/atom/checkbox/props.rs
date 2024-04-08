@@ -17,9 +17,11 @@ pub struct CheckboxProps {
     disabled: bool,
     #[props(default = false)]
     required: bool,
-    children: Element,
+
     #[props(optional)]
     oninput: EventHandler<FormEvent>,
+
+    children: Element,
     // Styling
     #[props(default)]
     color: CheckboxColor,

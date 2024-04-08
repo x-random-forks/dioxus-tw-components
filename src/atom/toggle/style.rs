@@ -1,9 +1,13 @@
 use tailwind_fuse::*;
 
 #[derive(TwClass, Clone, Copy)]
-#[tw(
-    class = r#"relative bg-input peer peer-focus:outline-none peer-focus:ring-2 rounded-full peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:bg-white after:border-gray-300 after:border after:rounded-full after:transition-all peer-checked:bg-primary peer-focus:ring-input"#
-)]
+#[tw(class = "relative
+    bg-input 
+    rounded-full 
+    peer 
+    peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-input
+    peer-checked:after:translate-x-full peer-checked:after:border-white
+    after:content-[''] after:absolute after:bg-white after:border-input after:border after:rounded-full after:transition-all")]
 pub struct ToggleClass {
     pub color: ToggleColor,
     pub size: ToggleSize,
@@ -11,12 +15,12 @@ pub struct ToggleClass {
 
 #[derive(TwVariant, PartialEq)]
 pub enum ToggleColor {
-    #[tw(default, class = "peer-checked:bg-primary peer-focus:ring-input")]
+    #[tw(default, class = "peer-checked:bg-primary")]
     Primary,
-    #[tw(class = "peer-checked:bg-secondary peer-focus:ring-input")]
+    #[tw(class = "peer-checked:bg-secondary")]
     Secondary,
-    #[tw(class = "peer-checked:bg-accent peer-focus:ring-input")]
-    Accent,
+    #[tw(class = "peer-checked:bg-destructive")]
+    Destructive,
 }
 
 #[derive(TwVariant, PartialEq)]

@@ -19,26 +19,26 @@ pub fn ProgressBarPage() -> Element {
             "PROGRESS BAR"
             ProgressTrack { color: ProgressTrackColor::Primary }
             ProgressTrack { color: ProgressTrackColor::Secondary }
-            ProgressTrack { color: ProgressTrackColor::Accent }
+            ProgressTrack { color: ProgressTrackColor::Destructive }
             ProgressTrack { size: ProgressTrackSize::Md }
             ProgressTrack { size: ProgressTrackSize::Sm }
             ProgressTrack { size: ProgressTrackSize::Lg }
             ProgressTrack { size: ProgressTrackSize::Xl }
             div {
-                Button { onclick: button_plus_closure, "+" }
-                Button { onclick: button_minus_closure, "-" }
+                Button { variant: ButtonVariant::Outline, onclick: button_plus_closure, "+" }
+                Button { variant: ButtonVariant::Outline, onclick: button_minus_closure, "-" }
             }
             ProgressTrack { ProgressBar { progress: progress() } }
             ProgressTrack { ProgressBar { progress: progress(), color: ProgressBarColor::Secondary } }
-            ProgressTrack { ProgressBar { progress: progress(), color: ProgressBarColor::Accent } }
-            ProgressTrack { 
+            ProgressTrack { ProgressBar { progress: progress(), color: ProgressBarColor::Destructive } }
+            ProgressTrack {
                 ProgressBar { progress: progress(), ProgressLabel { progress: progress() } }
             }
-            ProgressTrack { 
-                ProgressBar { progress: progress(), color: ProgressBarColor::Accent, ProgressLabel { progress: progress() } }
+            ProgressTrack {
+                ProgressBar { progress: progress(), color: ProgressBarColor::Destructive, ProgressLabel { progress: progress() } }
             }
-            ProgressTrack { 
-                ProgressBar { progress: progress(), ProgressLabel { progress: progress(), show_percentage: false } }
+            ProgressTrack {
+                ProgressBar { progress: progress(), ProgressLabel { class: "font-bold text-black", progress: progress(), show_percentage: false } }
             }
         }
     )

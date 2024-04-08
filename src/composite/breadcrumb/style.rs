@@ -5,9 +5,9 @@ use tailwind_fuse::*;
 pub struct BreadcrumbClass {}
 
 #[derive(TwClass, Clone, Copy)]
-#[tw(class = r#""#)]
+#[tw(class = r#"font-normal"#)]
 pub struct BreadcrumbItemClass {}
 
 #[derive(TwClass, Clone, Copy)]
-#[tw(class = r#""#)]
+#[tw(class = r#"font-semibold"#)]
 pub struct BreadcrumbSeparatorClass {}

@@ -9,7 +9,9 @@ pub struct LabelProps {
     // Represent the unique id in the DOM
     #[props(default)]
     r#for: String,
+
     children: Element,
+
     // Styling
     #[props(default)]
     color: LabelColor,

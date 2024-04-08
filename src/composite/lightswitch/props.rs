@@ -4,7 +4,6 @@ use component_derive::Component;
 
 pub struct LightSwitchSignal(pub String);
 
-// TODO Doc
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct LightSwitchProps {
     // Styling
@@ -14,13 +13,11 @@ pub struct LightSwitchProps {
 
 impl Component for LightSwitchProps {
     fn view(self) -> Element {
-        let light_switch_context = use_context::<Signal<LightSwitchSignal>>();
-
         let lightswitch_closure = move |_| {
-            use_light_switch(light_switch_context);
+            use_light_switch(use_context::<Signal<LightSwitchSignal>>());
         };
 
-        let icon = get_day_icon(light_switch_context);
+        let icon = get_day_icon(use_context::<Signal<LightSwitchSignal>>());
 
         let class = class!(self.class);
 

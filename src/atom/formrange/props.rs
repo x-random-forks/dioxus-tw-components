@@ -19,11 +19,13 @@ pub struct FormRangeProps {
     step: i32,
     #[props(default = false)]
     disabled: bool,
-    // TODO implemant <datalist>
-    #[props(default = "".to_string())]
-    list: String,
+
+    // TODO implement <datalist>
+    // #[props(default = "".to_string())]
+    // list: String,
     #[props(optional)]
     oninput: EventHandler<FormEvent>,
+
     // Styling TODO
     #[props(default)]
     class: String,
@@ -41,7 +43,7 @@ impl Component for FormRangeProps {
                 step: "{self.step}",
                 value: "{self.value}",
                 disabled: "{self.disabled}",
-                list: "{self.list}",
+                // list: "{self.list}",
                 class: "{class}",
                 oninput: move |e| self.oninput.call(e)
             }

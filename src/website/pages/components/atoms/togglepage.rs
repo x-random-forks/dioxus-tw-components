@@ -20,7 +20,13 @@ pub fn TogglePage() -> Element {
                     color: ToggleColor::Secondary,
                     "Secondary"
                 }
-                Toggle { name: "toggle", value: "toggle", checked: true, color: ToggleColor::Accent, "Accent" }
+                Toggle {
+                    name: "toggle",
+                    value: "toggle",
+                    checked: true,
+                    color: ToggleColor::Destructive,
+                    "Destructive"
+                }
                 Toggle {
                     name: "toggle",
                     value: "toggle",
