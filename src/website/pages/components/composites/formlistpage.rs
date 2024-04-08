@@ -48,21 +48,21 @@ pub fn FormListPage() -> Element {
 
     rsx!(
         "FORM LIST PAGE"
-            div {
-                form {
-                    id: "id-formlist",
-                    onsubmit: move |event| {
-                        log::debug!("Form values {:#?}", values());
-                        log::debug!("Valid :{}", event.valid());
-                        values.set(event.values());
-                    },
-                    FormList { group_vec: group }
-                    Button { r#type: "submit", variant: ButtonVariant::Outline, "Submit" }
-                }
+        div {
+            form {
+                id: "id-formlist",
+                onsubmit: move |event| {
+                    log::debug!("Form values {:#?}", values());
+                    log::debug!("Valid :{}", event.valid());
+                    values.set(event.values());
+                },
+                FormList { group_vec: group }
+                Button { r#type: "submit", variant: ButtonVariant::Outline, "Submit" }
             }
-            div {
-                "Form Values"
-                div { class: "h-4", "{values:#?}" }
-            }
+        }
+        div {
+            "Form Values"
+            div { class: "h-4", "{values:#?}" }
+        }
     )
 }
