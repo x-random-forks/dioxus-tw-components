@@ -1,3 +1,4 @@
+use dioxus::{hooks::use_signal, signals::Signal};
 use std::sync::atomic::AtomicUsize;
 
 const ID_PREFIX: &str = "dx42-";
@@ -10,4 +11,8 @@ pub fn use_unique_id() -> String {
         ID_PREFIX,
         UNIQUE_ID_COUNTER.fetch_add(1, std::sync::atomic::Ordering::Relaxed)
     )
+}
+
+pub fn use_signal_unique_id(id: String) -> Signal<String> {
+    use_signal(|| id)
 }

@@ -2,6 +2,12 @@
 
 use dioxus::prelude::*;
 
+#[macro_use]
+mod props;
+
+#[macro_use]
+mod class;
+
 pub mod atom;
 pub mod composite;
 pub mod hooks;

@@ -76,15 +76,6 @@ impl Component for RadioItemProps {
             false
         };
 
-        // TODO Will get rid of this when the last div is removed
-        // let text_color = match self.color {
-        //     Color::DefaultColor => "text-foreground",
-        //     Color::Primary => "text-primary",
-        //     Color::Secondary => "text-secondary",
-        //     Color::Accent => "text-accent",
-        //     _ => "text-none",
-        // };
-
         rsx!(
             label { class: "{self.name}",
                 div { class: "flex items-center",

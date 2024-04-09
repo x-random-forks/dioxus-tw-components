@@ -4,15 +4,10 @@ use component_derive::Component;
 use dioxus::prelude::*;
 use tailwind_fuse::*;
 
-#[derive(PartialEq, Props, Clone, Component)]
-pub struct SeparatorProps {
+props_no_children!(SeparatorProps {
     #[props(default = false)]
     vertical: bool,
-
-    // Styling
-    #[props(default)]
-    class: String,
-}
+});
 
 impl Component for SeparatorProps {
     fn view(self) -> Element {

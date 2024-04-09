@@ -43,6 +43,7 @@ pub fn SideNavComp() -> Element {
         "radiogroup",
         "scrollable",
         "select",
+        "table",
     ];
 
     let composites = composite_names

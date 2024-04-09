@@ -4,16 +4,12 @@ use component_derive::Component;
 use dioxus::prelude::*;
 use tailwind_fuse::*;
 
-#[derive(Props, Clone, PartialEq, Component)]
-pub struct PlaceholderProps {
-    // Styling
+props_no_children!(PlaceholderProps {
     #[props(default)]
     radius: PlaceholderRadius,
     #[props(default = true)]
     animation: bool,
-    #[props(default)]
-    class: String,
-}
+});
 
 impl Component for PlaceholderProps {
     fn view(self) -> Element {
@@ -22,6 +18,6 @@ impl Component for PlaceholderProps {
             .animation(self.animation.into())
             .with_class(self.class);
 
-        rsx!( div { class: "{class}" } )
+        rsx!( div { class: "{class}", id: self.id } )
     }
 }

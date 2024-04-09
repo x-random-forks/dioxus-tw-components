@@ -58,6 +58,8 @@ pub enum Route {
             ScrollablePage {},
             #[route("/component/composite/select")]
             SelectPage {},
+            #[route("/component/composite/table")]
+            TablePage {},
         #[end_layout]
     #[route("/..route")]
     NotFound {}

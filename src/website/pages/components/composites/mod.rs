@@ -30,3 +30,6 @@ pub use breadcrumbpage::BreadcrumbPage;
 
 mod accordionpage;
 pub use accordionpage::AccordionPage;
+
+mod tablepage;
+pub use tablepage::TablePage;
