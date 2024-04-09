@@ -4,7 +4,6 @@ use component_derive::Component;
 use dioxus::prelude::*;
 use tailwind_fuse::*;
 
-// TODO Snap on scroll
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct ScrollableProps {
     #[props(default = false)]

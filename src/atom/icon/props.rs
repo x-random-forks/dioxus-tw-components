@@ -1,9 +1,7 @@
-use self::styling::Color;
 use super::style::IconSvg;
 use crate::*;
 use component_derive::Component;
 
-pub use Color::{Accent, DefaultColor, Primary, Secondary, Unset};
 pub use IconSvg::*;
 
 #[derive(PartialEq, Props, Clone, Component)]
@@ -14,27 +12,28 @@ pub struct IconProps {
     // Icon type
     #[props(default = IconSvg::HollowCircle)]
     svg: IconSvg,
-    #[props(default = Color::default())]
-    color: Color,
 }
 
 // TODO
 impl Component for IconProps {
     fn view(self) -> Element {
-        let fill_color = match self.color {
-            Color::DefaultColor => "fill-foreground",
-            Color::Primary => "fill-primary",
-            Color::Secondary => "fill-secondary",
-            Color::Accent => "fill-accent",
-            _ => "fill-none",
-        };
-        let stroke_color = match self.color {
-            Color::DefaultColor => "stroke-foreground",
-            Color::Primary => "stroke-primary",
-            Color::Secondary => "stroke-secondary",
-            Color::Accent => "stroke-accent",
-            _ => "stroke-none",
-        };
+        // let fill_color = match self.color {
+        //     Color::DefaultColor => "fill-foreground",
+        //     Color::Primary => "fill-primary",
+        //     Color::Secondary => "fill-secondary",
+        //     Color::Accent => "fill-accent",
+        //     _ => "fill-none",
+        // };
+        // let stroke_color = match self.color {
+        //     Color::DefaultColor => "stroke-foreground",
+        //     Color::Primary => "stroke-primary",
+        //     Color::Secondary => "stroke-secondary",
+        //     Color::Accent => "stroke-accent",
+        //     _ => "stroke-none",
+        // };
+
+        let stroke_color = "stroke-foreground";
+        let fill_color = "fill-foreground";
 
         let svg = match self.svg {
             IconSvg::HollowCircle => rsx!(

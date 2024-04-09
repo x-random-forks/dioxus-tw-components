@@ -32,9 +32,6 @@ module.exports = {
             boxShadow: {
                 "global-shadow": 'var(--global-shadow)',
             },
-            variants: {
-
-            }
         },
     },
     plugins: [],

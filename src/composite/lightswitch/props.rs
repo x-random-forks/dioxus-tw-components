@@ -19,12 +19,10 @@ impl Component for LightSwitchProps {
 
         let icon = get_day_icon(use_context::<Signal<LightSwitchSignal>>());
 
-        let class = class!(self.class);
-
         rsx!(
             button {
                 r#type: "button",
-                class: "{class}",
+                class: "{self.class}",
                 onclick: lightswitch_closure,
                 Icon { svg: icon }
             }

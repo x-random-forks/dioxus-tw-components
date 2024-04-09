@@ -27,3 +27,6 @@ pub use navbarpage::NavbarPage;
 
 mod breadcrumbpage;
 pub use breadcrumbpage::BreadcrumbPage;
+
+mod accordionpage;
+pub use accordionpage::AccordionPage;

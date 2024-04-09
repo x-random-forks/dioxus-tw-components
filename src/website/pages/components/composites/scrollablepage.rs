@@ -14,9 +14,11 @@ pub fn ScrollablePage() -> Element {
             // WIP
             "Horizontal WIP"
             Scrollable { class: "h-80 w-32 bg-gray-200", horizontal: true,
-            for i in 0..10 {
-                div { class: "h-24 w-24 bg-gray-300 border border-black rotate-90 origin-[right_top]", "SCROLLABLE {i} CONTENT" }
-            }
+                for i in 0..10 {
+                    div { class: "h-24 w-24 bg-gray-300 border border-black rotate-90 origin-[right_top]",
+                        "SCROLLABLE {i} CONTENT"
+                    }
+                }
             }
         }
     )

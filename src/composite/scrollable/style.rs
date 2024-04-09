@@ -11,6 +11,7 @@ pub struct ScrollableClass {
 pub enum ScrollableHorizontal {
     #[tw(default, class = "overflow-y-auto overflow-x-hidden grid-flow-row")]
     Vertical,
+    // TODO WIP Trying to make horizontal scroll with mouse wheel
     #[tw(class = "overflow-y-auto overflow-x-hidden -rotate-90 origin-[right_top] -rotate-90")]
     Horizontal,
 }
