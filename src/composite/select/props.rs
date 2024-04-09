@@ -1,25 +1,32 @@
-use self::styling::BaseClass;
-use crate::*;
+use super::style::*;
+use crate::Component;
 use component_derive::Component;
+use dioxus::prelude::*;
+use tailwind_fuse::*;
 
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct SelectGroupProps {
-    // What will be sent in the request eg name:value where value is represented by the selected SelectItem
+    #[props(default)]
     name: String,
     // TODO Currently not woking
     #[props(default = false)]
     required: bool,
     #[props(default = false)]
     disabled: bool,
+
     #[props(optional)]
     oninput: EventHandler<FormEvent>,
+
     children: Element,
     // Styling
+    #[props(default)]
+    class: String,
 }
 
 impl Component for SelectGroupProps {
     fn view(self) -> Element {
-        let class = class!(BaseClass::<SelectGroupProps>::BaseClass);
+        let class = SelectGroupClass::builder().with_class(self.class);
+
         rsx!(
             select {
                 name: "{self.name}",
@@ -37,12 +44,16 @@ impl Component for SelectGroupProps {
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct SelectPlaceholderProps {
     children: Element,
+
     // Styling
+    #[props(default)]
+    class: String,
 }
 
 impl Component for SelectPlaceholderProps {
     fn view(self) -> Element {
-        let class = class!(BaseClass::<SelectPlaceholderProps>::BaseClass);
+        let class = SelectPlaceholderClass::builder().with_class(self.class);
+
         rsx!(
             option { disabled: true, selected: true, value: "", class: "{class}", {self.children} }
         )
@@ -52,17 +63,22 @@ impl Component for SelectPlaceholderProps {
 // SelectLabel is used to group SelectItems together under a common label
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct SelectLabelProps {
+    #[props(default)]
     label: String,
-    // This disabled the Label and all SelectItems under it
     #[props(default = false)]
     disabled: bool,
+
     children: Element,
+
     // Styling
+    #[props(default)]
+    class: String,
 }
 
 impl Component for SelectLabelProps {
     fn view(self) -> Element {
-        let class = class!(BaseClass::<SelectLabelProps>::BaseClass);
+        let class = SelectLabelClass::builder().with_class(self.class);
+
         rsx!(
             optgroup {
                 label: "{self.label}",
@@ -76,21 +92,24 @@ impl Component for SelectLabelProps {
 
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct SelectItemProps {
-    // What will be sent in the request eg name:value where value is represented by the selected SelectItem
+    #[props(default)]
     value: String,
-    // Disabled the SelectItem
     #[props(default = false)]
     disabled: bool,
-    // Select the SelectItem by default
     #[props(default = false)]
     selected: bool,
+
     children: Element,
+
     // Styling
+    #[props(default)]
+    class: String,
 }
 
 impl Component for SelectItemProps {
     fn view(self) -> Element {
-        let class = class!(BaseClass::<SelectItemProps>::BaseClass);
+        let class = SelectItemClass::builder().with_class(self.class);
+
         rsx!(
             option {
                 value: "{self.value}",
@@ -102,5 +121,3 @@ impl Component for SelectItemProps {
         )
     }
 }
-
-// SelectContent ?

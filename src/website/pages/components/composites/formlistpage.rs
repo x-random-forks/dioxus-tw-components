@@ -62,7 +62,7 @@ pub fn FormListPage() -> Element {
         }
         div {
             "Form Values"
-            div { class: "h-4", "{values:#?}" }
+            div { class: "h-4 m-2", "{values:#?}" }
         }
     )
 }

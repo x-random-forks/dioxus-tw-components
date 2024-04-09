@@ -31,13 +31,13 @@ pub fn ProgressBarPage() -> Element {
             ProgressTrack { ProgressBar { progress: progress() } }
             ProgressTrack { ProgressBar { progress: progress(), color: ProgressBarColor::Secondary } }
             ProgressTrack { ProgressBar { progress: progress(), color: ProgressBarColor::Destructive } }
-            ProgressTrack {
+            ProgressTrack { 
                 ProgressBar { progress: progress(), ProgressLabel { progress: progress() } }
             }
-            ProgressTrack {
+            ProgressTrack { 
                 ProgressBar { progress: progress(), color: ProgressBarColor::Destructive, ProgressLabel { progress: progress() } }
             }
-            ProgressTrack {
+            ProgressTrack { 
                 ProgressBar { progress: progress(), ProgressLabel { class: "font-bold text-black", progress: progress(), show_percentage: false } }
             }
         }

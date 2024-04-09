@@ -1,43 +1,17 @@
-use super::{SelectGroupProps, SelectItemProps, SelectLabelProps, SelectPlaceholderProps};
-use crate::styling::BaseClass;
+use tailwind_fuse::*;
 
-impl std::fmt::Display for BaseClass<SelectGroupProps> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let class = match self {
-            BaseClass::BaseClass => "flex flex-col w-full bg-input",
-            _ => "",
-        };
-        write!(f, "{}", class)
-    }
-}
+#[derive(TwClass, Clone, Copy)]
+#[tw(class = r#"flex flex-col w-full bg-input"#)]
+pub struct SelectGroupClass {}
 
-impl std::fmt::Display for BaseClass<SelectPlaceholderProps> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let class = match self {
-            // This hides the placeholder in the dropdown menu
-            BaseClass::BaseClass => "hidden",
-            _ => "",
-        };
-        write!(f, "{}", class)
-    }
-}
+#[derive(TwClass, Clone, Copy)]
+#[tw(class = r#"hidden"#)]
+pub struct SelectPlaceholderClass {}
 
-impl std::fmt::Display for BaseClass<SelectLabelProps> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let class = match self {
-            BaseClass::BaseClass => "px-2 py-1.5 text-sm font-semibold",
-            _ => "",
-        };
-        write!(f, "{}", class)
-    }
-}
+#[derive(TwClass, Clone, Copy)]
+#[tw(class = r#"px-2 py-1.5 text-sm font-semibold"#)]
+pub struct SelectLabelClass {}
 
-impl std::fmt::Display for BaseClass<SelectItemProps> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let class = match self {
-            BaseClass::BaseClass => "flex py-1.5 pl-2 pr-8 text-sm",
-            _ => "",
-        };
-        write!(f, "{}", class)
-    }
-}
+#[derive(TwClass, Clone, Copy)]
+#[tw(class = r#"flex py-1.5 pl-2 pr-8 text-sm"#)]
+pub struct SelectItemClass {}

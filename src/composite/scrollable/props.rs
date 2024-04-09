@@ -4,10 +4,11 @@ use component_derive::Component;
 use dioxus::prelude::*;
 use tailwind_fuse::*;
 
-// TODO Orientation
 // TODO Snap on scroll
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct ScrollableProps {
+    #[props(default = false)]
+    horizontal: bool,
     children: Element,
 
     // Styling
@@ -17,7 +18,9 @@ pub struct ScrollableProps {
 
 impl Component for ScrollableProps {
     fn view(self) -> Element {
-        let class = ScrollableClass::builder().with_class(self.class);
+        let class = ScrollableClass::builder()
+            .horizontal(self.horizontal.into())
+            .with_class(self.class);
 
         rsx!(
             div { class: "{class}", {self.children} }
