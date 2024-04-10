@@ -1,15 +1,10 @@
 use tailwind_fuse::*;
 
-#[derive(TwClass, Clone, Copy)]
-#[tw(class = r#"relative group"#)]
-pub struct DropdownClass {}
+def_class_no_variant!(DropdownClass, r#"relative group"#);
 
-#[derive(TwClass, Clone, Copy)]
-#[tw(class = r#""#)]
-pub struct DropdownToggleClass {}
+def_class_no_variant!(DropdownToggleClass, r#""#);
 
-#[derive(TwClass, Clone, Copy)]
-#[tw(
-    class = r#"absolute hidden z-10 group-focus-within:block shadow-sm bg-background rounded-global-radius border border-border my-1 p-2 whitespace-nowrap"#
-)]
-pub struct DropdownContentClass {}
+def_class_no_variant!(
+    DropdownContentClass,
+    r#"absolute hidden z-10 group-focus-within:block shadow-sm bg-background rounded-global-radius border border-border my-1 p-2 whitespace-nowrap"#
+);

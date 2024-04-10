@@ -1,5 +1,3 @@
 use tailwind_fuse::*;
 
-#[derive(TwClass, Clone, Copy)]
-#[tw(class = r#"w-full accent-foreground"#)]
-pub struct FormRangeClass {}
+def_class_no_variant!(FormRangeClass, r#"w-full accent-foreground"#);

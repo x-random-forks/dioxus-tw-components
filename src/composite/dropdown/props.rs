@@ -4,61 +4,40 @@ use component_derive::Component;
 use dioxus::prelude::*;
 use tailwind_fuse::*;
 
-#[derive(Props, Clone, PartialEq, Component)]
-pub struct DropdownProps {
-    children: Element,
-
-    // Styling
-    #[props(default)]
-    class: String,
-}
+props!(DropdownProps {});
 
 impl Component for DropdownProps {
     fn view(self) -> Element {
         let class = DropdownClass::builder().with_class(self.class);
 
         rsx!(
-            div { class: "{class}", {self.children} }
+            div { class: "{class}", id: self.id, {self.children} }
         )
     }
 }
 
-#[derive(Props, Clone, PartialEq, Component)]
-pub struct DropdownToggleProps {
-    children: Element,
-
-    // Styling
-    #[props(default)]
-    class: String,
-}
+props!(DropdownToggleProps {});
 
 impl Component for DropdownToggleProps {
     fn view(self) -> Element {
         let class = DropdownToggleClass::builder().with_class(self.class);
 
         rsx!(
-            div { class: "{class}", {self.children} }
+            div { class: "{class}", id: self.id, {self.children} }
         )
     }
 }
 
 // Use HTML/CSS black magic to render the dropdown content
 // group-focus-within:block
-#[derive(Props, Clone, PartialEq, Component)]
-pub struct DropdownContentProps {
-    children: Element,
-
-    // Styling
-    #[props(default)]
-    class: String,
-}
+props!(DropdownContentProps {});
 
 impl Component for DropdownContentProps {
     fn view(self) -> Element {
         let class = DropdownContentClass::builder().with_class(self.class);
 
         rsx!(
-            div { class: "{class}", {self.children} }
+            div { class: "{class}", id: self.id, {self.children} }
         )
     }
 }

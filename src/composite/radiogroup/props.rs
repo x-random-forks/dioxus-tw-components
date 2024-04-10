@@ -8,25 +8,18 @@ use tailwind_fuse::*;
 // And differentiate between multiple RadioGroups
 struct RadioGroupSignal(String);
 
-#[derive(PartialEq, Props, Clone, Component)]
-pub struct RadioGroupProps {
-    #[props(default)]
+props!(RadioGroupProps {
+    #[props(into)]
     name: String,
-    #[props(default)]
+    #[props(into)]
     default_value: String,
-    #[props(default = false)]
-    disabled: bool,
-
-    children: Element,
-    // Styling
-    // Orientation ?
-}
+});
 
 impl Component for RadioGroupProps {
     fn view(self) -> Element {
         use_context_provider(|| Signal::new(RadioGroupSignal(self.default_value)));
 
-        let class = RadioGroupClass::builder().with_class("");
+        let class = RadioGroupClass::builder().with_class(self.class);
 
         rsx!(
             div { class: "{class}", {self.children} }
@@ -34,6 +27,7 @@ impl Component for RadioGroupProps {
     }
 }
 
+// TODO Refactor using macros
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct RadioItemProps {
     // Corresponds to the name of the RadioGroup

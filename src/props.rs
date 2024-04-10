@@ -57,3 +57,12 @@ macro_rules! props {
         }
     };
 }
+
+macro_rules! export_props {
+    () => {
+        mod props;
+        pub use props::*;
+        mod style;
+        pub use style::*;
+    };
+}

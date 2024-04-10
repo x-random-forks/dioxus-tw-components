@@ -1,4 +1,3 @@
-use super::style::*;
 use crate::Component;
 use component_derive::Component;
 use dioxus::prelude::*;
@@ -17,7 +16,7 @@ pub struct ScrollableProps {
 
 impl Component for ScrollableProps {
     fn view(self) -> Element {
-        let class = ScrollableClass::builder()
+        let class = super::ScrollableClass::builder()
             .horizontal(self.horizontal.into())
             .with_class(self.class);
 

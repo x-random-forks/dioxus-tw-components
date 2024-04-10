@@ -1,37 +1,27 @@
 use tailwind_fuse::*;
 
-#[derive(TwClass, Clone, Copy)]
-#[tw(class = "relative
+def_class_with_variant!(
+    ToggleClass,
+    r#"
+    relative
     bg-input 
     rounded-full 
     peer 
     peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-input
     peer-checked:after:translate-x-full peer-checked:after:border-white
-    after:content-[''] after:absolute after:bg-white after:border-input after:border after:rounded-full after:transition-all")]
-pub struct ToggleClass {
-    pub color: ToggleColor,
-    pub size: ToggleSize,
-}
+    after:content-[''] after:absolute after:bg-white after:border-input after:border after:rounded-full after:transition-all"#,
+    color: ToggleColor, size: ToggleSize);
 
-#[derive(TwVariant, PartialEq)]
-pub enum ToggleColor {
-    #[tw(default, class = "peer-checked:bg-primary")]
-    Primary,
-    #[tw(class = "peer-checked:bg-secondary")]
-    Secondary,
-    #[tw(class = "peer-checked:bg-destructive")]
-    Destructive,
-}
+def_variant!(
+    ToggleColor,
+    Primary => r#"peer-checked:bg-primary"#,
+    Secondary => r#"peer-checked:bg-secondary"#,
+    Destructive => r#"peer-checked:bg-destructive"#
+);
 
-#[derive(TwVariant, PartialEq)]
-pub enum ToggleSize {
-    #[tw(class = "w-14 h-7 after:top-0.5 after:start-[4px] after:h-6 after:w-6")]
-    Lg,
-    #[tw(
-        default,
-        class = "w-11 h-6 after:top-[2px] after:start-[2px] after:h-5 after:w-5"
-    )]
-    Md,
-    #[tw(class = "w-9 h-5 after:top-[2px] after:start-[2px] after:h-4 after:w-4")]
-    Sm,
-}
+def_variant!(
+    ToggleSize,
+    Lg => r#"w-14 h-7 after:top-0.5 after:start-[4px] after:h-6 after:w-6"#,
+    Md => r#"w-11 h-6 after:top-[2px] after:start-[2px] after:h-5 after:w-5"#,
+    Sm => r#"w-9 h-5 after:top-[2px] after:start-[2px] after:h-4 after:w-4"#
+);

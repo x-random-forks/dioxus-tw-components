@@ -21,13 +21,7 @@ impl Component for ModalProps {
 }
 
 // Used to open the modal
-#[derive(Props, Clone, PartialEq, Component)]
-pub struct ModalTriggerProps {
-    children: Element,
-    // Styling
-    #[props(default)]
-    class: String,
-}
+props!(ModalTriggerProps {});
 
 impl Component for ModalTriggerProps {
     fn view(self) -> Element {
@@ -38,21 +32,14 @@ impl Component for ModalTriggerProps {
         let class = ModalTriggerClass::builder().with_class(self.class);
 
         rsx!(
-            div { class: "{class}", onclick: trigger_closure, { self.children } }
+            div { class: "{class}", id: self.id, onclick: trigger_closure, { self.children } }
         )
     }
 }
 
-#[derive(Props, Clone, PartialEq, Component)]
-pub struct ModalCancelProps {
-    children: Element,
+props!(ModalCloseProps {});
 
-    // Styling
-    #[props(default)]
-    class: String,
-}
-
-impl Component for ModalCancelProps {
+impl Component for ModalCloseProps {
     fn view(self) -> Element {
         let trigger_closure = move |_: Event<MouseData>| {
             toggle_modal(use_context::<Signal<ModalState>>());
@@ -61,40 +48,27 @@ impl Component for ModalCancelProps {
         let class = ModalCancelClass::builder().with_class(self.class);
 
         rsx!(
-            div { class: "{class}", onclick: trigger_closure, {self.children} }
+            div { class: "{class}", id: self.id, onclick: trigger_closure, {self.children} }
         )
     }
 }
 
-#[derive(Props, Clone, PartialEq, Component)]
-pub struct ModalContentProps {
-    children: Element,
-    // Styling
-    #[props(default)]
-    class: String,
-}
+props!(ModalContentProps {});
 
 impl Component for ModalContentProps {
     fn view(self) -> Element {
         let class = ModalContentClass::builder().with_class(self.class);
 
         rsx!(
-            div { class: "{modal_state_to_string()} {class}", {self.children} }
+            div { class: "{modal_state_to_string()} {class}", id: self.id, {self.children} }
         )
     }
 }
 
-#[derive(Props, Clone, PartialEq, Component)]
-pub struct ModalBackgroundProps {
-    // Set to true if you want the modal to close when the background is clicked
+props!(ModalBackgroundProps {
     #[props(default = true)]
     interactive: bool,
-    // Usefull if you want to render an image or smth else as the background
-    children: Element,
-    // Styling
-    #[props(default)]
-    class: String,
-}
+});
 
 impl Component for ModalBackgroundProps {
     fn view(self) -> Element {
@@ -109,6 +83,7 @@ impl Component for ModalBackgroundProps {
         rsx!(
             div {
                 class: "{modal_state_to_string()} {class}",
+                id: self.id,
                 onclick: modal_closure,
                 {self.children}
             }

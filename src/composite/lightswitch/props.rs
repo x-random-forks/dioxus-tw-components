@@ -4,6 +4,8 @@ use component_derive::Component;
 
 pub struct LightSwitchSignal(pub String);
 
+// REVIEW : Not finished, need to see in a real project how to properly handle states and such
+
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct LightSwitchProps {
     // Styling

@@ -1,6 +1,8 @@
 use crate::{atom::button::*, *};
 use component_derive::Component;
 
+// REVIEW / TODO : This is more of an example, probably need to use it before refining implementation
+
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct FormListProps {
     #[props(default)]

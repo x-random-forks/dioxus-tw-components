@@ -12,7 +12,6 @@ props! {
         #[props(optional)]
         onclick: Option<EventHandler<MouseEvent>>,
 
-        // Styling
         #[props(default)]
         variant: ButtonVariant,
         #[props(default)]

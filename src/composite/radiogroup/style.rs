@@ -1,10 +1,6 @@
 use tailwind_fuse::*;
 
-#[derive(TwClass, Clone, Copy)]
-#[tw(class = r#"flex flex-col"#)]
-pub struct RadioGroupClass {}
+def_class_no_variant!(RadioGroupClass, r#"flex flex-col"#);
 
 // TODO
-#[derive(TwClass, Clone, Copy)]
-#[tw(class = r#"flex flex-col"#)]
-pub struct RadioItemClass {}
+def_class_no_variant!(RadioItemClass, r#""#);

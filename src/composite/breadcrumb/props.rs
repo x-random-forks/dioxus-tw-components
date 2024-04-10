@@ -1,63 +1,40 @@
-use super::style::*;
 use crate::Component;
 use component_derive::Component;
 use dioxus::prelude::*;
 use tailwind_fuse::*;
 
-#[derive(PartialEq, Props, Clone, Component)]
-pub struct BreadcrumbProps {
-    children: Element,
-
-    // Styling
-    #[props(default)]
-    class: String,
-}
+props!(BreadcrumbProps {});
 
 impl Component for BreadcrumbProps {
     fn view(self) -> Element {
-        let class = BreadcrumbClass::builder().with_class(self.class);
+        let class = super::BreadcrumbClass::builder().with_class(self.class);
 
         rsx!(
-            ol { class: "{class}", { self.children } }
+            ol { class: "{class}", id: self.id, { self.children } }
         )
     }
 }
 
-#[derive(PartialEq, Props, Clone, Component)]
-pub struct BreadcrumbItemProps {
-    children: Element,
-
-    // Styling
-    #[props(default)]
-    class: String,
-}
+props!(BreadcrumbItemProps {});
 
 impl Component for BreadcrumbItemProps {
     fn view(self) -> Element {
-        let class = BreadcrumbItemClass::builder().with_class(self.class);
+        let class = super::BreadcrumbItemClass::builder().with_class(self.class);
 
         rsx!(
-            li { class: "{class}", { self.children } }
+            li { class: "{class}", id: self.id, { self.children } }
         )
     }
 }
 
-#[derive(PartialEq, Props, Clone, Component)]
-pub struct BreadcrumbSeparatorProps {
-    // Used to pass a custom separator
-    children: Element,
-
-    // Styling
-    #[props(default)]
-    class: String,
-}
+props!(BreadcrumbSeparatorProps {});
 
 impl Component for BreadcrumbSeparatorProps {
     fn view(self) -> Element {
-        let class = BreadcrumbSeparatorClass::builder().with_class(self.class);
+        let class = super::BreadcrumbSeparatorClass::builder().with_class(self.class);
 
         rsx!(
-            li { class: "{class}", aria_hidden: "true",
+            li { class: "{class}", aria_hidden: "true", id: self.id,
                 if self.children == None {
                     "\u{203A}"
                 } else {

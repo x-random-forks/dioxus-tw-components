@@ -1,13 +1,10 @@
 use tailwind_fuse::*;
 
-#[derive(TwClass, Clone, Copy)]
-#[tw(class = r#"flex flex-wrap items-center font-normal gap-2"#)]
-pub struct BreadcrumbClass {}
+def_class_no_variant!(
+    BreadcrumbClass,
+    r#"flex flex-wrap items-center font-normal gap-2"#
+);
 
-#[derive(TwClass, Clone, Copy)]
-#[tw(class = r#"font-normal"#)]
-pub struct BreadcrumbItemClass {}
+def_class_no_variant!(BreadcrumbItemClass, r#"font-normal"#);
 
-#[derive(TwClass, Clone, Copy)]
-#[tw(class = r#"font-semibold"#)]
-pub struct BreadcrumbSeparatorClass {}
+def_class_no_variant!(BreadcrumbSeparatorClass, r#"font-semibold"#);

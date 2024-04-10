@@ -4,48 +4,39 @@ use component_derive::Component;
 use dioxus::prelude::*;
 use tailwind_fuse::*;
 
-#[derive(PartialEq, Props, Clone, Component)]
-pub struct CheckboxProps {
-    // Name of input field, associate with its value when sending the associated form
-    #[props(default)]
-    name: String,
-    #[props(default)]
-    value: String,
-    #[props(default = false)]
-    checked: bool,
-    #[props(default = false)]
-    disabled: bool,
-    #[props(default = false)]
-    required: bool,
+props!(CheckboxProps {
+    #[props(extends = input)]
+    attributes: Vec<Attribute>,
 
     #[props(optional)]
-    oninput: EventHandler<FormEvent>,
+    oninput: Option<EventHandler<FormEvent>>,
 
-    children: Element,
-    // Styling
     #[props(default)]
     color: CheckboxColor,
-    #[props(default)]
-    class: String,
-}
+});
 
+// REVIEW: Should split into several components and move to composite ?
+// Reasoning is the label encapsulate both the input and the children (usually some text)
 impl Component for CheckboxProps {
     fn view(self) -> Element {
         let class = CheckboxClass::builder()
             .color(self.color)
             .with_class(self.class);
 
+        let oninput = move |event| {
+            if let Some(oc) = &self.oninput {
+                oc.call(event)
+            }
+        };
+
         rsx!(
             label { class: "cursor-pointer gap-x-1 flex items-center",
                 input {
-                    name: "{self.name}",
-                    value: "{self.value}",
+                    ..self.attributes,
+                    id: self.id,
                     r#type: "checkbox",
-                    checked: self.checked,
-                    disabled: self.disabled,
-                    required: self.required,
                     class: "{class}",
-                    oninput: move |e| self.oninput.call(e)
+                    oninput: oninput
                 }
                 div { class: "peer-disabled:opacity-30", {self.children} }
             }

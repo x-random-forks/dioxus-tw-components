@@ -14,7 +14,8 @@ pub struct IconProps {
     svg: IconSvg,
 }
 
-// TODO
+// REVIEW / TODO : Help using Dioxus Free Icons https://crates.io/crates/dioxus-free-icons
+// Then I can refactor the whole class, even maybe removing it
 impl Component for IconProps {
     fn view(self) -> Element {
         // let fill_color = match self.color {

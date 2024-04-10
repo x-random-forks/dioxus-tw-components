@@ -1,17 +1,9 @@
 use tailwind_fuse::*;
 
-#[derive(TwClass, Clone, Copy)]
-#[tw(class = r#"flex flex-col w-full bg-input"#)]
-pub struct SelectGroupClass {}
+def_class_no_variant!(SelectGroupClass, r#"flex flex-col w-full bg-input"#);
 
-#[derive(TwClass, Clone, Copy)]
-#[tw(class = r#"hidden"#)]
-pub struct SelectPlaceholderClass {}
+def_class_no_variant!(SelectPlaceholderClass, r#"hidden"#);
 
-#[derive(TwClass, Clone, Copy)]
-#[tw(class = r#"px-2 py-1.5 text-sm font-semibold"#)]
-pub struct SelectLabelClass {}
+def_class_no_variant!(SelectLabelClass, r#"px-2 py-1.5 text-sm font-semibold"#);
 
-#[derive(TwClass, Clone, Copy)]
-#[tw(class = r#"flex py-1.5 pl-2 pr-8 text-sm"#)]
-pub struct SelectItemClass {}
+def_class_no_variant!(SelectItemClass, r#"flex py-1.5 pl-2 pr-8 text-sm"#);

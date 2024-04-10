@@ -11,7 +11,7 @@ pub fn ModalPage() -> Element {
             ModalBackground {}
             ModalContent { 
                 div {
-                    ModalCancel { 
+                    ModalClose { 
                         Button { variant: ButtonVariant::Ghost, size: ButtonSize::Xs, "X" }
                     }
                 }

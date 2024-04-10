@@ -19,6 +19,7 @@ pub struct LabelProps {
     class: String,
 }
 
+// REVIEW / TODO : While probably get rid of this class in the end and just add a .label class in input.css
 impl Component for LabelProps {
     fn view(self) -> Element {
         let class = LabelClass::builder()

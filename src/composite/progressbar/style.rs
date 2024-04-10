@@ -1,52 +1,40 @@
 use tailwind_fuse::*;
 
-#[derive(TwClass, Clone, Copy)]
-#[tw(class = "w-full rounded-global-radius")]
-pub struct ProgressTrackClass {
+def_class_with_variant!(
+    ProgressTrackClass,
+    r#"w-full rounded-global-radius"#,
     color: ProgressTrackColor,
     size: ProgressTrackSize,
-}
+);
 
-#[derive(TwVariant, PartialEq)]
-pub enum ProgressTrackColor {
-    #[tw(class = "bg-primary")]
-    Primary,
-    #[tw(default, class = "bg-input")]
-    Secondary,
-    #[tw(class = "bg-destructive")]
-    Destructive,
-}
+def_variant!(
+    ProgressTrackColor,
+    Primary => r#"bg-primary"#,
+    Secondary => r#"bg-input"#,
+    Destructive => r#"bg-destructive"#
+);
 
-#[derive(TwVariant, PartialEq)]
-pub enum ProgressTrackSize {
-    #[tw(class = "h-2 text-xs")]
-    Sm,
-    #[tw(default, class = "h-4 text-xs")]
-    Md,
-    #[tw(class = "h-6 text-base")]
-    Lg,
-    #[tw(class = "h-8 text-lg")]
-    Xl,
-}
+def_variant!(
+    ProgressTrackSize,
+    Md => r#"h-4 text-xs"#,
+    Sm => r#"h-2 text-xs"#,
+    Lg => r#"h-6 text-base"#,
+    Xl => r#"h-8 text-lg"#
+);
 
-#[derive(TwClass, Clone, Copy)]
-#[tw(class = "h-full rounded-global-radius flex items-center justify-center")]
-pub struct ProgressBarClass {
+def_class_with_variant!(
+    ProgressBarClass,
+    r#"h-full rounded-global-radius flex items-center justify-center"#,
     color: ProgressBarColor,
-}
+);
 
-#[derive(TwVariant, PartialEq)]
-pub enum ProgressBarColor {
-    #[tw(default, class = "bg-primary [&>*]:text-primary-foreground")]
-    Primary,
-    #[tw(class = "bg-secondary [&>*]:text-secondary-foreground")]
-    Secondary,
-    #[tw(class = "bg-destructive [&>*]:text-destructive-foreground")]
-    Destructive,
-}
+def_variant!(
+    ProgressBarColor,
+    Primary => r#"bg-primary [&>*]:text-primary-foreground"#,
+    Secondary => r#"bg-secondary [&>*]:text-secondary-foreground"#,
+    Destructive => r#"bg-destructive [&>*]:text-destructive-foreground"#
+);
 
 // By default the color is set by ProgressBar using [&>*] selector, you can override it by passing
 // your color of choice to ProgressLabel's class
-#[derive(TwClass, Clone, Copy)]
-#[tw(class = "")]
-pub struct ProgressLabelClass {}
+def_class_no_variant!(ProgressLabelClass, r#""#);

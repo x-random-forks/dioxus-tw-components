@@ -1,18 +1,5 @@
 use tailwind_fuse::*;
 
-// #[derive(TwClass, Clone, Copy)]
-// #[tw(class = r#"text-center
-//             text-base font-medium
-//             rounded-global-radius
-//             shadow-global-shadow
-//             transition-colors
-//             duration-150
-//             disabled:opacity-50 disabled:cursor-not-allowed"#)]
-// pub struct ButtonClass {
-//     variant: ButtonVariant,
-//     size: ButtonSize,
-// }
-
 def_class_with_variant!(ButtonClass, r#"text-center
             text-base font-medium
             rounded-global-radius

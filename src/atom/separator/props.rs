@@ -14,6 +14,6 @@ impl Component for SeparatorProps {
             .vertical(self.vertical.into())
             .with_class(self.class);
 
-        rsx!(div { class: "{class}" })
+        rsx!( div { class: "{class}" } )
     }
 }

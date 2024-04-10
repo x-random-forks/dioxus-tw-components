@@ -1,20 +1,14 @@
 use tailwind_fuse::*;
 
 // Check input.css to personalize scrollbar class
-#[derive(TwClass, PartialEq)]
-#[tw(class = "px-2 py-4 scrollbar")]
-pub struct ScrollableClass {
-    horizontal: ScrollableHorizontal,
-}
+def_class_with_variant!(ScrollableClass, r#"px-2 py-4 scrollbar"#, horizontal: ScrollableHorizontal);
 
-#[derive(TwVariant, PartialEq)]
-pub enum ScrollableHorizontal {
-    #[tw(default, class = "overflow-y-auto overflow-x-hidden grid-flow-row")]
-    Vertical,
+def_variant!(
+    ScrollableHorizontal,
+    Vertical => r#"overflow-y-auto overflow-x-hidden grid-flow-row"#,
     // TODO WIP Trying to make horizontal scroll with mouse wheel
-    #[tw(class = "overflow-y-auto overflow-x-hidden -rotate-90 origin-[right_top] -rotate-90")]
-    Horizontal,
-}
+    Horizontal => r#"overflow-y-auto overflow-x-hidden -rotate-90 origin-[right_top] -rotate-90"#
+);
 
 impl From<bool> for ScrollableHorizontal {
     fn from(horizontal: bool) -> Self {

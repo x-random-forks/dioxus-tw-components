@@ -1,4 +1,3 @@
-use super::style::*;
 use crate::Component;
 use component_derive::Component;
 use dioxus::prelude::*;
@@ -9,16 +8,16 @@ pub struct ProgressTrackProps {
     children: Element,
     // Styling
     #[props(default)]
-    color: ProgressTrackColor,
+    color: super::ProgressTrackColor,
     #[props(default)]
-    size: ProgressTrackSize,
+    size: super::ProgressTrackSize,
     #[props(default)]
     class: String,
 }
 
 impl Component for ProgressTrackProps {
     fn view(self) -> Element {
-        let class = ProgressTrackClass::builder()
+        let class = super::ProgressTrackClass::builder()
             .color(self.color)
             .size(self.size)
             .with_class(self.class);
@@ -36,14 +35,14 @@ pub struct ProgressBarProps {
     children: Element,
     // Styling
     #[props(default)]
-    color: ProgressBarColor,
+    color: super::ProgressBarColor,
     #[props(default)]
     class: String,
 }
 
 impl Component for ProgressBarProps {
     fn view(self) -> Element {
-        let class = ProgressBarClass::builder()
+        let class = super::ProgressBarClass::builder()
             .color(self.color)
             .with_class(self.class);
 
@@ -68,7 +67,7 @@ pub struct ProgressLabelProps {
 
 impl Component for ProgressLabelProps {
     fn view(self) -> Element {
-        let class = ProgressLabelClass::builder().with_class(self.class);
+        let class = super::ProgressLabelClass::builder().with_class(self.class);
 
         rsx!(
             span { class: "{class}",

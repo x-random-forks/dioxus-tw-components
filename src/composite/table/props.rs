@@ -3,59 +3,69 @@ use component_derive::Component;
 use dioxus::prelude::*;
 use tailwind_fuse::*;
 
-props!(TableProps {});
+props!(TableProps {
+    #[props(extends = table)]
+    attributes: Vec<Attribute>,
+});
 
 impl Component for TableProps {
     fn view(self) -> Element {
         let class = super::style::TableClass::builder().with_class(self.class);
 
         rsx!(
-            table { class: class, { self.children } }
+            table { ..self.attributes, class: class, { self.children } }
         )
     }
 }
 
-props!(TableHeaderProps {});
+props!(TableHeaderProps {
+    #[props(extends = thead)]
+    attributes: Vec<Attribute>,
+});
 
 impl Component for TableHeaderProps {
     fn view(self) -> Element {
         let class = super::style::TableHeaderClass::builder().with_class(self.class);
 
         rsx!(
-            thead { class: class, { self.children } }
+            thead { ..self.attributes, class: class, { self.children } }
         )
     }
 }
 
-props!(TableBodyProps {});
+props!(TableBodyProps {
+    #[props(extends = tbody)]
+    attributes: Vec<Attribute>,
+});
 
 impl Component for TableBodyProps {
     fn view(self) -> Element {
         let class = super::style::TableBodyClass::builder().with_class(self.class);
 
         rsx!(
-            tbody { class: class, { self.children } }
+            tbody { ..self.attributes, class: class, { self.children } }
         )
     }
 }
 
-props!(TableFooterProps {});
+props!(TableFooterProps {
+    #[props(extends = tfoot)]
+    attributes: Vec<Attribute>,
+});
 
 impl Component for TableFooterProps {
     fn view(self) -> Element {
         let class = super::style::TableFooterClass::builder().with_class(self.class);
 
         rsx!(
-            tfoot { class: class, { self.children } }
+            tfoot { ..self.attributes, class: class, { self.children } }
         )
     }
 }
 
-// TODO Enum Scope, see link below
 props!(TableHeadProps {
-    // https://developer.mozilla.org/fr/docs/Web/HTML/Element/th#scope
-    #[props(default)]
-    scope: String,
+    #[props(extends = th)]
+    attributes: Vec<Attribute>,
 });
 
 impl Component for TableHeadProps {
@@ -63,43 +73,52 @@ impl Component for TableHeadProps {
         let class = super::style::TableHeadClass::builder().with_class(self.class);
 
         rsx!(
-            th { class: class, scope: self.scope, { self.children } }
+            th { ..self.attributes, class: class, { self.children } }
         )
     }
 }
 
-props!(TableRowProps {});
+props!(TableRowProps {
+    #[props(extends = tr)]
+    attributes: Vec<Attribute>,
+});
 
 impl Component for TableRowProps {
     fn view(self) -> Element {
         let class = super::style::TableRowClass::builder().with_class(self.class);
 
         rsx!(
-            tr { class: class, { self.children } }
+            tr { ..self.attributes, class: class, { self.children } }
         )
     }
 }
 
-props!(TableCellProps {});
+props!(TableCellProps {
+    #[props(extends = td)]
+    attributes: Vec<Attribute>,
+});
 
 impl Component for TableCellProps {
     fn view(self) -> Element {
         let class = super::style::TableCellClass::builder().with_class(self.class);
 
         rsx!(
-            td { class: class, { self.children } }
+            td { ..self.attributes, class: class, { self.children } }
         )
     }
 }
 
-props!(TableCaptionProps {});
+props!(TableCaptionProps {
+    #[props(extends = caption)]
+    attributes: Vec<Attribute>,
+});
 
 impl Component for TableCaptionProps {
     fn view(self) -> Element {
         let class = super::style::TableCaptionClass::builder().with_class(self.class);
 
         rsx!(
-            caption { class: class, { self.children } }
+            caption { ..self.attributes, class: class, { self.children } }
         )
     }
 }
