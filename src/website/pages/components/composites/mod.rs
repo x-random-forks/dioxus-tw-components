@@ -33,3 +33,6 @@ pub use accordionpage::AccordionPage;
 
 mod tablepage;
 pub use tablepage::TablePage;
+
+mod tabspage;
+pub use tabspage::TabsPage;

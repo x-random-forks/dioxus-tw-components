@@ -44,6 +44,7 @@ pub fn SideNavComp() -> Element {
         "scrollable",
         "select",
         "table",
+        "tabs",
     ];
 
     let composites = composite_names

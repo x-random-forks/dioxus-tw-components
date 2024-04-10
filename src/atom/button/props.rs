@@ -1,4 +1,3 @@
-use super::style::*;
 use crate::Component;
 use component_derive::Component;
 use dioxus::prelude::*;
@@ -13,15 +12,15 @@ props! {
         onclick: Option<EventHandler<MouseEvent>>,
 
         #[props(default)]
-        variant: ButtonVariant,
+        variant: super::ButtonVariant,
         #[props(default)]
-        size: ButtonSize,
+        size: super::ButtonSize,
     }
 }
 
 impl Component for ButtonProps {
     fn view(self) -> Element {
-        let class = ButtonClass::builder()
+        let class = super::ButtonClass::builder()
             .variant(self.variant)
             .size(self.size)
             .with_class(self.class);

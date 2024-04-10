@@ -60,6 +60,8 @@ pub enum Route {
             SelectPage {},
             #[route("/component/composite/table")]
             TablePage {},
+            #[route("/component/composite/tabs")]
+            TabsPage {},
         #[end_layout]
     #[route("/..route")]
     NotFound {}
