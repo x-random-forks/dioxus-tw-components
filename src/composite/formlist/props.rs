@@ -21,27 +21,22 @@ impl Component for FormListProps {
             ));
 
         let vec_size = self.group_vec.len();
+
         let button_closure_plus = move |_| {
-            log::debug!("Plus Button Clicked");
             if group_to_render() < vec_size {
                 group_to_render += 1;
             }
         };
+
         let button_closure_minus = move |_| {
-            log::debug!("Minus Button Clicked");
             if group_to_render() > 1 {
                 group_to_render -= 1;
             }
         };
 
         rsx!(
-            Button { r#type: "button", variant: ButtonVariant::Outline, onclick: button_closure_plus, "+" }
-            Button {
-                r#type: "button",
-                variant: ButtonVariant::Outline,
-                onclick: button_closure_minus,
-                "-"
-            }
+            Button { onclick: button_closure_plus, r#type: "button", "+" }
+            Button { onclick: button_closure_minus, r#type: "button", "-" }
             { rendered_group_vec }
         )
     }

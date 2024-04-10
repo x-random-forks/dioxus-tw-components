@@ -1,18 +1,12 @@
 use tailwind_fuse::*;
 
-#[derive(TwClass, Clone, Copy)]
-#[tw(class = r#"bg-border shrink-0"#)]
-pub struct SeparatorClass {
-    vertical: SeparatorOrientation,
-}
+def_class_with_variant!(SeparatorClass, "bg-border shrink-0", vertical: SeparatorOrientation);
 
-#[derive(TwVariant, PartialEq)]
-pub enum SeparatorOrientation {
-    #[tw(default, class = "w-full h-[1px]")]
-    Horizontal,
-    #[tw(class = "h-full w-[1px]")]
-    Vertical,
-}
+def_variant!(
+    SeparatorOrientation,
+    Horizontal => r#"w-full h-[1px]"#,
+    Vertical => r#"h-full w-[1px]"#
+);
 
 impl From<bool> for SeparatorOrientation {
     fn from(value: bool) -> Self {

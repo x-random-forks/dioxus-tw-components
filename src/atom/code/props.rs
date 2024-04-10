@@ -1,8 +1,6 @@
-use super::style::*;
 use crate::Component;
 use component_derive::Component;
 use dioxus::prelude::*;
-use tailwind_fuse::*;
 
 #[derive(PartialEq, Props, Clone, Component)]
 pub struct CodeProps {

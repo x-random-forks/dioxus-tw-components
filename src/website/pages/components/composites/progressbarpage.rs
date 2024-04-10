@@ -25,8 +25,8 @@ pub fn ProgressBarPage() -> Element {
             ProgressTrack { size: ProgressTrackSize::Lg }
             ProgressTrack { size: ProgressTrackSize::Xl }
             div {
-                Button { variant: ButtonVariant::Outline, onclick: button_plus_closure, "+" }
-                Button { variant: ButtonVariant::Outline, onclick: button_minus_closure, "-" }
+                Button { onclick: button_plus_closure, variant: ButtonVariant::Outline, "+" }
+                Button { onclick: button_minus_closure, variant: ButtonVariant::Outline, "-" }
             }
             ProgressTrack { ProgressBar { progress: progress() } }
             ProgressTrack { ProgressBar { progress: progress(), color: ProgressBarColor::Secondary } }

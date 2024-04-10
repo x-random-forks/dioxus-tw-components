@@ -11,6 +11,7 @@ pub fn InputPage() -> Element {
             div { Input { r#type: "email", placeholder: "email" } }
             div { Input { r#type: "number", value: "2" } }
             div { Input { r#type: "text", disabled: true } }
+            div { Input { r#type: "text" } }
         }
     )
 }

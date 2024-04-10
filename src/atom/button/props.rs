@@ -4,27 +4,20 @@ use component_derive::Component;
 use dioxus::prelude::*;
 use tailwind_fuse::*;
 
-#[derive(Props, Clone, PartialEq, Component)]
-pub struct ButtonProps {
-    #[props(default)]
-    r#type: String,
-    #[props(default)]
-    name: String,
-    #[props(default = false)]
-    disabled: bool,
+props! {
+    ButtonProps {
+        #[props(extends = button)]
+        attributes: Vec<Attribute>,
 
-    #[props(optional)]
-    onclick: EventHandler<MouseEvent>,
+        #[props(optional)]
+        onclick: Option<EventHandler<MouseEvent>>,
 
-    children: Element,
-
-    // Styling
-    #[props(default)]
-    variant: ButtonVariant,
-    #[props(default)]
-    size: ButtonSize,
-    #[props(default)]
-    class: String,
+        // Styling
+        #[props(default)]
+        variant: ButtonVariant,
+        #[props(default)]
+        size: ButtonSize,
+    }
 }
 
 impl Component for ButtonProps {
@@ -34,13 +27,18 @@ impl Component for ButtonProps {
             .size(self.size)
             .with_class(self.class);
 
+        let onclick = move |event| {
+            if let Some(oc) = &self.onclick {
+                oc.call(event)
+            }
+        };
+
         rsx!(
             button {
-                r#type: "{self.r#type}",
-                name: "{self.name}",
-                disabled: self.disabled,
-                onclick: move |e| self.onclick.call(e),
+                ..self.attributes,
                 class: "{class}",
+                id: self.id,
+                onclick: onclick,
                 {self.children}
             }
         )

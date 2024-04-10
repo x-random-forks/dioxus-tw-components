@@ -1,4 +1,3 @@
-use super::style::*;
 use crate::Component;
 use component_derive::Component;
 use dioxus::prelude::*;
@@ -11,10 +10,10 @@ props_no_children!(SeparatorProps {
 
 impl Component for SeparatorProps {
     fn view(self) -> Element {
-        let class = SeparatorClass::builder()
+        let class = super::SeparatorClass::builder()
             .vertical(self.vertical.into())
             .with_class(self.class);
 
-        rsx!( div { class: "{class}" } )
+        rsx!(div { class: "{class}" })
     }
 }

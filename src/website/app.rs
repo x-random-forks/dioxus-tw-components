@@ -1,5 +1,3 @@
-use std::rc::Rc;
-
 use dioxus::prelude::*;
 use dioxus_components_bin::composite::lightswitch::LightSwitchSignal;
 
