@@ -5,9 +5,6 @@ use tailwind_fuse::*;
 
 struct TabsState(String);
 
-// TODO Props without a class ?
-// Eg this one, Accordion,...
-
 props!(TabsProps {
     #[props(into)]
     default_tab: String,
@@ -41,17 +38,17 @@ props!(TabsTriggerProps {});
 
 impl Component for TabsTriggerProps {
     fn view(self) -> Element {
-        let mut context = consume_context::<Signal<TabsState>>();
+        let mut tab_state = consume_context::<Signal<TabsState>>();
 
         let class = super::style::TabsTriggerClass::builder().with_class(self.class);
 
-        let state = match context.read().0 == self.id {
+        let state = match tab_state.read().0 == self.id {
             true => "active",
             false => "inactive",
         };
 
         let onclick = move |_| {
-            context.set(TabsState(self.id.clone()));
+            tab_state.set(TabsState(self.id.clone()));
         };
 
         rsx!(
@@ -65,12 +62,12 @@ props!(TabsContentProps {});
 
 impl Component for TabsContentProps {
     fn view(self) -> Element {
-        let context = consume_context::<Signal<TabsState>>();
+        let tab_state = consume_context::<Signal<TabsState>>();
 
         let class = super::style::TabsContentClass::builder().with_class(self.class);
 
         rsx!(
-            div { class: class, hidden: if context.read().0 == self.id { false } else { true }, { self.children } }
+            div { class: class, hidden: if tab_state.read().0 == self.id { false } else { true }, { self.children } }
         )
     }
 }

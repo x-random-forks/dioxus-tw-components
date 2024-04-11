@@ -10,9 +10,12 @@ use crate::website::router::Route;
 pub fn Header() -> Element {
     let left_part = rsx!(
         Link { class: "mr-6", to: "/", div { class: "text-foreground font-bold", "Dioxus Lib Comp" } }
-        ul { class: "text-sm list-none flex",
+        ul { class: "text-sm list-none flex space-x-2",
             li {
                 Link { class: "anchor", to: "/component/atom/button", "Component" }
+            }
+            li {
+                Link { class: "anchor", to: "/test", "Test" }
             }
         }
     );

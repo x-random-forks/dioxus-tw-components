@@ -1,4 +1,4 @@
-workspace = { members = ["component-derive"] }
+workspace = { members = ["component-derive", "myderive"] }
 [package]
 name = "dioxus_components_bin"
 version = "0.1.0"
@@ -26,3 +26,4 @@ tailwind_fuse = { version = "0.2.0", features = ["variant"] }
 web-sys = {version = "0.3.69"}
 
 component-derive = { path = "component-derive" }
+myderive = { path = "myderive" }

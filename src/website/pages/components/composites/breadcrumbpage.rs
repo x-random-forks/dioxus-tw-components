@@ -5,7 +5,7 @@ pub fn BreadcrumbPage() -> Element {
     rsx!(
         div { class: "",
             "BREADCRUMB PAGE"
-            Breadcrumb { class: "text-sm text-muted-foreground",
+            Breadcrumb { class: "",
                 BreadcrumbItem { "Home" }
                 BreadcrumbSeparator {}
                 BreadcrumbItem { "Library" }

@@ -67,3 +67,28 @@ macro_rules! def_variant {
         }
     };
 }
+
+// TESTING
+macro_rules! impl_colorable {
+    ($type:ty, $($variant:ident => $color:expr),* $(,)?) => {
+        impl Colorable for $type {
+            fn color(&self) -> &'static str {
+                match self.color {
+                    $(
+                        Color::$variant => $color,
+                    )*
+                }
+            }
+        }
+    };
+}
+
+macro_rules! impl_base_class {
+    ($type:ty, $base:expr) => {
+        impl BaseClass for $type {
+            fn base(&self) -> &'static str {
+                $base
+            }
+        }
+    };
+}

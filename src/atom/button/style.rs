@@ -6,14 +6,21 @@ def_class_with_variant!(ButtonClass, r#"text-center
             shadow-global-shadow
             transition-colors
             duration-150
-            disabled:opacity-50 disabled:cursor-not-allowed"#, variant: ButtonVariant, size: ButtonSize);
+            disabled:opacity-50 disabled:cursor-not-allowed"#, variant: ButtonVariant, color: ButtonColor, size: ButtonSize);
+
+def_variant!(
+    ButtonColor,
+    Default => r#"bg-background text-foreground hover:bg-foreground/20 active:bg-foreground/30 active:shadow"#,
+    Primary => r#"bg-primary text-primary-foreground border-primary hover:bg-primary/90 active:bg-primary/80 active:shadow"#,
+    Secondary => r#"bg-secondary text-secondary-foreground border-secondary hover:bg-secondary/90 active:bg-secondary/80 active:shadow"#,
+    Destructive => r#"bg-destructive text-destructive-foreground border-destructive hover:bg-destructive/90 active:bg-destructive/80 active:shadow"#
+);
 
 def_variant!(
     ButtonVariant,
-    Primary => r#"bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 active:shadow"#,
-    Secondary => r#"bg-secondary text-secondary-foreground hover:bg-secondary/90 active:bg-secondary/80 active:shadow"#,
-    Outline => r#"border border-input bg-background hover:bg-accent/80 hover:text-accent-foreground active:bg-accent active:shadow"#,
-    Ghost => r#"border-none text-foreground hover:bg-accent/80 active:bg-accent active:shadow"#
+    Default => r#"border-none"#,
+    Outline => r#"border"#,
+    Ghost => r#"border-none"#
 );
 
 def_variant!(

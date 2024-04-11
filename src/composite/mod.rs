@@ -5,6 +5,7 @@ pub mod formlist;
 pub mod lightswitch;
 pub mod modal;
 pub mod navbar;
+pub mod pagination;
 pub mod progressbar;
 pub mod radiogroup;
 pub mod scrollable;
