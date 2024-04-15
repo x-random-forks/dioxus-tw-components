@@ -1,15 +1,20 @@
-use tailwind_fuse::*;
+use super::props::*;
+use crate::types::*;
 
-// def_class_no_variant!(AccordionClass, "");
+impl BaseClass for AccordionItemProps {
+    fn base(&self) -> &'static str {
+        "border-b"
+    }
+}
 
-def_class_no_variant!(AccordionItemClass, "border-b");
+impl BaseClass for AccordionTriggerProps {
+    fn base(&self) -> &'static str {
+        "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline"
+    }
+}
 
-def_class_no_variant!(
-    AccordionTriggerClass,
-    "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline"
-);
-
-def_class_no_variant!(
-    AccordionContentClass,
-    "text-sm overflow-hidden transition-all"
-);
+impl BaseClass for AccordionContentProps {
+    fn base(&self) -> &'static str {
+        "text-sm overflow-hidden transition-all"
+    }
+}

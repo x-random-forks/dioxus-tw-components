@@ -1,9 +1,26 @@
-use tailwind_fuse::*;
+use super::props::*;
+use crate::types::*;
 
-def_class_no_variant!(SelectGroupClass, r#"flex flex-col w-full bg-input"#);
+impl BaseClass for SelectGroupProps {
+    fn base(&self) -> &'static str {
+        "flex flex-col w-full bg-input"
+    }
+}
 
-def_class_no_variant!(SelectPlaceholderClass, r#"hidden"#);
+impl BaseClass for SelectPlaceholderProps {
+    fn base(&self) -> &'static str {
+        "hidden"
+    }
+}
 
-def_class_no_variant!(SelectLabelClass, r#"px-2 py-1.5 text-sm font-semibold"#);
+impl BaseClass for SelectLabelProps {
+    fn base(&self) -> &'static str {
+        "px-2 py-1.5 text-sm font-semibold"
+    }
+}
 
-def_class_no_variant!(SelectItemClass, r#"flex py-1.5 pl-2 pr-8 text-sm"#);
+impl BaseClass for SelectItemProps {
+    fn base(&self) -> &'static str {
+        "flex py-1.5 pl-2 pr-8 text-sm"
+    }
+}

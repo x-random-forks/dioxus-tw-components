@@ -1,19 +1,12 @@
-use crate::Component;
-use component_derive::Component;
 use dioxus::prelude::*;
+use myderive::props_component;
 use tailwind_fuse::*;
 
-props_no_children!(SeparatorProps {
-    #[props(default = false)]
-    vertical: bool,
-});
+use crate::types::*;
 
-impl Component for SeparatorProps {
-    fn view(self) -> Element {
-        let class = super::SeparatorClass::builder()
-            .vertical(self.vertical.into())
-            .with_class(self.class);
+#[props_component(class)]
+pub fn Separator(#[props(default = false)] vertical: bool) -> Element {
+    let class = tw_merge!(props.base(), props.variant(), props.class);
 
-        rsx!( div { class: "{class}" } )
-    }
+    rsx!( div { class: class } )
 }

@@ -1,10 +1,20 @@
-use tailwind_fuse::*;
+use super::props::*;
+use crate::types::*;
 
-def_class_no_variant!(DropdownClass, r#"relative group"#);
+impl BaseClass for DropdownProps {
+    fn base(&self) -> &'static str {
+        "relative group"
+    }
+}
 
-def_class_no_variant!(DropdownToggleClass, r#""#);
+impl BaseClass for DropdownToggleProps {
+    fn base(&self) -> &'static str {
+        ""
+    }
+}
 
-def_class_no_variant!(
-    DropdownContentClass,
-    r#"absolute hidden z-10 group-focus-within:block shadow-sm bg-background rounded-global-radius border border-border my-1 p-2 whitespace-nowrap"#
-);
+impl BaseClass for DropdownContentProps {
+    fn base(&self) -> &'static str {
+        "absolute hidden z-10 group-focus-within:block shadow-sm bg-background rounded-global-radius border border-border my-1 p-2 whitespace-nowrap"
+    }
+}

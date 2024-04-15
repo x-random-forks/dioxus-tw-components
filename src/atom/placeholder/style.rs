@@ -1,25 +1,26 @@
-use tailwind_fuse::*;
+use super::props::*;
+use crate::types::*;
 
-def_class_with_variant!(PlaceholderClass, r#"bg-muted"#, radius: PlaceholderRadius, animation: PlaceholderAnimation);
+impl BaseClass for PlaceholderProps {
+    fn base(&self) -> &'static str {
+        "bg-muted"
+    }
+}
 
-def_variant!(
-    PlaceholderRadius,
-    Global => r#"rounded-global-radius"#,
-    Full => r#"rounded-full"#,
-    None => r#"rounded-none"#
-);
+#[derive(Default, Clone, Copy, PartialEq)]
+pub enum PlaceholderRadius {
+    #[default]
+    Global,
+    Full,
+    None,
+}
 
-def_variant!(
-    PlaceholderAnimation,
-    Pulse => r#"animate-pulse"#,
-    None => r#""#
-);
-
-impl From<bool> for PlaceholderAnimation {
-    fn from(animated: bool) -> Self {
-        match animated {
-            true => PlaceholderAnimation::Pulse,
-            false => PlaceholderAnimation::None,
+impl Variation for PlaceholderProps {
+    fn variant(&self) -> &'static str {
+        match self.radius {
+            PlaceholderRadius::Global => "rounded-global-radius",
+            PlaceholderRadius::Full => "rounded-full",
+            PlaceholderRadius::None => "rounded-none",
         }
     }
 }

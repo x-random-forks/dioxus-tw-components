@@ -1,81 +1,40 @@
-use crate::Component;
-use component_derive::Component;
 use dioxus::prelude::*;
+use myderive::props_component;
 use tailwind_fuse::*;
 
-#[derive(PartialEq, Props, Clone, Component)]
-pub struct ProgressTrackProps {
-    children: Element,
-    // Styling
-    #[props(default)]
-    color: super::ProgressTrackColor,
-    #[props(default)]
-    size: super::ProgressTrackSize,
-    #[props(default)]
-    class: String,
+use crate::types::*;
+
+#[props_component(class, children, id)]
+pub fn ProgressTrack(
+    #[props(default = Color::Primary)] color: Color,
+    #[props(default)] size: Size,
+) -> Element {
+    let class = tw_merge!(props.base(), props.color(), props.size(), props.class);
+
+    rsx!(
+        div { class: class, id: props.id, {props.children} }
+    )
 }
 
-impl Component for ProgressTrackProps {
-    fn view(self) -> Element {
-        let class = super::ProgressTrackClass::builder()
-            .color(self.color)
-            .size(self.size)
-            .with_class(self.class);
+#[props_component(class, children, id)]
+pub fn ProgressBar(#[props(default = 50)] progress: u8, #[props(default)] color: Color) -> Element {
+    let class = tw_merge!(props.base(), props.color(), props.class);
 
-        rsx!(
-            div { class: "{class}", {self.children} }
-        )
-    }
+    rsx!(
+        div { class: class, style: "width: {props.progress}%", id: props.id,
+            div { {props.children} }
+        }
+    )
 }
 
-#[derive(PartialEq, Props, Clone, Component)]
-pub struct ProgressBarProps {
-    #[props(default = 50)]
-    progress: u8,
-    children: Element,
-    // Styling
-    #[props(default)]
-    color: super::ProgressBarColor,
-    #[props(default)]
-    class: String,
-}
+#[props_component(class, children, id)]
+pub fn ProgressLabel(
+    #[props(default = 50)] progress: u8,
+    #[props(default = true)] show_percentage: bool,
+) -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-impl Component for ProgressBarProps {
-    fn view(self) -> Element {
-        let class = super::ProgressBarClass::builder()
-            .color(self.color)
-            .with_class(self.class);
-
-        rsx!(
-            div { class: "{class}", style: "width: {self.progress}%",
-                div { {self.children} }
-            }
-        )
-    }
-}
-
-#[derive(PartialEq, Props, Clone, Component)]
-pub struct ProgressLabelProps {
-    #[props(default = 50)]
-    progress: u8,
-    #[props(default = true)]
-    show_percentage: bool,
-    // Styling
-    #[props(default)]
-    class: String,
-}
-
-impl Component for ProgressLabelProps {
-    fn view(self) -> Element {
-        let class = super::ProgressLabelClass::builder().with_class(self.class);
-
-        rsx!(
-            span { class: "{class}",
-                {self.progress.to_string()},
-                if self.show_percentage {
-                    "%"
-                }
-            }
-        )
-    }
+    rsx!(
+        span { class: class, {props.progress.to_string()}, if props.show_percentage { "%" } }
+    )
 }

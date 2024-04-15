@@ -1,6 +1,8 @@
-use tailwind_fuse::*;
+use super::props::*;
+use crate::types::*;
 
-def_class_no_variant!(
-    NavbarClass,
-    r#"container flex h-12 max-w-screen-2xl items-center"#
-);
+impl BaseClass for NavbarProps {
+    fn base(&self) -> &'static str {
+        "container flex h-12 max-w-screen-2xl items-center"
+    }
+}

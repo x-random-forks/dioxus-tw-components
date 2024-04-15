@@ -14,9 +14,6 @@ pub fn Header() -> Element {
             li {
                 Link { class: "anchor", to: "/component/atom/button", "Component" }
             }
-            li {
-                Link { class: "anchor", to: "/test", "Test" }
-            }
         }
     );
 

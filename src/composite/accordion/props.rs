@@ -1,90 +1,83 @@
-use crate::{hooks::use_signal_unique_id, Component};
-use component_derive::Component;
+use crate::hooks::use_signal_unique_id;
+use crate::types::*;
 use dioxus::prelude::*;
+use myderive::props_component;
 use tailwind_fuse::*;
 use web_sys::wasm_bindgen::JsValue;
 
 struct AccordionState(bool);
 
-// TODO Add multi_open functionality
-props!(AccordionProps {
-    #[props(default = false)]
-    multi_open: bool,
-});
+// TODO Check if this works with multiple accordions
 
-impl Component for AccordionProps {
-    fn view(self) -> Element {
-        rsx!({ self.children })
-    }
+#[props_component(id, class, children)]
+pub fn Accordion(#[props(default = false)] multi_open: bool) -> Element {
+    let class = tw_merge!(props.class);
+
+    rsx!(
+        div { class: class, id: props.id, {props.children} }
+    )
 }
 
-props!(AccordionItemProps {});
+#[props_component(id, class, children)]
+pub fn AccordionItem() -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-impl Component for AccordionItemProps {
-    fn view(self) -> Element {
-        let class = super::style::AccordionItemClass::builder().with_class("");
+    use_context_provider(|| Signal::new(AccordionState(false)));
 
-        use_context_provider(|| Signal::new(AccordionState(false)));
-
-        rsx!(
-            div { class: "{class}", id: self.id, {self.children} }
-        )
-    }
+    rsx!(
+        div { class: class, id: props.id, {props.children} }
+    )
 }
 
-props!(AccordionTriggerProps {});
+#[props_component(id, class, children)]
+pub fn AccordionTrigger() -> Element {
+    let button_closure = move |_: Event<MouseData>| {
+        if read_accordion_state() {
+            use_accordion_state().set(AccordionState(false));
+        } else {
+            use_accordion_state().set(AccordionState(true));
+        }
+    };
 
-impl Component for AccordionTriggerProps {
-    fn view(self) -> Element {
-        let button_closure = move |_: Event<MouseData>| {
-            if read_accordion_state() {
-                use_accordion_state().set(AccordionState(false));
-            } else {
-                use_accordion_state().set(AccordionState(true));
-            }
-        };
+    let class = tw_merge!(props.base(), props.class);
 
-        let class = super::style::AccordionTriggerClass::builder().with_class(self.class);
-
-        rsx!( button { class: "{class}", id: self.id, onclick: button_closure, "Button" } )
-    }
+    rsx!(
+        button { class: class, id: props.id, onclick: button_closure, {props.children} }
+    )
 }
 
-props!(AccordionContentProps {});
+#[props_component(id, class, children)]
+pub fn AccordionContent() -> Element {
+    let mut elem_height = use_signal(|| "".to_string());
+    let sig_id = use_signal_unique_id(props.id.clone());
 
-impl Component for AccordionContentProps {
-    fn view(self) -> Element {
-        let mut elem_height = use_signal(|| "".to_string());
-        let sig_id = use_signal_unique_id(self.id.clone());
+    let final_height = match read_accordion_state() {
+        true => elem_height(),
+        false => "0".to_string(),
+    };
 
-        let final_height = match read_accordion_state() {
-            true => elem_height(),
-            false => "0".to_string(),
-        };
-
-        let onmounted = move |_| async move {
-            match get_element_height(&sig_id()) {
-                Ok(height) => {
-                    elem_height.set(format!("{}px", height));
-                }
-                Err(e) => {
-                    log::error!("Failed to get element height: {:?}", e);
-                }
+    let onmounted = move |_| async move {
+        match get_element_height(&sig_id()) {
+            Ok(height) => {
+                elem_height.set(format!("{}px", height));
             }
-        };
-
-        let class = super::style::AccordionContentClass::builder().with_class(self.class);
-
-        rsx!(
-            div {
-                id: "{self.id}",
-                class: "{class}",
-                height: final_height,
-                onmounted: onmounted,
-                {self.children}
+            Err(e) => {
+                log::error!("Failed to get element height: {:?}", e);
             }
-        )
-    }
+        }
+    };
+
+    let class = tw_merge!(props.base(), props.class);
+
+    rsx!(
+        div {
+            id: props.id,
+            class: class,
+            height: final_height,
+            onmounted: onmounted,
+            {props.children}
+        }
+    )
 }
 
 fn get_element_height(sig_id: &str) -> Result<i32, JsValue> {

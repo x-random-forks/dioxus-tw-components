@@ -1,30 +1,22 @@
-use super::style::*;
-use crate::Component;
-use component_derive::Component;
 use dioxus::prelude::*;
+use myderive::props_component;
 use tailwind_fuse::*;
 
-props_no_children!(InputProps {
-    #[props(extends = input)]
-    attribute: Vec<Attribute>,
+use crate::types::*;
 
-    #[props(optional)]
-    oninput: Option<EventHandler<FormEvent>>,
+#[props_component(id, class)]
+pub fn Input(
+    #[props(extends = input)] attributes: Vec<Attribute>,
+    #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
+    #[props(default)] size: Size,
+) -> Element {
+    let class = tw_merge!(props.base(), props.size(), props.class);
 
-    #[props(default)]
-    size: InputSize,
-});
+    let oninput = move |event| {
+        if let Some(oc) = &props.oninput {
+            oc.call(event)
+        }
+    };
 
-impl Component for InputProps {
-    fn view(self) -> Element {
-        let class = InputClass::builder().size(self.size).with_class(self.class);
-
-        let oninput = move |event| {
-            if let Some(oc) = &self.oninput {
-                oc.call(event)
-            }
-        };
-
-        rsx! { input { ..self.attribute, oninput: oninput, class: class } }
-    }
+    rsx! { input { ..props.attributes, oninput: oninput, class: class, id: props.id } }
 }

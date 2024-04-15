@@ -4,7 +4,6 @@ use super::pages::{components::sidenav::SideNavComp, header::Header};
 use crate::website::app::HomePage;
 use crate::website::pages::components::atoms::*;
 use crate::website::pages::components::composites::*;
-use crate::website::pages::test_page::TestPage;
 
 #[derive(Routable, Clone)]
 #[rustfmt::skip]
@@ -12,8 +11,6 @@ pub enum Route {
     #[layout(Header)]
         #[route("/")]
         HomePage {},
-        #[route("/test")]
-        TestPage {},
         #[layout(SideNavComp)]
             #[route("/component/atom/button")]
             ButtonPage {},

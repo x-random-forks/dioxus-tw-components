@@ -1,27 +1,37 @@
-use crate::Component;
-use component_derive::Component;
 use dioxus::prelude::*;
+use myderive::props_component;
 use tailwind_fuse::*;
 
-#[derive(PartialEq, Props, Clone, Component)]
-pub struct ScrollableProps {
-    #[props(default = false)]
-    horizontal: bool,
-    children: Element,
+use crate::types::*;
 
-    // Styling
-    #[props(default)]
-    class: String,
+#[props_component(class, children, id)]
+pub fn Scrollable(#[props(default = false)] horizontal: bool) -> Element {
+    let class = tw_merge!(props.base(), props.variant(), props.class);
+
+    rsx!(
+        div { class: class, id: props.id, {props.children} }
+    )
 }
 
-impl Component for ScrollableProps {
-    fn view(self) -> Element {
-        let class = super::ScrollableClass::builder()
-            .horizontal(self.horizontal.into())
-            .with_class(self.class);
+// #[derive(PartialEq, Props, Clone, Component)]
+// pub struct ScrollableProps {
+//     #[props(default = false)]
+//     horizontal: bool,
+//     children: Element,
 
-        rsx!(
-            div { class: "{class}", {self.children} }
-        )
-    }
-}
+//     // Styling
+//     #[props(default)]
+//     class: String,
+// }
+
+// impl Component for ScrollableProps {
+//     fn view(self) -> Element {
+//         let class = super::ScrollableClass::builder()
+//             .horizontal(self.horizontal.into())
+//             .with_class(self.class);
+
+//         rsx!(
+//             div { class: "{class}", {self.children} }
+//         )
+//     }
+// }

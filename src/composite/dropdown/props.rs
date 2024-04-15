@@ -1,43 +1,34 @@
-use super::style::*;
-use crate::Component;
-use component_derive::Component;
 use dioxus::prelude::*;
+use myderive::props_component;
 use tailwind_fuse::*;
 
-props!(DropdownProps {});
+use crate::types::*;
 
-impl Component for DropdownProps {
-    fn view(self) -> Element {
-        let class = DropdownClass::builder().with_class(self.class);
+#[props_component(class, id, children)]
+pub fn Dropdown(#[props(default)] open: bool) -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-        rsx!(
-            div { class: "{class}", id: self.id, {self.children} }
-        )
-    }
+    rsx!(
+        div { class: class, id: props.id, {props.children} }
+    )
 }
 
-props!(DropdownToggleProps {});
+#[props_component(class, id, children)]
+pub fn DropdownToggle() -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-impl Component for DropdownToggleProps {
-    fn view(self) -> Element {
-        let class = DropdownToggleClass::builder().with_class(self.class);
-
-        rsx!(
-            div { class: "{class}", id: self.id, {self.children} }
-        )
-    }
+    rsx!(
+        div { class: class, id: props.id, {props.children} }
+    )
 }
 
 // Use HTML/CSS black magic to render the dropdown content
 // group-focus-within:block
-props!(DropdownContentProps {});
+#[props_component(class, id, children)]
+pub fn DropdownContent() -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-impl Component for DropdownContentProps {
-    fn view(self) -> Element {
-        let class = DropdownContentClass::builder().with_class(self.class);
-
-        rsx!(
-            div { class: "{class}", id: self.id, {self.children} }
-        )
-    }
+    rsx!(
+        div { class: class, id: props.id, {props.children} }
+    )
 }

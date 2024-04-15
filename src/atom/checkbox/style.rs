@@ -1,10 +1,24 @@
-use tailwind_fuse::*;
+use super::props::*;
+use crate::types::*;
 
-def_class_with_variant!(CheckboxClass, r#"peer"#, color: CheckboxColor);
+impl BaseClass for CheckboxProps {
+    fn base(&self) -> &'static str {
+        "peer"
+    }
+}
 
-def_variant!(
-    CheckboxColor,
-    Primary => r#"accent-primary focus:ring-primary focus:ring-2 focus:ring-offset-1"#,
-    Secondary => r#"accent-secondary focus:ring-secondary focus:ring-2 focus:ring-offset-1"#,
-    Accent => r#"accent-accent focus:ring-accent-foreground focus:ring-2 focus:ring-offset-1"#
-);
+impl Colorable for CheckboxProps {
+    fn color(&self) -> &'static str {
+        match self.color {
+            Color::Primary => "accent-primary focus:ring-primary focus:ring-2 focus:ring-offset-1",
+            Color::Secondary => {
+                "accent-secondary focus:ring-secondary focus:ring-2 focus:ring-offset-1"
+            }
+            Color::Destructive => {
+                "accent-destructive focus:ring-destructive focus:ring-2 focus:ring-offset-1"
+            }
+            Color::Success => "accent-success focus:ring-success focus:ring-2 focus:ring-offset-1",
+            _ => "accent-primary focus:ring-primary focus:ring-2 focus:ring-offset-1",
+        }
+    }
+}

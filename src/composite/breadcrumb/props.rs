@@ -1,46 +1,38 @@
-use crate::Component;
-use component_derive::Component;
 use dioxus::prelude::*;
+use myderive::props_component;
 use tailwind_fuse::*;
 
-props!(BreadcrumbProps {});
+use crate::types::*;
 
-impl Component for BreadcrumbProps {
-    fn view(self) -> Element {
-        let class = super::BreadcrumbClass::builder().with_class(self.class);
+#[props_component(class, id, children)]
+pub fn Breadcrumb(#[props(default)] separator: bool) -> Element {
+    let class = tw_merge!(props.class);
 
-        rsx!(
-            ol { class: "{class}", id: self.id, { self.children } }
-        )
-    }
+    rsx!(
+        ol { class: class, id: props.id, {props.children} }
+    )
 }
 
-props!(BreadcrumbItemProps {});
+#[props_component(class, id, children)]
+pub fn BreadcrumbItem() -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-impl Component for BreadcrumbItemProps {
-    fn view(self) -> Element {
-        let class = super::BreadcrumbItemClass::builder().with_class(self.class);
-
-        rsx!(
-            li { class: "{class}", id: self.id, { self.children } }
-        )
-    }
+    rsx!(
+        li { class: class, id: props.id, {props.children} }
+    )
 }
 
-props!(BreadcrumbSeparatorProps {});
+#[props_component(class, id, children)]
+pub fn BreadcrumbSeparator() -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-impl Component for BreadcrumbSeparatorProps {
-    fn view(self) -> Element {
-        let class = super::BreadcrumbSeparatorClass::builder().with_class(self.class);
-
-        rsx!(
-            li { class: "{class}", aria_hidden: "true", id: self.id,
-                if self.children == None {
-                    "\u{203A}"
-                } else {
-                    { self.children }
-                }
+    rsx!(
+        li { class: class, aria_hidden: "true", id: props.id,
+            if props.children == None {
+                "\u{203A}"
+            } else {
+                {props.children}
             }
-        )
-    }
+        }
+    )
 }

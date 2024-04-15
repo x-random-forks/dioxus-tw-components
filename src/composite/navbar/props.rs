@@ -1,28 +1,20 @@
-use crate::Component;
-use component_derive::Component;
 use dioxus::prelude::*;
+use myderive::props_component;
 use tailwind_fuse::*;
 
-props_no_children!(NavbarProps {
-    #[props(default)]
-    left_part: Element,
-    #[props(default)]
-    right_part: Element,
-});
+use crate::types::*;
 
-// TODO: Split this into multiple components
-impl Component for NavbarProps {
-    fn view(self) -> Element {
-        let class = super::NavbarClass::builder().with_class(self.class);
+#[props_component(class, id)]
+pub fn Navbar(
+    #[props(default)] left_part: Element,
+    #[props(default)] right_part: Element,
+) -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-        // TODO Move this
-        let left_part_class = "flex space-x-2 items-center ml-6";
-        let right_part_class = "flex flex-1 items-center justify-end space-x-2 mr-6";
-        rsx!(
-            nav { class: "{class}",
-                div { class: "{left_part_class}", {self.left_part} }
-                div { class: "{right_part_class}", {self.right_part} }
-            }
-        )
-    }
+    rsx!(
+        nav { class: class, id: props.id,
+            div { class: "flex space-x-2 items-center ml-6", {props.left_part} }
+            div { class: "flex flex-1 items-center justify-end space-x-2 mr-6", {props.right_part} }
+        }
+    )
 }

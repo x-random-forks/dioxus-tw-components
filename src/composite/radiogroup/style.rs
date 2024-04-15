@@ -1,6 +1,15 @@
-use tailwind_fuse::*;
+use super::props::*;
+use crate::types::*;
 
-def_class_no_variant!(RadioGroupClass, r#"flex flex-col"#);
+impl BaseClass for RadioGroupProps {
+    fn base(&self) -> &'static str {
+        "flex flex-col"
+    }
+}
 
 // TODO
-def_class_no_variant!(RadioItemClass, r#""#);
+impl BaseClass for RadioItemProps {
+    fn base(&self) -> &'static str {
+        ""
+    }
+}

@@ -1,86 +1,74 @@
-use super::style::*;
-use crate::Component;
-use component_derive::Component;
 use dioxus::prelude::*;
+use myderive::props_component;
 use tailwind_fuse::*;
 
-props!(SelectGroupProps {
-    #[props(extends = select)]
-    attributes: Vec<Attribute>,
+use crate::types::*;
 
-    #[props(optional)]
-    oninput: Option<EventHandler<FormEvent>>,
-});
+#[props_component(class, id, children)]
+pub fn SelectGroup(
+    #[props(extends = select)] attributes: Vec<Attribute>,
 
-impl Component for SelectGroupProps {
-    fn view(self) -> Element {
-        let class = SelectGroupClass::builder().with_class(self.class);
+    #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
+) -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-        let oninput = move |event| {
-            if let Some(oc) = &self.oninput {
-                oc.call(event)
-            }
-        };
+    let oninput = move |event| {
+        if let Some(oc) = &props.oninput {
+            oc.call(event)
+        }
+    };
 
-        rsx!(
-            select {
-                ..self.attributes,
-                class: "{class}",
-                id: self.id,
-                oninput: oninput,
-                {self.children}
-            }
-        )
-    }
+    rsx!(
+        select {
+            ..props.attributes,
+            class: class,
+            id: props.id,
+            oninput: oninput,
+            {props.children}
+        }
+    )
 }
 
-// What will be shown by default in the SelectGroup when nothing is selected yet
-props!(SelectPlaceholderProps {});
+#[props_component(class, id, children)]
+pub fn SelectPlaceholder() -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-impl Component for SelectPlaceholderProps {
-    fn view(self) -> Element {
-        let class = SelectPlaceholderClass::builder().with_class(self.class);
-
-        rsx!(
-            option {
-                disabled: true,
-                selected: true,
-                value: "",
-                class: "{class}",
-                id: self.id,
-                {self.children}
-            }
-        )
-    }
+    rsx!(
+        option {
+            disabled: true,
+            selected: true,
+            value: "",
+            class: class,
+            id: props.id,
+            {props.children}
+        }
+    )
 }
 
-// SelectLabel is used to group SelectItems together under a common label
-props!(SelectLabelProps {
-    #[props(extends = optgroup)]
-    attributes: Vec<Attribute>,
-});
+#[props_component(class, id, children)]
+pub fn SelectLabel(#[props(extends = optgroup)] attributes: Vec<Attribute>) -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-impl Component for SelectLabelProps {
-    fn view(self) -> Element {
-        let class = SelectLabelClass::builder().with_class(self.class);
-
-        rsx!(
-            optgroup { ..self.attributes, class: "{class}", id: self.id, {self.children} }
-        )
-    }
+    rsx!(
+        optgroup {
+            ..props.attributes,
+            class: class,
+            id: props.id,
+            {props.children}
+        }
+    )
 }
 
-props!(SelectItemProps {
-    #[props(extends = option)]
-    attributes: Vec<Attribute>,
-});
+#[props_component(class, id, children)]
+pub fn SelectItem(#[props(extends = option)] attributes: Vec<Attribute>) -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-impl Component for SelectItemProps {
-    fn view(self) -> Element {
-        let class = SelectItemClass::builder().with_class(self.class);
-
-        rsx!(
-            option { ..self.attributes, class: "{class}", id: self.id, {self.children} }
-        )
-    }
+    rsx!(
+        option {
+            ..props.attributes,
+            class: class,
+            id: props.id,
+            {props.children}
+        }
+    )
 }

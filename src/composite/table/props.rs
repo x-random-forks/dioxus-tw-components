@@ -1,124 +1,77 @@
-use crate::Component;
-use component_derive::Component;
 use dioxus::prelude::*;
+use myderive::props_component;
 use tailwind_fuse::*;
 
-props!(TableProps {
-    #[props(extends = table)]
-    attributes: Vec<Attribute>,
-});
+use crate::types::*;
 
-impl Component for TableProps {
-    fn view(self) -> Element {
-        let class = super::style::TableClass::builder().with_class(self.class);
+#[props_component(class, id, children)]
+pub fn Table(#[props(extends = table)] attributes: Vec<Attribute>) -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-        rsx!(
-            table { ..self.attributes, class: class, { self.children } }
-        )
-    }
+    rsx!(
+        table { ..props.attributes, class: class, id: props.id, {props.children} }
+    )
 }
 
-props!(TableHeaderProps {
-    #[props(extends = thead)]
-    attributes: Vec<Attribute>,
-});
+#[props_component(class, id, children)]
+pub fn TableHeader(#[props(extends = thead)] attributes: Vec<Attribute>) -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-impl Component for TableHeaderProps {
-    fn view(self) -> Element {
-        let class = super::style::TableHeaderClass::builder().with_class(self.class);
-
-        rsx!(
-            thead { ..self.attributes, class: class, { self.children } }
-        )
-    }
+    rsx!(
+        thead { ..props.attributes, class: class, id: props.id, {props.children} }
+    )
 }
 
-props!(TableBodyProps {
-    #[props(extends = tbody)]
-    attributes: Vec<Attribute>,
-});
+#[props_component(class, id, children)]
+pub fn TableBody(#[props(extends = tbody)] attributes: Vec<Attribute>) -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-impl Component for TableBodyProps {
-    fn view(self) -> Element {
-        let class = super::style::TableBodyClass::builder().with_class(self.class);
-
-        rsx!(
-            tbody { ..self.attributes, class: class, { self.children } }
-        )
-    }
+    rsx!(
+        tbody { ..props.attributes, class: class, id: props.id, {props.children} }
+    )
 }
 
-props!(TableFooterProps {
-    #[props(extends = tfoot)]
-    attributes: Vec<Attribute>,
-});
+#[props_component(class, id, children)]
+pub fn TableFooter(#[props(extends = tfoot)] attributes: Vec<Attribute>) -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-impl Component for TableFooterProps {
-    fn view(self) -> Element {
-        let class = super::style::TableFooterClass::builder().with_class(self.class);
-
-        rsx!(
-            tfoot { ..self.attributes, class: class, { self.children } }
-        )
-    }
+    rsx!(
+        tfoot { ..props.attributes, class: class, id: props.id, {props.children} }
+    )
 }
 
-props!(TableHeadProps {
-    #[props(extends = th)]
-    attributes: Vec<Attribute>,
-});
+#[props_component(class, id, children)]
+pub fn TableHead(#[props(extends = th)] attributes: Vec<Attribute>) -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-impl Component for TableHeadProps {
-    fn view(self) -> Element {
-        let class = super::style::TableHeadClass::builder().with_class(self.class);
-
-        rsx!(
-            th { ..self.attributes, class: class, { self.children } }
-        )
-    }
+    rsx!(
+        th { ..props.attributes, class: class, id: props.id, {props.children} }
+    )
 }
 
-props!(TableRowProps {
-    #[props(extends = tr)]
-    attributes: Vec<Attribute>,
-});
+#[props_component(class, id, children)]
+pub fn TableRow(#[props(extends = tr)] attributes: Vec<Attribute>) -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-impl Component for TableRowProps {
-    fn view(self) -> Element {
-        let class = super::style::TableRowClass::builder().with_class(self.class);
-
-        rsx!(
-            tr { ..self.attributes, class: class, { self.children } }
-        )
-    }
+    rsx!(
+        tr { ..props.attributes, class: class, id: props.id, {props.children} }
+    )
 }
 
-props!(TableCellProps {
-    #[props(extends = td)]
-    attributes: Vec<Attribute>,
-});
+#[props_component(class, id, children)]
+pub fn TableCell(#[props(extends = td)] attributes: Vec<Attribute>) -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-impl Component for TableCellProps {
-    fn view(self) -> Element {
-        let class = super::style::TableCellClass::builder().with_class(self.class);
-
-        rsx!(
-            td { ..self.attributes, class: class, { self.children } }
-        )
-    }
+    rsx!(
+        td { ..props.attributes, class: class, id: props.id, {props.children} }
+    )
 }
 
-props!(TableCaptionProps {
-    #[props(extends = caption)]
-    attributes: Vec<Attribute>,
-});
+#[props_component(class, id, children)]
+pub fn TableCaption(#[props(extends = caption)] attributes: Vec<Attribute>) -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-impl Component for TableCaptionProps {
-    fn view(self) -> Element {
-        let class = super::style::TableCaptionClass::builder().with_class(self.class);
-
-        rsx!(
-            caption { ..self.attributes, class: class, { self.children } }
-        )
-    }
+    rsx!(
+        caption { ..props.attributes, class: class, id: props.id, {props.children} }
+    )
 }

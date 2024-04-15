@@ -1,83 +1,183 @@
-use proc_macro::{TokenStream, TokenTree};
+use proc_macro::TokenStream;
 use quote::quote;
-use syn::{parse::Parser, parse_macro_input, FieldsNamed, ItemStruct};
+use syn::{
+    parse::{Parse, ParseStream},
+    parse_macro_input, ItemFn,
+};
 
+/// This macro is used to create a component that takes props as arguments
+/// Example:
+/// #[props_component]
+/// fn NewElement(#[props(default = Color::Destructive)] color: Color) -> Element {
+///     rsx!()
+/// }
+///
+/// This will expand to
+///
+/// #[derive(Clone, Props, PartialEq)]
+/// pub struct NewElementProps {
+///     #[props(default = Color::Destructive)]
+///     color: Color,
+///     #[props(into)]
+///     #[props(default)]
+///     id: String,
+///     #[props(into)]
+///     #[props(default)]
+///     class: String,
+///     children: Element
+/// }
+/// pub fn NewElement(props: NewElementProps) -> Element {
+///     let color = props.color;
+///     let id = props.id;
+///     let class = props.class;
+///     let children = props.children;
+///
+///     rsx!()
+/// }
+///
+/// You can then use the component and its prop as you want
 #[proc_macro_attribute]
-pub fn dxcomp(args: TokenStream, input: TokenStream) -> TokenStream {
-    const ACCEPTED_ATTRIBUTES: [&str; 2] = ["color", "size"];
+pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(input as ItemFn);
 
-    let mut input = parse_macro_input!(input as ItemStruct);
+    let name = &input.sig.ident;
+    let name_struct = syn::Ident::new(&format!("{}Props", name), proc_macro2::Span::call_site());
 
-    if let syn::Fields::Named(ref mut fields) = input.fields {
-        add_field_to_struct(fields, quote! { children: Element }, None);
+    let (mut fields, mut let_statements) = make_struct_fields_and_let_statements(&input.sig.inputs);
 
-        add_field_to_struct(
-            fields,
-            quote! { id: String },
-            Some(quote! { #[props(default)] }),
-        );
+    let args = parse_macro_input!(args as ParsedArg);
+    let accepted_attributes = AttributeConfig::default();
 
-        add_field_to_struct(
-            fields,
-            quote! { class: String },
-            Some(quote! { #[props(default)] }),
-        );
-
-        // handle_macro_args();
-        for arg in args {
-            if let TokenTree::Ident(ident) = arg {
-                if !ACCEPTED_ATTRIBUTES.contains(&ident.to_string().as_str()) {
-                    panic!("Invalid attribute: {}", ident);
-                } else {
-                    match ident.to_string().as_str() {
-                        "color" => {
-                            add_field_to_struct(
-                                fields,
-                                quote! { pub(crate) color: Color },
-                                Some(quote! { #[props(default = Color::Primary)] }),
-                            );
-                        }
-                        "size" => {
-                            add_field_to_struct(
-                                fields,
-                                quote! { size: Size },
-                                Some(quote! { #[props(default = Size::Medium)] }),
-                            );
-                        }
-                        _ => {}
-                    }
-                }
+    for arg in args.args {
+        match accepted_attributes.accepted(arg.to_string()) {
+            Ok(index) => {
+                fields.push(accepted_attributes.add_attributes[index].field.clone());
+                let_statements.push(
+                    accepted_attributes.add_attributes[index]
+                        .let_statement
+                        .clone(),
+                )
             }
+            Err(e) => panic!("{e}"),
+        }
+    }
+
+    let output = &input.sig.output;
+    let block = &input.block;
+
+    let expanded = quote! {
+        #[derive(Clone, Props, PartialEq)]
+        pub struct #name_struct {
+            #(#fields),*
+        }
+
+        pub fn #name(props: #name_struct) #output {
+            #(#let_statements)*
+
+            let result = (|| #block)();
+            result
         }
     };
 
-    print_pretty_tokens(&input);
-
-    return quote! {
-        #input
-    }
-    .into();
+    TokenStream::from(expanded)
 }
 
-fn add_field_to_struct(
-    fields: &mut FieldsNamed,
+fn make_struct_fields_and_let_statements(
+    inputs: &syn::punctuated::Punctuated<syn::FnArg, syn::token::Comma>,
+) -> (Vec<proc_macro2::TokenStream>, Vec<proc_macro2::TokenStream>) {
+    let mut fields = Vec::new();
+    let mut let_statements = Vec::new();
+
+    for input in inputs {
+        if let syn::FnArg::Typed(pat_type) = input {
+            let ident = match &*pat_type.pat {
+                syn::Pat::Ident(pat_ident) => &pat_ident.ident,
+                _ => panic!("Unsupported parameter pattern"),
+            };
+
+            let ty = &pat_type.ty;
+            let attr = &pat_type.attrs;
+
+            fields.push(quote! { #(#attr)*pub #ident: #ty });
+            // let_statements.push(quote! { let #ident = &props.#ident; });
+        }
+    }
+
+    (fields, let_statements)
+}
+
+#[derive(Debug)]
+struct ParsedArg {
+    args: Vec<syn::Ident>,
+}
+
+impl Parse for ParsedArg {
+    fn parse(input: ParseStream) -> syn::Result<Self> {
+        let args =
+            syn::punctuated::Punctuated::<syn::Ident, syn::Token![,]>::parse_terminated(&input)?;
+
+        Ok(ParsedArg {
+            args: args.into_iter().collect(),
+        })
+    }
+}
+
+#[derive(Debug)]
+struct AttributeConfig {
+    add_attributes: Vec<AcceptedAttribute>,
+}
+
+impl AttributeConfig {
+    fn default() -> Self {
+        let mut add_attributes = Vec::new();
+
+        add_attributes.push(AcceptedAttribute::id());
+        add_attributes.push(AcceptedAttribute::class());
+        add_attributes.push(AcceptedAttribute::children());
+
+        AttributeConfig { add_attributes }
+    }
+
+    fn accepted(&self, attr_name: String) -> Result<usize, String> {
+        for (index, attribute) in self.add_attributes.iter().enumerate() {
+            if attribute.name == attr_name {
+                return Ok(index);
+            }
+        }
+
+        Err(format!("Invalid attribute: {}", attr_name))
+    }
+}
+
+#[derive(Debug, Clone)]
+struct AcceptedAttribute {
+    name: String,
     field: proc_macro2::TokenStream,
-    attrs: Option<proc_macro2::TokenStream>,
-) {
-    let mut new_field = syn::Field::parse_named.parse2(field.into()).unwrap();
-
-    if let Some(attrs) = attrs {
-        let attrs = syn::Attribute::parse_outer.parse2(attrs.into()).unwrap();
-        new_field.attrs.extend(attrs);
-    }
-
-    fields.named.push(new_field);
+    let_statement: proc_macro2::TokenStream,
 }
 
-fn print_pretty_tokens(input: &ItemStruct) {
-    let pretty_tokens = quote! {
-        #input
-    };
+impl AcceptedAttribute {
+    fn id() -> Self {
+        AcceptedAttribute {
+            name: "id".to_string(),
+            field: quote! { #[props(into)] #[props(default = crate::hooks::use_unique_id())]id: String },
+            let_statement: quote! { let id = &props.id; },
+        }
+    }
 
-    println!("pretty_tokens: \"{}\"", pretty_tokens);
+    fn class() -> Self {
+        AcceptedAttribute {
+            name: "class".to_string(),
+            field: quote! { #[props(into)] #[props(default)]class: String },
+            let_statement: quote! { let class = &props.class; },
+        }
+    }
+
+    fn children() -> Self {
+        AcceptedAttribute {
+            name: "children".to_string(),
+            field: quote! { children: Element },
+            let_statement: quote! { let children = &props.children; },
+        }
+    }
 }

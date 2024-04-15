@@ -1,30 +1,23 @@
-use super::style::*;
-use crate::Component;
-use component_derive::Component;
 use dioxus::prelude::*;
+use myderive::props_component;
 use tailwind_fuse::*;
 
-props_no_children!(TextAreaProps {
-    #[props(extends = textarea)]
-    attributes: Vec<Attribute>,
+use crate::types::*;
 
-    #[props(optional)]
-    oninput: Option<EventHandler<FormEvent>>,
+#[props_component(id, class)]
+pub fn TextArea(
+    #[props(extends = textarea)] attributes: Vec<Attribute>,
+    #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
+) -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-});
+    let oninput = move |event| {
+        if let Some(oc) = &props.oninput {
+            oc.call(event)
+        }
+    };
 
-impl Component for TextAreaProps {
-    fn view(self) -> Element {
-        let class = TextAreaClass::builder().with_class(self.class);
+    // TODO add a default placeholder
 
-        let oninput = move |event| {
-            if let Some(oc) = &self.oninput {
-                oc.call(event)
-            }
-        };
-
-        // TODO add a default placeholder
-
-        rsx!( textarea { ..self.attributes, class: "{class}", oninput: oninput } )
-    }
+    rsx!( textarea { ..props.attributes, class: class, oninput: oninput, id: props.id } )
 }

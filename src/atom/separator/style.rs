@@ -1,18 +1,17 @@
-use tailwind_fuse::*;
+use super::props::*;
+use crate::types::*;
 
-def_class_with_variant!(SeparatorClass, "bg-border shrink-0", vertical: SeparatorOrientation);
+impl BaseClass for SeparatorProps {
+    fn base(&self) -> &'static str {
+        "bg-border shrink-0"
+    }
+}
 
-def_variant!(
-    SeparatorOrientation,
-    Horizontal => r#"w-full h-[1px]"#,
-    Vertical => r#"h-full w-[1px]"#
-);
-
-impl From<bool> for SeparatorOrientation {
-    fn from(value: bool) -> Self {
-        match value {
-            true => SeparatorOrientation::Vertical,
-            false => SeparatorOrientation::Horizontal,
+impl Variation for SeparatorProps {
+    fn variant(&self) -> &'static str {
+        match self.vertical {
+            true => "h-full w-[1px]",
+            false => "w-full h-[1px]",
         }
     }
 }

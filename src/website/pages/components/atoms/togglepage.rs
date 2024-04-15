@@ -1,37 +1,22 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::atom::toggle::*;
+use dioxus_components_bin::{
+    atom::toggle::*,
+    types::{Color, Size},
+};
 
 pub fn TogglePage() -> Element {
     rsx!(
         "TOGGLE PAGE"
         div { class: "flex gap-4",
             div { class: "",
+                Toggle { name: "toggle", value: "toggle", checked: true, color: Color::Primary, "Primary" }
+                Toggle { name: "toggle", value: "toggle", checked: true, color: Color::Secondary, "Secondary" }
+                Toggle { name: "toggle", value: "toggle", checked: true, color: Color::Destructive, "Destructive" }
                 Toggle {
                     name: "toggle",
                     value: "toggle",
                     checked: true,
-                    color: ToggleColor::Primary,
-                    "Primary"
-                }
-                Toggle {
-                    name: "toggle",
-                    value: "toggle",
-                    checked: true,
-                    color: ToggleColor::Secondary,
-                    "Secondary"
-                }
-                Toggle {
-                    name: "toggle",
-                    value: "toggle",
-                    checked: true,
-                    color: ToggleColor::Destructive,
-                    "Destructive"
-                }
-                Toggle {
-                    name: "toggle",
-                    value: "toggle",
-                    checked: true,
-                    color: ToggleColor::Primary,
+                    color: Color::Primary,
                     disabled: true,
                     "Disabled"
                 }
@@ -39,24 +24,24 @@ pub fn TogglePage() -> Element {
                     name: "toggle",
                     value: "toggle",
                     checked: true,
-                    color: ToggleColor::Primary,
-                    size: ToggleSize::Sm,
+                    color: Color::Primary,
+                    size: Size::Sm,
                     "Sm"
                 }
                 Toggle {
                     name: "toggle",
                     value: "toggle",
                     checked: true,
-                    color: ToggleColor::Primary,
-                    size: ToggleSize::Md,
+                    color: Color::Primary,
+                    size: Size::Md,
                     "Md"
                 }
                 Toggle {
                     name: "toggle",
                     value: "toggle",
                     checked: true,
-                    color: ToggleColor::Primary,
-                    size: ToggleSize::Lg,
+                    color: Color::Primary,
+                    size: Size::Lg,
                     "Lg"
                 }
             }

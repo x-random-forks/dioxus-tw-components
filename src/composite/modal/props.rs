@@ -1,94 +1,66 @@
-use super::style::*;
-use crate::Component;
-use component_derive::Component;
 use dioxus::prelude::*;
+use myderive::props_component;
 use tailwind_fuse::*;
+
+use crate::types::*;
 
 struct ModalState(bool);
 
-// Modal is used a wrapper for every other modal component, it also sets up a context for those components
-#[derive(Props, Clone, PartialEq, Component)]
-pub struct ModalProps {
-    children: Element,
+#[props_component(children)]
+pub fn Modal() -> Element {
+    use_context_provider(|| Signal::new(ModalState(false)));
+
+    rsx!({ props.children })
 }
 
-impl Component for ModalProps {
-    fn view(self) -> Element {
-        use_context_provider(|| Signal::new(ModalState(false)));
+#[props_component(class, id, children)]
+pub fn ModalTrigger() -> Element {
+    let trigger_closure = move |_: Event<MouseData>| {
+        toggle_modal(use_context::<Signal<ModalState>>());
+    };
 
-        rsx!({ self.children })
-    }
+    let class = tw_merge!(props.base(), props.class);
+
+    rsx!(
+        div { class: class, id: props.id, onclick: trigger_closure, {props.children} }
+    )
 }
 
-// Used to open the modal
-props!(ModalTriggerProps {});
+#[props_component(class, id, children)]
+pub fn ModalClose() -> Element {
+    let trigger_closure = move |_: Event<MouseData>| {
+        toggle_modal(use_context::<Signal<ModalState>>());
+    };
 
-impl Component for ModalTriggerProps {
-    fn view(self) -> Element {
-        let trigger_closure = move |_: Event<MouseData>| {
+    let class = tw_merge!(props.base(), props.class);
+
+    rsx!(
+        div { class: class, id: props.id, onclick: trigger_closure, {props.children} }
+    )
+}
+
+#[props_component(class, id, children)]
+pub fn ModalContent() -> Element {
+    let class = tw_merge!(props.base(), props.class, modal_state_to_string());
+
+    rsx!(
+        div { class: class, id: props.id, {props.children} }
+    )
+}
+
+#[props_component(class, id, children)]
+pub fn ModalBackground(#[props(default = true)] interactive: bool) -> Element {
+    let modal_closure = move |_: Event<MouseData>| {
+        if props.interactive {
             toggle_modal(use_context::<Signal<ModalState>>());
-        };
+        }
+    };
 
-        let class = ModalTriggerClass::builder().with_class(self.class);
+    let class = tw_merge!(props.base(), props.class);
 
-        rsx!(
-            div { class: "{class}", id: self.id, onclick: trigger_closure, { self.children } }
-        )
-    }
-}
-
-props!(ModalCloseProps {});
-
-impl Component for ModalCloseProps {
-    fn view(self) -> Element {
-        let trigger_closure = move |_: Event<MouseData>| {
-            toggle_modal(use_context::<Signal<ModalState>>());
-        };
-
-        let class = ModalCancelClass::builder().with_class(self.class);
-
-        rsx!(
-            div { class: "{class}", id: self.id, onclick: trigger_closure, {self.children} }
-        )
-    }
-}
-
-props!(ModalContentProps {});
-
-impl Component for ModalContentProps {
-    fn view(self) -> Element {
-        let class = ModalContentClass::builder().with_class(self.class);
-
-        rsx!(
-            div { class: "{modal_state_to_string()} {class}", id: self.id, {self.children} }
-        )
-    }
-}
-
-props!(ModalBackgroundProps {
-    #[props(default = true)]
-    interactive: bool,
-});
-
-impl Component for ModalBackgroundProps {
-    fn view(self) -> Element {
-        let modal_closure = move |_: Event<MouseData>| {
-            if self.interactive {
-                toggle_modal(use_context::<Signal<ModalState>>());
-            }
-        };
-
-        let class = ModalBackgroundClass::builder().with_class(self.class);
-
-        rsx!(
-            div {
-                class: "{modal_state_to_string()} {class}",
-                id: self.id,
-                onclick: modal_closure,
-                {self.children}
-            }
-        )
-    }
+    rsx!(
+        div { class: "{modal_state_to_string()} {class}", id: props.id, onclick: modal_closure, {props.children} }
+    )
 }
 
 fn toggle_modal(mut modal_context: Signal<ModalState>) {

@@ -1,37 +1,29 @@
-use crate::Component;
-use component_derive::Component;
 use dioxus::prelude::*;
+use myderive::props_component;
 use tailwind_fuse::*;
 
-props_no_children!(FormRangeProps {
-    #[props(extends = input)]
-    attributes: Vec<Attribute>,
+use crate::types::*;
 
-    // TODO implement <datalist>
-    // #[props(default = "".to_string())]
-    // list: String,
-    #[props(optional)]
-    oninput: Option<EventHandler<FormEvent>>,
-});
+#[props_component(id, class)]
+pub fn FormRange(
+    #[props(extends = input)] attributes: Vec<Attribute>,
+    #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
+) -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-impl Component for FormRangeProps {
-    fn view(self) -> Element {
-        let class = super::FormRangeClass::builder().with_class(self.class);
+    let oninput = move |event| {
+        if let Some(oc) = &props.oninput {
+            oc.call(event)
+        }
+    };
 
-        let oninput = move |event| {
-            if let Some(oc) = &self.oninput {
-                oc.call(event)
-            }
-        };
-
-        rsx!(
-            input {
-                ..self.attributes,
-                r#type: "range",
-                // list: "{self.list}",
-                class: "{class}",
-                oninput: oninput
-            }
-        )
-    }
+    rsx!(
+        input {
+            ..props.attributes,
+            r#type: "range",
+            class: class,
+            id: props.id,
+            oninput: oninput
+        }
+    )
 }

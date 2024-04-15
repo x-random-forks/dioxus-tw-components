@@ -1,1 +1,3 @@
-export_props!();
+mod props;
+pub use props::*;
+mod style;

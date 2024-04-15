@@ -1,10 +1,20 @@
-use tailwind_fuse::*;
+use super::props::*;
+use crate::types::*;
 
-def_class_no_variant!(
-    BreadcrumbClass,
-    r#"flex flex-wrap items-center font-normal gap-2 text-sm text-muted-foreground"#
-);
+impl BaseClass for BreadcrumbProps {
+    fn base(&self) -> &'static str {
+        "flex flex-wrap items-center font-normal gap-2 text-sm text-muted-foreground"
+    }
+}
 
-def_class_no_variant!(BreadcrumbItemClass, r#"font-normal last:text-foreground"#);
+impl BaseClass for BreadcrumbItemProps {
+    fn base(&self) -> &'static str {
+        "font-normal last:text-foreground"
+    }
+}
 
-def_class_no_variant!(BreadcrumbSeparatorClass, r#"font-semibold"#);
+impl BaseClass for BreadcrumbSeparatorProps {
+    fn base(&self) -> &'static str {
+        "font-semibold"
+    }
+}

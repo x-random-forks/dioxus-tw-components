@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::{atom::button::*, composite::modal::*};
+use dioxus_components_bin::{atom::button::*, composite::modal::*, types::Size};
 
 pub fn ModalPage() -> Element {
     rsx!(
@@ -12,7 +12,7 @@ pub fn ModalPage() -> Element {
             ModalContent { 
                 div {
                     ModalClose { 
-                        Button { variant: ButtonVariant::Ghost, size: ButtonSize::Xs, "X" }
+                        Button { variant: ButtonVariant::Ghost, size: Size::Xs, "X" }
                     }
                 }
                 div { class: "h4", "TITLE" }

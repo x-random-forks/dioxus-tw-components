@@ -1,3 +1,8 @@
-use tailwind_fuse::*;
+use super::props::*;
+use crate::types::*;
 
-def_class_no_variant!(FormRangeClass, r#"w-full accent-foreground"#);
+impl BaseClass for FormRangeProps {
+    fn base(&self) -> &'static str {
+        "w-full accent-foreground"
+    }
+}
