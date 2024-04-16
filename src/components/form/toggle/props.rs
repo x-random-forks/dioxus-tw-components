@@ -9,30 +9,30 @@ use crate::types::*;
 // eg peer-disabled:font-mute will change children text-color when the input is disabled (Label component already does this by default)
 #[props_component(class, id)]
 pub fn Toggle(
-    #[props(extends = input)] attributes: Vec<Attribute>,
+    #[props(extends = button)] attributes: Vec<Attribute>,
     #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
     #[props(default)] color: Color,
     #[props(default)] size: Size,
 ) -> Element {
     let class = tw_merge!(props.base(), props.color(), props.size(), props.class);
 
-    let oninput = move |event| {
-        if let Some(oc) = &props.oninput {
-            oc.call(event)
+    let mut state = use_signal(|| "off".to_string());
+
+    let onclick = move |_event| {
+        if state() == "off" {
+            state.set("on".to_string());
+        } else {
+            state.set("off".to_string());
         }
     };
 
-    // We need the first label so the user can click on the div instead of the input to toggle the checkbox (since the input is hidden)
     rsx!(
-        input {
+        button {
+            "data-state": state(),
             ..props.attributes,
             id: props.id,
-            r#type: "checkbox",
-            // Set this input to be hidden except for screen readers
-            // We a custom visual toggle so we don't need the default input
-            class: "sr-only peer",
-            oninput: oninput,
+            class: class,
+            onclick: onclick
         }
-        div { class: "{class}" }
     )
 }

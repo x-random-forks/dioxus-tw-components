@@ -6,7 +6,7 @@ pub fn CheckboxPage() -> Element {
         "CHECKBOX PAGE"
         div { class: "flex flex-col",
             div {
-                label {r#for: "checkbox-1",
+                label { r#for: "checkbox-1",
                     label { r#for: "checkbox-1", "Primary" }
                     Checkbox { id: "checkbox-1", checked: true, color: Color::Primary }
                 }

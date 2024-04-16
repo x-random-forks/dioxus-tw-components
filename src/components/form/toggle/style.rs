@@ -3,17 +3,18 @@ use crate::types::*;
 
 impl BaseClass for ToggleProps {
     fn base(&self) -> &'static str {
-        "relative bg-input rounded-full peer-disabled:bg-muted peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-black peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:bg-white after:border-input after:border after:rounded-full after:transition-all"
+        "peer relative bg-input rounded-full focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 data-[state=on]:after:translate-x-full data-[state=on]:after:border-white after:content-[''] after:absolute after:bg-background after:border-input after:border after:rounded-full after:transition-all transition-colors duration-100"
     }
 }
 
 impl Colorable for ToggleProps {
     fn color(&self) -> &'static str {
         match self.color {
-            Color::Primary => "peer-checked:bg-primary",
-            Color::Secondary => "peer-checked:bg-secondary",
-            Color::Destructive => "peer-checked:bg-destructive",
-            Color::Success => "peer-checked:bg-success",
+            Color::Default => "data-[state=on]:bg-foreground",
+            Color::Primary => "data-[state=on]:bg-primary",
+            Color::Secondary => "data-[state=on]:bg-secondary",
+            Color::Destructive => "data-[state=on]:bg-destructive",
+            Color::Success => "data-[state=on]:bg-success",
             _ => "",
         }
     }

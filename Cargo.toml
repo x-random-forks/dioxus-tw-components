@@ -28,6 +28,8 @@ web-sys = {version = "0.3.69"}
 component-derive = { path = "component-derive" }
 props-component-macro = { path = "props-component-macro" }
 
+# This is to keep the dioxus from dioxus-free-icons from conflicting with the one we are using
+# Meaning basically to keep them both on the same version
 [patch.crates-io]
 dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "7eccc7a104df013b06c104fc1275450d2747e78c" }
 
