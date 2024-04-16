@@ -15,5 +15,5 @@ pub fn App() -> Element {
 
 #[component]
 pub fn HomePage() -> Element {
-    rsx!("Hello World!")
+    rsx!("Hello World")
 }

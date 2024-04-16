@@ -4,8 +4,6 @@ use tailwind_fuse::*;
 
 use crate::types::*;
 
-// TODO / REVIEW : Same as checkbox, split this into more components ?
-
 // Specifically stylised input type checkbox
 // The input use the tailwind peer class, you can use at your advantage to style the children
 // eg peer-disabled:font-mute will change children text-color when the input is disabled (Label component already does this by default)
@@ -24,6 +22,7 @@ pub fn Toggle(
         }
     };
 
+    // We need the first label so the user can click on the div instead of the input to toggle the checkbox (since the input is hidden)
     rsx!(
         input {
             ..props.attributes,
@@ -32,7 +31,7 @@ pub fn Toggle(
             // Set this input to be hidden except for screen readers
             // We a custom visual toggle so we don't need the default input
             class: "sr-only peer",
-            oninput: oninput
+            oninput: oninput,
         }
         div { class: "{class}" }
     )

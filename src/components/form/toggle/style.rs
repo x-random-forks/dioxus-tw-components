@@ -3,7 +3,7 @@ use crate::types::*;
 
 impl BaseClass for ToggleProps {
     fn base(&self) -> &'static str {
-        "relative bg-input rounded-full peer-disabled:bg-muted peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-input peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:bg-white after:border-input after:border after:rounded-full after:transition-all"
+        "relative bg-input rounded-full peer-disabled:bg-muted peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-black peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:bg-white after:border-input after:border after:rounded-full after:transition-all"
     }
 }
 
