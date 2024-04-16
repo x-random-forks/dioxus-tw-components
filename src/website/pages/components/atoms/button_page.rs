@@ -2,11 +2,15 @@ use dioxus::prelude::*;
 use dioxus_components_bin::{atom::button::*, types::*};
 
 pub fn ButtonPage() -> Element {
+    let onclick = move |_| {
+        log::debug!("Primary button clicked");
+    };
+
     rsx!(
         div { class: "grid space-y-4 border-4 border-primary",
             div {
                 Button { "Default" }
-                Button { color: Color::Primary, "Primary" }
+                Button { color: Color::Primary, onclick: onclick, "Primary" }
                 Button { color: Color::Secondary, "Secondary" }
                 Button { color: Color::Destructive, "Destructive" }
             }

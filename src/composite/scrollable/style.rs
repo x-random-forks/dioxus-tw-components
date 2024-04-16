@@ -7,12 +7,13 @@ impl BaseClass for ScrollableProps {
     }
 }
 
-impl Variation for ScrollableProps {
-    fn variant(&self) -> &'static str {
-        match self.horizontal {
-            // TODO WIP Trying to make horizontal scroll with mouse wheel
-            true => "overflow-y-auto overflow-x-hidden -rotate-90 origin-[right_top] -rotate-90",
-            false => "overflow-y-auto overflow-x-hidden grid-flow-row",
+impl Orientable for ScrollableProps {
+    fn orientation(&self) -> &'static str {
+        match self.orientation {
+            Orientation::Horizontal => {
+                "overflow-y-auto overflow-x-hidden -rotate-90 origin-[right_top] -rotate-90"
+            }
+            Orientation::Vertical => "overflow-y-auto overflow-x-hidden grid-flow-row",
         }
     }
 }

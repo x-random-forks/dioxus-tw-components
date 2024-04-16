@@ -20,15 +20,13 @@ pub fn RadioGroup(#[props(into)] name: String, #[props(into)] default_value: Str
     )
 }
 
-// TO CLEAN
+// TO CLEAN/ REFACTOR
 #[props_component(class, id, children)]
 pub fn RadioItem(
     // Corresponds to the name of the RadioGroup
     #[props(default)] name: String,
     // What will be sent as name:value
     #[props(default)] value: String,
-    // Applies to the whole RadioGroup, if true, the form will not be submitted if no RadioItem is checked
-    #[props(default = false)] required: bool,
     // Disable the radio button
     #[props(default = false)] disabled: bool,
 
@@ -36,16 +34,10 @@ pub fn RadioItem(
 ) -> Element {
     let mut radio_context = consume_context::<Signal<RadioGroupSignal>>();
 
-    let svg = if radio_context.read().0 == props.value {
-        IconSvg::CircleInnerCircle
+    let (svg, checked) = if radio_context.read().0 == props.value {
+        (IconSvg::CircleInnerCircle, true)
     } else {
-        IconSvg::HollowCircle
-    };
-
-    let checked = if radio_context.read().0 == props.value {
-        true
-    } else {
-        false
+        (IconSvg::HollowCircle, false)
     };
 
     rsx!(
@@ -55,7 +47,6 @@ pub fn RadioItem(
                     name: "{props.name}",
                     value: "{props.value}",
                     checked: "{checked}",
-                    required: "{props.required}",
                     disabled: "{props.disabled}",
                     r#type: "radio",
                     oninput: move |e| {
@@ -73,73 +64,3 @@ pub fn RadioItem(
         }
     )
 }
-
-// TODO Refactor using macros
-// #[derive(PartialEq, Props, Clone, Component)]
-// pub struct RadioItemProps {
-//     // Corresponds to the name of the RadioGroup
-//     #[props(default)]
-//     name: String,
-//     // What will be sent as name:value
-//     #[props(default)]
-//     value: String,
-//     // Applies to the whole RadioGroup, if true, the form will not be submitted if no RadioItem is checked
-//     #[props(default = false)]
-//     required: bool,
-//     // Disable the radio button
-//     #[props(default = false)]
-//     disabled: bool,
-
-//     #[props(optional)]
-//     oninput: EventHandler<FormEvent>,
-
-//     children: Element,
-
-//     // Styling
-//     #[props(default)]
-//     class: String,
-// }
-
-// impl Component for RadioItemProps {
-//     fn view(self) -> Element {
-//         let mut radio_context = consume_context::<Signal<RadioGroupSignal>>();
-
-//         // TODO Should do both at the same time
-//         let svg = if radio_context.read().0 == self.value {
-//             IconSvg::CircleInnerCircle
-//         } else {
-//             IconSvg::HollowCircle
-//         };
-
-//         let checked = if radio_context.read().0 == self.value {
-//             true
-//         } else {
-//             false
-//         };
-
-//         rsx!(
-//             label { class: "{self.name}",
-//                 div { class: "flex items-center",
-//                     input {
-//                         name: "{self.name}",
-//                         value: "{self.value}",
-//                         checked: "{checked}",
-//                         required: "{self.required}",
-//                         disabled: "{self.disabled}",
-//                         r#type: "radio",
-//                         oninput: move |e| {
-//                             radio_context.set(RadioGroupSignal(self.value.clone()));
-//                             self.oninput.call(e);
-//                         },
-//                         class: "hidden peer"
-//                     }
-//                     div { class: "size-4 peer-disabled:cursor-not-allowed", Icon { svg: svg } }
-//                     // TODO Move this into another comp
-//                     div { class: "font-medium peer-disabled:opacity-50 peer-disabled:cursor-not-allowed",
-//                         {self.children}
-//                     }
-//                 }
-//             }
-//         )
-//     }
-// }

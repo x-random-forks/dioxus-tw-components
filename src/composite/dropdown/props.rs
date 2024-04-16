@@ -13,13 +13,9 @@ pub fn Dropdown(#[props(default)] open: bool) -> Element {
     )
 }
 
-#[props_component(class, id, children)]
+#[props_component(children)]
 pub fn DropdownToggle() -> Element {
-    let class = tw_merge!(props.base(), props.class);
-
-    rsx!(
-        div { class: class, id: props.id, {props.children} }
-    )
+    rsx!({ props.children })
 }
 
 // Use HTML/CSS black magic to render the dropdown content

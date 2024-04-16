@@ -7,11 +7,11 @@ impl BaseClass for SeparatorProps {
     }
 }
 
-impl Variation for SeparatorProps {
-    fn variant(&self) -> &'static str {
-        match self.vertical {
-            true => "h-full w-[1px]",
-            false => "w-full h-[1px]",
+impl Orientable for SeparatorProps {
+    fn orientation(&self) -> &'static str {
+        match self.orientation {
+            Orientation::Horizontal => "w-full h-[1px]",
+            Orientation::Vertical => "h-full w-[1px]",
         }
     }
 }

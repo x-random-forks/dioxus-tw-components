@@ -32,6 +32,24 @@ pub trait Sizable {
     fn size(&self) -> &'static str;
 }
 
+#[derive(Default, Clone, Copy, PartialEq)]
+pub enum Orientation {
+    #[default]
+    Horizontal,
+    Vertical,
+}
+
+pub trait Orientable {
+    fn orientation(&self) -> &'static str;
+}
+
+#[derive(Default, Clone, Copy, PartialEq)]
+pub enum Side {
+    #[default]
+    Left,
+    Right,
+}
+
 pub trait Variation {
     fn variant(&self) -> &'static str;
 }

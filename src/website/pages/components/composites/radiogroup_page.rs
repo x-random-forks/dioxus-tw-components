@@ -7,7 +7,7 @@ pub fn RadioGroupPage() -> Element {
             "RADIO GROUP PAGE"
             RadioGroup { name: "gender", default_value: "male",
                 Label { r#for: "gender", "Choose birth gender" }
-                RadioItem { value: "male", name: "gender", required: true, "Male" }
+                RadioItem { value: "male", name: "gender", "Male" }
                 RadioItem { value: "female", name: "gender", "Female" }
                 RadioItem { value: "other", name: "gender", "Other" }
                 RadioItem { value: "disabled", name: "gender", disabled: true, "Disabled" }

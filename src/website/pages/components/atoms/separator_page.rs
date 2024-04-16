@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::atom::separator::*;
+use dioxus_components_bin::{atom::separator::*, types::Orientation};
 
 pub fn SeparatorPage() -> Element {
     rsx!(
@@ -10,9 +10,9 @@ pub fn SeparatorPage() -> Element {
                 Separator { class: "my-4" }
                 div { class: "flex h-5 items-center space-x-4 text-sm",
                     div { "AAAAA" }
-                    Separator { vertical: true }
+                    Separator { orientation: Orientation::Vertical }
                     div { "BBBBBBBBBBBBBBBBBBBBBBB" }
-                    Separator { vertical: true }
+                    Separator { orientation: Orientation::Vertical }
                     div { "ZZ" }
                 }
             }

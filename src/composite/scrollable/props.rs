@@ -5,8 +5,8 @@ use tailwind_fuse::*;
 use crate::types::*;
 
 #[props_component(class, children, id)]
-pub fn Scrollable(#[props(default = false)] horizontal: bool) -> Element {
-    let class = tw_merge!(props.base(), props.variant(), props.class);
+pub fn Scrollable(#[props(default = Orientation::Vertical)] orientation: Orientation) -> Element {
+    let class = tw_merge!(props.base(), props.orientation(), props.class);
 
     rsx!(
         div { class: class, id: props.id, {props.children} }

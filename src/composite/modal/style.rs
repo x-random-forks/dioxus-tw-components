@@ -17,13 +17,13 @@ impl BaseClass for ModalCloseProps {
 
 impl BaseClass for ModalContentProps {
     fn base(&self) -> &'static str {
-        "top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-50 bg-background border-border rounded-global-radius p-4 flex flex-col"
+        "top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-50 bg-background border-border rounded-global-radius p-4 flex flex-col data-[state=active]:fixed data-[state=inactive]:hidden"
     }
 }
 
 // TODO : Probably add variant to define basic background colors ?
 impl BaseClass for ModalBackgroundProps {
     fn base(&self) -> &'static str {
-        "w-full h-full top-0 left-0 z-40 bg-[linear-gradient(_45deg,magenta,rebeccapurple,dodgerblue,green_)] opacity-75"
+        "w-full h-full top-0 left-0 z-40 bg-[linear-gradient(_45deg,magenta,rebeccapurple,dodgerblue,green_)] opacity-75 data-[state=active]:fixed data-[state=inactive]:hidden"
     }
 }

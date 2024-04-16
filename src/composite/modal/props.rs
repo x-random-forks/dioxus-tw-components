@@ -41,10 +41,17 @@ pub fn ModalClose() -> Element {
 
 #[props_component(class, id, children)]
 pub fn ModalContent() -> Element {
-    let class = tw_merge!(props.base(), props.class, modal_state_to_string());
+    let class = tw_merge!(props.base(), props.class);
+
+    let modal_context = use_context::<Signal<ModalState>>();
+
+    let (state, hidden) = match modal_context.read().0 {
+        true => ("active", false),
+        false => ("inactive", true),
+    };
 
     rsx!(
-        div { class: class, id: props.id, {props.children} }
+        div { "data-state": state, class: class, id: props.id, hidden: hidden, {props.children} }
     )
 }
 
@@ -58,10 +65,19 @@ pub fn ModalBackground(#[props(default = true)] interactive: bool) -> Element {
 
     let class = tw_merge!(props.base(), props.class);
 
+    let modal_context = use_context::<Signal<ModalState>>();
+
+    let (state, hidden) = match modal_context.read().0 {
+        true => ("active", false),
+        false => ("inactive", true),
+    };
+
     rsx!(
         div {
-            class: "{modal_state_to_string()} {class}",
+            "data-state": state,
+            class: "{class}",
             id: props.id,
+            hidden: hidden,
             onclick: modal_closure,
             {props.children}
         }
@@ -73,12 +89,5 @@ fn toggle_modal(mut modal_context: Signal<ModalState>) {
         modal_context.set(ModalState(false));
     } else {
         modal_context.set(ModalState(true));
-    }
-}
-
-fn modal_state_to_string() -> &'static str {
-    match use_context::<Signal<ModalState>>().read().0 {
-        true => "fixed",
-        false => "hidden",
     }
 }

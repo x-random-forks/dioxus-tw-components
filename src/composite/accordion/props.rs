@@ -97,7 +97,14 @@ pub fn AccordionTrigger(
     };
 
     rsx!(
-        button { "data-state": state, class: class, id: props.id, onclick: button_closure, onmounted: onmounted, {props.children} }
+        button {
+            "data-state": state,
+            class: class,
+            id: props.id,
+            onclick: button_closure,
+            onmounted: onmounted,
+            {props.children}
+        }
     )
 }
 
@@ -129,7 +136,14 @@ pub fn AccordionContent() -> Element {
     };
 
     rsx!(
-        div { "data-state": state, id: props.id, class: class, height: final_height, onmounted: onmounted, {props.children} }
+        div {
+            "data-state": state,
+            id: props.id,
+            class: class,
+            height: final_height,
+            onmounted: onmounted,
+            {props.children}
+        }
     )
 }
 
