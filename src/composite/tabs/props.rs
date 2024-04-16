@@ -28,9 +28,9 @@ pub fn TabsList() -> Element {
 
 #[props_component(class, id, children)]
 pub fn TabsTrigger() -> Element {
-    let mut tab_state = consume_context::<Signal<TabsState>>();
-
     let class = tw_merge!(props.base(), props.class);
+
+    let mut tab_state = consume_context::<Signal<TabsState>>();
 
     let state = match tab_state.read().0 == props.id {
         true => "active",
@@ -52,7 +52,12 @@ pub fn TabsContent() -> Element {
 
     let class = tw_merge!(props.base(), props.class);
 
+    let (state, is_hidden) = match tab_state.read().0 == props.id {
+        true => ("active", false),
+        false => ("inactive", true),
+    };
+
     rsx!(
-        div { class: class, hidden: if tab_state.read().0 == props.id { false } else { true }, id: props.id, { props.children } }
+        div { "data-state": state, class: class, hidden: is_hidden, id: props.id, { props.children } }
     )
 }
