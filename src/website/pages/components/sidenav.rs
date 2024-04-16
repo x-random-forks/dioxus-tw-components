@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 use dioxus_components_bin::{
-    atom::separator::Separator, composite::scrollable::*, layout::docslayout::DocsLayout,
+    atom::separator::Separator, composite::scrollable::*, layout::docs::DocsLayout,
 };
 
 use crate::website::router::Route;
@@ -10,7 +10,7 @@ pub fn SideNavComp() -> Element {
     let atom_names = [
         "button",
         "checkbox",
-        "formrange",
+        "slider",
         "icon",
         "input",
         "placeholder",

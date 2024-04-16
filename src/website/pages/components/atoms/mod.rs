@@ -4,8 +4,8 @@ pub use button_page::ButtonPage;
 mod checkbox_page;
 pub use checkbox_page::CheckboxPage;
 
-mod formrange_page;
-pub use formrange_page::FormRangePage;
+mod slider_page;
+pub use slider_page::SliderPage;
 
 mod icon_page;
 pub use icon_page::IconPage;

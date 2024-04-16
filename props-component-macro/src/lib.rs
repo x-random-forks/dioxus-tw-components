@@ -43,6 +43,7 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
     let name = &input.sig.ident;
     let name_struct = syn::Ident::new(&format!("{}Props", name), proc_macro2::Span::call_site());
 
+    // Let statement are not used right now since they made the code far more complex to resolve problems about borrowing and such
     let (mut fields, mut let_statements) = make_struct_fields_and_let_statements(&input.sig.inputs);
 
     let args = parse_macro_input!(args as ParsedArg);
@@ -86,7 +87,7 @@ fn make_struct_fields_and_let_statements(
     inputs: &syn::punctuated::Punctuated<syn::FnArg, syn::token::Comma>,
 ) -> (Vec<proc_macro2::TokenStream>, Vec<proc_macro2::TokenStream>) {
     let mut fields = Vec::new();
-    let mut let_statements = Vec::new();
+    let let_statements = Vec::new();
 
     for input in inputs {
         if let syn::FnArg::Typed(pat_type) = input {

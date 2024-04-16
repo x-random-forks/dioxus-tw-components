@@ -5,7 +5,7 @@ use tailwind_fuse::*;
 use crate::types::*;
 
 #[props_component(id, class)]
-pub fn FormRange(
+pub fn Slider(
     #[props(extends = input)] attributes: Vec<Attribute>,
     #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
 ) -> Element {

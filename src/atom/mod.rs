@@ -1,11 +1,11 @@
 pub mod button;
 pub mod checkbox;
 pub mod code;
-pub mod formrange;
 pub mod icon;
 pub mod input;
 pub mod label;
 pub mod placeholder;
 pub mod separator;
+pub mod slider;
 pub mod textarea;
 pub mod toggle;
