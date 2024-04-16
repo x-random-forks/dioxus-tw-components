@@ -9,8 +9,9 @@ pub fn Input(
     #[props(extends = input)] attributes: Vec<Attribute>,
     #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
     #[props(default)] size: Size,
+    #[props(default)] color: Color,
 ) -> Element {
-    let class = tw_merge!(props.base(), props.size(), props.class);
+    let class = tw_merge!(props.base(), props.color(), props.size(), props.class);
 
     let oninput = move |event| {
         if let Some(oc) = &props.oninput {

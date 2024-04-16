@@ -5,6 +5,6 @@ pub fn SliderPage() -> Element {
     rsx!(
         "SLIDER PAGE"
         Slider {}
-        Slider {disabled: true}
+        Slider { disabled: true }
     )
 }

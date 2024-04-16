@@ -1,11 +1,17 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::atom::input::*;
+use dioxus_components_bin::{atom::input::*, types::Color};
 
 pub fn InputPage() -> Element {
     rsx!(
         div { class: "flex flex-col space-y-2 w-52 p-4",
             "INPUT PAGE"
             div { Input { r#type: "text" } }
+            div { Input { color: Color::Primary, r#type: "text" } }
+            div { Input { color: Color::Secondary, r#type: "text" } }
+            div { Input { color: Color::Destructive, r#type: "text" } }
+            div { Input { color: Color::Success, r#type: "text" } }
+            div { Input { color: Color::Accent, r#type: "text" } }
+            div { Input { color: Color::Muted, r#type: "text" } }
             div { Input { r#type: "date" } }
             div { Input { r#type: "file" } }
             div { Input { r#type: "email", placeholder: "email" } }
