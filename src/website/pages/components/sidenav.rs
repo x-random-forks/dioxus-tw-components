@@ -10,11 +10,9 @@ pub fn SideNavComp() -> Element {
     let atom_names = [
         "button",
         "checkbox",
-        "code",
         "formrange",
         "icon",
         "input",
-        "label",
         "placeholder",
         "separator",
         "textarea",

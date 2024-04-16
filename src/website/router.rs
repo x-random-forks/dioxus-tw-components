@@ -16,16 +16,12 @@ pub enum Route {
             ButtonPage {},
             #[route("/component/atom/checkbox")]
             CheckboxPage {},
-            #[route("/component/atom/code")]
-            CodePage {},
             #[route("/component/atom/formrange")]
             FormRangePage {},
             #[route("/component/atom/icon")]
             IconPage {},
             #[route("/component/atom/input")]
             InputPage {},
-            #[route("/component/atom/label")]
-            LabelPage {},
             #[route("/component/atom/placeholder")]
             PlaceholderPage {},
             #[route("/component/atom/separator")]

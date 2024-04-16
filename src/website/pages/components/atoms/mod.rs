@@ -1,35 +1,29 @@
-mod buttonpage;
-pub use buttonpage::ButtonPage;
+mod button_page;
+pub use button_page::ButtonPage;
 
-mod checkboxpage;
-pub use checkboxpage::CheckboxPage;
+mod checkbox_page;
+pub use checkbox_page::CheckboxPage;
 
-mod formrangepage;
-pub use formrangepage::FormRangePage;
+mod formrange_page;
+pub use formrange_page::FormRangePage;
 
-mod iconpage;
-pub use iconpage::IconPage;
+mod icon_page;
+pub use icon_page::IconPage;
 
-mod inputpage;
-pub use inputpage::InputPage;
+mod input_page;
+pub use input_page::InputPage;
 
-mod labelpage;
-pub use labelpage::LabelPage;
+mod separator_page;
+pub use separator_page::SeparatorPage;
 
-mod separatorpage;
-pub use separatorpage::SeparatorPage;
+mod textarea_page;
+pub use textarea_page::TextAreaPage;
 
-mod textareapage;
-pub use textareapage::TextAreaPage;
+mod toggle_page;
+pub use toggle_page::TogglePage;
 
-mod togglepage;
-pub use togglepage::TogglePage;
+mod typography_page;
+pub use typography_page::TypographyPage;
 
-mod typographypage;
-pub use typographypage::TypographyPage;
-
-mod codepage;
-pub use codepage::CodePage;
-
-mod placeholderpage;
-pub use placeholderpage::PlaceholderPage;
+mod placeholder_page;
+pub use placeholder_page::PlaceholderPage;

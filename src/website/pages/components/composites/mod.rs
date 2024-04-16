@@ -1,38 +1,38 @@
-mod scrollablepage;
-pub use scrollablepage::ScrollablePage;
+mod scrollable_page;
+pub use scrollable_page::ScrollablePage;
 
-mod lightswitchpage;
-pub use lightswitchpage::LightSwitchPage;
+mod lightswitch_page;
+pub use lightswitch_page::LightSwitchPage;
 
-mod selectpage;
-pub use selectpage::SelectPage;
+mod select_page;
+pub use select_page::SelectPage;
 
-mod radiogrouppage;
-pub use radiogrouppage::RadioGroupPage;
+mod radiogroup_page;
+pub use radiogroup_page::RadioGroupPage;
 
-mod dropdownpage;
-pub use dropdownpage::DropdownPage;
+mod dropdown_page;
+pub use dropdown_page::DropdownPage;
 
-mod modalpage;
-pub use modalpage::ModalPage;
+mod modal_page;
+pub use modal_page::ModalPage;
 
-mod formlistpage;
-pub use formlistpage::FormListPage;
+mod formlist_page;
+pub use formlist_page::FormListPage;
 
-mod progressbarpage;
-pub use progressbarpage::ProgressBarPage;
+mod progressbar_page;
+pub use progressbar_page::ProgressBarPage;
 
-mod navbarpage;
-pub use navbarpage::NavbarPage;
+mod navbar_page;
+pub use navbar_page::NavbarPage;
 
-mod breadcrumbpage;
-pub use breadcrumbpage::BreadcrumbPage;
+mod breadcrumb_page;
+pub use breadcrumb_page::BreadcrumbPage;
 
-mod accordionpage;
-pub use accordionpage::AccordionPage;
+mod accordion_page;
+pub use accordion_page::AccordionPage;
 
-mod tablepage;
-pub use tablepage::TablePage;
+mod table_page;
+pub use table_page::TablePage;
 
-mod tabspage;
-pub use tabspage::TabsPage;
+mod tabs_page;
+pub use tabs_page::TabsPage;
