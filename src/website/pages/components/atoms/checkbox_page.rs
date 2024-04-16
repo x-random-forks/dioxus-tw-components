@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::{atom::checkbox::*, types::Color};
+use dioxus_components_bin::{components::form::checkbox::*, types::Color};
 
 pub fn CheckboxPage() -> Element {
     rsx!(

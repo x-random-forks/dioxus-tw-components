@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 use dioxus_components_bin::{
-    atom::{button::*, separator::Separator},
-    composite::dropdown::*,
+    components::atom::{button::*, separator::Separator},
+    components::composite::dropdown::*,
 };
 
 pub fn DropdownPage() -> Element {

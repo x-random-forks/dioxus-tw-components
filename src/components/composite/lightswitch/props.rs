@@ -1,6 +1,6 @@
-use crate::{atom::icon::Icon, *};
-use atom::icon::style::IconSvg;
+use crate::{components::atom::icon::Icon, *};
 use component_derive::Component;
+use components::atom::icon::style::IconSvg;
 
 pub struct LightSwitchSignal(pub String);
 

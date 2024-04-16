@@ -1,5 +1,6 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::{atom::button::*, composite::modal::*, types::Size};
+use dioxus_components_bin::components::composite::modal::*;
+use dioxus_components_bin::{components::atom::button::*, types::Size};
 
 pub fn ModalPage() -> Element {
     rsx!(

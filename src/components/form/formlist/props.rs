@@ -1,4 +1,4 @@
-use crate::{atom::button::*, *};
+use crate::{components::atom::button::*, *};
 use component_derive::Component;
 
 // REVIEW / TODO : This is more of an example, probably need to use it before refining implementation

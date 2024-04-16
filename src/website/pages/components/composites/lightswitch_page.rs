@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::composite::lightswitch::*;
+use dioxus_components_bin::components::composite::lightswitch::*;
 
 pub fn LightSwitchPage() -> Element {
     rsx!(

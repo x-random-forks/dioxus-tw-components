@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::composite::select::*;
+use dioxus_components_bin::components::form::select::*;
 
 pub fn SelectPage() -> Element {
     rsx!(

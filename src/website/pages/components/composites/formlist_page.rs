@@ -2,8 +2,10 @@ use std::collections::HashMap;
 
 use dioxus::prelude::*;
 use dioxus_components_bin::{
-    atom::{button::*, input::*, label::*},
-    composite::{formlist::*, select::*},
+    components::atom::{button::*, label::*},
+    components::form::formlist::*,
+    components::form::input::Input,
+    components::form::select::*,
 };
 
 pub fn FormListPage() -> Element {

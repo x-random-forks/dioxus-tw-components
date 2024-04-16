@@ -1,7 +1,8 @@
 use dioxus::prelude::*;
 use dioxus_components_bin::{
-    atom::{icon::*, input::*},
-    composite::{lightswitch::*, navbar::*},
+    components::atom::icon::*,
+    components::composite::{lightswitch::*, navbar::*},
+    components::form::input::Input,
     layout::{header::HeaderLayout, mainlayout::MainLayout},
 };
 

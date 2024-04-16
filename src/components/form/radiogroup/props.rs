@@ -1,4 +1,4 @@
-use crate::{atom::icon::*, composite::radiogroup::props::style::IconSvg};
+use crate::{components::atom::icon::*, components::form::radiogroup::props::style::IconSvg};
 use dioxus::prelude::*;
 use props_component_macro::props_component;
 use tailwind_fuse::*;

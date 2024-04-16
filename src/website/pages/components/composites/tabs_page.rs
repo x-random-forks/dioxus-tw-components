@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::composite::tabs::*;
+use dioxus_components_bin::components::composite::tabs::*;
 
 pub fn TabsPage() -> Element {
     rsx!(

@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::composite::accordion::*;
+use dioxus_components_bin::components::composite::accordion::*;
 
 pub fn AccordionPage() -> Element {
     rsx!(

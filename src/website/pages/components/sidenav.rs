@@ -1,6 +1,7 @@
 use dioxus::prelude::*;
 use dioxus_components_bin::{
-    atom::separator::Separator, composite::scrollable::*, layout::docs::DocsLayout,
+    components::atom::separator::Separator, components::composite::scrollable::*,
+    layout::docs::DocsLayout,
 };
 
 use crate::website::router::Route;

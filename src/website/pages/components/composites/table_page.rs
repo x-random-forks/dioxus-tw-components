@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::composite::table::*;
+use dioxus_components_bin::components::composite::table::*;
 
 pub fn TablePage() -> Element {
     rsx!(

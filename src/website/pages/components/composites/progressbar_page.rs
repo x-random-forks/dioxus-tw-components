@@ -1,5 +1,6 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::{atom::button::*, composite::progressbar::*, types::*};
+use dioxus_components_bin::components::composite::progressbar::*;
+use dioxus_components_bin::{components::atom::button::*, types::*};
 
 pub fn ProgressBarPage() -> Element {
     let mut progress = use_signal(|| 45);

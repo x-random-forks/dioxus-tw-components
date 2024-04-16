@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::{atom::input::*, types::Color};
+use dioxus_components_bin::{components::form::input::*, types::Color};
 
 pub fn InputPage() -> Element {
     rsx!(

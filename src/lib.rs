@@ -2,8 +2,7 @@
 
 use dioxus::prelude::*;
 
-pub mod atom;
-pub mod composite;
+pub mod components;
 pub mod hooks;
 pub mod layout;
 pub mod types;

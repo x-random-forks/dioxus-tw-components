@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 use dioxus_components_bin::{
-    atom::toggle::*,
+    components::form::toggle::*,
     types::{Color, Size},
 };
 
