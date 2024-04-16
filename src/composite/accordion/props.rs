@@ -1,17 +1,46 @@
-use crate::hooks::use_signal_unique_id;
+use crate::hooks::use_signal_string;
 use crate::types::*;
 use dioxus::prelude::*;
 use props_component_macro::props_component;
 use tailwind_fuse::*;
 use web_sys::wasm_bindgen::JsValue;
 
-struct AccordionState(bool);
+struct AccordionState {
+    multi_open: bool,
+    current_active: Vec<String>,
+}
 
-// TODO Check if this works with multiple accordions
+impl AccordionState {
+    fn new(multi_open: bool) -> Self {
+        Self {
+            multi_open,
+            current_active: Vec::new(),
+        }
+    }
+
+    fn add_id(&mut self, id: String) {
+        self.current_active.push(id);
+    }
+
+    fn remove_id(&mut self, id: String) {
+        self.current_active.retain(|x| x != &id);
+    }
+
+    fn set_id(&mut self, id: String) {
+        self.current_active.clear();
+        self.current_active.push(id);
+    }
+
+    fn is_active(&self, id: &str) -> bool {
+        self.current_active.contains(&id.to_string())
+    }
+}
 
 #[props_component(id, class, children)]
 pub fn Accordion(#[props(default = false)] multi_open: bool) -> Element {
     let class = tw_merge!(props.class);
+
+    use_context_provider(|| Signal::new(AccordionState::new(props.multi_open)));
 
     rsx!(
         div { class: class, id: props.id, {props.children} }
@@ -22,39 +51,64 @@ pub fn Accordion(#[props(default = false)] multi_open: bool) -> Element {
 pub fn AccordionItem() -> Element {
     let class = tw_merge!(props.base(), props.class);
 
-    use_context_provider(|| Signal::new(AccordionState(false)));
-
     rsx!(
         div { class: class, id: props.id, {props.children} }
     )
 }
 
+// TODO add an SVG indicator for the accordion trigger state
 #[props_component(id, class, children)]
-pub fn AccordionTrigger() -> Element {
-    let button_closure = move |_: Event<MouseData>| {
-        if read_accordion_state() {
-            use_accordion_state().set(AccordionState(false));
-        } else {
-            use_accordion_state().set(AccordionState(true));
+pub fn AccordionTrigger(
+    /// Determines if the accordion item is open by default
+    #[props(default = false)]
+    is_open: bool,
+) -> Element {
+    let class = tw_merge!(props.base(), props.class);
+
+    let mut accordion_state = consume_context::<Signal<AccordionState>>();
+
+    let sig_id = use_signal_string(props.id.clone());
+
+    let onmounted = move |_| async move {
+        if props.is_open {
+            accordion_state.write().add_id(sig_id());
         }
     };
 
-    let class = tw_merge!(props.base(), props.class);
+    let button_closure = move |_: Event<MouseData>| {
+        // If the current item is active, remove it from the list, effectively closing it
+        if accordion_state.read().is_active(&sig_id()) {
+            accordion_state.write().remove_id(sig_id());
+        } else {
+            // If the current item is not active
+            // set it as the only active item if multi_open is false
+            // or add it to the list of active items if multi_open is true
+            if !accordion_state.read().multi_open {
+                accordion_state.write().set_id(sig_id());
+            } else {
+                accordion_state.write().add_id(sig_id());
+            }
+        }
+    };
+
+    let state = match accordion_state.read().is_active(&sig_id()) {
+        true => "active",
+        false => "inactive",
+    };
 
     rsx!(
-        button { class: class, id: props.id, onclick: button_closure, {props.children} }
+        button { "data-state": state, class: class, id: props.id, onclick: button_closure, onmounted: onmounted, {props.children} }
     )
 }
 
 #[props_component(id, class, children)]
 pub fn AccordionContent() -> Element {
-    let mut elem_height = use_signal(|| "".to_string());
-    let sig_id = use_signal_unique_id(props.id.clone());
+    let class = tw_merge!(props.base(), props.class);
 
-    let final_height = match read_accordion_state() {
-        true => elem_height(),
-        false => "0".to_string(),
-    };
+    // This is the height of the element when visible, we need to calcul it before rendering it to have a smooth transition
+    let mut elem_height = use_signal(|| "".to_string());
+
+    let sig_id = use_signal_string(props.id.clone());
 
     let onmounted = move |_| async move {
         match get_element_height(&sig_id()) {
@@ -67,10 +121,15 @@ pub fn AccordionContent() -> Element {
         }
     };
 
-    let class = tw_merge!(props.base(), props.class);
+    let accordion_state = consume_context::<Signal<AccordionState>>();
+
+    let (final_height, state) = match accordion_state.read().is_active(&sig_id()) {
+        true => (elem_height(), false),
+        false => ("0".to_string(), true),
+    };
 
     rsx!(
-        div { id: props.id, class: class, height: final_height, onmounted: onmounted, {props.children} }
+        div { "data-state": state, id: props.id, class: class, height: final_height, onmounted: onmounted, {props.children} }
     )
 }
 
@@ -84,12 +143,4 @@ fn get_element_height(sig_id: &str) -> Result<i32, JsValue> {
         .ok_or_else(|| JsValue::from_str("Element not found"))?;
 
     Ok(element.scroll_height())
-}
-
-fn use_accordion_state() -> Signal<AccordionState> {
-    use_context::<Signal<AccordionState>>()
-}
-
-fn read_accordion_state() -> bool {
-    use_context::<Signal<AccordionState>>().read().0
 }

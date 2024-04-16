@@ -9,7 +9,7 @@ impl BaseClass for AccordionItemProps {
 
 impl BaseClass for AccordionTriggerProps {
     fn base(&self) -> &'static str {
-        "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline"
+        "flex flex-1 items-center justify-between py-2 font-medium transition-all hover:underline"
     }
 }
 
