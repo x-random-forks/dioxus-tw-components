@@ -4,10 +4,28 @@ use dioxus_components_bin::{components::form::checkbox::*, types::Color};
 pub fn CheckboxPage() -> Element {
     rsx!(
         "CHECKBOX PAGE"
-        Checkbox { checked: true, color: Color::Primary, "Primary" }
-        Checkbox { checked: true, color: Color::Secondary, "Secondary" }
-        Checkbox { checked: true, color: Color::Destructive, "Destructive" }
-        Checkbox { checked: true, color: Color::Success, "Success" }
-        Checkbox { checked: true, disabled: true, color: Color::Primary, "Disabled" }
+        div {
+            div {
+                label { r#for: "checkbox-1", "Primary" }
+                Checkbox { id: "checkbox-1", checked: true, color: Color::Primary }
+            }
+            div {
+                Checkbox { id: "checkbox-2", checked: true, color: Color::Secondary, "Secondary" }
+                label { r#for: "checkbox-2", "Secondary" }
+            }
+            div {
+                Checkbox { id: "checkbox-3", checked: true, color: Color::Destructive, "Destructive" }
+                label { class:"", r#for: "checkbox-3", "Destructive" }
+            }
+            div {
+                Checkbox { id: "checkbox-4", checked: true, color: Color::Success, "Success" }
+                label { r#for: "checkbox-4", "Success" }
+            }
+            div {
+                Checkbox { id: "checkbox-5", checked: true, disabled: true, color: Color::Primary, "Disabled" }
+                label { class:"peer-disabled:opacity-50",r#for: "checkbox-5", "Disabled" }
+            }
+
+        }
     )
 }
