@@ -8,7 +8,8 @@ use crate::types::*;
 pub fn Checkbox(
     #[props(extends = input)] attributes: Vec<Attribute>,
     #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
-    #[props(default)] color: Color,
+    #[props(default = Color::Primary)] color: Color,
+    #[props(default)] side: Side,
 ) -> Element {
     let class = tw_merge!(props.base(), props.color(), props.class);
 
@@ -20,14 +21,25 @@ pub fn Checkbox(
 
     rsx!(
         label { class: "cursor-pointer gap-x-1 flex items-center",
-            input {
-                ..props.attributes,
-                r#type: "checkbox",
-                class: class,
-                oninput: oninput,
-                id: props.id
+            if props.side == Side::Right {
+                input {
+                    ..props.attributes,
+                    r#type: "checkbox",
+                    class: class,
+                    oninput: oninput,
+                    id: props.id
+                }
+                div { class: "peer-disabled:opacity-30", {props.children} }
+            } else {
+                div { class: "peer-disabled:opacity-30", {props.children} }
+                input {
+                    ..props.attributes,
+                    r#type: "checkbox",
+                    class: class,
+                    oninput: oninput,
+                    id: props.id
+                }
             }
-            div { class: "peer-disabled:opacity-30", {props.children} }
         }
     )
 }

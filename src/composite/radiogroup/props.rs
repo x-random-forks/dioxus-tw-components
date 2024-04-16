@@ -31,6 +31,8 @@ pub fn RadioItem(
     #[props(default = false)] disabled: bool,
 
     #[props(optional)] oninput: EventHandler<FormEvent>,
+
+    #[props(default)] side: Side,
 ) -> Element {
     let mut radio_context = consume_context::<Signal<RadioGroupSignal>>();
 
@@ -55,10 +57,18 @@ pub fn RadioItem(
                     },
                     class: "hidden peer"
                 }
-                div { class: "size-4 peer-disabled:cursor-not-allowed", Icon { svg: svg } }
-                // TODO Move this into another comp
-                div { class: "font-medium peer-disabled:opacity-50 peer-disabled:cursor-not-allowed",
-                    {props.children}
+                if props.side == Side::Left {
+                    div { class: "font-medium peer-disabled:opacity-50 peer-disabled:cursor-not-allowed",
+                        {props.children}
+                    }
+                    div { class: "size-4 peer-disabled:cursor-not-allowed", Icon { svg: svg } }
+                } else {
+
+                    div { class: "size-4 peer-disabled:cursor-not-allowed", Icon { svg: svg } }
+                    // TODO Move this into another comp
+                    div { class: "font-medium peer-disabled:opacity-50 peer-disabled:cursor-not-allowed",
+                        {props.children}
+                    }
                 }
             }
         }
