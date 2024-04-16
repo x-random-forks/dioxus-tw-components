@@ -1,10 +1,16 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::atom::textarea::*;
+use dioxus_components_bin::{atom::textarea::*, types::Color};
 
 pub fn TextAreaPage() -> Element {
     rsx!(
         "TEXTAREA PAGE"
-        TextArea {}
-        TextArea { disabled: true }
+        div { class: "grid space-y-2",
+            TextArea { color: Color::Default }
+            TextArea { color: Color::Primary }
+            TextArea { color: Color::Secondary }
+            TextArea { color: Color::Destructive }
+            TextArea { color: Color::Success }
+            TextArea { disabled: true }
+        }
     )
 }
