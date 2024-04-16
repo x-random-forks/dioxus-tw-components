@@ -4,7 +4,7 @@ use tailwind_fuse::*;
 
 use crate::types::*;
 
-#[props_component(id, class, children)]
+#[props_component(id, class)]
 pub fn Checkbox(
     #[props(extends = input)] attributes: Vec<Attribute>,
     #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
