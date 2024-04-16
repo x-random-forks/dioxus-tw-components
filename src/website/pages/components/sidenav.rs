@@ -8,18 +8,7 @@ use crate::website::router::Route;
 
 pub fn SideNavComp() -> Element {
     // TODO Find a better way to do this
-    let atom_names = [
-        "button",
-        "checkbox",
-        "slider",
-        "icon",
-        "input",
-        "placeholder",
-        "separator",
-        "textarea",
-        "toggle",
-        "typography",
-    ];
+    let atom_names = ["button", "icon", "placeholder", "separator", "typography"];
 
     let atoms = atom_names
         .iter()
@@ -34,14 +23,11 @@ pub fn SideNavComp() -> Element {
         "accordion",
         "breadcrumb",
         "dropdown",
-        "formlist",
         "lightswitch",
         "modal",
         "navbar",
         "progressbar",
-        "radiogroup",
         "scrollable",
-        "select",
         "table",
         "tabs",
     ];
@@ -51,6 +37,26 @@ pub fn SideNavComp() -> Element {
         .map(|name| {
             rsx!(
                 Link { to: format!("/component/composite/{}", name), {name} }
+            )
+        })
+        .collect::<Vec<Element>>();
+
+    let form_names = [
+        "checkbox",
+        "formlist",
+        "input",
+        "radiogroup",
+        "select",
+        "slider",
+        "textarea",
+        "toggle",
+    ];
+
+    let forms = form_names
+        .iter()
+        .map(|name| {
+            rsx!(
+                Link { to: format!("/component/form/{}", name), {name} }
             )
         })
         .collect::<Vec<Element>>();
@@ -66,6 +72,11 @@ pub fn SideNavComp() -> Element {
                 h5 { class: "h5", "COMPOSITES" }
                 for composite in composites {
                     div { class: "hover:underline", {composite} }
+                }
+                Separator {}
+                h5 { class: "h5", "FORMS" }
+                for form in forms {
+                    div { class: "hover:underline", {form} }
                 }
             }
         }
