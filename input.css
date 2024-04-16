@@ -83,6 +83,9 @@
         @apply text-foreground/70 hover:text-foreground transition-colors cursor-pointer;
       }
 
+      .activity {
+        @apply absolute left-[-45%] h-full w-[45%] bg-[linear-gradient(to_left,rgba(251,251,251,0.05),rgba(251,251,251,0.3),rgba(251,251,251,0.6),rgba(251,251,251,0.3),rgba(251,251,251,0.05))] bg-[-moz-linear-gradient(to_left,rgba(251,251,251,0.05),rgba(251,251,251,0.3),rgba(251,251,251,0.6),rgba(251,251,251,0.3),rgba(251,251,251,0.05))] bg-[-webkit-linear-gradient(to_left,rgba(251,251,251,0.05),rgba(251,251,251,0.3),rgba(251,251,251,0.6),rgba(251,251,251,0.3),rgba(251,251,251,0.05))] animate-[loading_1s_infinite] z-[45];
+      }
     }
     
 /* TODO */

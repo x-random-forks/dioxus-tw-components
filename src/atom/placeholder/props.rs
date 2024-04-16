@@ -5,16 +5,8 @@ use tailwind_fuse::*;
 use crate::types::*;
 
 #[props_component(id, class)]
-pub fn Placeholder(
-    #[props(default)] radius: super::PlaceholderRadius,
-    #[props(default = true)] animation: bool,
-) -> Element {
-    let class = tw_merge!(
-        props.base(),
-        props.variant(),
-        if props.animation { "animate-pulse" } else { "" },
-        props.class
-    );
+pub fn Placeholder(#[props(default)] animation: super::PlaceholderAnimation) -> Element {
+    let class = tw_merge!(props.base(), props.variant(), props.class);
 
-    rsx!(div { class: class })
+    rsx!( div { class: class } )
 }

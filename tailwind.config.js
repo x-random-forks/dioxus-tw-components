@@ -34,6 +34,13 @@ module.exports = {
             boxShadow: {
                 "global-shadow": 'var(--global-shadow)',
             },
+            keyframes: {
+                "shimmer" : {
+                    "100%" : {
+                        "transform" : "translateX(100%)",
+                    }
+                }
+            }
         },
     },
     plugins: [],

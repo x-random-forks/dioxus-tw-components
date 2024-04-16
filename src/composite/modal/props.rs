@@ -59,7 +59,12 @@ pub fn ModalBackground(#[props(default = true)] interactive: bool) -> Element {
     let class = tw_merge!(props.base(), props.class);
 
     rsx!(
-        div { class: "{modal_state_to_string()} {class}", id: props.id, onclick: modal_closure, {props.children} }
+        div {
+            class: "{modal_state_to_string()} {class}",
+            id: props.id,
+            onclick: modal_closure,
+            {props.children}
+        }
     )
 }
 

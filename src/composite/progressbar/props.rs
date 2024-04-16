@@ -35,6 +35,11 @@ pub fn ProgressLabel(
     let class = tw_merge!(props.base(), props.class);
 
     rsx!(
-        span { class: class, {props.progress.to_string()}, if props.show_percentage { "%" } }
+        span { class: class,
+            {props.progress.to_string()},
+            if props.show_percentage {
+                "%"
+            }
+        }
     )
 }

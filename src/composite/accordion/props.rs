@@ -70,13 +70,7 @@ pub fn AccordionContent() -> Element {
     let class = tw_merge!(props.base(), props.class);
 
     rsx!(
-        div {
-            id: props.id,
-            class: class,
-            height: final_height,
-            onmounted: onmounted,
-            {props.children}
-        }
+        div { id: props.id, class: class, height: final_height, onmounted: onmounted, {props.children} }
     )
 }
 
