@@ -1,6 +1,6 @@
 use crate::{atom::icon::*, composite::radiogroup::props::style::IconSvg};
 use dioxus::prelude::*;
-use myderive::props_component;
+use props_component_macro::props_component;
 use tailwind_fuse::*;
 
 use crate::types::*;

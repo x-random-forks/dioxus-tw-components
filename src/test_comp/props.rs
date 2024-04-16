@@ -1,5 +1,5 @@
 // use dioxus::prelude::*;
-// use myderive::props_component;
+// use props_component_macro::props_component;
 
 // pub trait BaseClass {
 //     fn base(&self) -> &'static str;

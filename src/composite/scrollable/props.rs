@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use myderive::props_component;
+use props_component_macro::props_component;
 use tailwind_fuse::*;
 
 use crate::types::*;

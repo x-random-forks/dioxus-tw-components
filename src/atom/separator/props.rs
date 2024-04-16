@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use myderive::props_component;
+use props_component_macro::props_component;
 use tailwind_fuse::*;
 
 use crate::types::*;
@@ -8,5 +8,5 @@ use crate::types::*;
 pub fn Separator(#[props(default = false)] vertical: bool) -> Element {
     let class = tw_merge!(props.base(), props.variant(), props.class);
 
-    rsx!( div { class: class } )
+    rsx!(div { class: class })
 }

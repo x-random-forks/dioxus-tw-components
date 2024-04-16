@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use myderive::props_component;
+use props_component_macro::props_component;
 use tailwind_fuse::*;
 
 use crate::types::*;
@@ -16,5 +16,5 @@ pub fn Placeholder(
         props.class
     );
 
-    rsx!( div { class: class } )
+    rsx!(div { class: class })
 }

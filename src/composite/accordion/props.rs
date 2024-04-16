@@ -1,7 +1,7 @@
 use crate::hooks::use_signal_unique_id;
 use crate::types::*;
 use dioxus::prelude::*;
-use myderive::props_component;
+use props_component_macro::props_component;
 use tailwind_fuse::*;
 use web_sys::wasm_bindgen::JsValue;
 
