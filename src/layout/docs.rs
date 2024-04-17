@@ -1,25 +1,16 @@
-use crate::Component;
-use component_derive::Component;
 use dioxus::prelude::*;
+use props_component_macro::props_component;
 use tailwind_fuse::*;
 
-#[derive(PartialEq, Props, Clone, Component)]
-pub struct DocsLayoutProps {
-    children: Element,
-    // Styling
-    #[props(default)]
-    class: String,
-}
+#[props_component(class, children, id)]
+pub fn Docs() -> Element {
+    let class = tw_merge!("mx-auto w-full border", props.class);
 
-impl Component for DocsLayoutProps {
-    fn view(self) -> Element {
-        let class = DocsLayoutClass::builder().with_class(self.class);
-        rsx!(
-            div { class: "{class}", { self.children } }
-        )
-    }
+    rsx!(
+        div {
+            class: class,
+            id: props.id,
+            { props.children }
+        }
+    )
 }
-
-#[derive(TwClass, Clone, Copy)]
-#[tw(class = r#"mx-auto w-full border"#)]
-pub struct DocsLayoutClass {}

@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 use dioxus_components_bin::{
     components::composite::{lightswitch::*, navbar::*},
     components::form::input::Input,
-    layout::{header::HeaderLayout, mainlayout::MainLayout},
+    layout::{HeaderLayout, MainLayout},
 };
 
 use crate::website::router::Route;

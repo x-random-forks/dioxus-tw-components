@@ -1,33 +1,14 @@
-use super::style::*;
-use crate::Component;
-use component_derive::Component;
 use dioxus::prelude::*;
+use props_component_macro::props_component;
 use tailwind_fuse::*;
 
-#[derive(PartialEq, Props, Clone, Component)]
-pub struct LabelProps {
-    // Represent the unique id in the DOM
-    #[props(default)]
-    r#for: String,
+use crate::types::*;
 
-    children: Element,
+#[props_component(class, children)]
+pub fn Label(#[props(default)] r#for: String) -> Element {
+    let class = tw_merge!(props.base(), props.class);
 
-    // Styling
-    #[props(default)]
-    color: LabelColor,
-    #[props(default)]
-    class: String,
-}
-
-// REVIEW / TODO : While probably get rid of this class in the end and just add a .label class in input.css
-impl Component for LabelProps {
-    fn view(self) -> Element {
-        let class = LabelClass::builder()
-            .color(self.color)
-            .with_class(self.class);
-
-        rsx!(
-            label { class: "{class}", r#for: "{self.r#for}", { self.children } }
-        )
-    }
+    rsx!(
+        label { class: class, r#for: props.r#for, { props.children } }
+    )
 }

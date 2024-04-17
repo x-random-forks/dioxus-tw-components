@@ -1,4 +1,5 @@
-workspace = { members = ["component-derive", "props-component-macro"] }
+workspace = { members = ["props-component-macro"] }
+
 [package]
 name = "dioxus_components_bin"
 version = "0.1.0"
@@ -24,8 +25,6 @@ console = "0.15.8"
 tailwind_fuse = { version = "0.2.0", features = ["variant"] }
 dioxus-free-icons = { version = "0.8", features = ["font-awesome-brands", "feather"] }
 web-sys = {version = "0.3.69"}
-
-component-derive = { path = "component-derive" }
 props-component-macro = { path = "props-component-macro" }
 
 # This is to keep the dioxus from dioxus-free-icons from conflicting with the one we are using

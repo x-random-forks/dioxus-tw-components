@@ -1,7 +1,6 @@
 use dioxus::prelude::*;
 use dioxus_components_bin::{
-    components::atom::separator::Separator, components::composite::scrollable::*,
-    layout::docs::DocsLayout,
+    components::atom::separator::Separator, components::composite::scrollable::*, layout::Docs,
 };
 
 use crate::website::router::Route;
@@ -81,7 +80,7 @@ pub fn SideNavComp() -> Element {
             }
         }
         div { class: "relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]",
-            DocsLayout { Outlet::<Route> {} }
+            Docs { Outlet::<Route> {} }
         }
     )
 }
