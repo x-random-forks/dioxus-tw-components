@@ -22,25 +22,25 @@ impl Variation for ButtonProps {
             ButtonVariant::Default => "",
             ButtonVariant::Outline => match self.color {
                 Color::Default => {
-                    "border bg-transparentborder-foreground text-foreground hover:bg-foreground/40"
+                    "border bg-transparent border-foreground text-foreground hover:bg-foreground/40"
                 }
-                Color::Primary => "border bg-transparentborder-primary text-primary hover:bg-primary/90 hover:text-primary-foreground",
-                Color::Secondary => "border bg-transparentborder-secondary text-secondary hover:bg-secondary/90 hover:text-secondary-foreground",
-                Color::Destructive => "border bg-transparentborder-destructive text-destructive hover:bg-destructive/90 hover:text-destructive-foreground",
-                Color::Success => "border bg-transparentborder-success text-success hover:bg-success/90 hover:text-success-foreground",
-                Color::Accent => "border bg-transparentborder-accent text-accent hover:bg-accent/90 hover:text-accent-foreground",
-                Color::Muted => "border bg-transparentborder-muted text-muted hover:bg-muted/90 hover:text-muted-foreground",
+                Color::Primary => "border bg-transparent border-primary text-primary hover:bg-primary/90 hover:text-primary-foreground",
+                Color::Secondary => "border bg-transparent border-secondary text-secondary hover:bg-secondary/90 hover:text-secondary-foreground",
+                Color::Destructive => "border bg-transparent border-destructive text-destructive hover:bg-destructive/90 hover:text-destructive-foreground",
+                Color::Success => "border bg-transparent border-success text-success hover:bg-success/90 hover:text-success-foreground",
+                Color::Accent => "border bg-transparent border-accent text-accent hover:bg-accent/90 hover:text-accent-foreground",
+                Color::Muted => "border bg-transparent border-muted text-muted hover:bg-muted/90 hover:text-muted-foreground",
             },
             ButtonVariant::Ghost => match self.color {
                 Color::Default => {
-                    "bg-transparentborder-foreground text-foreground hover:bg-foreground/40"
+                    "bg-transparent border-foreground text-foreground hover:bg-foreground/40"
                 }
-                Color::Primary => "bg-transparentborder-primary text-primary hover:bg-primary/90 hover:text-primary-foreground",
-                Color::Secondary => "bg-transparentborder-secondary text-secondary hover:bg-secondary/90 hover:text-secondary-foreground",
-                Color::Destructive => "bg-transparentborder-destructive text-destructive hover:bg-destructive/90 hover:text-destructive-foreground",
-                Color::Success => "bg-transparentborder-success text-success hover:bg-success/90 hover:text-success-foreground",
-                Color::Accent => "bg-transparentborder-accent text-accent hover:bg-accent/90 hover:text-accent-foreground",
-                Color::Muted => "bg-transparentborder-muted text-muted hover:bg-muted/90 hover:text-muted-foreground",
+                Color::Primary => "bg-transparent border-primary text-primary hover:bg-primary/90 hover:text-primary-foreground",
+                Color::Secondary => "bg-transparent border-secondary text-secondary hover:bg-secondary/90 hover:text-secondary-foreground",
+                Color::Destructive => "bg-transparent border-destructive text-destructive hover:bg-destructive/90 hover:text-destructive-foreground",
+                Color::Success => "bg-transparent border-success text-success hover:bg-success/90 hover:text-success-foreground",
+                Color::Accent => "bg-transparent border-accent text-accent hover:bg-accent/90 hover:text-accent-foreground",
+                Color::Muted => "bg-transparent border-muted text-muted hover:bg-muted/90 hover:text-muted-foreground",
             },
         }
     }

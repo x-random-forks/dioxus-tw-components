@@ -13,6 +13,13 @@ pub fn TypographyPage() -> Element {
             div { p { class: "paragraph", "paragraph" } }
             div { span { class: "span", "span" } }
             div { a { class: "anchor", "anchor" } }
+
+            h3 { class: "h3", "Responsive text size" }
+            div { p { class: "text-extrasmall", "text-extrasmall" } }
+            div { p { class: "text-small", "text-small" } }
+            div { p { class: "text-medium", "text-medium" } }
+            div { p { class: "text-large", "text-large" } }
+            div { p { class: "text-extralarge", "text-extralarge" } }
         }
     )
 }

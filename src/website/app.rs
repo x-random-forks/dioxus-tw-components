@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 use dioxus::prelude::*;
 use dioxus_components_bin::{
     components::{
@@ -9,6 +7,7 @@ use dioxus_components_bin::{
     },
     types::Side,
 };
+use std::collections::HashMap;
 
 use crate::website::router::Route;
 
@@ -22,15 +21,14 @@ pub fn App() -> Element {
     )
 }
 
-#[component]
 pub fn HomePage() -> Element {
     rsx!(
-        "Hello World"
+        p { class: "", "Hello World" }
         TestIntegrationFormBuilder {}
     )
 }
 
-pub fn TestIntegrationFormBuilder() -> Element {
+fn TestIntegrationFormBuilder() -> Element {
     let mut values = use_signal(HashMap::new);
     let mut submitted_values = use_signal(HashMap::new);
 

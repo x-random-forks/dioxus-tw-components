@@ -1,4 +1,4 @@
-use crate::hooks::use_signal_string;
+use crate::hooks::use_string_to_signal_string;
 use crate::types::*;
 use dioxus::prelude::*;
 use props_component_macro::props_component;
@@ -56,7 +56,6 @@ pub fn AccordionItem() -> Element {
     )
 }
 
-// TODO add an SVG indicator for the accordion trigger state
 #[props_component(id, class, children)]
 pub fn AccordionTrigger(
     /// Determines if the accordion item is open by default
@@ -67,7 +66,7 @@ pub fn AccordionTrigger(
 
     let mut accordion_state = consume_context::<Signal<AccordionState>>();
 
-    let sig_id = use_signal_string(props.id.clone());
+    let sig_id = use_string_to_signal_string(props.id.clone());
 
     let onmounted = move |_| async move {
         if props.is_open {
@@ -103,7 +102,13 @@ pub fn AccordionTrigger(
             id: props.id,
             onclick: button_closure,
             onmounted: onmounted,
-            {props.children}
+            {props.children},
+            dioxus_free_icons::Icon {
+                class: "transition-transform transform duration-300 group-data-[state=active]:-rotate-180",
+                width: 24,
+                height: 24,
+                icon: dioxus_free_icons::icons::fi_icons::FiChevronUp
+            }
         }
     )
 }
@@ -115,7 +120,7 @@ pub fn AccordionContent() -> Element {
     // This is the height of the element when visible, we need to calcul it before rendering it to have a smooth transition
     let mut elem_height = use_signal(|| "".to_string());
 
-    let sig_id = use_signal_string(props.id.clone());
+    let sig_id = use_string_to_signal_string(props.id.clone());
 
     let onmounted = move |_| async move {
         match get_element_height(&sig_id()) {

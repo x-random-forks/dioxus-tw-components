@@ -18,7 +18,5 @@ pub fn TextArea(
         }
     };
 
-    // TODO add a default placeholder
-
     rsx!( textarea { ..props.attributes, class: class, oninput: oninput, id: props.id } )
 }

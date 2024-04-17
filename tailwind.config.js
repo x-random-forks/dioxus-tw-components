@@ -40,7 +40,9 @@ module.exports = {
                         "transform" : "translateX(100%)",
                     }
                 }
-            }
+            },
+            fontSize: {
+            },
         },
     },
     plugins: [],

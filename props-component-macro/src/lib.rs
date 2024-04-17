@@ -7,13 +7,18 @@ use syn::{
 
 /// This macro is used to create a component that takes props as arguments, only 3 attributes are handled for now : id, class and children
 /// ```
+/// /// This is a cool and very useful component
 /// #[props_component(id, class, children)]
-/// pub fn NewElement(#[props(default = Color::Destructive)] color: Color) -> Element
+/// pub fn NewElement(
+/// /// This is to color the component
+/// #[props(default = Color::Destructive)] color: Color
+/// ) -> Element
 ///
 /// // Will expand to this struct
 ///
 /// #[derive(Clone, Props, PartialEq)]
 /// pub struct NewElementProps {
+///     /// This is to color this cool component
 ///     #[props(default = Color::Destructive)]
 ///     color: Color,
 ///     #[props(into)]
@@ -27,9 +32,9 @@ use syn::{
 ///
 /// // and the function signature will be changed to this
 ///
+/// /// This is a cool and very useful component
 /// pub fn NewElement(props: NewElementProps) -> Element
 /// ```
-/// You can also comment the function and its arguments to document every component
 ///
 #[proc_macro_attribute]
 pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {

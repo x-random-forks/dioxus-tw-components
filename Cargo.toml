@@ -24,7 +24,7 @@ manganis = "0.2.1"
 console = "0.15.8"
 tailwind_fuse = { version = "0.2.0", features = ["variant"] }
 dioxus-free-icons = { version = "0.8", features = ["font-awesome-brands", "font-awesome-regular","feather"] }
-web-sys = {version = "0.3.69"}
+web-sys = {version = "0.3.69", features = ["Element", "Window", "CssStyleDeclaration", "ResizeObserver"]}
 props-component-macro = { path = "props-component-macro" }
 form_builder = { path = "form_builder" }
 
