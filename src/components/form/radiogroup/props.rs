@@ -19,7 +19,7 @@ pub fn RadioGroup(#[props(into)] name: String, #[props(into)] default_value: Str
     )
 }
 
-// TO CLEAN/ REFACTOR
+// TO CLEAN/ REFACTOR : probably while building a real form, will probably have to use a button or something similar instead of input tag
 #[props_component(class, id, children)]
 pub fn RadioItem(
     // Corresponds to the name of the RadioGroup
@@ -36,31 +36,9 @@ pub fn RadioItem(
     let mut radio_context = consume_context::<Signal<RadioGroupSignal>>();
 
     let (checked, circle) = if radio_context.read().0 == props.value {
-        (
-            true,
-            rsx!(
-                dioxus_free_icons::Icon {
-                    class: "",
-                    width: 24,
-                    height: 24,
-                    icon: dioxus_free_icons::icons::fi_icons::FiCircle,
-                    title: "an hollow circle"
-                }
-            ),
-        )
+        (true, checked_circle())
     } else {
-        (
-            false,
-            rsx!(
-                dioxus_free_icons::Icon {
-                    class: "",
-                    width: 24,
-                    height: 24,
-                    icon: dioxus_free_icons::icons::fi_icons::FiCheckCircle,
-                    title: "a checked circle"
-                }
-            ),
-        )
+        (false, unchecked_circle())
     };
 
     rsx!(
@@ -68,7 +46,7 @@ pub fn RadioItem(
             div { class: "flex items-center",
                 input {
                     name: "{props.name}",
-                    value: "{props.value.clone()}",
+                    value: "{props.value}",
                     checked: "{checked}",
                     disabled: "{props.disabled}",
                     r#type: "radio",
@@ -85,7 +63,6 @@ pub fn RadioItem(
                     div { class: "size-4 peer-disabled:cursor-not-allowed", {circle} }
                 } else {
                     div { class: "size-4 peer-disabled:cursor-not-allowed", {circle} }
-                    // TODO Move this into another comp
                     div { class: "font-medium peer-disabled:opacity-50 peer-disabled:cursor-not-allowed",
                         {props.children}
                     }
@@ -95,23 +72,28 @@ pub fn RadioItem(
     )
 }
 
-// TODO change icons
-// fn use_correct_circle_icon(radio_signal: Signal<RadioGroupSignal>, props_value: String) -> Element {
-//     rsx!(if radio_signal.read().0 == props_value {
-//         dioxus_free_icons::Icon {
-//             class: "",
-//             width: 24,
-//             height: 24,
-//             icon: dioxus_free_icons::icons::fi_icons::FiCircle,
-//             title: "an hollow circle",
-//         }
-//     } else {
-//         dioxus_free_icons::Icon {
-//             class: "",
-//             width: 24,
-//             height: 24,
-//             icon: dioxus_free_icons::icons::fi_icons::FiCheckCircle,
-//             title: "a checked circle",
-//         }
-//     })
-// }
+fn checked_circle() -> Element {
+    rsx!(
+        dioxus_free_icons::Icon {
+            class: "peer-disabled:cursor-not-allowed peer-disabled:opacity-50 peer-disabled:fill-muted peer-disabled:stroke-muted",
+            width: 20,
+            height: 20,
+            fill: "",
+            icon: dioxus_free_icons::icons::fi_icons::FiCheckCircle,
+            title: "a checked circle"
+        }
+    )
+}
+
+fn unchecked_circle() -> Element {
+    rsx!(
+        dioxus_free_icons::Icon {
+            class: "peer-disabled:cursor-not-allowed peer-disabled:fill-muted peer-disabled:stroke-muted",
+            width: 20,
+            height: 20,
+            fill: "",
+            icon: dioxus_free_icons::icons::fi_icons::FiCircle,
+            title: "an hollow circle"
+        }
+    )
+}

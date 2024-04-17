@@ -3,7 +3,7 @@ use crate::types::*;
 
 impl BaseClass for RadioGroupProps {
     fn base(&self) -> &'static str {
-        "flex flex-col"
+        ""
     }
 }
 
