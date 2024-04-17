@@ -13,7 +13,7 @@ pub fn use_unique_id() -> String {
     )
 }
 
-/// Convert a String to a Signal<String>
+/// Convert a String to a `Signal<String>`
 pub fn use_signal_string(string: String) -> Signal<String> {
     use_signal(|| string)
 }

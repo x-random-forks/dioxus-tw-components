@@ -4,9 +4,14 @@ use tailwind_fuse::*;
 
 use crate::types::*;
 
+/// A simple separator component
 #[props_component(class)]
-pub fn Separator(#[props(default = Orientation::Horizontal)] orientation: Orientation) -> Element {
+pub fn Separator(
+    /// Handle the orientation of the separator
+    #[props(default = Orientation::Horizontal)]
+    orientation: Orientation,
+) -> Element {
     let class = tw_merge!(props.base(), props.orientation(), props.class);
 
-    rsx!( div { class: class } )
+    rsx!(div { class: class })
 }

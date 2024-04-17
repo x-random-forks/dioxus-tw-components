@@ -1,4 +1,4 @@
-workspace = { members = ["props-component-macro"] }
+workspace = { members = ["props-component-macro", "form_builder"] }
 
 [package]
 name = "dioxus_components_bin"
@@ -18,17 +18,18 @@ log = "0.4.17"
 tracing-wasm = "0.2.1"
 tracing = "0.1.40"
 
-dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "7eccc7a104df013b06c104fc1275450d2747e78c", features = ["web", "router"] }
+dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "c9ab09b3480ba2ad3b77d16c5e86382a62258194", features = ["web", "router"] }
 dioxus-logger = "0.4.1"
 manganis = "0.2.1"
 console = "0.15.8"
 tailwind_fuse = { version = "0.2.0", features = ["variant"] }
-dioxus-free-icons = { version = "0.8", features = ["font-awesome-brands", "feather"] }
+dioxus-free-icons = { version = "0.8", features = ["font-awesome-brands", "font-awesome-regular","feather"] }
 web-sys = {version = "0.3.69"}
 props-component-macro = { path = "props-component-macro" }
+form_builder = { path = "form_builder" }
 
 # This is to keep the dioxus from dioxus-free-icons from conflicting with the one we are using
 # Meaning basically to keep them both on the same version
 [patch.crates-io]
-dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "7eccc7a104df013b06c104fc1275450d2747e78c" }
+dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "c9ab09b3480ba2ad3b77d16c5e86382a62258194" }
 

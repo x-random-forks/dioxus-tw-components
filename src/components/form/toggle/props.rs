@@ -10,13 +10,17 @@ use crate::types::*;
 #[props_component(class, id)]
 pub fn Toggle(
     #[props(extends = button)] attributes: Vec<Attribute>,
+    #[props(default = false)] checked: bool,
     #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
     #[props(default)] color: Color,
     #[props(default)] size: Size,
 ) -> Element {
     let class = tw_merge!(props.base(), props.color(), props.size(), props.class);
 
-    let mut state = use_signal(|| "off".to_string());
+    let mut state = use_signal(|| match props.checked {
+        true => "on".to_string(),
+        false => "off".to_string(),
+    });
 
     let onclick = move |_event| {
         if state() == "off" {

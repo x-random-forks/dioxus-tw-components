@@ -9,7 +9,12 @@ use crate::types::*;
 struct RadioGroupSignal(String);
 
 #[props_component(class, id, children)]
-pub fn RadioGroup(#[props(into)] name: String, #[props(into)] default_value: String) -> Element {
+pub fn RadioGroup(
+    #[props(into)] name: String,
+    #[props(default)]
+    #[props(into)]
+    default_value: String,
+) -> Element {
     let class = tw_merge!(props.base(), props.class);
 
     use_context_provider(|| Signal::new(RadioGroupSignal(props.default_value)));
@@ -43,7 +48,7 @@ pub fn RadioItem(
 
     rsx!(
         label { class: "{props.name}",
-            div { class: "flex items-center",
+            div { class: "flex items-center space-x-2",
                 input {
                     name: "{props.name}",
                     value: "{props.value}",
@@ -76,10 +81,10 @@ fn checked_circle() -> Element {
     rsx!(
         dioxus_free_icons::Icon {
             class: "peer-disabled:cursor-not-allowed peer-disabled:opacity-50 peer-disabled:fill-muted peer-disabled:stroke-muted",
-            width: 20,
-            height: 20,
+            width: 18,
+            height: 18,
             fill: "",
-            icon: dioxus_free_icons::icons::fi_icons::FiCheckCircle,
+            icon: dioxus_free_icons::icons::fa_regular_icons::FaCircleCheck,
             title: "a checked circle"
         }
     )
@@ -89,10 +94,10 @@ fn unchecked_circle() -> Element {
     rsx!(
         dioxus_free_icons::Icon {
             class: "peer-disabled:cursor-not-allowed peer-disabled:fill-muted peer-disabled:stroke-muted",
-            width: 20,
-            height: 20,
+            width: 18,
+            height: 18,
             fill: "",
-            icon: dioxus_free_icons::icons::fi_icons::FiCircle,
+            icon: dioxus_free_icons::icons::fa_regular_icons::FaCircle,
             title: "an hollow circle"
         }
     )

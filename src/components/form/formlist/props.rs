@@ -14,7 +14,10 @@ pub fn FormList(#[props(default)] group_vec: Vec<Element>) -> Element {
         .group_vec
         .iter()
         .take(group_to_render())
-        .map(|x| rsx!({ x }.clone(), div { class: "h-4" }));
+        .map(|x| rsx!(
+            { x }.clone(),
+            div { class: "h-4" }
+        ));
 
     let vec_size = props.group_vec.len();
 
@@ -30,13 +33,13 @@ pub fn FormList(#[props(default)] group_vec: Vec<Element>) -> Element {
         }
     };
 
-    rsx!(div {
-        class: class,
-        id: props.id,
-        Button { onclick: button_closure_plus, r#type: "button", "+" }
-        Button { onclick: button_closure_minus, r#type: "button", "-" }
-        { rendered_group_vec }
-    })
+    rsx!(
+        div { class: class, id: props.id,
+            Button { onclick: button_closure_plus, r#type: "button", "+" }
+            Button { onclick: button_closure_minus, r#type: "button", "-" }
+            { rendered_group_vec }
+        }
+    )
 }
 
 // #[derive(PartialEq, Props, Clone, Component)]

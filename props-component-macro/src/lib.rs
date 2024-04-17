@@ -5,14 +5,12 @@ use syn::{
     parse_macro_input, ItemFn,
 };
 
-/// This macro is used to create a component that takes props as arguments
-/// Example:
-/// #[props_component]
-/// fn NewElement(#[props(default = Color::Destructive)] color: Color) -> Element {
-///     rsx!()
-/// }
+/// This macro is used to create a component that takes props as arguments, only 3 attributes are handled for now : id, class and children
+/// ```
+/// #[props_component(id, class, children)]
+/// pub fn NewElement(#[props(default = Color::Destructive)] color: Color) -> Element
 ///
-/// This will expand to
+/// // Will expand to this struct
 ///
 /// #[derive(Clone, Props, PartialEq)]
 /// pub struct NewElementProps {
@@ -26,19 +24,27 @@ use syn::{
 ///     class: String,
 ///     children: Element
 /// }
-/// pub fn NewElement(props: NewElementProps) -> Element {
-///     let color = props.color;
-///     let id = props.id;
-///     let class = props.class;
-///     let children = props.children;
 ///
-///     rsx!()
-/// }
+/// // and the function signature will be changed to this
 ///
-/// You can then use the component and its prop as you want
+/// pub fn NewElement(props: NewElementProps) -> Element
+/// ```
+/// You can also comment the function and its arguments to document every component
+///
 #[proc_macro_attribute]
 pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as ItemFn);
+
+    let mut vec_attr = Vec::new();
+
+    for attr in &input.attrs {
+        // Check if the attribute is a doc comment
+        if attr.path().is_ident("doc") {
+            vec_attr.push(attr.clone());
+        }
+    }
+
+    // println!("'{:?}' {}", vec_attr, vec_attr.len());
 
     let name = &input.sig.ident;
     let name_struct = syn::Ident::new(&format!("{}Props", name), proc_macro2::Span::call_site());
@@ -67,11 +73,13 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
     let block = &input.block;
 
     let expanded = quote! {
+
         #[derive(Clone, Props, PartialEq)]
         pub struct #name_struct {
             #(#fields),*
         }
 
+        #(#vec_attr)*
         pub fn #name(props: #name_struct) #output {
             #(#let_statements)*
 

@@ -10,7 +10,7 @@ pub fn TogglePage() -> Element {
         div { class: "flex gap-4",
             div {
                 Toggle { id: "toggle-1", color: Color::Primary }
-                label { r#for: "toggle-1", "Primary" }
+                label { class: "select-none", r#for: "toggle-1", "Primary" }
             }
             div {
                 Toggle { id: "toggle-2", color: Color::Secondary }
