@@ -1,35 +1,24 @@
-use crate::{components::atom::icon::Icon, *};
-use component_derive::Component;
-use components::atom::icon::style::IconSvg;
+use dioxus::prelude::*;
+use props_component_macro::props_component;
+use tailwind_fuse::*;
 
 pub struct LightSwitchSignal(pub String);
 
 // REVIEW : Not finished, need to see in a real project how to properly handle states and such
 
-#[derive(PartialEq, Props, Clone, Component)]
-pub struct LightSwitchProps {
-    // Styling
-    #[props(default)]
-    class: String,
-}
+#[props_component(class, id)]
+pub fn LightSwitch() -> Element {
+    let class = tw_merge!(props.class);
 
-impl Component for LightSwitchProps {
-    fn view(self) -> Element {
-        let lightswitch_closure = move |_| {
-            use_light_switch(use_context::<Signal<LightSwitchSignal>>());
-        };
+    let lightswitch_closure = move |_| {
+        use_light_switch(use_context::<Signal<LightSwitchSignal>>());
+    };
 
-        let icon = get_day_icon(use_context::<Signal<LightSwitchSignal>>());
-
-        rsx!(
-            button {
-                r#type: "button",
-                class: "{self.class}",
-                onclick: lightswitch_closure,
-                Icon { svg: icon }
-            }
-        )
-    }
+    rsx!(
+        button { r#type: "button", class: class, onclick: lightswitch_closure,
+            {use_correct_theme_icon(use_context::<Signal<LightSwitchSignal>>())}
+        }
+    )
 }
 
 // Switch the value of light switch to "dark" or ""
@@ -82,10 +71,22 @@ pub fn use_user_pref_light() {
     });
 }
 
-fn get_day_icon(light_switch_context: Signal<LightSwitchSignal>) -> IconSvg {
-    if light_switch_context.read().0.is_empty() {
-        IconSvg::Sun
-    } else {
-        IconSvg::Moon
-    }
+fn use_correct_theme_icon(light_switch_context: Signal<LightSwitchSignal>) -> Element {
+    rsx!(
+        if light_switch_context.read().0.is_empty() {
+            dioxus_free_icons::Icon {
+                class: "stroke-2",
+                width: 24,
+                height: 24,
+                icon: dioxus_free_icons::icons::fi_icons::FiSun
+            }
+        } else {
+            dioxus_free_icons::Icon {
+                class: "",
+                width: 24,
+                height: 24,
+                icon: dioxus_free_icons::icons::fi_icons::FiMoon
+            }
+        }
+    )
 }

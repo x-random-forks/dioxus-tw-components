@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
 
 pub fn IconPage() -> Element {
-    rsx!("ICON PAGE")
+    rsx!("ICON PAGE ")
 }

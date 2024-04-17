@@ -1,4 +1,3 @@
-use crate::{components::atom::icon::*, components::form::radiogroup::props::style::IconSvg};
 use dioxus::prelude::*;
 use props_component_macro::props_component;
 use tailwind_fuse::*;
@@ -36,10 +35,32 @@ pub fn RadioItem(
 ) -> Element {
     let mut radio_context = consume_context::<Signal<RadioGroupSignal>>();
 
-    let (svg, checked) = if radio_context.read().0 == props.value {
-        (IconSvg::CircleInnerCircle, true)
+    let (checked, circle) = if radio_context.read().0 == props.value {
+        (
+            true,
+            rsx!(
+                dioxus_free_icons::Icon {
+                    class: "",
+                    width: 24,
+                    height: 24,
+                    icon: dioxus_free_icons::icons::fi_icons::FiCircle,
+                    title: "an hollow circle"
+                }
+            ),
+        )
     } else {
-        (IconSvg::HollowCircle, false)
+        (
+            false,
+            rsx!(
+                dioxus_free_icons::Icon {
+                    class: "",
+                    width: 24,
+                    height: 24,
+                    icon: dioxus_free_icons::icons::fi_icons::FiCheckCircle,
+                    title: "a checked circle"
+                }
+            ),
+        )
     };
 
     rsx!(
@@ -47,7 +68,7 @@ pub fn RadioItem(
             div { class: "flex items-center",
                 input {
                     name: "{props.name}",
-                    value: "{props.value}",
+                    value: "{props.value.clone()}",
                     checked: "{checked}",
                     disabled: "{props.disabled}",
                     r#type: "radio",
@@ -61,10 +82,9 @@ pub fn RadioItem(
                     div { class: "font-medium peer-disabled:opacity-50 peer-disabled:cursor-not-allowed",
                         {props.children}
                     }
-                    div { class: "size-4 peer-disabled:cursor-not-allowed", Icon { svg: svg } }
+                    div { class: "size-4 peer-disabled:cursor-not-allowed", {circle} }
                 } else {
-
-                    div { class: "size-4 peer-disabled:cursor-not-allowed", Icon { svg: svg } }
+                    div { class: "size-4 peer-disabled:cursor-not-allowed", {circle} }
                     // TODO Move this into another comp
                     div { class: "font-medium peer-disabled:opacity-50 peer-disabled:cursor-not-allowed",
                         {props.children}
@@ -74,3 +94,24 @@ pub fn RadioItem(
         }
     )
 }
+
+// TODO change icons
+// fn use_correct_circle_icon(radio_signal: Signal<RadioGroupSignal>, props_value: String) -> Element {
+//     rsx!(if radio_signal.read().0 == props_value {
+//         dioxus_free_icons::Icon {
+//             class: "",
+//             width: 24,
+//             height: 24,
+//             icon: dioxus_free_icons::icons::fi_icons::FiCircle,
+//             title: "an hollow circle",
+//         }
+//     } else {
+//         dioxus_free_icons::Icon {
+//             class: "",
+//             width: 24,
+//             height: 24,
+//             icon: dioxus_free_icons::icons::fi_icons::FiCheckCircle,
+//             title: "a checked circle",
+//         }
+//     })
+// }
