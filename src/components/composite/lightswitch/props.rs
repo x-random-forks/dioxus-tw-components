@@ -15,18 +15,21 @@ pub fn LightSwitch() -> Element {
     };
 
     rsx!(
-        button { r#type: "button", class: class, onclick: lightswitch_closure,
-            {use_correct_theme_icon(use_context::<Signal<LightSwitchSignal>>())}
+        button {
+            r#type: "button",
+            class: class,
+            onclick: lightswitch_closure,
+            {use_correct_theme_icon(use_context::<Signal<LightSwitchSignal>>())},
         }
     )
 }
 
 // Switch the value of light switch to "dark" or ""
-pub fn use_light_switch(mut light_switch_context: Signal<LightSwitchSignal>) {
-    if light_switch_context.read().0.is_empty() {
-        light_switch_context.write().0 = "dark".to_string();
+pub fn use_light_switch(mut light_switch_signal: Signal<LightSwitchSignal>) {
+    if light_switch_signal.read().0.is_empty() {
+        light_switch_signal.write().0 = "dark".to_string();
     } else {
-        light_switch_context.write().0 = "".to_string();
+        light_switch_signal.write().0 = "".to_string();
     }
     // let dark = light_switch_context.read().0.clone();
     // let _ = use_resource(move || async move {
@@ -71,22 +74,20 @@ pub fn use_user_pref_light() {
     });
 }
 
-fn use_correct_theme_icon(light_switch_context: Signal<LightSwitchSignal>) -> Element {
-    rsx!(
-        if light_switch_context.read().0.is_empty() {
-            dioxus_free_icons::Icon {
-                class: "stroke-2",
-                width: 24,
-                height: 24,
-                icon: dioxus_free_icons::icons::fi_icons::FiSun
-            }
-        } else {
-            dioxus_free_icons::Icon {
-                class: "",
-                width: 24,
-                height: 24,
-                icon: dioxus_free_icons::icons::fi_icons::FiMoon
-            }
+fn use_correct_theme_icon(light_switch_signal: Signal<LightSwitchSignal>) -> Element {
+    rsx!(if light_switch_signal.read().0.is_empty() {
+        dioxus_free_icons::Icon {
+            class: "stroke-2",
+            width: 24,
+            height: 24,
+            icon: dioxus_free_icons::icons::fi_icons::FiSun,
         }
-    )
+    } else {
+        dioxus_free_icons::Icon {
+            class: "",
+            width: 24,
+            height: 24,
+            icon: dioxus_free_icons::icons::fi_icons::FiMoon,
+        }
+    })
 }
