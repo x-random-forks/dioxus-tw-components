@@ -128,7 +128,7 @@ fn use_default_trigger_decoration() -> Element {
 
 /// Collapsible element that is toggled by the [AccordionTrigger] component
 #[props_component(id, class, children)]
-pub fn AccordionContent(#[props(default = Animation::Full)] animation: Animation) -> Element {
+pub fn AccordionContent(#[props(default)] animation: Animation) -> Element {
     let class = tw_merge!(props.base(), props.animation(), props.class);
 
     // This is the height of the element when visible, we need to calcul it before rendering it to have a smooth transition

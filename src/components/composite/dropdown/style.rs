@@ -15,6 +15,6 @@ impl BaseClass for DropdownToggleProps {
 
 impl BaseClass for DropdownContentProps {
     fn base(&self) -> &'static str {
-        "absolute hidden z-10 group-focus-within:block shadow-sm bg-background rounded-global-radius border border-border my-1 p-2 whitespace-nowrap"
+        "absolute hidden z-10 group-focus-within:block hover:block active:block shadow-sm bg-background rounded-global-radius border border-border my-1 p-2 whitespace-nowrap"
     }
 }
