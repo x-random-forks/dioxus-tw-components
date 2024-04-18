@@ -15,6 +15,16 @@ impl BaseClass for AccordionTriggerProps {
 
 impl BaseClass for AccordionContentProps {
     fn base(&self) -> &'static str {
-        "text-small overflow-hidden transition-all px-small"
+        "text-small overflow-hidden px-small"
+    }
+}
+
+impl Animatable for AccordionContentProps {
+    fn animation(&self) -> &'static str {
+        match self.animation {
+            Animation::None => "transition-none",
+            Animation::Light | Animation::Full => "transition-all",
+            Animation::Custom(animation) => animation,
+        }
     }
 }

@@ -67,7 +67,9 @@ pub fn AccordionTrigger(
     /// Determine if the accordion item is open by default
     #[props(default = false)]
     is_open: bool,
-    #[props(default = use_default_trigger_decoration())] trigger_decoration: Element,
+    /// Decoration element that is displayed next to the trigger text, by default a chevron svg
+    #[props(default = use_default_trigger_decoration())]
+    trigger_decoration: Element,
 ) -> Element {
     let class = tw_merge!(props.base(), props.class);
 
@@ -126,8 +128,8 @@ fn use_default_trigger_decoration() -> Element {
 
 /// Collapsible element that is toggled by the [AccordionTrigger] component
 #[props_component(id, class, children)]
-pub fn AccordionContent() -> Element {
-    let class = tw_merge!(props.base(), props.class);
+pub fn AccordionContent(#[props(default = Animation::Full)] animation: Animation) -> Element {
+    let class = tw_merge!(props.base(), props.animation(), props.class);
 
     // This is the height of the element when visible, we need to calcul it before rendering it to have a smooth transition
     let mut elem_height = use_signal(|| "".to_string());
@@ -135,12 +137,18 @@ pub fn AccordionContent() -> Element {
     let sig_id = use_string_to_signal_string(props.id.clone());
 
     let onmounted = move |_| async move {
+        if props.animation == Animation::None {
+            elem_height.set("auto".to_string());
+            return;
+        }
+
         match use_element_scroll_height(&sig_id()) {
             Ok(height) => {
                 elem_height.set(format!("{}px", height));
             }
             Err(e) => {
-                log::error!("Failed to get element height: {:?}", e);
+                log::error!("Failed to get element height: {:?}, setting it to auto", e);
+                elem_height.set("auto".to_string());
             }
         }
     };
