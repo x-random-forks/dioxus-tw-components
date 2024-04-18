@@ -25,7 +25,7 @@ pub fn AccordionPage() -> Element {
                     AccordionContent { id: "t-4", class: "", "Content 4" }
                 }
                 AccordionItem { 
-                    AccordionTrigger { id: "t-5", "Trigger 5" }
+                    AccordionTrigger { id: "t-5", trigger_decoration: None, "Trigger 5" }
                     AccordionContent { id: "t-5", class: "", "Content 5" }
                 }
                 AccordionItem { 

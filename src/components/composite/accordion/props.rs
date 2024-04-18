@@ -67,6 +67,7 @@ pub fn AccordionTrigger(
     /// Determine if the accordion item is open by default
     #[props(default = false)]
     is_open: bool,
+    #[props(default = use_default_trigger_decoration())] trigger_decoration: Element,
 ) -> Element {
     let class = tw_merge!(props.base(), props.class);
 
@@ -109,14 +110,18 @@ pub fn AccordionTrigger(
             onclick: button_closure,
             onmounted: onmounted,
             {props.children},
-            dioxus_free_icons::Icon {
-                class: "transition-transform transform duration-300 group-data-[state=active]:-rotate-180",
-                width: 24,
-                height: 24,
-                icon: dioxus_free_icons::icons::fi_icons::FiChevronUp
-            }
+            {props.trigger_decoration}
         }
     )
+}
+
+fn use_default_trigger_decoration() -> Element {
+    rsx!(dioxus_free_icons::Icon {
+        class: "transition-transform transform duration-300 group-data-[state=active]:-rotate-180",
+        width: 24,
+        height: 24,
+        icon: dioxus_free_icons::icons::fi_icons::FiChevronUp
+    })
 }
 
 /// Collapsible element that is toggled by the [AccordionTrigger] component
@@ -143,8 +148,8 @@ pub fn AccordionContent() -> Element {
     let accordion_state = consume_context::<Signal<AccordionState>>();
 
     let (final_height, state) = match accordion_state.read().is_active(&sig_id()) {
-        true => (elem_height(), false),
-        false => ("0".to_string(), true),
+        true => (elem_height(), "active"),
+        false => ("0".to_string(), "inactive"),
     };
 
     rsx!(
