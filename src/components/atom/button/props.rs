@@ -4,11 +4,18 @@ use tailwind_fuse::*;
 
 use crate::types::*;
 
+/// A simple button which you can use every HTML attributes on, and style based on variant, color and size
 #[props_component(id, class, children)]
 pub fn Button(
-    #[props(extends = button)] attributes: Vec<Attribute>,
-    #[props(optional)] onclick: Option<EventHandler<MouseEvent>>,
-    #[props(default)] variant: super::ButtonVariant,
+    /// Things like disabled, type,... see [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button)
+    #[props(extends = button)]
+    attributes: Vec<Attribute>,
+    /// Callback when the button is clicked
+    #[props(optional)]
+    onclick: Option<EventHandler<MouseEvent>>,
+    /// Style variant
+    #[props(default)]
+    variant: super::ButtonVariant,
     #[props(default)] color: Color,
     #[props(default)] size: Size,
 ) -> Element {

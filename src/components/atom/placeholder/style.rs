@@ -7,10 +7,13 @@ impl BaseClass for PlaceholderProps {
     }
 }
 
+/// Used to control the level of animation
 #[derive(Default, Clone, Copy, PartialEq)]
 pub enum PlaceholderAnimation {
     None,
+    /// A light pulsing animation
     Light,
+    /// A full shimmering animation
     #[default]
     Full,
 }

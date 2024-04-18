@@ -4,11 +4,18 @@ use tailwind_fuse::*;
 
 use crate::types::*;
 
+/// A simple placeholder component that can be used to show for example a loading state
 #[props_component(id, class)]
 pub fn Placeholder(
-    #[props(default)] animation: super::PlaceholderAnimation,
-    #[props(default = 24)] width: u32,
-    #[props(default = 4)] height: u32,
+    /// Used to control the level of animation of the component
+    #[props(default)]
+    animation: super::PlaceholderAnimation,
+    /// This use tailwind w-{width} h-{height} classes so not every value is possible
+    #[props(default = 24)]
+    width: u32,
+    /// This use tailwind w-{width} h-{height} classes so not every value is possible
+    #[props(default = 4)]
+    height: u32,
 ) -> Element {
     let class = tw_merge!(
         props.base(),
@@ -18,5 +25,5 @@ pub fn Placeholder(
         props.class
     );
 
-    rsx!( div { class: class } )
+    rsx!(div { class: class })
 }

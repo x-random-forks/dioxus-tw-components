@@ -36,8 +36,13 @@ impl AccordionState {
     }
 }
 
+/// The Accordion component divides the content into collapsible items
 #[props_component(id, class, children)]
-pub fn Accordion(#[props(default = false)] multi_open: bool) -> Element {
+pub fn Accordion(
+    /// Control if multiple items can be open at the same time
+    #[props(default = false)]
+    multi_open: bool,
+) -> Element {
     let class = tw_merge!(props.class);
 
     use_context_provider(|| Signal::new(AccordionState::new(props.multi_open)));
@@ -47,6 +52,7 @@ pub fn Accordion(#[props(default = false)] multi_open: bool) -> Element {
     )
 }
 
+/// Wrapper for the [AccordionTrigger] and [AccordionContent] components
 #[props_component(id, class, children)]
 pub fn AccordionItem() -> Element {
     let class = tw_merge!(props.base(), props.class);
@@ -56,9 +62,10 @@ pub fn AccordionItem() -> Element {
     )
 }
 
+/// The clickable element that toggles the visibility of the [AccordionContent] component
 #[props_component(id, class, children)]
 pub fn AccordionTrigger(
-    /// Determines if the accordion item is open by default
+    /// Determine if the accordion item is open by default
     #[props(default = false)]
     is_open: bool,
 ) -> Element {
@@ -113,6 +120,7 @@ pub fn AccordionTrigger(
     )
 }
 
+/// Collapsible element that is toggled by the [AccordionTrigger] component
 #[props_component(id, class, children)]
 pub fn AccordionContent() -> Element {
     let class = tw_merge!(props.base(), props.class);
