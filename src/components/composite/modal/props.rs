@@ -7,8 +7,8 @@ use crate::types::*;
 struct ModalState(bool);
 
 #[props_component(children)]
-pub fn Modal() -> Element {
-    use_context_provider(|| Signal::new(ModalState(false)));
+pub fn Modal(#[props(default = true)] is_open: bool) -> Element {
+    use_context_provider(|| Signal::new(ModalState(props.is_open)));
 
     rsx!({ props.children })
 }
