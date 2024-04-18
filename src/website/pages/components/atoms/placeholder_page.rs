@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::components::atom::placeholder::*;
+use dioxus_components_bin::{components::atom::placeholder::*, types::Animation};
 
 pub fn PlaceholderPage() -> Element {
     rsx!(
@@ -7,10 +7,10 @@ pub fn PlaceholderPage() -> Element {
         Placeholder {
             class: "rounded-global-radius",
             width: 40,
-            animation: PlaceholderAnimation::None
+            animation: Animation::None
         }
-        Placeholder { class: "rounded-full w-40 h-40", animation: PlaceholderAnimation::Light }
-        Placeholder { class: "rounded-global-radius w-80 h-4", animation: PlaceholderAnimation::Full }
+        Placeholder { class: "rounded-full w-40 h-40", animation: Animation::Light }
+        Placeholder { class: "rounded-global-radius w-80 h-4", animation: Animation::Full }
         "No animation"
         Placeholder { class: "rounded-global-radius w-20 h-20" }
     )

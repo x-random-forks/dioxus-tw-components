@@ -7,23 +7,13 @@ impl BaseClass for PlaceholderProps {
     }
 }
 
-/// Used to control the level of animation
-#[derive(Default, Clone, Copy, PartialEq)]
-pub enum PlaceholderAnimation {
-    None,
-    /// A light pulsing animation
-    Light,
-    /// A full shimmering animation
-    #[default]
-    Full,
-}
-
-impl Variation for PlaceholderProps {
-    fn variant(&self) -> &'static str {
+impl Animatable for PlaceholderProps {
+    fn animation(&self) -> &'static str {
         match self.animation {
-            PlaceholderAnimation::None => "rounded",
-            PlaceholderAnimation::Light => "animate-pulse",
-            PlaceholderAnimation::Full => "relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/30 before:animate-[shimmer_2s_infinite]",
+            Animation::None => "",
+            Animation::Light => "animate-pulse",
+            Animation::Full => "relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/40 before:animate-[shimmer_2s_infinite]",
+            Animation::Custom(animation) => animation,
         }
     }
 }

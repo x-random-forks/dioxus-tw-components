@@ -9,7 +9,7 @@ use crate::types::*;
 pub fn Placeholder(
     /// Used to control the level of animation of the component
     #[props(default)]
-    animation: super::PlaceholderAnimation,
+    animation: Animation,
     /// This use tailwind w-{width} h-{height} classes so not every value is possible
     #[props(default = 24)]
     width: u32,
@@ -19,7 +19,7 @@ pub fn Placeholder(
 ) -> Element {
     let class = tw_merge!(
         props.base(),
-        props.variant(),
+        props.animation(),
         format!("w-{}", props.width),
         format!("h-{}", props.height),
         props.class
