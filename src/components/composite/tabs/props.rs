@@ -22,7 +22,7 @@ pub fn TabsList() -> Element {
     let class = tw_merge!(props.base(), props.class);
 
     rsx!(
-        div { class: class, id: props.id, {props.children}}
+        div { class: class, id: props.id, {props.children} }
     )
 }
 

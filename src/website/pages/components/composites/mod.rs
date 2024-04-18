@@ -27,3 +27,6 @@ pub use table_page::TablePage;
 
 mod tabs_page;
 pub use tabs_page::TabsPage;
+
+mod carousel_page;
+pub use carousel_page::CarouselPage;

@@ -30,6 +30,8 @@ pub enum Route {
             AccordionPage {},
             #[route("/component/composite/breadcrumb")]
             BreadcrumbPage {},
+            #[route("/component/composite/carousel")]
+            CarouselPage {},
             #[route("/component/composite/dropdown")]
             DropdownPage {},
             #[route("/component/composite/lightswitch")]

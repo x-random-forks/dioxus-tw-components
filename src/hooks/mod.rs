@@ -30,3 +30,15 @@ pub fn use_element_scroll_height(sig_id: &str) -> Result<i32, JsValue> {
 
     Ok(element.scroll_height())
 }
+
+pub fn use_element_scroll_width(sig_id: &str) -> Result<i32, JsValue> {
+    let window = web_sys::window().ok_or_else(|| JsValue::from_str("Failed to get window"))?;
+    let document = window
+        .document()
+        .ok_or_else(|| JsValue::from_str("Failed to get document"))?;
+    let element = document
+        .get_element_by_id(sig_id)
+        .ok_or_else(|| JsValue::from_str("Element not found"))?;
+
+    Ok(element.scroll_width())
+}

@@ -21,6 +21,7 @@ pub fn SideNavComp() -> Element {
     let composite_names = [
         "accordion",
         "breadcrumb",
+        "carousel",
         "dropdown",
         "lightswitch",
         "modal",
