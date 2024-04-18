@@ -1,9 +1,8 @@
-use crate::hooks::use_string_to_signal_string;
+use crate::hooks::{use_element_scroll_height, use_string_to_signal_string};
 use crate::types::*;
 use dioxus::prelude::*;
 use props_component_macro::props_component;
 use tailwind_fuse::*;
-use web_sys::wasm_bindgen::JsValue;
 
 struct AccordionState {
     multi_open: bool,
@@ -131,7 +130,7 @@ pub fn AccordionContent() -> Element {
     let sig_id = use_string_to_signal_string(props.id.clone());
 
     let onmounted = move |_| async move {
-        match get_element_height(&sig_id()) {
+        match use_element_scroll_height(&sig_id()) {
             Ok(height) => {
                 elem_height.set(format!("{}px", height));
             }
@@ -158,16 +157,4 @@ pub fn AccordionContent() -> Element {
             {props.children}
         }
     )
-}
-
-fn get_element_height(sig_id: &str) -> Result<i32, JsValue> {
-    let window = web_sys::window().ok_or_else(|| JsValue::from_str("Failed to get window"))?;
-    let document = window
-        .document()
-        .ok_or_else(|| JsValue::from_str("Failed to get document"))?;
-    let element = document
-        .get_element_by_id(sig_id)
-        .ok_or_else(|| JsValue::from_str("Element not found"))?;
-
-    Ok(element.scroll_height())
 }
