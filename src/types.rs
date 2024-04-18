@@ -44,6 +44,19 @@ pub trait Orientable {
 }
 
 #[derive(Default, Clone, Copy, PartialEq)]
+pub enum Animation {
+    None,
+    Light,
+    #[default]
+    Full,
+    Custom(&'static str),
+}
+
+pub trait Animatable {
+    fn animation(&self) -> &'static str;
+}
+
+#[derive(Default, Clone, Copy, PartialEq)]
 pub enum Side {
     #[default]
     Left,
