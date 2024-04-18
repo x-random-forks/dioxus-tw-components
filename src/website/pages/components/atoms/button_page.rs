@@ -39,6 +39,17 @@ pub fn ButtonPage() -> Element {
                 Button { size: Size::Lg, "Lg" }
                 Button { size: Size::Xl, "Xl" }
             }
+            div {
+                Button { animation: Animation::None, "None" }
+                Button { animation: Animation::Light, "Light" }
+                Button { animation: Animation::Full, "Full" }
+                Button {
+                    animation: Animation::Custom(
+                        "relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-red-500/40 before:animate-[shimmer_2s_infinite]",
+                    ),
+                    "Custom"
+                }
+            }
         }
     )
 }

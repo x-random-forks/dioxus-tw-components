@@ -18,6 +18,9 @@ pub fn Button(
     variant: super::ButtonVariant,
     #[props(default)] color: Color,
     #[props(default)] size: Size,
+    /// Control the on hover and on active effect animation
+    #[props(default = Animation::Full)]
+    animation: Animation,
 ) -> Element {
     // Order matters there ! Because tw_merge!() will override the first class it finds that overlap another with the last one it finds
     let class = tw_merge!(
@@ -25,6 +28,7 @@ pub fn Button(
         props.color(),
         props.variant(),
         props.size(),
+        props.animation(),
         props.class
     );
 

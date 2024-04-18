@@ -25,5 +25,5 @@ pub fn Placeholder(
         props.class
     );
 
-    rsx!(div { class: class })
+    rsx!( div { class: class } )
 }

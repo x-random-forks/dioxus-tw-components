@@ -3,7 +3,7 @@ use crate::types::*;
 
 impl BaseClass for ButtonProps {
     fn base(&self) -> &'static str {
-        "text-center font-medium rounded-global-radius shadow-global-shadow transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+        "text-center font-medium rounded-global-radius shadow-global-shadow disabled:opacity-50 disabled:cursor-not-allowed"
     }
 }
 
@@ -68,6 +68,16 @@ impl Sizable for ButtonProps {
             Size::Md => "px-5 py-[9px] text-base",
             Size::Lg => "px-6 py-3 text-lg",
             Size::Xl => "px-8 py-4 text-xl",
+        }
+    }
+}
+
+impl Animatable for ButtonProps {
+    fn animation(&self) -> &'static str {
+        match self.animation {
+            Animation::None => "transition-none",
+            Animation::Light | Animation::Full => "transition-colors duration-150",
+            Animation::Custom(animation) => animation,
         }
     }
 }
