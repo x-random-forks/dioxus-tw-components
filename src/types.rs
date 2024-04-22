@@ -66,3 +66,18 @@ pub enum Side {
 pub trait Variation {
     fn variant(&self) -> &'static str;
 }
+
+// TODO use this everywhere we can
+pub enum StateAttribute {
+    Active,
+    Inactive,
+}
+
+impl StateAttribute {
+    pub fn state_attribute_to_str(&self) -> &'static str {
+        match self {
+            StateAttribute::Active => "active",
+            StateAttribute::Inactive => "inactive",
+        }
+    }
+}

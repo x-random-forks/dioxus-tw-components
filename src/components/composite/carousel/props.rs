@@ -105,7 +105,6 @@ pub fn Carousel(
     )
 }
 
-/// TODO This is not usable directly yet but it will
 #[props_component(id, class, children)]
 pub fn CarouselWindow() -> Element {
     let class = tw_merge!(props.base(), props.class);
@@ -115,7 +114,7 @@ pub fn CarouselWindow() -> Element {
     )
 }
 
-/// You need to pass it an id for it to work    
+/// You need to pass it an id for it to work
 #[props_component(id, class, children)]
 pub fn CarouselContent(#[props(default)] animation: Animation) -> Element {
     let class = tw_merge!(props.base(), props.animation(), props.class);
@@ -215,76 +214,17 @@ fn use_carousel(next: bool, mut carousel_state: Signal<CarouselState>) {
 
 fn get_next_prev_icons(is_next: bool) -> Element {
     match is_next {
-        true => rsx!(
-            dioxus_free_icons::Icon {
-                class: "",
-                width: 24,
-                height: 24,
-                icon: dioxus_free_icons::icons::fa_regular_icons::FaCircleRight
-            }
-        ),
-        false => rsx!(
-            dioxus_free_icons::Icon {
-                class: "",
-                width: 24,
-                height: 24,
-                icon: dioxus_free_icons::icons::fa_regular_icons::FaCircleLeft
-            }
-        ),
-    }
-}
-
-// TODO use this elsewhere
-pub enum StateAttribute {
-    Active,
-    Inactive,
-}
-
-impl StateAttribute {
-    pub fn state_attribute_to_str(&self) -> &'static str {
-        match self {
-            StateAttribute::Active => "active",
-            StateAttribute::Inactive => "inactive",
-        }
-    }
-}
-
-impl BaseClass for CarouselProps {
-    fn base(&self) -> &'static str {
-        "container flex items-center"
-    }
-}
-
-impl BaseClass for CarouselWindowProps {
-    fn base(&self) -> &'static str {
-        "relative overflow-hidden grow rounded-global-radius border border-border"
-    }
-}
-
-impl BaseClass for CarouselContentProps {
-    fn base(&self) -> &'static str {
-        "flex aspect-square"
-    }
-}
-
-impl Animatable for CarouselContentProps {
-    fn animation(&self) -> &'static str {
-        match self.animation {
-            Animation::None => "transition-none",
-            Animation::Light | Animation::Full => "transform transition-transform duration-500",
-            Animation::Custom(animation) => animation,
-        }
-    }
-}
-
-impl BaseClass for CarouselItemProps {
-    fn base(&self) -> &'static str {
-        "relative min-w-0 shrink-0 grow-0 basis-full p-medium"
-    }
-}
-
-impl BaseClass for CarouselTriggerProps {
-    fn base(&self) -> &'static str {
-        "size-10 flex flex-nowrap items-center justify-center"
+        true => rsx!(dioxus_free_icons::Icon {
+            class: "",
+            width: 24,
+            height: 24,
+            icon: dioxus_free_icons::icons::fa_regular_icons::FaCircleRight
+        }),
+        false => rsx!(dioxus_free_icons::Icon {
+            class: "",
+            width: 24,
+            height: 24,
+            icon: dioxus_free_icons::icons::fa_regular_icons::FaCircleLeft
+        }),
     }
 }
