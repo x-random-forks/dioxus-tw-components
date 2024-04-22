@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 use props_component_macro::props_component;
 use tailwind_fuse::*;
 
-use crate::types::*;
+use crate::attributes::*;
 
 #[props_component(class, children)]
 pub fn Label(#[props(default)] r#for: String) -> Element {

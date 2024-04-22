@@ -1,7 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::{
-    components::composite::lightswitch::LightSwitchSignal, types::AppState,
-};
+use dioxus_components_bin::{components::composite::lightswitch::LightSwitchSignal, LibState};
 
 use crate::website::router::Route;
 
@@ -11,7 +9,7 @@ pub fn App() -> Element {
     let light_switch_context = use_context::<Signal<LightSwitchSignal>>();
     let dark = &light_switch_context.read().0;
 
-    let mut app_state = use_context_provider(|| Signal::new(AppState::default()));
+    let mut app_state = use_context_provider(|| Signal::new(LibState::default()));
 
     let onclick = move |event: MouseEvent| {
         app_state

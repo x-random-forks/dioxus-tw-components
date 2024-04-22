@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 use props_component_macro::props_component;
 use tailwind_fuse::*;
 
-use crate::types::*;
+use crate::attributes::*;
 
 /// A simple separator component
 #[props_component(class)]
@@ -13,5 +13,5 @@ pub fn Separator(
 ) -> Element {
     let class = tw_merge!(props.base(), props.orientation(), props.class);
 
-    rsx!( div { class: class } )
+    rsx!(div { class: class })
 }

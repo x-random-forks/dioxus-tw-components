@@ -1,5 +1,5 @@
+use crate::attributes::*;
 use crate::hooks::{use_element_scroll_height, use_string_to_signal_string};
-use crate::types::*;
 use dioxus::prelude::*;
 use props_component_macro::props_component;
 use tailwind_fuse::*;
@@ -118,14 +118,12 @@ pub fn AccordionTrigger(
 }
 
 fn use_default_trigger_decoration() -> Element {
-    rsx!(
-        dioxus_free_icons::Icon {
-            class: "transition-transform transform duration-300 group-data-[state=active]:-rotate-180",
-            width: 24,
-            height: 24,
-            icon: dioxus_free_icons::icons::fi_icons::FiChevronUp
-        }
-    )
+    rsx!(dioxus_free_icons::Icon {
+        class: "transition-transform transform duration-300 group-data-[state=active]:-rotate-180",
+        width: 24,
+        height: 24,
+        icon: dioxus_free_icons::icons::fi_icons::FiChevronUp
+    })
 }
 
 /// Collapsible element that is toggled by the [AccordionTrigger] component

@@ -1,5 +1,5 @@
 use super::props::*;
-use crate::types::*;
+use crate::attributes::*;
 
 impl BaseClass for RadioGroupProps {
     fn base(&self) -> &'static str {

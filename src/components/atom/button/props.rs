@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 use props_component_macro::props_component;
 use tailwind_fuse::*;
 
-use crate::types::*;
+use crate::attributes::*;
 
 /// A simple button which you can use every HTML attributes on, and style based on variant, color and size
 #[props_component(id, class, children)]

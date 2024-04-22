@@ -1,5 +1,5 @@
 use super::props::*;
-use crate::types::*;
+use crate::attributes::*;
 
 // Used to make a "useless" div which does not create a newline that wrap our trigger with our trigger_closure
 // Also used by ModalCancelProps

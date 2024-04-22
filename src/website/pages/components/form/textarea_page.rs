@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::{components::form::textarea::*, types::Color};
+use dioxus_components_bin::{attributes::Color, components::form::textarea::*};
 
 pub fn TextAreaPage() -> Element {
     rsx!(

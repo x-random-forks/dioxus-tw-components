@@ -7,8 +7,9 @@ use tailwind_fuse::*;
 use web_sys::wasm_bindgen::closure::Closure;
 
 use crate::{
+    attributes::*,
     hooks::{use_clear_timeout_id, use_set_timeout, use_window},
-    types::*,
+    LibState,
 };
 
 #[derive(Clone, Copy)]
@@ -171,8 +172,7 @@ pub fn DropdownContent() -> Element {
 
         use_clear_timeout_id(&window, state.read().timeout_id);
     };
-
-    let app_state = consume_context::<Signal<AppState>>();
+    let app_state = consume_context::<Signal<LibState>>();
 
     use_memo(move || {
         let click: Point2D<f64, f64> = app_state

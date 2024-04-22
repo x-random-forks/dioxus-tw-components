@@ -1,6 +1,6 @@
 use crate::{
+    attributes::*,
     hooks::{use_element_scroll_width, use_string_to_signal_string},
-    types::*,
 };
 use dioxus::prelude::*;
 use props_component_macro::props_component;

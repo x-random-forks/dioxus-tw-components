@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 use props_component_macro::props_component;
 use tailwind_fuse::*;
 
-use crate::types::*;
+use crate::attributes::*;
 
 // Struct used to track which RadioItem is currently checked within the RadioGroup
 // And differentiate between multiple RadioGroups
@@ -91,14 +91,13 @@ fn checked_circle() -> Element {
 }
 
 fn unchecked_circle() -> Element {
-    rsx!(
-        dioxus_free_icons::Icon {
-            class: "peer-disabled:cursor-not-allowed peer-disabled:fill-muted peer-disabled:stroke-muted",
-            width: 18,
-            height: 18,
-            fill: "",
-            icon: dioxus_free_icons::icons::fa_regular_icons::FaCircle,
-            title: "an hollow circle"
-        }
-    )
+    rsx!(dioxus_free_icons::Icon {
+        class:
+            "peer-disabled:cursor-not-allowed peer-disabled:fill-muted peer-disabled:stroke-muted",
+        width: 18,
+        height: 18,
+        fill: "",
+        icon: dioxus_free_icons::icons::fa_regular_icons::FaCircle,
+        title: "an hollow circle"
+    })
 }

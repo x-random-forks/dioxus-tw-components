@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 use props_component_macro::props_component;
 use tailwind_fuse::*;
 
-use crate::types::*;
+use crate::attributes::*;
 
 /// A simple placeholder component that can be used to show for example a loading state
 #[props_component(id, class)]
@@ -25,5 +25,5 @@ pub fn Placeholder(
         props.class
     );
 
-    rsx!( div { class: class } )
+    rsx!(div { class: class })
 }

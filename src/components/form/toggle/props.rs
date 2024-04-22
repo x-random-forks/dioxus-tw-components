@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 use props_component_macro::props_component;
 use tailwind_fuse::*;
 
-use crate::types::*;
+use crate::attributes::*;
 
 // Specifically stylised input type checkbox
 // The input use the tailwind peer class, you can use at your advantage to style the children

@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 use dioxus_components_bin::components::composite::progressbar::*;
-use dioxus_components_bin::{components::atom::button::*, types::*};
+use dioxus_components_bin::{attributes::*, components::atom::button::*};
 
 pub fn ProgressBarPage() -> Element {
     let mut progress = use_signal(|| 45);
@@ -32,13 +32,13 @@ pub fn ProgressBarPage() -> Element {
             ProgressTrack { ProgressBar { progress: progress() } }
             ProgressTrack { ProgressBar { progress: progress(), color: Color::Secondary } }
             ProgressTrack { ProgressBar { progress: progress(), color: Color::Destructive } }
-            ProgressTrack { 
+            ProgressTrack {
                 ProgressBar { progress: progress(), ProgressLabel { progress: progress() } }
             }
-            ProgressTrack { 
+            ProgressTrack {
                 ProgressBar { progress: progress(), color: Color::Destructive, ProgressLabel { progress: progress() } }
             }
-            ProgressTrack { 
+            ProgressTrack {
                 ProgressBar { progress: progress(), ProgressLabel { class: "font-bold text-black", progress: progress(), show_percentage: false } }
             }
         }

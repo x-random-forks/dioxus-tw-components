@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 use dioxus_components_bin::{
+    attributes::{Color, Size},
     components::form::toggle::*,
-    types::{Color, Size},
 };
 
 pub fn TogglePage() -> Element {

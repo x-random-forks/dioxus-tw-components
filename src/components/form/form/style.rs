@@ -1,5 +1,5 @@
 use super::props::*;
-use crate::types::*;
+use crate::attributes::*;
 
 #[derive(Default, Clone, Copy, PartialEq)]
 pub enum FormFlow {

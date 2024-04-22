@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::{components::atom::placeholder::*, types::Animation};
+use dioxus_components_bin::{attributes::Animation, components::atom::placeholder::*};
 
 pub fn PlaceholderPage() -> Element {
     rsx!(
