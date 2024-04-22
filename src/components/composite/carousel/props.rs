@@ -159,10 +159,8 @@ pub fn CarouselItem(
     };
 
     // REVIEW: Is this ok ? Should I extend this everywhere possible ?
-    let state = carousel_state
-        .read()
-        .is_current_key_eq_mine(props.item_key)
-        .state_attribute_to_str();
+    // Found a better way in dropdown to do it so just change it whereever I can
+    let state = carousel_state.read().is_current_key_eq_mine(props.item_key);
 
     rsx!(
         div { "data-state": state, class: class, id: props.id, onmounted: onmounted, {props.children} }

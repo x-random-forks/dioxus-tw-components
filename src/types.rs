@@ -1,3 +1,5 @@
+use dioxus::{html::geometry::*, prelude::IntoAttributeValue};
+
 pub trait BaseClass {
     fn base(&self) -> &'static str;
 }
@@ -68,6 +70,7 @@ pub trait Variation {
 }
 
 // TODO use this everywhere we can
+#[derive(Clone, Copy, Debug)]
 pub enum StateAttribute {
     Active,
     Inactive,
@@ -79,5 +82,45 @@ impl StateAttribute {
             StateAttribute::Active => "active",
             StateAttribute::Inactive => "inactive",
         }
+    }
+
+    pub fn is_active(&self) -> bool {
+        match self {
+            StateAttribute::Active => true,
+            StateAttribute::Inactive => false,
+        }
+    }
+}
+
+impl IntoAttributeValue for StateAttribute {
+    fn into_value(self) -> dioxus::prelude::dioxus_core::AttributeValue {
+        dioxus::prelude::dioxus_core::AttributeValue::Text(
+            self.state_attribute_to_str().to_string(),
+        )
+    }
+}
+
+pub struct AppState {
+    last_click_coordinates: Coordinates,
+}
+
+impl AppState {
+    pub fn default() -> Self {
+        Self {
+            last_click_coordinates: Coordinates::new(
+                ScreenPoint::zero(),
+                ClientPoint::zero(),
+                ElementPoint::zero(),
+                PagePoint::zero(),
+            ),
+        }
+    }
+
+    pub fn get_last_click_coordinates(&self) -> &Coordinates {
+        &self.last_click_coordinates
+    }
+
+    pub fn set_last_click_coordinates(&mut self, coordinates: Coordinates) {
+        self.last_click_coordinates = coordinates;
     }
 }
