@@ -64,7 +64,11 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
     let name_struct = syn::Ident::new(&format!("{}Props", name), proc_macro2::Span::call_site());
 
     // Let statement are not used right now since they made the code far more complex to resolve problems about borrowing and such
-    let (mut fields, mut let_statements) = make_struct_fields_and_let_statements(&input.sig.inputs);
+    // any_mut is used to check if any of the parameters of the function is mutable, if so we will make the props mutable
+    let (mut fields, mut let_statements, any_mut) =
+        make_struct_fields_and_let_statements(&input.sig.inputs);
+
+    println!("any mut{:?}", any_mut);
 
     let args = parse_macro_input!(args as ParsedArg);
     let accepted_attributes = AttributeConfig::default();
@@ -86,6 +90,13 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
     let output = &input.sig.output;
     let block = &input.block;
 
+    let props = match any_mut {
+        true => quote! { mut props: #name_struct },
+        false => quote! {
+            props: #name_struct
+        },
+    };
+
     let expanded = quote! {
 
         #[derive(Clone, Props, PartialEq)]
@@ -94,7 +105,7 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
         }
 
         #(#vec_attr)*
-        pub fn #name(props: #name_struct) #output {
+        pub fn #name(#props) #output {
             #(#let_statements)*
 
             let result = (|| #block)();
@@ -110,14 +121,24 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
 /// the props_component macro to generate the new struct and function.
 fn make_struct_fields_and_let_statements(
     inputs: &syn::punctuated::Punctuated<syn::FnArg, syn::token::Comma>,
-) -> (Vec<proc_macro2::TokenStream>, Vec<proc_macro2::TokenStream>) {
+) -> (
+    Vec<proc_macro2::TokenStream>,
+    Vec<proc_macro2::TokenStream>,
+    bool,
+) {
     let mut fields = Vec::new();
     let let_statements = Vec::new();
+    let mut any_mut = false;
 
     for input in inputs {
         if let syn::FnArg::Typed(pat_type) = input {
             let ident = match &*pat_type.pat {
-                syn::Pat::Ident(pat_ident) => &pat_ident.ident,
+                syn::Pat::Ident(pat_ident) => {
+                    if pat_ident.mutability.is_some() {
+                        any_mut = true;
+                    }
+                    &pat_ident.ident
+                }
                 _ => panic!("Unsupported parameter pattern"),
             };
 
@@ -129,7 +150,7 @@ fn make_struct_fields_and_let_statements(
         }
     }
 
-    (fields, let_statements)
+    (fields, let_statements, any_mut)
 }
 
 /// This struct represents a list of identifiers parsed from the arguments of the props_component

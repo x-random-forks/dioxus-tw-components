@@ -1,3 +1,5 @@
+use std::ops::Neg;
+
 use dioxus::prelude::IntoAttributeValue;
 
 pub trait BaseClass {
@@ -97,5 +99,16 @@ impl IntoAttributeValue for StateAttribute {
         dioxus::prelude::dioxus_core::AttributeValue::Text(
             self.state_attribute_to_str().to_string(),
         )
+    }
+}
+
+impl Neg for StateAttribute {
+    type Output = Self;
+
+    fn neg(self) -> Self::Output {
+        match self {
+            StateAttribute::Active => StateAttribute::Inactive,
+            StateAttribute::Inactive => StateAttribute::Active,
+        }
     }
 }

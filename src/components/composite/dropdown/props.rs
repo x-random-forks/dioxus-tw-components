@@ -31,10 +31,7 @@ impl DropdownState {
     }
 
     fn toggle(&mut self) {
-        self.state_attribute = match self.state_attribute {
-            StateAttribute::Active => StateAttribute::Inactive,
-            StateAttribute::Inactive => StateAttribute::Active,
-        };
+        self.state_attribute = -self.state_attribute;
     }
 
     fn get_state_attribute(&self) -> StateAttribute {
@@ -79,12 +76,12 @@ pub fn Dropdown() -> Element {
     use_context_provider(|| Signal::new(DropdownState::new()));
 
     rsx!(
-        div { class: class, id: props.id, {props.children} }
+        div { class, id: props.id, {props.children} }
     )
 }
 
 #[props_component(children)]
-pub fn DropdownToggle(#[props(extends = div)] attributes: Vec<Attribute>) -> Element {
+pub fn DropdownToggle(#[props(extends = div)] mut attributes: Vec<Attribute>) -> Element {
     // Use an "useless div" to wrap the dropdown toggle and get the onclick event, so the user can put
     // Everything inside the DropdownToggle not just only a button
     let class = "inline-block";
@@ -92,39 +89,34 @@ pub fn DropdownToggle(#[props(extends = div)] attributes: Vec<Attribute>) -> Ele
     let mut state = consume_context::<Signal<DropdownState>>();
 
     let onmounted = move |event: Event<MountedData>| async move {
-        // TODO remove unwrap
-        state
-            .write()
-            .set_toggle_rect(event.get_client_rect().await.unwrap());
+        match event.get_client_rect().await {
+            Ok(rect) => state.write().set_toggle_rect(rect),
+            Err(err) => log::error!("{:?}", err),
+        }
     };
 
     let onclick = move |_: MouseEvent| {
         state.write().toggle();
         // Remove the timeout if the dropdown is closed manually
-        // REVIEW error handling ?
         if state.read().get_state_attribute().is_active() {
-            let window = match use_window() {
-                Ok(window) => window,
-                Err(err) => {
-                    log::error!("{:?}", err);
-                    return;
-                }
+            match use_window() {
+                Ok(ref window) => use_clear_timeout_id(window, state.read().timeout_id),
+                Err(err) => log::error!("{:?}", err),
             };
-            use_clear_timeout_id(&window, state.read().timeout_id);
         }
     };
 
-    // Convert the state to an AttributeValue
-    let data_state = state.read().get_state_attribute().into_value();
-
     // Temporary, I would like to be able to pass the new_attribute directly to the rsx! macro but idk if it's possible
     // REVIEW, add this to macro props_component if not possible ?
-    let new_attribute = Attribute::new("data-state", data_state, None, true);
-    let mut attr = props.attributes.clone();
-    attr.push(new_attribute);
+    props.attributes.push(Attribute::new(
+        "data-state",
+        state.read().into_value(),
+        None,
+        true,
+    ));
 
     rsx!(
-        div { ..attr, class, onmounted, onclick, { props.children } }
+        div { ..props.attributes, class, onmounted, onclick, { props.children } }
     )
 }
 
@@ -135,10 +127,10 @@ pub fn DropdownContent() -> Element {
     let mut state = consume_context::<Signal<DropdownState>>();
 
     let onmounted = move |event: Event<MountedData>| async move {
-        // TODO remove unwrap
-        state
-            .write()
-            .set_content_rect(event.get_client_rect().await.unwrap());
+        match event.get_client_rect().await {
+            Ok(rect) => state.write().set_content_rect(rect),
+            Err(err) => log::error!("{:?}", err),
+        }
     };
 
     let onmouseleave = move |_| {
@@ -162,16 +154,12 @@ pub fn DropdownContent() -> Element {
     };
 
     let onmouseenter = move |_| {
-        let window = match use_window() {
-            Ok(window) => window,
-            Err(err) => {
-                log::error!("{:?}", err);
-                return;
-            }
+        match use_window() {
+            Ok(ref window) => use_clear_timeout_id(window, state.read().timeout_id),
+            Err(err) => log::error!("{:?}", err),
         };
-
-        use_clear_timeout_id(&window, state.read().timeout_id);
     };
+
     let app_state = consume_context::<Signal<LibState>>();
 
     use_memo(move || {
