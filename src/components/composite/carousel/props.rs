@@ -158,6 +158,7 @@ pub fn CarouselItem(
         carousel_state.write().increment_carousel_size();
     };
 
+    // REVIEW: Is this ok ? Should I extend this everywhere possible ?
     let state = carousel_state
         .read()
         .is_current_key_eq_mine(props.item_key)
