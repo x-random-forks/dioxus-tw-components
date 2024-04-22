@@ -1,4 +1,4 @@
-use dioxus::{html::geometry::*, prelude::IntoAttributeValue};
+use dioxus::prelude::IntoAttributeValue;
 
 pub trait BaseClass {
     fn base(&self) -> &'static str;

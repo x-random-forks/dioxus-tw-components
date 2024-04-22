@@ -1,5 +1,5 @@
 use crate::attributes::*;
-use crate::hooks::{use_element_scroll_height, use_string_to_signal_string};
+use crate::hooks::use_element_scroll_height;
 use dioxus::prelude::*;
 use props_component_macro::props_component;
 use tailwind_fuse::*;
@@ -75,7 +75,7 @@ pub fn AccordionTrigger(
 
     let mut accordion_state = consume_context::<Signal<AccordionState>>();
 
-    let sig_id = use_string_to_signal_string(props.id.clone());
+    let sig_id = use_signal(|| props.id.clone());
 
     let onmounted = move |_| async move {
         if props.is_open {
@@ -134,7 +134,7 @@ pub fn AccordionContent(#[props(default)] animation: Animation) -> Element {
     // This is the height of the element when visible, we need to calcul it before rendering it to have a smooth transition
     let mut elem_height = use_signal(|| "".to_string());
 
-    let sig_id = use_string_to_signal_string(props.id.clone());
+    let sig_id = use_signal(|| props.id.clone());
 
     let onmounted = move |_| async move {
         if props.animation == Animation::None {

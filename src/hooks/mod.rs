@@ -1,4 +1,3 @@
-use dioxus::{hooks::use_signal, signals::Signal};
 use std::sync::atomic::AtomicUsize;
 use web_sys::wasm_bindgen::{closure::Closure, JsCast, JsValue};
 
@@ -12,11 +11,6 @@ pub fn use_unique_id() -> String {
         ID_PREFIX,
         UNIQUE_ID_COUNTER.fetch_add(1, std::sync::atomic::Ordering::Relaxed)
     )
-}
-
-/// Convert a String to a `Signal<String>`
-pub fn use_string_to_signal_string(string: String) -> Signal<String> {
-    use_signal(|| string)
 }
 
 pub fn use_window() -> Result<web_sys::Window, JsValue> {

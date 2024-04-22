@@ -1,7 +1,4 @@
-use crate::{
-    attributes::*,
-    hooks::{use_element_scroll_width, use_string_to_signal_string},
-};
+use crate::{attributes::*, hooks::use_element_scroll_width};
 use dioxus::prelude::*;
 use props_component_macro::props_component;
 use tailwind_fuse::*;
@@ -121,7 +118,7 @@ pub fn CarouselContent(#[props(default)] animation: Animation) -> Element {
 
     let mut carousel_state = consume_context::<Signal<CarouselState>>();
 
-    let sig_id = use_string_to_signal_string(props.id.clone());
+    let sig_id = use_signal(|| props.id.clone());
 
     let onmounted = move |_| async move {
         // Useful when default item is not the first one
