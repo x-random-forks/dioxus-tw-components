@@ -1,13 +1,7 @@
 use dioxus::prelude::*;
 use dioxus_components_bin::{
-    components::{
-        atom::button::Button,
-        composite::lightswitch::LightSwitchSignal,
-        form::{form::Form, input::Input, radiogroup::*, toggle::Toggle},
-    },
-    types::{AppState, Side},
+    components::composite::lightswitch::LightSwitchSignal, types::AppState,
 };
-use std::collections::HashMap;
 
 use crate::website::router::Route;
 
