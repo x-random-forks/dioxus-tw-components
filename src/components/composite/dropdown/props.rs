@@ -69,6 +69,17 @@ impl DropdownState {
     }
 }
 
+/// Usage:
+/// ```ignore
+/// Dropdown {
+///    DropdownToggle {
+///       Button { "Dropdown" } // Can be anything like a div, button, etc
+///     }
+///     DropdownContent {
+///       div { "content" }
+///    }
+/// }
+/// ```
 #[props_component(class, id, children)]
 #[derive(HasStateAttr)]
 pub fn Dropdown(
