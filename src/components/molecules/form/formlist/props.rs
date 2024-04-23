@@ -14,7 +14,10 @@ pub fn FormList(#[props(default)] group_vec: Vec<Element>) -> Element {
         .group_vec
         .iter()
         .take(group_to_render())
-        .map(|x| rsx!({ x }.clone(), div { class: "h-4" }));
+        .map(|x| rsx!(
+            { x }.clone(),
+            div { class: "h-4" }
+        ));
 
     let vec_size = props.group_vec.len();
 

@@ -10,10 +10,10 @@ pub fn DropdownPage() -> Element {
             "DROPDOWN PAGE"
             div {
                 Dropdown { closing_delay_ms: 1000,
-                    DropdownToggle {
+                    DropdownToggle { 
                         Button { variant: ButtonVariant::Outline, "Dropdown" }
                     }
-                    DropdownContent {
+                    DropdownContent { 
                         div { class: "paragraph flex flex-col space-y-2",
                             a {
                                 class: "anchor",
@@ -26,11 +26,11 @@ pub fn DropdownPage() -> Element {
                         }
                     }
                 }
-                Dropdown {
-                    DropdownToggle {
+                Dropdown { 
+                    DropdownToggle { 
                         Button { variant: ButtonVariant::Outline, "Dropdown" }
                     }
-                    DropdownContent {
+                    DropdownContent { 
                         div { class: "paragraph flex flex-col space-y-2",
                             div { "content" }
                             Separator {}

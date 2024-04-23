@@ -12,7 +12,7 @@ pub fn BreadcrumbPage() -> Element {
                 BreadcrumbSeparator {}
                 BreadcrumbItem { "Data" }
             }
-            Breadcrumb {
+            Breadcrumb { 
                 BreadcrumbItem { "Home" }
                 BreadcrumbSeparator { "/" }
                 BreadcrumbItem { "Library" }

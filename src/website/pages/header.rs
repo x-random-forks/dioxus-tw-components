@@ -9,13 +9,16 @@ use crate::website::router::Route;
 
 pub fn Header() -> Element {
     rsx!(
-        HeaderLayout {
-            Navbar {
+        HeaderLayout { 
+            Navbar { 
                 div { class: "flex flex-1 space-x-2 items-center ml-6",
                     Link { class: "mr-6", to: "/", div { class: "text-foreground font-bold", "Dioxus Lib Comp" } }
                     ul { class: "text-sm list-none flex space-x-2",
                         li {
-                            Link { class: "anchor", to: "/component/atom/button", "Component" }
+                            Link { class: "anchor", to: "/components/atoms/button", "Components" }
+                        }
+                        li {
+                            Link { class: "anchor", to: "/layouts/tmp", "Layouts" }
                         }
                     }
                 }

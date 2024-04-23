@@ -13,7 +13,7 @@ pub fn SideNavComp() -> Element {
         .iter()
         .map(|name| {
             rsx!(
-                Link { to: format!("/component/atom/{}", name), {name} }
+                Link { to: format!("/components/atoms/{}", name), {name} }
             )
         })
         .collect::<Vec<Element>>();
@@ -36,7 +36,7 @@ pub fn SideNavComp() -> Element {
         .iter()
         .map(|name| {
             rsx!(
-                Link { to: format!("/component/composite/{}", name), {name} }
+                Link { to: format!("/components/composites/{}", name), {name} }
             )
         })
         .collect::<Vec<Element>>();
@@ -56,7 +56,7 @@ pub fn SideNavComp() -> Element {
         .iter()
         .map(|name| {
             rsx!(
-                Link { to: format!("/component/molecule/form/{}", name), {name} }
+                Link { to: format!("/components/molecules/form/{}", name), {name} }
             )
         })
         .collect::<Vec<Element>>();

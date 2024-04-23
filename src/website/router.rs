@@ -1,10 +1,12 @@
 use dioxus::prelude::*;
 
+use super::pages::layouts::sidenav::SideNavLayouts;
 use super::pages::{components::sidenav::SideNavComp, header::Header};
 use crate::website::app::HomePage;
 use crate::website::pages::components::atoms::*;
 use crate::website::pages::components::composites::*;
 use crate::website::pages::components::molecule::form::*;
+use crate::website::pages::layouts::tmp_page::*;
 
 #[derive(Routable, Clone)]
 #[rustfmt::skip]
@@ -14,59 +16,64 @@ pub enum Route {
         HomePage {},
         #[layout(SideNavComp)]
         // Atoms
-            #[route("/component/atom/button")]
+            #[route("/components/atoms/button")]
             ButtonPage {},
-            #[route("/component/atom/icon")]
+            #[route("/components/atoms/icon")]
             IconPage {},
-            #[route("/component/atom/placeholder")]
+            #[route("/components/atoms/placeholder")]
             PlaceholderPage {},
-            #[route("/component/atom/separator")]
+            #[route("/components/atoms/separator")]
             SeparatorPage {},
-            #[route("/component/atom/typography")]
+            #[route("/components/atoms/typography")]
             TypographyPage {},
 
         // Composites
-            #[route("/component/composite/accordion")]
+            #[route("/components/composites/accordion")]
             AccordionPage {},
-            #[route("/component/composite/breadcrumb")]
+            #[route("/components/composites/breadcrumb")]
             BreadcrumbPage {},
-            #[route("/component/composite/carousel")]
+            #[route("/components/composites/carousel")]
             CarouselPage {},
-            #[route("/component/composite/dropdown")]
+            #[route("/components/composites/dropdown")]
             DropdownPage {},
-            #[route("/component/composite/lightswitch")]
+            #[route("/components/composites/lightswitch")]
             LightSwitchPage {},
-            #[route("/component/composite/modal")]
+            #[route("/components/composites/modal")]
             ModalPage {},
-            #[route("/component/composite/navbar")]
+            #[route("/components/composites/navbar")]
             NavbarPage {},
-            #[route("/component/composite/progressbar")]
+            #[route("/components/composites/progressbar")]
             ProgressBarPage {},
-            #[route("/component/composite/scrollable")]
+            #[route("/components/composites/scrollable")]
             ScrollablePage {},
-            #[route("/component/composite/table")]
+            #[route("/components/composites/table")]
             TablePage {},
-            #[route("/component/composite/tabs")]
+            #[route("/components/composites/tabs")]
             TabsPage {},
 
         // Form
-            #[route("/component/molecule/form/checkbox")]
+            #[route("/components/molecules/form/checkbox")]
             CheckboxPage {},
-            #[route("/component/molecule/form/formlist")]
+            #[route("/components/molecules/form/formlist")]
             FormListPage {},
-            #[route("/component/molecule/form/input")]
+            #[route("/components/molecules/form/input")]
             InputPage {},
-            #[route("/component/molecule/form/radiogroup")]
+            #[route("/components/molecules/form/radiogroup")]
             RadioGroupPage {},
-            #[route("/component/molecule/form/select")]
+            #[route("/components/molecules/form/select")]
             SelectPage {},
-            #[route("/component/molecule/form/slider")]
+            #[route("/components/molecules/form/slider")]
             SliderPage {},
-            #[route("/component/molecule/form/textarea")]
+            #[route("/components/molecules/form/textarea")]
             TextAreaPage {},
-            #[route("/component/molecule/form/toggle")]
+            #[route("/components/molecules/form/toggle")]
             TogglePage {},
-            #[end_layout]
+        #[end_layout]
+        
+        #[layout(SideNavLayouts)]
+            #[route("/layouts/tmp")]
+            TmpPage {},
+
         #[route("/..route")]
         NotFound {}
 }
