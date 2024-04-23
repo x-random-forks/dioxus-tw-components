@@ -98,6 +98,15 @@ impl DataStateAttrValue {
     }
 }
 
+impl From<DataStateAttrValue> for &'static str {
+    fn from(value: DataStateAttrValue) -> Self {
+        match value {
+            DataStateAttrValue::Active => "active",
+            DataStateAttrValue::Inactive => "inactive",
+        }
+    }
+}
+
 impl IntoAttributeValue for DataStateAttrValue {
     fn into_value(self) -> dioxus::prelude::dioxus_core::AttributeValue {
         dioxus::prelude::dioxus_core::AttributeValue::Text(

@@ -12,7 +12,6 @@ pub fn RadioGroupPage() -> Element {
                 RadioItem { value: "male", name: "gender", "Male" }
                 RadioItem { value: "female", name: "gender", "Female" }
                 RadioItem { value: "other", name: "gender", "Other" }
-                RadioItem { value: "disabled", name: "gender", disabled: true, "Disabled" }
             }
         }
     )

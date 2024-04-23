@@ -10,14 +10,21 @@ use crate::attributes::*;
 #[props_component(class, id)]
 pub fn Toggle(
     #[props(extends = button)] mut attributes: Vec<Attribute>,
-    #[props(default = false)] checked: bool,
+    #[props(default = false)] active: bool,
     #[props(optional)] onclick: Option<EventHandler<FormEvent>>,
     #[props(default)] color: Color,
     #[props(default)] size: Size,
+    #[props(default)] animation: Animation,
 ) -> Element {
-    let class = tw_merge!(props.base(), props.color(), props.size(), props.class);
+    let class = tw_merge!(
+        props.base(),
+        props.color(),
+        props.size(),
+        props.animation(),
+        props.class
+    );
 
-    let mut state = use_signal(|| match props.checked {
+    let mut state = use_signal(|| match props.active {
         true => DataStateAttrValue::Active,
         false => DataStateAttrValue::Inactive,
     });
