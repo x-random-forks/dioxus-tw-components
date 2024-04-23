@@ -1,5 +1,7 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::{components::atom::label::Label, components::form::radiogroup::*};
+use dioxus_components_bin::{
+    components::atoms::label::Label, components::molecules::form::radiogroup::*,
+};
 
 pub fn RadioGroupPage() -> Element {
     rsx!(

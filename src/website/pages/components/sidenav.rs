@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 use dioxus_components_bin::{
-    components::atom::separator::Separator, components::composite::scrollable::*, layout::Docs,
+    components::atoms::separator::Separator, components::composites::scrollable::*, layout::Docs,
 };
 
 use crate::website::router::Route;
@@ -56,7 +56,7 @@ pub fn SideNavComp() -> Element {
         .iter()
         .map(|name| {
             rsx!(
-                Link { to: format!("/component/form/{}", name), {name} }
+                Link { to: format!("/component/molecule/form/{}", name), {name} }
             )
         })
         .collect::<Vec<Element>>();

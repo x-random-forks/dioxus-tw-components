@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::components::form::select::*;
+use dioxus_components_bin::components::molecules::form::select::*;
 
 pub fn SelectPage() -> Element {
     rsx!(

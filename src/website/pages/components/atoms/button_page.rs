@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::{attributes::*, components::atom::button::*};
+use dioxus_components_bin::{attributes::*, components::atoms::button::*};
 
 pub fn ButtonPage() -> Element {
     let onclick = move |_| {

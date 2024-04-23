@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::{components::composite::lightswitch::LightSwitchSignal, LibState};
+use dioxus_components_bin::{components::composites::lightswitch::LightSwitchSignal, LibState};
 
 use crate::website::router::Route;
 

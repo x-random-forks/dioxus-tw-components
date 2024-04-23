@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::components::composite::breadcrumb::*;
+use dioxus_components_bin::components::composites::breadcrumb::*;
 
 pub fn BreadcrumbPage() -> Element {
     rsx!(

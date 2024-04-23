@@ -4,7 +4,7 @@ use super::pages::{components::sidenav::SideNavComp, header::Header};
 use crate::website::app::HomePage;
 use crate::website::pages::components::atoms::*;
 use crate::website::pages::components::composites::*;
-use crate::website::pages::components::form::*;
+use crate::website::pages::components::molecule::form::*;
 
 #[derive(Routable, Clone)]
 #[rustfmt::skip]
@@ -50,21 +50,21 @@ pub enum Route {
             TabsPage {},
 
         // Form
-            #[route("/component/form/checkbox")]
+            #[route("/component/molecule/form/checkbox")]
             CheckboxPage {},
-            #[route("/component/form/formlist")]
+            #[route("/component/molecule/form/formlist")]
             FormListPage {},
-            #[route("/component/form/input")]
+            #[route("/component/molecule/form/input")]
             InputPage {},
-            #[route("/component/form/radiogroup")]
+            #[route("/component/molecule/form/radiogroup")]
             RadioGroupPage {},
-            #[route("/component/form/select")]
+            #[route("/component/molecule/form/select")]
             SelectPage {},
-            #[route("/component/form/slider")]
+            #[route("/component/molecule/form/slider")]
             SliderPage {},
-            #[route("/component/form/textarea")]
+            #[route("/component/molecule/form/textarea")]
             TextAreaPage {},
-            #[route("/component/form/toggle")]
+            #[route("/component/molecule/form/toggle")]
             TogglePage {},
             #[end_layout]
         #[route("/..route")]
