@@ -12,26 +12,3 @@ pub fn Scrollable(#[props(default = Orientation::Vertical)] orientation: Orienta
         div { class: class, id: props.id, {props.children} }
     )
 }
-
-// #[derive(PartialEq, Props, Clone, Component)]
-// pub struct ScrollableProps {
-//     #[props(default = false)]
-//     horizontal: bool,
-//     children: Element,
-
-//     // Styling
-//     #[props(default)]
-//     class: String,
-// }
-
-// impl Component for ScrollableProps {
-//     fn view(self) -> Element {
-//         let class = super::ScrollableClass::builder()
-//             .horizontal(self.horizontal.into())
-//             .with_class(self.class);
-
-//         rsx!(
-//             div { class: "{class}", {self.children} }
-//         )
-//     }
-// }

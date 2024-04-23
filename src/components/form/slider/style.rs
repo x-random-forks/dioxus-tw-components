@@ -3,7 +3,7 @@ use crate::attributes::*;
 
 impl BaseClass for SliderProps {
     fn base(&self) -> &'static str {
-        "w-full disabled: cursor-not-allowed disabled:opacity-50"
+        "w-full disabled:cursor-not-allowed disabled:opacity-50"
     }
 }
 

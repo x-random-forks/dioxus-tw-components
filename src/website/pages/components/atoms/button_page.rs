@@ -33,9 +33,9 @@ pub fn ButtonPage() -> Element {
                 Button { disabled: true, color: Color::Destructive, "Destructive" }
             }
             div {
-                Button { size: Size::Md, "Md/Default" }
                 Button { size: Size::Xs, "Xs" }
                 Button { size: Size::Sm, "Sm" }
+                Button { size: Size::Md, "Md/Default" }
                 Button { size: Size::Lg, "Lg" }
                 Button { size: Size::Xl, "Xl" }
             }

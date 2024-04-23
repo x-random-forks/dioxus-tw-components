@@ -6,36 +6,36 @@ use tailwind_fuse::*;
 
 struct AccordionState {
     multi_open: bool,
-    current_active: Vec<String>,
+    active_items: Vec<String>,
 }
 
 impl AccordionState {
     fn new(multi_open: bool) -> Self {
         Self {
             multi_open,
-            current_active: Vec::new(),
+            active_items: Vec::new(),
         }
     }
 
     fn add_id(&mut self, id: String) {
-        self.current_active.push(id);
+        self.active_items.push(id);
     }
 
     fn remove_id(&mut self, id: String) {
-        self.current_active.retain(|x| x != &id);
+        self.active_items.retain(|x| x != &id);
     }
 
     fn set_id(&mut self, id: String) {
-        self.current_active.clear();
-        self.current_active.push(id);
+        self.active_items.clear();
+        self.active_items.push(id);
     }
 
     fn is_active(&self, id: &str) -> bool {
-        self.current_active.contains(&id.to_string())
+        self.active_items.contains(&id.to_string())
     }
 
     fn into_value_id(&self, id: &str) -> DataStateAttrValue {
-        if self.current_active.contains(&id.to_string()) {
+        if self.active_items.contains(&id.to_string()) {
             DataStateAttrValue::Active
         } else {
             DataStateAttrValue::Inactive

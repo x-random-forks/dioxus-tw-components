@@ -24,10 +24,10 @@ impl Colorable for ProgressTrackProps {
 impl Sizable for ProgressTrackProps {
     fn size(&self) -> &'static str {
         match self.size {
-            Size::Xs | Size::Sm => "h-2 text-xs",
-            Size::Md => "h-4 text-xs",
-            Size::Lg => "h-6 text-base",
-            Size::Xl => "h-8 text-lg",
+            Size::Xs | Size::Sm => "h-2 d-text-extrasmall",
+            Size::Md => "h-4 d-text-small",
+            Size::Lg => "h-6 d-text-medium",
+            Size::Xl => "h-8 d-text-large",
         }
     }
 }

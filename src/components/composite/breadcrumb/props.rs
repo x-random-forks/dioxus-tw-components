@@ -4,9 +4,19 @@ use tailwind_fuse::*;
 
 use crate::attributes::*;
 
+/// Usage:
+/// ```ignore
+/// Breadcrumb {
+///     BreadcrumbItem { "Home" },
+///     BreadcrumbSeparator {},
+///     BreadcrumbItem { "Library" },
+///     BreadcrumbSeparator {},
+///     BreadcrumbItem { "Data" },
+/// }
+/// ```
 #[props_component(class, id, children)]
 pub fn Breadcrumb(#[props(default)] separator: bool) -> Element {
-    let class = tw_merge!(props.class);
+    let class = tw_merge!(props.base(), props.class);
 
     rsx!(
         ol { class: class, id: props.id, {props.children} }

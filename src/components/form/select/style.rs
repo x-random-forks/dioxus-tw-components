@@ -15,12 +15,12 @@ impl BaseClass for SelectPlaceholderProps {
 
 impl BaseClass for SelectLabelProps {
     fn base(&self) -> &'static str {
-        "px-2 py-1.5 text-sm font-semibold"
+        "px-extrasmall py-extrasmall text-sm font-semibold"
     }
 }
 
 impl BaseClass for SelectItemProps {
     fn base(&self) -> &'static str {
-        "flex py-1.5 pl-2 pr-8 text-sm"
+        "flex py-extrasmall pl-2 pr-8 text-sm"
     }
 }

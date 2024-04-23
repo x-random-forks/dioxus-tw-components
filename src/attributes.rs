@@ -92,6 +92,10 @@ impl DataStateAttrValue {
             DataStateAttrValue::Inactive => false,
         }
     }
+
+    pub fn toggle(&mut self) {
+        *self = -(*self);
+    }
 }
 
 impl IntoAttributeValue for DataStateAttrValue {

@@ -6,3 +6,5 @@ impl BaseClass for NavbarProps {
         "container flex h-12 max-w-screen-2xl items-center"
     }
 }
+
+// TODO add size ?

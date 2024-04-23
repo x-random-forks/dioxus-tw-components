@@ -3,7 +3,7 @@ use crate::attributes::*;
 
 impl BaseClass for BreadcrumbProps {
     fn base(&self) -> &'static str {
-        "flex flex-wrap items-center font-normal gap-2 text-sm text-muted-foreground"
+        "flex flex-row items-center font-normal gap-2 d-text-small text-muted-foreground"
     }
 }
 

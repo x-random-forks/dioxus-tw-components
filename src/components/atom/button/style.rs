@@ -15,11 +15,18 @@ pub enum ButtonVariant {
     Ghost,
 }
 
-// TO CLEAN
 impl Variation for ButtonProps {
     fn variant(&self) -> &'static str {
         match self.variant {
-            ButtonVariant::Default => "",
+            ButtonVariant::Default => match self.color {
+                Color::Default => "bg-background text-foreground hover:bg-foreground/20 active:bg-foreground/30 active:shadow",
+                Color::Primary => "bg-primary text-primary-foreground border-primary hover:bg-primary/90 active:bg-primary/80 active:shadow",
+                Color::Secondary => "bg-secondary text-secondary-foreground border-secondary hover:bg-secondary/90 active:bg-secondary/80 active:shadow",
+                Color::Destructive => "bg-destructive text-destructive-foreground border-destructive hover:bg-destructive/90 active:bg-destructive/80 active:shadow",
+                Color::Success => "bg-success text-success-foreground border-success hover:bg-success/90 active:bg-success/80 active:shadow",
+                Color::Accent => "bg-accent text-accent-foreground border-accent hover:bg-accent/90 active:bg-accent/80 active:shadow",
+                Color::Muted => "bg-muted text-muted-foreground border-muted hover:bg-muted/90 active:bg-muted/80 active:shadow",
+            },
             ButtonVariant::Outline => match self.color {
                 Color::Default => {
                     "border bg-transparent border-foreground text-foreground hover:bg-foreground/40"
@@ -46,28 +53,21 @@ impl Variation for ButtonProps {
     }
 }
 
+// Handled in variant
 impl Colorable for ButtonProps {
     fn color(&self) -> &'static str {
-        match self.color {
-            Color::Default => "bg-background text-foreground hover:bg-foreground/20 active:bg-foreground/30 active:shadow",
-            Color::Primary => "bg-primary text-primary-foreground border-primary hover:bg-primary/90 active:bg-primary/80 active:shadow",
-            Color::Secondary => "bg-secondary text-secondary-foreground border-secondary hover:bg-secondary/90 active:bg-secondary/80 active:shadow",
-            Color::Destructive => "bg-destructive text-destructive-foreground border-destructive hover:bg-destructive/90 active:bg-destructive/80 active:shadow",
-            Color::Success => "bg-success text-success-foreground border-success hover:bg-success/90 active:bg-success/80 active:shadow",
-            Color::Accent => "bg-accent text-accent-foreground border-accent hover:bg-accent/90 active:bg-accent/80 active:shadow",
-            Color::Muted => "bg-muted text-muted-foreground border-muted hover:bg-muted/90 active:bg-muted/80 active:shadow",
-        }
+        ""
     }
 }
 
 impl Sizable for ButtonProps {
     fn size(&self) -> &'static str {
         match self.size {
-            Size::Xs => "px-2.5 py-1.5 text-xs",
-            Size::Sm => "px-3 py-2 text-sm",
-            Size::Md => "px-5 py-[9px] text-base",
-            Size::Lg => "px-6 py-3 text-lg",
-            Size::Xl => "px-8 py-4 text-xl",
+            Size::Xs => "px-extrasmall py-extrasmall d-text-extrasmall",
+            Size::Sm => "px-small py-small d-text-small",
+            Size::Md => "px-small py-small d-text-small",
+            Size::Lg => "px-medium py-medium d-text-medium",
+            Size::Xl => "px-large py-large d-text-large",
         }
     }
 }

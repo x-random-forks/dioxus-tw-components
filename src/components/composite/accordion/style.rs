@@ -9,13 +9,13 @@ impl BaseClass for AccordionItemProps {
 
 impl BaseClass for AccordionTriggerProps {
     fn base(&self) -> &'static str {
-        "flex flex-1 items-center justify-between p-small w-full text-medium font-medium group hover:underline"
+        "flex flex-1 items-center justify-between p-extrasmall w-full d-text-small font-medium group hover:underline"
     }
 }
 
 impl BaseClass for AccordionContentProps {
     fn base(&self) -> &'static str {
-        "text-small overflow-hidden px-small"
+        "d-text-small overflow-hidden px-small"
     }
 }
 
