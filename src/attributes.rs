@@ -1,6 +1,6 @@
 use std::ops::Neg;
 
-use dioxus::{prelude::IntoAttributeValue, signals::Signal};
+use dioxus::prelude::IntoAttributeValue;
 
 pub trait BaseClass {
     fn base(&self) -> &'static str;
@@ -111,14 +111,4 @@ impl Neg for DataStateAttrValue {
             DataStateAttrValue::Inactive => DataStateAttrValue::Active,
         }
     }
-}
-
-pub trait DataState: IntoAttributeValue + Clone {
-    fn get_state_attr_value(&self) -> DataStateAttrValue;
-
-    fn is_active(&self) -> bool;
-}
-
-pub trait HasStateAttr<T> {
-    fn add_datastate_to_attr(&mut self, state: Signal<T>);
 }

@@ -142,12 +142,14 @@ pub fn AccordionTrigger(
 }
 
 fn use_default_trigger_decoration() -> Element {
-    rsx!(dioxus_free_icons::Icon {
-        class: "transition-transform transform duration-300 group-data-[state=active]:-rotate-180",
-        width: 24,
-        height: 24,
-        icon: dioxus_free_icons::icons::fi_icons::FiChevronUp
-    })
+    rsx!(
+        dioxus_free_icons::Icon {
+            class: "transition-transform transform duration-300 group-data-[state=active]:-rotate-180",
+            width: 24,
+            height: 24,
+            icon: dioxus_free_icons::icons::fi_icons::FiChevronUp
+        }
+    )
 }
 
 /// Collapsible element that is toggled by the [AccordionTrigger] component

@@ -4,7 +4,7 @@ use dioxus_components_bin::components::composite::carousel::*;
 pub fn CarouselPage() -> Element {
     rsx!(
         "CAROUSEL PAGE"
-        Carousel { default_item: 0, is_circular: true,
+        Carousel { default_item_key: 0, is_circular: true,
             CarouselTrigger { next: false }
             CarouselWindow { 
                 CarouselContent { class: "", id: "carousel-1",

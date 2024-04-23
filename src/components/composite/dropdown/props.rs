@@ -2,7 +2,7 @@ use dioxus::{
     html::geometry::euclid::{Point2D, Rect},
     prelude::*,
 };
-use props_component_macro::{props_component, DataState, HasStateAttr};
+use props_component_macro::props_component;
 use tailwind_fuse::*;
 use web_sys::wasm_bindgen::closure::Closure;
 
@@ -12,7 +12,7 @@ use crate::{
     LibState,
 };
 
-#[derive(Clone, Copy, DataState)]
+#[derive(Clone, Copy)]
 struct DropdownState {
     state_attr_value: DataStateAttrValue,
     timeout_id: i32,
@@ -67,6 +67,16 @@ impl DropdownState {
     fn get_closing_delay(&self) -> i32 {
         self.closing_delay_ms
     }
+
+    fn is_active(&self) -> bool {
+        self.state_attr_value.is_active()
+    }
+}
+
+impl IntoAttributeValue for DropdownState {
+    fn into_value(self) -> dioxus::prelude::dioxus_core::AttributeValue {
+        self.state_attr_value.into_value()
+    }
 }
 
 /// Usage:
@@ -81,7 +91,6 @@ impl DropdownState {
 /// }
 /// ```
 #[props_component(class, id, children)]
-#[derive(HasStateAttr)]
 pub fn Dropdown(
     #[props(extends = div)] mut attributes: Vec<Attribute>,
     /// Correponds to the time in ms it takes for the toggle to close itself if not active, -1 disabled this feature (default)
@@ -92,7 +101,12 @@ pub fn Dropdown(
 
     let state = use_context_provider(|| Signal::new(DropdownState::new(props.closing_delay_ms)));
 
-    props.add_datastate_to_attr(state);
+    props.attributes.push(Attribute::new(
+        "data-state",
+        state.read().into_value(),
+        None,
+        false,
+    ));
 
     rsx!(
         div { ..props.attributes, class: class, id: props.id, {props.children} }
@@ -100,7 +114,6 @@ pub fn Dropdown(
 }
 
 #[props_component(children)]
-#[derive(HasStateAttr)]
 pub fn DropdownToggle(#[props(extends = div)] mut attributes: Vec<Attribute>) -> Element {
     // Use an "useless div" to wrap the dropdown toggle and get the onclick event, so the user can put
     // Everything inside the DropdownToggle not just only a button
@@ -138,7 +151,12 @@ pub fn DropdownToggle(#[props(extends = div)] mut attributes: Vec<Attribute>) ->
         }
     };
 
-    props.add_datastate_to_attr(state);
+    props.attributes.push(Attribute::new(
+        "data-state",
+        state.read().into_value(),
+        None,
+        false,
+    ));
 
     rsx!(
         div {
@@ -153,7 +171,6 @@ pub fn DropdownToggle(#[props(extends = div)] mut attributes: Vec<Attribute>) ->
 }
 
 #[props_component(class, id, children)]
-#[derive(HasStateAttr)]
 pub fn DropdownContent(
     #[props(extends = div)] mut attributes: Vec<Attribute>,
     #[props(default)] animation: Animation,
@@ -202,7 +219,12 @@ pub fn DropdownContent(
         }
     });
 
-    props.add_datastate_to_attr(state);
+    props.attributes.push(Attribute::new(
+        "data-state",
+        state.read().into_value(),
+        None,
+        false,
+    ));
 
     rsx!(
         div {

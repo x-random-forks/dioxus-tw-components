@@ -5,21 +5,22 @@ use tailwind_fuse::*;
 use web_sys::wasm_bindgen::JsValue;
 
 struct CarouselState {
-    carousel_size: u32,
-    current_key: u32,
-    content_size: i32,
     is_circular: bool,
+    carousel_size: u32,
+    // Use a key there so we can just +1 or -1 instead of having a vec
+    current_item_key: u32,
     content_id: String,
+    content_width: i32,
     current_translation: i32,
 }
 
 impl CarouselState {
-    fn new(default_item: u32, is_circular: bool) -> Self {
+    fn new(current_item_key: u32, is_circular: bool) -> Self {
         Self {
-            current_key: default_item,
-            carousel_size: 0,
-            content_size: 0,
+            current_item_key,
             is_circular,
+            carousel_size: 0,
+            content_width: 0,
             content_id: String::from(""),
             current_translation: 0,
         }
@@ -32,14 +33,14 @@ impl CarouselState {
     fn set_content_size(&mut self, scroll_width: Result<i32, JsValue>) {
         match scroll_width {
             Ok(width) => {
-                self.content_size = width;
+                self.content_width = width;
             }
             Err(e) => {
-                self.content_size = 0;
+                self.content_width = 0;
                 log::error!(
                     "Failed to get element width: {:?}, setting it to {}",
                     e,
-                    self.content_size
+                    self.content_width
                 );
                 log::error!(
                     "Is the id of the CarouselContent set and correct? {:?}",
@@ -50,15 +51,15 @@ impl CarouselState {
     }
 
     fn go_to_next_item(&mut self) {
-        self.current_key += 1;
+        self.current_item_key += 1;
     }
 
     fn go_to_prev_item(&mut self) {
-        self.current_key -= 1;
+        self.current_item_key -= 1;
     }
 
-    fn go_to_item(&mut self, key: u32) {
-        self.current_key = key;
+    fn go_to_item(&mut self, item_key: u32) {
+        self.current_item_key = item_key;
     }
 
     fn set_content_id(&mut self, id: String) {
@@ -66,7 +67,7 @@ impl CarouselState {
     }
 
     fn is_current_key_eq_mine(&self, key: u32) -> DataStateAttrValue {
-        if self.current_key == key {
+        if self.current_item_key == key {
             DataStateAttrValue::Active
         } else {
             DataStateAttrValue::Inactive
@@ -75,7 +76,7 @@ impl CarouselState {
 
     fn translate(&mut self) {
         self.set_current_translation(
-            self.current_key as i32 * self.content_size / self.carousel_size.max(1) as i32,
+            self.current_item_key as i32 * self.content_width / self.carousel_size.max(1) as i32,
         )
     }
 
@@ -88,14 +89,31 @@ impl CarouselState {
     }
 }
 
+/// Usage :
+/// ```ignore
+/// Carousel { default_item_key: 0,
+///     CarouselTrigger { next: false }
+///     CarouselWindow {
+///         CarouselContent { id: "carousel-1",
+///             CarouselItem { item_key: 0, div { "ITEM 1" } }
+///             CarouselItem { item_key: 1, div { "ITEM 2" } }
+///         }
+///     }
+///     CarouselTrigger { next: true }
+/// }
 #[props_component(id, class, children)]
 pub fn Carousel(
-    #[props(default = 0)] default_item: u32,
+    #[props(default = 0)] default_item_key: u32,
     #[props(default = false)] is_circular: bool,
 ) -> Element {
     let class = tw_merge!(props.base(), props.class);
 
-    use_context_provider(|| Signal::new(CarouselState::new(props.default_item, props.is_circular)));
+    use_context_provider(|| {
+        Signal::new(CarouselState::new(
+            props.default_item_key,
+            props.is_circular,
+        ))
+    });
 
     rsx!(
         div { class: class, id: props.id, {props.children} }
@@ -125,6 +143,7 @@ pub fn CarouselContent(#[props(default)] animation: Animation) -> Element {
         carousel_state
             .write()
             .set_content_size(use_element_scroll_width(&sig_id()));
+
         carousel_state.write().translate();
 
         carousel_state.write().set_content_id(sig_id());
@@ -144,23 +163,27 @@ pub fn CarouselContent(#[props(default)] animation: Animation) -> Element {
 
 #[props_component(id, class, children)]
 pub fn CarouselItem(
+    #[props(extends = div)] mut attributes: Vec<Attribute>,
     /// Represent position in the carousel
     item_key: u32,
 ) -> Element {
     let class = tw_merge!(props.base(), props.class);
 
-    let mut carousel_state = consume_context::<Signal<CarouselState>>();
+    let mut state = consume_context::<Signal<CarouselState>>();
 
     let onmounted = move |_| {
-        carousel_state.write().increment_carousel_size();
+        state.write().increment_carousel_size();
     };
 
-    // REVIEW: Is this ok ? Should I extend this everywhere possible ?
-    // Found a better way in dropdown to do it so just change it whereever I can
-    let state = carousel_state.read().is_current_key_eq_mine(props.item_key);
+    props.attributes.push(Attribute::new(
+        "data-state",
+        state.read().is_current_key_eq_mine(props.item_key),
+        None,
+        true,
+    ));
 
     rsx!(
-        div { "data-state": state, class: class, id: props.id, onmounted: onmounted, {props.children} }
+        div { ..props.attributes, class: class, id: props.id, onmounted: onmounted, {props.children} }
     )
 }
 
@@ -190,7 +213,7 @@ pub fn CarouselTrigger(#[props(default = false)] next: bool) -> Element {
 
 fn use_carousel(next: bool, mut carousel_state: Signal<CarouselState>) {
     let mut carousel_state = carousel_state.write();
-    let current_key = carousel_state.current_key;
+    let current_key = carousel_state.current_item_key;
     let carousel_size = carousel_state.carousel_size;
 
     if next {
