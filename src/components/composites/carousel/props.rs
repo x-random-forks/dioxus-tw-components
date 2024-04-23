@@ -116,7 +116,7 @@ pub fn Carousel(
     });
 
     rsx!(
-        div { class: class, id: props.id, {props.children} }
+        div { class, id: props.id, {props.children} }
     )
 }
 
@@ -125,7 +125,7 @@ pub fn CarouselWindow() -> Element {
     let class = tw_merge!(props.base(), props.class);
 
     rsx!(
-        div { class: class, id: props.id, {props.children} }
+        div { class, id: props.id, {props.children} }
     )
 }
 
@@ -157,7 +157,13 @@ pub fn CarouselContent(#[props(default)] animation: Animation) -> Element {
     });
 
     rsx!(
-        div { class: class, style: style, id: props.id, onmounted: onmounted, {props.children} }
+        div {
+            class,
+            style,
+            id: props.id,
+            onmounted: onmounted,
+            {props.children}
+        }
     )
 }
 
@@ -183,7 +189,13 @@ pub fn CarouselItem(
     ));
 
     rsx!(
-        div { ..props.attributes, class: class, id: props.id, onmounted: onmounted, {props.children} }
+        div {
+            ..props.attributes,
+            class,
+            id: props.id,
+            onmounted: onmounted,
+            {props.children}
+        }
     )
 }
 
@@ -207,7 +219,7 @@ pub fn CarouselTrigger(#[props(default = false)] next: bool) -> Element {
     let icon = get_next_prev_icons(props.next);
 
     rsx!(
-        button { class: class, id: props.id, onclick: onclick, {icon} }
+        button { class, id: props.id, onclick: onclick, {icon} }
     )
 }
 

@@ -1,13 +1,10 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::{components::composites::lightswitch::LightSwitchSignal, LibState};
+use dioxus_components_bin::{components::composites::lightswitch::LightSwitchState, LibState};
 
 use crate::website::router::Route;
 
 pub fn App() -> Element {
-    use_context_provider(|| Signal::new(LightSwitchSignal("".to_string())));
-
-    let light_switch_context = use_context::<Signal<LightSwitchSignal>>();
-    let dark = &light_switch_context.read().0;
+    let light_state = use_context_provider(|| Signal::new(LightSwitchState::new(false)));
 
     let mut app_state = use_context_provider(|| Signal::new(LibState::default()));
 
@@ -17,9 +14,12 @@ pub fn App() -> Element {
             .set_last_click_coordinates(event.coordinates());
     };
 
+    let class = "bg-background text-foreground min-h-screen";
+
     rsx!(
         div {
-            class: "{dark} bg-background text-foreground min-h-screen",
+            class: if let Some(dark) = light_state.read().is_on() { "{dark}" },
+            class: class,
             onclick: onclick,
             Router::<Route> {}
         }
@@ -27,7 +27,9 @@ pub fn App() -> Element {
 }
 
 pub fn HomePage() -> Element {
-    rsx!( p { class: "", "Hello World" } )
+    rsx!(
+        p { class: "", "Hello World" }
+    )
 }
 
 // fn TestIntegrationFormBuilder() -> Element {

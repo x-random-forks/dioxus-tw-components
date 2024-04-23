@@ -19,7 +19,13 @@ pub fn SelectGroup(
     };
 
     rsx!(
-        select { ..props.attributes, class: class, id: props.id, oninput: oninput, {props.children} }
+        select {
+            ..props.attributes,
+            class,
+            id: props.id,
+            oninput: oninput,
+            {props.children}
+        }
     )
 }
 
@@ -28,7 +34,14 @@ pub fn SelectPlaceholder() -> Element {
     let class = tw_merge!(props.base(), props.class);
 
     rsx!(
-        option { disabled: true, selected: true, value: "", class: class, id: props.id, {props.children} }
+        option {
+            disabled: true,
+            selected: true,
+            value: "",
+            class,
+            id: props.id,
+            {props.children}
+        }
     )
 }
 
@@ -37,7 +50,7 @@ pub fn SelectLabel(#[props(extends = optgroup)] attributes: Vec<Attribute>) -> E
     let class = tw_merge!(props.base(), props.class);
 
     rsx!(
-        optgroup { ..props.attributes, class: class, id: props.id, {props.children} }
+        optgroup { ..props.attributes, class, id: props.id, {props.children} }
     )
 }
 
@@ -46,6 +59,6 @@ pub fn SelectItem(#[props(extends = option)] attributes: Vec<Attribute>) -> Elem
     let class = tw_merge!(props.base(), props.class);
 
     rsx!(
-        option { ..props.attributes, class: class, id: props.id, {props.children} }
+        option { ..props.attributes, class, id: props.id, {props.children} }
     )
 }

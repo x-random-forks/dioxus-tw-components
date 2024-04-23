@@ -11,11 +11,9 @@ pub fn ModalPage() -> Element {
             }
             ModalBackground {}
             ModalContent { 
-                div {
-                    ModalClose { 
-                        Button { variant: ButtonVariant::Ghost, size: Size::Xs, "X" }
-                    }
-                }
+                div { ModalClose { 
+                    Button { variant: ButtonVariant::Ghost, size: Size::Xs, "X" }
+                } }
                 div { class: "h4", "TITLE" }
                 div { class: "paragraph", "LONG LONG LONG LONG LONG LONG LONG LONG CONTENT" }
             }

@@ -13,7 +13,7 @@ pub fn Tabs(#[props(into)] default_tab: String) -> Element {
     use_context_provider(|| Signal::new(TabsState(props.default_tab)));
 
     rsx!(
-        div { class: class, id: props.id, {props.children} }
+        div { class, id: props.id, {props.children} }
     )
 }
 
@@ -22,7 +22,7 @@ pub fn TabsList() -> Element {
     let class = tw_merge!(props.base(), props.class);
 
     rsx!(
-        div { class: class, id: props.id, {props.children} }
+        div { class, id: props.id, {props.children} }
     )
 }
 
@@ -42,7 +42,7 @@ pub fn TabsTrigger() -> Element {
     };
 
     rsx!(
-        button { "data-state": state, class: class, onclick: onclick, { props.children } }
+        button { "data-state": state, class, onclick: onclick, { props.children } }
     )
 }
 
@@ -58,6 +58,12 @@ pub fn TabsContent() -> Element {
     };
 
     rsx!(
-        div { "data-state": state, class: class, hidden: is_hidden, id: props.id, { props.children } }
+        div {
+            "data-state": state,
+            class,
+            hidden: is_hidden,
+            id: props.id,
+            { props.children }
+        }
     )
 }

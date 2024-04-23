@@ -68,7 +68,7 @@ pub fn Accordion(
     use_context_provider(|| Signal::new(AccordionState::new(props.multi_open)));
 
     rsx!(
-        div { class: class, id: props.id, {props.children} }
+        div { class, id: props.id, {props.children} }
     )
 }
 
@@ -78,7 +78,7 @@ pub fn AccordionItem() -> Element {
     let class = tw_merge!(props.base(), props.class);
 
     rsx!(
-        div { class: class, id: props.id, {props.children} }
+        div { class, id: props.id, {props.children} }
     )
 }
 
@@ -131,7 +131,7 @@ pub fn AccordionTrigger(
     rsx!(
         button {
             ..props.attributes,
-            class: class,
+            class,
             id: props.id,
             onclick: button_closure,
             onmounted: onmounted,
@@ -200,7 +200,7 @@ pub fn AccordionContent(
         div {
             ..props.attributes,
             id: props.id,
-            class: class,
+            class,
             height: final_height,
             onmounted: onmounted,
             {props.children}

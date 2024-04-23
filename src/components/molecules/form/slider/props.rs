@@ -22,7 +22,7 @@ pub fn Slider(
         input {
             ..props.attributes,
             r#type: "range",
-            class: class,
+            class,
             id: props.id,
             oninput: oninput
         }

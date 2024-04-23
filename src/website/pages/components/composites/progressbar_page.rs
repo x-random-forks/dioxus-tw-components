@@ -29,17 +29,29 @@ pub fn ProgressBarPage() -> Element {
                 Button { onclick: button_plus_closure, variant: ButtonVariant::Outline, "+" }
                 Button { onclick: button_minus_closure, variant: ButtonVariant::Outline, "-" }
             }
-            ProgressTrack { ProgressBar { progress: progress() } }
-            ProgressTrack { ProgressBar { progress: progress(), color: Color::Secondary } }
-            ProgressTrack { ProgressBar { progress: progress(), color: Color::Destructive } }
             ProgressTrack { 
-                ProgressBar { progress: progress(), ProgressLabel { progress: progress() } }
+                ProgressBar { progress: progress() }
             }
             ProgressTrack { 
-                ProgressBar { progress: progress(), color: Color::Destructive, ProgressLabel { progress: progress() } }
+                ProgressBar { progress: progress(), color: Color::Secondary }
             }
             ProgressTrack { 
-                ProgressBar { progress: progress(), ProgressLabel { class: "font-bold text-black", progress: progress(), show_percentage: false } }
+                ProgressBar { progress: progress(), color: Color::Destructive }
+            }
+            ProgressTrack { 
+                ProgressBar { progress: progress(),
+                    ProgressLabel { progress: progress() }
+                }
+            }
+            ProgressTrack { 
+                ProgressBar { progress: progress(), color: Color::Destructive,
+                    ProgressLabel { progress: progress() }
+                }
+            }
+            ProgressTrack { 
+                ProgressBar { progress: progress(),
+                    ProgressLabel { class: "font-bold text-black", progress: progress(), show_percentage: false }
+                }
             }
         }
     )

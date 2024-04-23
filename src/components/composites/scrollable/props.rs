@@ -9,6 +9,6 @@ pub fn Scrollable(#[props(default = Orientation::Vertical)] orientation: Orienta
     let class = tw_merge!(props.base(), props.orientation(), props.class);
 
     rsx!(
-        div { class: class, id: props.id, {props.children} }
+        div { class, id: props.id, {props.children} }
     )
 }

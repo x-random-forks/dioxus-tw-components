@@ -34,7 +34,7 @@ pub fn FormList(#[props(default)] group_vec: Vec<Element>) -> Element {
     };
 
     rsx!(
-        div { class: class, id: props.id,
+        div { class, id: props.id,
             Button { onclick: button_closure_plus, r#type: "button", "+" }
             Button { onclick: button_closure_minus, r#type: "button", "-" }
             { rendered_group_vec }

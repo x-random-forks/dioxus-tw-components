@@ -23,7 +23,7 @@ pub fn Form(
         form {
             ..props.attributes,
             id: props.id,
-            class: class,
+            class,
             onsubmit: onsubmit,
             oninput: oninput,
             {props.children}

@@ -79,5 +79,7 @@ pub enum Route {
 }
 
 fn NotFound() -> Element {
-    rsx!( div { "404 Not Found" } )
+    rsx!(
+        div { "404 Not Found" }
+    )
 }

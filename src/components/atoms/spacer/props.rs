@@ -9,5 +9,7 @@ use crate::attributes::*;
 pub fn Spacer() -> Element {
     let class = tw_merge!(props.base(), props.class);
 
-    rsx!( div { class: class } )
+    rsx!(
+        div { class }
+    )
 }

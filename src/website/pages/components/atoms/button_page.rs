@@ -10,7 +10,7 @@ pub fn ButtonPage() -> Element {
         div { class: "grid space-y-4 border-4 border-primary",
             div {
                 Button { "Default" }
-                Button { color: Color::Primary, onclick: onclick, "Primary" }
+                Button { color: Color::Primary, onclick, "Primary" }
                 Button { color: Color::Secondary, "Secondary" }
                 Button { color: Color::Destructive, "Destructive" }
             }

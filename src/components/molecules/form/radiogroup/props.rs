@@ -20,7 +20,7 @@ pub fn RadioGroup(
     use_context_provider(|| Signal::new(RadioGroupSignal(props.default_value)));
 
     rsx!(
-        div { class: class, id: props.id, {props.children} }
+        div { class, id: props.id, {props.children} }
     )
 }
 

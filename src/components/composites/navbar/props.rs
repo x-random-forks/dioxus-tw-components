@@ -9,6 +9,6 @@ pub fn Navbar(#[props(default)] children: Element) -> Element {
     let class = tw_merge!(props.base(), props.class);
 
     rsx!(
-        nav { class: class, id: props.id, {props.children} }
+        nav { class, id: props.id, {props.children} }
     )
 }

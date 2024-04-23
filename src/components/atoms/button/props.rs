@@ -39,6 +39,12 @@ pub fn Button(
     };
 
     rsx!(
-        button { ..props.attributes, class: class, id: props.id, onclick: onclick, {props.children} }
+        button {
+            ..props.attributes,
+            class,
+            id: props.id,
+            onclick: onclick,
+            {props.children}
+        }
     )
 }

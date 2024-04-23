@@ -51,7 +51,9 @@ impl IntoAttributeValue for ModalState {
 pub fn Modal(#[props(default = false)] is_open: bool) -> Element {
     use_context_provider(|| Signal::new(ModalState::new(props.is_open)));
 
-    rsx!({ props.children })
+    rsx!(
+        { props.children }
+    )
 }
 
 #[props_component(class, id, children)]
@@ -65,7 +67,7 @@ pub fn ModalTrigger() -> Element {
     };
 
     rsx!(
-        div { class: class, id: props.id, onclick: trigger_closure, {props.children} }
+        div { class, id: props.id, onclick: trigger_closure, {props.children} }
     )
 }
 
@@ -80,7 +82,7 @@ pub fn ModalClose() -> Element {
     };
 
     rsx!(
-        div { class: class, id: props.id, onclick: trigger_closure, {props.children} }
+        div { class, id: props.id, onclick: trigger_closure, {props.children} }
     )
 }
 
@@ -101,7 +103,7 @@ pub fn ModalContent(
     ));
 
     rsx!(
-        div { ..props.attributes, class: class, id: props.id, {props.children} }
+        div { ..props.attributes, class, id: props.id, {props.children} }
     )
 }
 

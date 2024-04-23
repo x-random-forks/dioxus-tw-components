@@ -18,5 +18,12 @@ pub fn TextArea(
         }
     };
 
-    rsx!( textarea { ..props.attributes, class: class, oninput: oninput, id: props.id } )
+    rsx!(
+        textarea {
+            ..props.attributes,
+            class,
+            oninput: oninput,
+            id: props.id
+        }
+    )
 }

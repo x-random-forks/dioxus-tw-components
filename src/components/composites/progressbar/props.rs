@@ -12,7 +12,7 @@ pub fn ProgressTrack(
     let class = tw_merge!(props.base(), props.color(), props.size(), props.class);
 
     rsx!(
-        div { class: class, id: props.id, {props.children} }
+        div { class, id: props.id, {props.children} }
     )
 }
 
@@ -21,7 +21,7 @@ pub fn ProgressBar(#[props(default = 50)] progress: u8, #[props(default)] color:
     let class = tw_merge!(props.base(), props.color(), props.class);
 
     rsx!(
-        div { class: class, style: "width: {props.progress}%", id: props.id,
+        div { class, style: "width: {props.progress}%", id: props.id,
             div { {props.children} }
         }
     )
@@ -35,7 +35,7 @@ pub fn ProgressLabel(
     let class = tw_merge!(props.base(), props.class);
 
     rsx!(
-        span { class: class,
+        span { class,
             {props.progress.to_string()},
             if props.show_percentage {
                 "%"

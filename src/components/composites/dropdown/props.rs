@@ -109,7 +109,7 @@ pub fn Dropdown(
     ));
 
     rsx!(
-        div { ..props.attributes, class: class, id: props.id, {props.children} }
+        div { ..props.attributes, class, id: props.id, {props.children} }
     )
 }
 
@@ -161,7 +161,7 @@ pub fn DropdownToggle(#[props(extends = div)] mut attributes: Vec<Attribute>) ->
     rsx!(
         div {
             ..props.attributes,
-            class: class,
+            class,
             onmounted: onmounted,
             onclick: onclick,
             onmouseleave: onmouseleave,
@@ -229,7 +229,7 @@ pub fn DropdownContent(
     rsx!(
         div {
             ..props.attributes,
-            class: class,
+            class,
             id: props.id,
             onmounted: onmounted,
             onmouseleave: onmouseleave,

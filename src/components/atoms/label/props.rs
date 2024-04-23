@@ -12,6 +12,6 @@ pub fn Label(
     let class = tw_merge!(props.base(), props.class);
 
     rsx!(
-        label { class: class, r#for: props.r#for, { props.children } }
+        label { class, r#for: props.r#for, { props.children } }
     )
 }

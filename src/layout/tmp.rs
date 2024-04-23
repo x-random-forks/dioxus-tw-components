@@ -19,6 +19,6 @@ pub fn Tmp(#[props(default)] layout: TmpEnum) -> Element {
     let class = tw_merge!(class, props.class);
 
     rsx!(
-        div { class: class, { props.children } }
+        div { class, { props.children } }
     )
 }

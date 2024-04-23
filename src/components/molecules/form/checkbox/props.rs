@@ -22,7 +22,7 @@ pub fn Checkbox(
         input {
             ..props.attributes,
             r#type: "checkbox",
-            class: class,
+            class,
             oninput: oninput,
             id: props.id
         }

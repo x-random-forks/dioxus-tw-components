@@ -40,5 +40,12 @@ pub fn Toggle(
         false,
     ));
 
-    rsx!( button { ..props.attributes, id: props.id, class: class, onclick: onclick } )
+    rsx!(
+        button {
+            ..props.attributes,
+            id: props.id,
+            class,
+            onclick: onclick
+        }
+    )
 }

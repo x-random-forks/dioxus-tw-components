@@ -19,5 +19,12 @@ pub fn Input(
         }
     };
 
-    rsx! { input { ..props.attributes, oninput: oninput, class: class, id: props.id } }
+    rsx! {
+        input {
+            ..props.attributes,
+            oninput: oninput,
+            class,
+            id: props.id
+        }
+    }
 }
