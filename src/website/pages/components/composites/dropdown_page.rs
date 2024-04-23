@@ -9,7 +9,7 @@ pub fn DropdownPage() -> Element {
         div { class: "flex gap-4",
             "DROPDOWN PAGE"
             div {
-                Dropdown { 
+                Dropdown { closing_delay_ms: 1000,
                     DropdownToggle { 
                         Button { variant: ButtonVariant::Outline, "Dropdown" }
                     }

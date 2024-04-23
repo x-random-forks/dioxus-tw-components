@@ -18,14 +18,16 @@ pub fn App() -> Element {
     };
 
     rsx!(
-        div { class: "{dark} bg-background text-foreground min-h-screen", onclick, Router::<Route> {} }
+        div {
+            class: "{dark} bg-background text-foreground min-h-screen",
+            onclick: onclick,
+            Router::<Route> {}
+        }
     )
 }
 
 pub fn HomePage() -> Element {
-    rsx!(
-        p { class: "", "Hello World" }
-    )
+    rsx!( p { class: "", "Hello World" } )
 }
 
 // fn TestIntegrationFormBuilder() -> Element {

@@ -13,5 +13,5 @@ pub fn Separator(
 ) -> Element {
     let class = tw_merge!(props.base(), props.orientation(), props.class);
 
-    rsx!(div { class: class })
+    rsx!( div { class: class } )
 }

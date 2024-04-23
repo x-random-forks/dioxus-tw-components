@@ -17,7 +17,7 @@ use syn::{
 /// 2. class: *String* => used add custom style to the component
 /// 3. children: *Element* => used to pass something to render as a child to the component \
 /// **Example**
-/// ```
+/// ```ignore
 /// /// This is a cool and very useful component
 /// #[props_component(id, class, children)]
 /// pub fn NewElement(
@@ -52,11 +52,15 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as ItemFn);
 
     let mut vec_attr = Vec::new();
+    let mut vec_attr_props = Vec::new();
 
     for attr in &input.attrs {
         // Check if the attribute of the input(the function) is a doc comment
         if attr.path().is_ident("doc") {
             vec_attr.push(attr.clone());
+        } else if attr.path().is_ident("derive") {
+            vec_attr_props.push(attr.clone());
+            // println!("Derive: {:?}", attr);
         }
     }
 
@@ -67,8 +71,6 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
     // any_mut is used to check if any of the parameters of the function is mutable, if so we will make the props mutable
     let (mut fields, mut let_statements, any_mut) =
         make_struct_fields_and_let_statements(&input.sig.inputs);
-
-    println!("any mut{:?}", any_mut);
 
     let args = parse_macro_input!(args as ParsedArg);
     let accepted_attributes = AttributeConfig::default();
@@ -100,6 +102,7 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
     let expanded = quote! {
 
         #[derive(Clone, Props, PartialEq)]
+        #(#vec_attr_props)*
         pub struct #name_struct {
             #(#fields),*
         }
@@ -242,4 +245,50 @@ impl AcceptedAttribute {
             let_statement: quote! { let children = &props.children; },
         }
     }
+}
+
+// TODO move this
+/// Impl the trait DataState and dioxus::IntoAttributeValue
+#[proc_macro_derive(DataState)]
+pub fn derive_data_state(input: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(input as syn::DeriveInput);
+    let name = &input.ident;
+
+    let expanded = quote! {
+        impl DataState for #name {
+            fn get_state_attr_value(&self) -> DataStateAttrValue {
+                self.state_attr_value
+            }
+
+            fn is_active(&self) -> bool {
+                self.state_attr_value.is_active()
+            }
+        }
+
+        impl IntoAttributeValue for #name {
+            fn into_value(self) -> dioxus::prelude::dioxus_core::AttributeValue {
+                self.state_attr_value.into_value()
+            }
+        }
+    };
+
+    TokenStream::from(expanded)
+}
+
+/// Impl the trait HasStateAttr
+#[proc_macro_derive(HasStateAttr)]
+pub fn derive_has_state_attr(input: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(input as syn::DeriveInput);
+    let name = &input.ident;
+
+    let expanded = quote! {
+        impl<T: DataState> HasStateAttr<T> for #name {
+            fn add_datastate_to_attr(&mut self, state: Signal<T>) {
+                self.attributes
+                    .push(Attribute::new("data-state", state.into_value(), None, true));
+            }
+        }
+    };
+
+    TokenStream::from(expanded)
 }

@@ -91,13 +91,14 @@ fn checked_circle() -> Element {
 }
 
 fn unchecked_circle() -> Element {
-    rsx!(dioxus_free_icons::Icon {
-        class:
-            "peer-disabled:cursor-not-allowed peer-disabled:fill-muted peer-disabled:stroke-muted",
-        width: 18,
-        height: 18,
-        fill: "",
-        icon: dioxus_free_icons::icons::fa_regular_icons::FaCircle,
-        title: "an hollow circle"
-    })
+    rsx!(
+        dioxus_free_icons::Icon {
+            class: "peer-disabled:cursor-not-allowed peer-disabled:fill-muted peer-disabled:stroke-muted",
+            width: 18,
+            height: 18,
+            fill: "",
+            icon: dioxus_free_icons::icons::fa_regular_icons::FaCircle,
+            title: "an hollow circle"
+        }
+    )
 }

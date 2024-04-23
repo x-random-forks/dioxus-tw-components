@@ -65,11 +65,11 @@ impl CarouselState {
         self.content_id = id;
     }
 
-    fn is_current_key_eq_mine(&self, key: u32) -> StateAttribute {
+    fn is_current_key_eq_mine(&self, key: u32) -> DataStateAttrValue {
         if self.current_key == key {
-            StateAttribute::Active
+            DataStateAttrValue::Active
         } else {
-            StateAttribute::Inactive
+            DataStateAttrValue::Inactive
         }
     }
 
@@ -210,17 +210,21 @@ fn use_carousel(next: bool, mut carousel_state: Signal<CarouselState>) {
 
 fn get_next_prev_icons(is_next: bool) -> Element {
     match is_next {
-        true => rsx!(dioxus_free_icons::Icon {
-            class: "",
-            width: 24,
-            height: 24,
-            icon: dioxus_free_icons::icons::fa_regular_icons::FaCircleRight
-        }),
-        false => rsx!(dioxus_free_icons::Icon {
-            class: "",
-            width: 24,
-            height: 24,
-            icon: dioxus_free_icons::icons::fa_regular_icons::FaCircleLeft
-        }),
+        true => rsx!(
+            dioxus_free_icons::Icon {
+                class: "",
+                width: 24,
+                height: 24,
+                icon: dioxus_free_icons::icons::fa_regular_icons::FaCircleRight
+            }
+        ),
+        false => rsx!(
+            dioxus_free_icons::Icon {
+                class: "",
+                width: 24,
+                height: 24,
+                icon: dioxus_free_icons::icons::fa_regular_icons::FaCircleLeft
+            }
+        ),
     }
 }

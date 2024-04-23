@@ -14,8 +14,17 @@ impl BaseClass for DropdownToggleProps {
 }
 
 impl BaseClass for DropdownContentProps {
-    // REVIEW split base class into multiple function, like position, size, padding, margin, text, ... ?
     fn base(&self) -> &'static str {
-        "absolute z-10 shadow-sm bg-background rounded-global-radius border border-border my-1 p-2 whitespace-nowrap transition-all duration-100 shadow opacity-100 data-[state=inactive]:opacity-0 data-[state=inactive]:invisible data-[state=inactive]:scale-90 data-[state=active]:scale-100"
+        "absolute z-10 shadow-sm bg-background rounded-global-radius border border-border my-1 p-2 whitespace-nowrap shadow opacity-100 data-[state=inactive]:invisible"
+    }
+}
+
+impl Animatable for DropdownContentProps {
+    fn animation(&self) -> &'static str {
+        match self.animation {
+            Animation::None => "transition-none",
+            Animation::Light | Animation::Full => "transition-all duration-100 data-[state=inactive]:scale-90 data-[state=active]:scale-100 data-[state=inactive]:opacity-0",
+            Animation::Custom(animation) => animation,
+        }
     }
 }
