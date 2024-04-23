@@ -5,7 +5,10 @@ use tailwind_fuse::*;
 use crate::attributes::*;
 
 #[props_component(class, children)]
-pub fn Label(#[props(default)] r#for: String) -> Element {
+pub fn Label(
+    #[props(default)] r#for: String,
+    #[props(default)] orientation: Orientation,
+) -> Element {
     let class = tw_merge!(props.base(), props.class);
 
     rsx!(

@@ -33,9 +33,30 @@ impl AccordionState {
     fn is_active(&self, id: &str) -> bool {
         self.current_active.contains(&id.to_string())
     }
+
+    fn into_value_id(&self, id: &str) -> DataStateAttrValue {
+        if self.current_active.contains(&id.to_string()) {
+            DataStateAttrValue::Active
+        } else {
+            DataStateAttrValue::Inactive
+        }
+    }
 }
 
-/// The Accordion component divides the content into collapsible items
+/// The Accordion component divides the content into collapsible items \
+/// Usage:
+/// ```ignore
+/// Accordion {
+///     AccordionItem {
+///         AccordionTrigger { "Trigger 1" }
+///         AccordionContent { "Content 1" }
+///     }
+///     AccordionItem {
+///         AccordionTrigger { "Trigger 2" }
+///         AccordionContent { "Content 2" }
+///     }
+/// }
+/// ```
 #[props_component(id, class, children)]
 pub fn Accordion(
     /// Control if multiple items can be open at the same time
@@ -64,6 +85,7 @@ pub fn AccordionItem() -> Element {
 /// The clickable element that toggles the visibility of the [AccordionContent] component
 #[props_component(id, class, children)]
 pub fn AccordionTrigger(
+    #[props(extends = button)] mut attributes: Vec<Attribute>,
     /// Determine if the accordion item is open by default
     #[props(default = false)]
     is_open: bool,
@@ -73,40 +95,42 @@ pub fn AccordionTrigger(
 ) -> Element {
     let class = tw_merge!(props.base(), props.class);
 
-    let mut accordion_state = consume_context::<Signal<AccordionState>>();
+    let mut state = consume_context::<Signal<AccordionState>>();
 
     let sig_id = use_signal(|| props.id.clone());
 
     let onmounted = move |_| async move {
         if props.is_open {
-            accordion_state.write().add_id(sig_id());
+            state.write().add_id(sig_id());
         }
     };
 
     let button_closure = move |_: Event<MouseData>| {
         // If the current item is active, remove it from the list, effectively closing it
-        if accordion_state.read().is_active(&sig_id()) {
-            accordion_state.write().remove_id(sig_id());
+        if state.read().is_active(&sig_id()) {
+            state.write().remove_id(sig_id());
         } else {
             // If the current item is not active
             // set it as the only active item if multi_open is false
             // or add it to the list of active items if multi_open is true
-            if !accordion_state.read().multi_open {
-                accordion_state.write().set_id(sig_id());
+            if !state.read().multi_open {
+                state.write().set_id(sig_id());
             } else {
-                accordion_state.write().add_id(sig_id());
+                state.write().add_id(sig_id());
             }
         }
     };
 
-    let state = match accordion_state.read().is_active(&sig_id()) {
-        true => "active",
-        false => "inactive",
-    };
+    props.attributes.push(Attribute::new(
+        "data-state",
+        state.read().into_value_id(&sig_id()),
+        None,
+        true,
+    ));
 
     rsx!(
         button {
-            "data-state": state,
+            ..props.attributes,
             class: class,
             id: props.id,
             onclick: button_closure,
@@ -118,19 +142,20 @@ pub fn AccordionTrigger(
 }
 
 fn use_default_trigger_decoration() -> Element {
-    rsx!(
-        dioxus_free_icons::Icon {
-            class: "transition-transform transform duration-300 group-data-[state=active]:-rotate-180",
-            width: 24,
-            height: 24,
-            icon: dioxus_free_icons::icons::fi_icons::FiChevronUp
-        }
-    )
+    rsx!(dioxus_free_icons::Icon {
+        class: "transition-transform transform duration-300 group-data-[state=active]:-rotate-180",
+        width: 24,
+        height: 24,
+        icon: dioxus_free_icons::icons::fi_icons::FiChevronUp
+    })
 }
 
 /// Collapsible element that is toggled by the [AccordionTrigger] component
 #[props_component(id, class, children)]
-pub fn AccordionContent(#[props(default)] animation: Animation) -> Element {
+pub fn AccordionContent(
+    #[props(extends = div)] mut attributes: Vec<Attribute>,
+    #[props(default)] animation: Animation,
+) -> Element {
     let class = tw_merge!(props.base(), props.animation(), props.class);
 
     // This is the height of the element when visible, we need to calcul it before rendering it to have a smooth transition
@@ -155,16 +180,23 @@ pub fn AccordionContent(#[props(default)] animation: Animation) -> Element {
         }
     };
 
-    let accordion_state = consume_context::<Signal<AccordionState>>();
+    let state = consume_context::<Signal<AccordionState>>();
 
-    let (final_height, state) = match accordion_state.read().is_active(&sig_id()) {
-        true => (elem_height(), "active"),
-        false => ("0".to_string(), "inactive"),
+    let final_height = match state.read().is_active(&sig_id()) {
+        true => elem_height(),
+        false => "0".to_string(),
     };
+
+    props.attributes.push(Attribute::new(
+        "data-state",
+        state.read().into_value_id(&sig_id()),
+        None,
+        true,
+    ));
 
     rsx!(
         div {
-            "data-state": state,
+            ..props.attributes,
             id: props.id,
             class: class,
             height: final_height,
