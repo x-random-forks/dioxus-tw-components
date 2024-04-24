@@ -79,26 +79,28 @@ pub fn RadioItem(
 
 fn checked_circle() -> Element {
     rsx!(
-        dioxus_free_icons::Icon {
-            class: "peer-disabled:cursor-not-allowed peer-disabled:opacity-50 peer-disabled:fill-muted peer-disabled:stroke-muted",
+        svg {
             width: 18,
             height: 18,
-            fill: "",
-            icon: dioxus_free_icons::icons::fa_regular_icons::FaCircleCheck,
-            title: "a checked circle"
+            xmlns: "http://www.w3.org/2000/svg",
+            view_box: "0 0 512 512",
+            path {
+                d: "M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z"
+            }
         }
     )
 }
 
 fn unchecked_circle() -> Element {
     rsx!(
-        dioxus_free_icons::Icon {
-            class: "peer-disabled:cursor-not-allowed peer-disabled:fill-muted peer-disabled:stroke-muted",
+        svg {
             width: 18,
             height: 18,
-            fill: "",
-            icon: dioxus_free_icons::icons::fa_regular_icons::FaCircle,
-            title: "an hollow circle"
+            xmlns: "http://www.w3.org/2000/svg",
+            view_box: "0 0 512 512",
+            path {
+                d: "M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"
+            }
         }
     )
 }

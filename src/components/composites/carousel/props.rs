@@ -246,20 +246,28 @@ fn use_carousel(next: bool, mut carousel_state: Signal<CarouselState>) {
 fn get_next_prev_icons(is_next: bool) -> Element {
     match is_next {
         true => rsx!(
-            dioxus_free_icons::Icon {
-                class: "",
+            svg {
                 width: 24,
                 height: 24,
-                icon: dioxus_free_icons::icons::fa_regular_icons::FaCircleRight
+                xmlns: "http://www.w3.org/2000/svg",
+                view_box: "0 0 512 512",
+                path {
+                    d: "M294.6 135.1c-4.2-4.5-10.1-7.1-16.3-7.1C266 128 256 138 256 150.3V208H160c-17.7 0-32 14.3-32 32v32c0 17.7 14.3 32 32 32h96v57.7c0 12.3 10 22.3 22.3 22.3c6.2 0 12.1-2.6 16.3-7.1l99.9-107.1c3.5-3.8 5.5-8.7 5.5-13.8s-2-10.1-5.5-13.8L294.6 135.1z"
+                }
             }
         ),
         false => rsx!(
-            dioxus_free_icons::Icon {
-                class: "",
+            svg {
                 width: 24,
                 height: 24,
-                icon: dioxus_free_icons::icons::fa_regular_icons::FaCircleLeft
+                xmlns: "http://www.w3.org/2000/svg",
+                view_box: "0 0 512 512",
+                transform: "scale(-1, 1)",
+                path {
+                    d: "M294.6 135.1c-4.2-4.5-10.1-7.1-16.3-7.1C266 128 256 138 256 150.3V208H160c-17.7 0-32 14.3-32 32v32c0 17.7 14.3 32 32 32h96v57.7c0 12.3 10 22.3 22.3 22.3c6.2 0 12.1-2.6 16.3-7.1l99.9-107.1c3.5-3.8 5.5-8.7 5.5-13.8s-2-10.1-5.5-13.8L294.6 135.1z"
+                }
             }
+
         ),
     }
 }
