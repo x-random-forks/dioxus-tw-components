@@ -1,9 +1,12 @@
 workspace = { members = ["props-component-macro"] }
 
 [package]
-name = "dioxus_components"
+name = "dioxus_components_bin"
 version = "0.1.0"
 edition = "2021"
+
+# [lib]
+# name = "dioxus_comps"
 
 [dependencies]
 futures = "0.3.30"
