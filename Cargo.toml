@@ -1,7 +1,7 @@
 workspace = { members = ["props-component-macro"] }
 
 [package]
-name = "dioxus_components_bin"
+name = "dioxus_components"
 version = "0.1.0"
 edition = "2021"
 
