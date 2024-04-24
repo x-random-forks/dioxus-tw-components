@@ -12,3 +12,10 @@ Still implemented a very basic Derive macro because:
 - We could alternatively just define manually a `pub fn MyComponent(props: MyComponentProps) -> Element {...}`.
 
 Note: right now there's a main + lib and I get a wasm-bindgen conflict but it may just be a local issue. If anyone encounters it, remove the main and integrate the lib in the actual dioxus repo (either manually for now or using git: https://rpadovani.com/private-rust-crates (not tested))
+
+
+
+Usage : 
+
+- to compile tailwind `npx tailwindcss -c ./css/tailwind.config.js -i ./css/input.css -o ./public/tailwind.css --watch`
+- to serve the lib `dx serve` (you need dioxus CLI `cargo install dioxus-cli@0.5`)

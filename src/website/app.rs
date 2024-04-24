@@ -1,0 +1,119 @@
+use dioxus::prelude::*;
+use dioxus_components_bin::{components::composites::lightswitch::LightSwitchState, LibState};
+
+use crate::website::router::Route;
+
+pub fn App() -> Element {
+    let light_state = use_context_provider(|| Signal::new(LightSwitchState::new(false)));
+
+    let mut app_state = use_context_provider(|| Signal::new(LibState::default()));
+
+    let onclick = move |event: MouseEvent| {
+        app_state
+            .write()
+            .set_last_click_coordinates(event.coordinates());
+    };
+
+    let class = "bg-background text-foreground min-h-screen";
+
+    rsx!(
+        div {
+            class: if let Some(dark) = light_state.read().is_on() { "{dark}" },
+            class: class,
+            onclick: onclick,
+            Router::<Route> {}
+        }
+    )
+}
+
+pub fn HomePage() -> Element {
+    rsx!(
+        p { class: "", "Hello World" }
+    )
+}
+
+// fn TestIntegrationFormBuilder() -> Element {
+//     let mut values = use_signal(HashMap::new);
+//     let mut submitted_values = use_signal(HashMap::new);
+
+//     let form = use_form().unwrap();
+//     let form = form.iter().unwrap();
+//     let mut vecform: Vec<Element> = Vec::new();
+
+//     let _form = form.for_each(|field| {
+//         let label = rsx!( label { "{field.label}" } );
+
+//         let forminput = match &field.content {
+//             FieldType::Text(_) => {
+//                 let input = rsx!(
+//                     Input {
+//                         r#type: "text",
+//                         name: "login",
+//                         oninput: move |event: FormEvent| {
+//                             values.set(event.values());
+//                         }
+//                     }
+//                 );
+//                 input
+//             }
+//             FieldType::Radio(radio) => {
+//                 let radiogroup = rsx!(
+//                     RadioGroup { name: "rcnp",
+//                         for item in &radio.variants {
+//                             RadioItem { side: Side::Right, value: item, name: "rcnp", {item.clone()} }
+//                         }
+//                     }
+//                 );
+//                 radiogroup
+//             }
+//             FieldType::Toggle(toggle) => {
+//                 let toggle = rsx!( Toggle { checked: toggle.default } );
+//                 toggle
+//             }
+//             _ => None,
+//         };
+//         vecform.push(rsx!(
+//             div { {label}, {forminput} }
+//         ));
+//     });
+
+//     let rendered_form = vecform.iter().map(|elem| rsx!({ elem }));
+
+//     let onsubmit = move |event: FormEvent| {
+//         submitted_values.set(event.values());
+//     };
+
+//     let oninput = move |event: FormEvent| {
+//         values.set(event.values());
+//     };
+
+//     rsx!(
+//         div {
+//             div {
+//                 Form { class: "border border-black", onsubmit: onsubmit, oninput: oninput,
+
+//                     {rendered_form},
+//                     Button { r#type: "submit", value: "Submit", "Submit" }
+//                 }
+//             }
+//             div { "{submitted_values:#?}" }
+//         }
+//     )
+// }
+
+// use form_builder::prelude::*;
+
+// fn use_form() -> Result<Form, form_builder::error::FormError> {
+//     let form = Form::new("Past And Future")
+//         .push(FormField::new("Login:", FieldType::Text(TextField::new())))?
+//         .push(FormField::new(
+//             "Wanted RNCP",
+//             FieldType::Radio(RadioField::new(vec!["None", "RNCP6", "RNCP7"])?),
+//         ))?
+//         .push(FormField::new(
+//             "Accept terms and conditions ",
+//             FieldType::Toggle(ToggleField::new()),
+//         ))?;
+//     // let mut answer = form.new_answer();
+//     Ok(form)
+// }

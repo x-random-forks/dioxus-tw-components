@@ -16,7 +16,7 @@ asset_dir = "public"
 [web.app]
 
 # HTML title tag content
-title = "dioxus | ⛺"
+title = "SSCCE Dioxus | ⛺"
 
 [web.watcher]
 
@@ -33,7 +33,7 @@ watch_path = ["src", "public"]
 [web.resource]
 
 # CSS style file
-style = ["/tailwind.css"]
+style = []
 
 # Javascript code file
 script = []
