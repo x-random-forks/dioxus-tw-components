@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::{attributes::Orientation, components::atoms::separator::*};
+use dioxus_components::{attributes::Orientation, components::atoms::separator::*};
 
 pub fn SeparatorPage() -> Element {
     rsx!(

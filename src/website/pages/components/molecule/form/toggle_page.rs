@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::{
+use dioxus_components::{
     attributes::{Color, Size},
     components::{atoms::label::*, molecules::form::toggle::*},
 };

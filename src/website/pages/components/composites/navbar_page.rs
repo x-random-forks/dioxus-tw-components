@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::components::composites::navbar::*;
+use dioxus_components::components::composites::navbar::*;
 
 pub fn NavbarPage() -> Element {
     rsx!(

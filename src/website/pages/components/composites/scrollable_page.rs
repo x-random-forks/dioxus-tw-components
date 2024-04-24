@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::{attributes::Orientation, components::composites::scrollable::*};
+use dioxus_components::{attributes::Orientation, components::composites::scrollable::*};
 
 pub fn ScrollablePage() -> Element {
     rsx!(

@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::{
+use dioxus_components::{
     components::atoms::label::Label, components::molecules::form::radiogroup::*,
 };
 

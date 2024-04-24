@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::components::composites::breadcrumb::*;
+use dioxus_components::components::composites::breadcrumb::*;
 
 pub fn BreadcrumbPage() -> Element {
     rsx!(
@@ -12,7 +12,7 @@ pub fn BreadcrumbPage() -> Element {
                 BreadcrumbSeparator {}
                 BreadcrumbItem { "Data" }
             }
-            Breadcrumb { 
+            Breadcrumb {
                 BreadcrumbItem { "Home" }
                 BreadcrumbSeparator { "/" }
                 BreadcrumbItem { "Library" }

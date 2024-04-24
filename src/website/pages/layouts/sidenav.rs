@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::{components::composites::scrollable::*, layout::Docs};
+use dioxus_components::{components::composites::scrollable::*, layout::Docs};
 
 use crate::website::router::Route;
 

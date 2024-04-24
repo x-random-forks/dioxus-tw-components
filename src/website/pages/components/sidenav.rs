@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components_bin::{
+use dioxus_components::{
     components::atoms::separator::Separator, components::composites::scrollable::*, layout::Docs,
 };
 

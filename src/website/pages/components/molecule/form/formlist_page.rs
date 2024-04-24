@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use dioxus::prelude::*;
-use dioxus_components_bin::{
+use dioxus_components::{
     components::atoms::{button::*, label::*},
     components::molecules::form::formlist::*,
     components::molecules::form::input::Input,
