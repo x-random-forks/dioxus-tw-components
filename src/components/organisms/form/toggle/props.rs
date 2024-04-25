@@ -11,7 +11,7 @@ use crate::attributes::*;
 pub fn Toggle(
     #[props(extends = button)] mut attributes: Vec<Attribute>,
     #[props(default = false)] active: bool,
-    #[props(optional)] onclick: Option<EventHandler<FormEvent>>,
+    #[props(optional)] onclick: Option<EventHandler<MouseEvent>>,
     #[props(default)] color: Color,
     #[props(default)] size: Size,
     #[props(default)] animation: Animation,
@@ -31,6 +31,9 @@ pub fn Toggle(
 
     let onclick = move |_event| {
         state.write().toggle();
+        if let Some(oc) = &props.onclick {
+            oc.call(_event)
+        }
     };
 
     props.attributes.push(Attribute::new(
@@ -43,9 +46,10 @@ pub fn Toggle(
     rsx!(
         button {
             ..props.attributes,
+            r#type: "button",
             id: props.id,
             class,
-            onclick: onclick
+            onclick
         }
     )
 }

@@ -1,9 +1,0 @@
-pub mod checkbox;
-pub mod form;
-pub mod formlist;
-pub mod input;
-pub mod radiogroup;
-pub mod select;
-pub mod slider;
-pub mod textarea;
-pub mod toggle;

@@ -1,10 +1,15 @@
-pub mod button;
+mod button;
+pub use button::{Button, ButtonVariant};
 
-pub mod label;
+mod label;
+pub use label::Label;
 
 /// A placeholder/skeleton
-pub mod placeholder;
+mod placeholder;
+pub use placeholder::Placeholder;
 
-pub mod separator;
+mod separator;
+pub use separator::Separator;
 
-pub mod spacer;
+mod spacer;
+pub use spacer::Spacer;

@@ -3,9 +3,13 @@
 use dioxus::html::geometry::*;
 
 pub mod attributes;
-pub mod components;
+
+mod components;
+pub use components::*;
+
 pub mod hooks;
-pub mod layout;
+
+pub mod prelude;
 
 pub struct LibState {
     last_click_coordinates: Coordinates,

@@ -10,7 +10,7 @@ pub enum TmpEnum {
 }
 
 #[props_component(class, children)]
-pub fn Tmp(#[props(default)] layout: TmpEnum) -> Element {
+pub fn TmpTemplate(#[props(default)] layout: TmpEnum) -> Element {
     let class = match props.layout {
         TmpEnum::Inline => "inline-flex",
         TmpEnum::Vertical => "block",

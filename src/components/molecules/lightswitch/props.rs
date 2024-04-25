@@ -97,11 +97,7 @@ fn use_correct_theme_icon(state: Signal<LightSwitchState>) -> Element {
                 fill: "none",
                 stroke_linecap: "round",
                 stroke_linejoin: "round",
-                circle {
-                    cx: 12,
-                    cy: 12,
-                    r: 5
-                }
+                circle { cx: 12, cy: 12, r: 5 }
                 line {
                     x1: 12,
                     y1: 1,
@@ -161,9 +157,7 @@ fn use_correct_theme_icon(state: Signal<LightSwitchState>) -> Element {
                 fill: "none",
                 stroke_linecap: "round",
                 stroke_linejoin: "round",
-                path {
-                    d: "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
-                }
+                path { d: "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" }
             }
         }
     )
