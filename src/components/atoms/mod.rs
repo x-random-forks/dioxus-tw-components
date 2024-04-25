@@ -1,4 +1,4 @@
-mod button;
+pub mod button;
 pub use button::{Button, ButtonVariant};
 
 mod label;
