@@ -24,8 +24,6 @@ impl LightSwitchState {
     }
 }
 
-// REVIEW : Not finished, need to see in a real project how to properly handle states and such
-
 #[props_component(class, id)]
 pub fn LightSwitch() -> Element {
     let mut class = tw_merge!(props.class);
@@ -41,7 +39,7 @@ pub fn LightSwitch() -> Element {
     let icon = if let Some(state) = state.as_ref() {
         use_correct_theme_icon(*state)
     } else {
-        class = tw_join!(class, "LightSwitch did not find its state");
+        class = tw_join!(class, "LightSwitch did not find its state :(");
         use_error_icon()
     };
 

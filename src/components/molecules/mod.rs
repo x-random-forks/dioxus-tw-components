@@ -32,3 +32,6 @@ pub use table::{
 
 pub mod tabs;
 pub use tabs::{Tabs, TabsContent, TabsList, TabsTrigger};
+
+pub mod toast;
+pub use toast::{Toast, ToastContent, ToastTrigger};
