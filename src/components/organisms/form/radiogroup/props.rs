@@ -100,11 +100,7 @@ pub fn RadioItem(
                 },
                 class: "peer hidden"
             }
-            div {
-                id: &*props.id,
-                class: "size-4 peer-disabled:cursor-not-allowed",
-                {circle}
-            }
+            div { id: &*props.id, class: "size-4 peer-disabled:cursor-not-allowed", {circle} }
         }
     )
 }

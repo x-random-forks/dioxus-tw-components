@@ -15,7 +15,8 @@ pub trait RenderForm {
 pub struct FormState {
     response: HashMap<String, FieldDataType>,
     answer: FormResponse,
-    pub test_toggle: bool,
+    pub boool: bool,
+    pub s_bool: Signal<bool>,
 }
 
 impl FormState {
@@ -23,7 +24,8 @@ impl FormState {
         Self {
             response: HashMap::new(),
             answer: FormResponse::default(),
-            test_toggle: false,
+            boool: false,
+            s_bool: Signal::new(false),
         }
     }
 
@@ -71,8 +73,9 @@ impl FormState {
         }
     }
 
-    pub fn test_toogle(&mut self) {
-        self.test_toggle = !self.test_toggle;
+    pub fn toogle(&mut self) {
+        self.boool = !self.boool;
+        self.s_bool.toggle();
     }
 }
 
@@ -86,9 +89,10 @@ impl RenderForm for Form {
         let onsubmit = {
             let form = self.clone();
             move |_event: FormEvent| {
-                log::debug!("{:#?}", state.read().response);
+                log::debug!("{:?}", state.read().answer);
 
-                state.write().test_toogle();
+                state.write().toogle();
+                log::debug!("{}", state.read().boool);
 
                 state.write().response_to_answer();
 
@@ -109,22 +113,24 @@ impl RenderForm for Form {
             .enumerate()
             .map(|(idx, field)| {
                 if field.label.is_empty() {
-                    return rsx!();
+                    return rsx!(  );
                 }
-                rsx!({ field.render(idx) })
+                rsx!(
+                    { field.render(idx) }
+                )
             })
             .collect();
 
         rsx!(
             Form { onsubmit, id: "ex-form",
-                FormHeader {
+                FormHeader { 
                     h2 { class: "h2", {&*self.label} }
                     if let Some(description) = &self.description {
                         p { class: "paragraph font-medium", {description.clone()} }
                     }
                 }
                 {rendered_fields.iter()},
-                FormFooter {
+                FormFooter { 
                     Button {
                         class: "w-full",
                         variant: ButtonVariant::Ghost,
@@ -153,117 +159,130 @@ impl RenderForm for FormField {
                 // TODO change this
                 let minlength = text_field.min_length.unwrap_or(0) as i64;
                 let maxlength = text_field.max_length.unwrap_or(999999) as i64;
+                let required = self.is_required;
 
-                rsx!(Input {
-                    r#type: "text",
-                    name,
-                    minlength,
-                    maxlength,
-                    value,
-                    oninput: move |event: FormEvent| {
-                        state.write().insert_response_value(
-                            name.to_string(),
-                            FieldDataType::Text(event.data().value()),
-                        );
+                rsx!(
+                    Input {
+                        r#type: "text",
+                        name,
+                        minlength,
+                        maxlength,
+                        value,
+                        required,
+                        show_tips: true,
+                        oninput: move |event: FormEvent| {
+                            state
+                                .write()
+                                .insert_response_value(
+                                    name.to_string(),
+                                    FieldDataType::Text(event.data().value()),
+                                );
+                        }
                     }
-                })
+                )
             }
             FieldType::Email(email_field) => {
                 let value = email_field.default.clone().unwrap_or("".to_string());
 
-                rsx!(Input {
-                    r#type: "email",
-                    name,
-                    value,
-                    oninput: move |event: FormEvent| {
-                        state.write().insert_response_value(
-                            name(),
-                            FieldDataType::Email(event.data().value()),
-                        );
-                        state
-                            .write()
-                            .set_data_answer(index(), FieldDataType::Email(event.data().value()))
-                            .unwrap();
+                rsx!(
+                    Input {
+                        r#type: "email",
+                        name,
+                        value,
+                        oninput: move |event: FormEvent| {
+                            state
+                                .write()
+                                .insert_response_value(name(), FieldDataType::Email(event.data().value()));
+                            state
+                                .write()
+                                .set_data_answer(index(), FieldDataType::Email(event.data().value()))
+                                .unwrap();
+                        }
                     }
-                })
+                )
             }
             FieldType::Date(date_field) => {
                 let value = date_field.default.clone().unwrap_or("".to_string());
 
-                rsx!(Input {
-                    r#type: "date",
-                    name,
-                    value,
-                    oninput: move |event: FormEvent| {
-                        state.write().insert_response_value(
-                            name(),
-                            FieldDataType::Date(event.data().value()),
-                        );
+                rsx!(
+                    Input {
+                        r#type: "date",
+                        name,
+                        value,
+                        oninput: move |event: FormEvent| {
+                            state
+                                .write()
+                                .insert_response_value(name(), FieldDataType::Date(event.data().value()));
+                        }
                     }
-                })
+                )
             }
             FieldType::Integer(integer_field) => {
                 let value = integer_field.default.clone().unwrap_or(0);
                 let min = integer_field.min.unwrap_or(0) as i64;
                 let max = integer_field.max.unwrap_or(9999999999) as i64;
 
-                rsx!(Input {
-                    r#type: "number",
-                    name,
-                    min,
-                    max,
-                    value,
-                    oninput: move |event: FormEvent| {
-                        let Ok(value) = event.data().value().parse::<i64>() else {
-                            log::error!("Error parsing value");
-                            return;
-                        };
-                        state
-                            .write()
-                            .insert_response_value(name(), FieldDataType::Integer(value));
+                rsx!(
+                    Input {
+                        r#type: "number",
+                        name,
+                        min,
+                        max,
+                        value,
+                        oninput: move |event: FormEvent| {
+                            let Ok(value) = event.data().value().parse::<i64>() else {
+                                log::error!("Error parsing value");
+                                return;
+                            };
+                            state.write().insert_response_value(name(), FieldDataType::Integer(value));
+                        }
                     }
-                })
+                )
             }
             FieldType::Float(float_field) => {
                 let value = float_field.default.clone().unwrap_or(0.0);
                 let min = float_field.min.unwrap_or(0.0) as f64;
                 let max = float_field.max.unwrap_or(9999999.9) as f64;
 
-                rsx!(Input {
-                    step: "0.001",
-                    r#type: "number",
-                    name,
-                    min,
-                    max,
-                    value,
-                    oninput: move |event: FormEvent| {
-                        let Ok(value) = event.data().value().parse::<f64>() else {
-                            log::error!("Error parsing value");
-                            return;
-                        };
-                        state
-                            .write()
-                            .insert_response_value(name(), FieldDataType::Float(value));
+                rsx!(
+                    Input {
+                        step: "0.001",
+                        r#type: "number",
+                        name,
+                        min,
+                        max,
+                        value,
+                        oninput: move |event: FormEvent| {
+                            let Ok(value) = event.data().value().parse::<f64>() else {
+                                log::error!("Error parsing value");
+                                return;
+                            };
+                            state.write().insert_response_value(name(), FieldDataType::Float(value));
+                        }
                     }
-                })
+                )
             }
             FieldType::TextArea(textarea_field) => {
                 let value = textarea_field.default.clone().unwrap_or("".to_string());
                 let minlength = textarea_field.min_length.unwrap_or(0) as i64;
                 let maxlength = textarea_field.max_length.unwrap_or(9999) as i64;
 
-                rsx!(TextArea {
-                    name,
-                    minlength,
-                    maxlength,
-                    value,
-                    oninput: move |event: FormEvent| {
-                        state.write().insert_response_value(
-                            name(),
-                            FieldDataType::TextArea(event.data().value()),
-                        );
+                rsx!(
+                    TextArea {
+                        name,
+                        minlength,
+                        maxlength,
+                        value,
+                        oninput: move |event: FormEvent| {
+                            state
+                                .write()
+                                .insert_response_value(
+                                    name(),
+                                    FieldDataType::TextArea(event.data().value()),
+                                );
+                        }
                     }
-                })
+                )
             }
             FieldType::Checkbox(checkbox_field) => {
                 let variants = checkbox_field.variants.clone();
@@ -353,21 +372,21 @@ impl RenderForm for FormField {
                 let max = slider_field.max;
                 let step = slider_field.step;
 
-                rsx!(Slider {
-                    name,
-                    min,
-                    max,
-                    step,
-                    oninput: move |event: FormEvent| {
-                        let Ok(value) = event.data().value().parse::<i64>() else {
-                            log::error!("Error parsing value");
-                            return;
-                        };
-                        state
-                            .write()
-                            .insert_response_value(name(), FieldDataType::Slider(value));
+                rsx!(
+                    Slider {
+                        name,
+                        min,
+                        max,
+                        step,
+                        oninput: move |event: FormEvent| {
+                            let Ok(value) = event.data().value().parse::<i64>() else {
+                                log::error!("Error parsing value");
+                                return;
+                            };
+                            state.write().insert_response_value(name(), FieldDataType::Slider(value));
+                        }
                     }
-                })
+                )
             }
             FieldType::Combobox(combobox_field) => {
                 let variants = combobox_field.variants.clone();
@@ -397,7 +416,7 @@ impl RenderForm for FormField {
                         Toggle {
                             name,
                             active,
-                            id:  name(),
+                            id: name(),
                             onclick: move |_| {
                                 active = !active;
                                 state.write().insert_response_value(name(), FieldDataType::Toggle(active));
@@ -419,10 +438,12 @@ impl RenderForm for FormField {
                 // TODO
                 let content = list_field.content.render(0);
 
-                rsx!({ content })
+                rsx!(
+                    { content }
+                )
             }
             _ => {
-                rsx!()
+                rsx!(  )
             }
         };
 
