@@ -35,3 +35,5 @@ impl LibState {
         self.last_click_coordinates = coordinates;
     }
 }
+
+extern crate slugify;

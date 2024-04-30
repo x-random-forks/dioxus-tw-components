@@ -1,18 +1,20 @@
 use super::props::*;
 use crate::attributes::*;
 
-#[derive(Default, Clone, Copy, PartialEq)]
-pub enum FormFlow {
-    #[default]
-    Vertical,
-    Horizontal,
+impl BaseClass for FormProps {
+    fn base(&self) -> &'static str {
+        "grid grid-cols-1 lg:grid-cols-2 space-x-4"
+    }
 }
 
-impl Variation for FormProps {
-    fn variant(&self) -> &'static str {
-        match self.flow {
-            FormFlow::Vertical => todo!(),
-            FormFlow::Horizontal => todo!(),
-        }
+impl BaseClass for FormHeaderProps {
+    fn base(&self) -> &'static str {
+        "w-full lg:col-span-2 border-b pb-2 flex flex-col items-center justify-center"
+    }
+}
+
+impl BaseClass for FormFooterProps {
+    fn base(&self) -> &'static str {
+        "mt-2 lg:col-span-2 flex flex-col items-center justify-center"
     }
 }

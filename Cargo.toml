@@ -19,7 +19,5 @@ tailwind_fuse = { version = "0.2.0", features = ["variant"] }
 web-sys = {version = "0.3.69", features = ["Element"]}
 props-component-macro = { path = "props-component-macro" }
 
-# This is to keep the dioxus from dioxus-free-icons from conflicting with the one we are using
-# Meaning basically to keep them both on the same version
-[patch.crates-io]
-dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "c9ab09b3480ba2ad3b77d16c5e86382a62258194" }
+form_builder = { git = "ssh://github.com/ZialeOrg/form_builder.git", branch = "complete_prelude" }
+slugify = "0.1.0"
