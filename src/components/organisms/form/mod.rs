@@ -5,7 +5,7 @@ mod form;
 pub use form::{Form, FormFooter, FormHeader};
 
 mod formlist;
-pub use formlist::FormList;
+pub use formlist::{FormList, FormListTrigger, FormListTitle, FormListContent};
 
 mod input;
 pub use input::Input;

@@ -15,6 +15,7 @@ pub trait RenderForm {
 pub struct FormState {
     user_input: HashMap<String, FieldDataType>,
     form_response: FormResponse,
+    form_index: usize,
 
     // TODO
     pub boool: bool,
@@ -25,6 +26,7 @@ impl FormState {
         Self {
             user_input: HashMap::new(),
             form_response: FormResponse::default(),
+            form_index: 0,
             boool: false,
         }
     }
@@ -73,6 +75,13 @@ impl FormState {
         }
     }
 
+    pub fn get_form_index(&mut self) -> ReadOnlySignal<String> {
+        let index = self.form_index.to_string();
+        self.form_index += 1;
+        log::debug!("Form index {}", self.form_index);
+        ReadOnlySignal::new(Signal::new(index))
+    }
+ 
     pub fn toogle(&mut self) {
         self.boool = !self.boool;
     }
@@ -81,12 +90,14 @@ impl FormState {
 impl RenderForm for Form {
     fn render(&self, _index: Vec<usize>) -> Element {
         let mut state = use_context_provider(|| Signal::new(FormState::new()));
+        // TODO Find why is the form rendered 2 times
         log::debug!("State created");
+        state.write().form_index = 0;
 
         state.write().set_answer(self.new_answer());
 
         let onsubmit = {
-            let form = self.clone();
+            // let form = self.clone();
             move |_event: FormEvent| {
                 log::debug!("{:?}", state.read().user_input);
                 // log::debug!("{:#?}", state.read().form_response);
@@ -143,6 +154,19 @@ impl RenderForm for Form {
     }
 }
 
+fn convert(v: Option<usize>) -> Option<i64> {
+    if let Some(v) = v {
+        if v > std::i64::MAX as usize {
+            Some(v as i64)
+        }
+        else {
+            None
+        }
+    } else {
+        None
+    }
+}
+
 impl RenderForm for FormField {
     fn render(&self, index: Vec<usize>) -> Element {
         let mut state = consume_context::<Signal<FormState>>();
@@ -153,14 +177,15 @@ impl RenderForm for FormField {
         // let required = self.is_required;
 
         let idx = use_signal(|| index.iter().sum::<usize>() + index.len());
-        let name = use_signal(|| slugify!(&idx.clone().to_string()));
+        // let name = use_signal(|| slugify!(&idx.clone().to_string()));
+        let name = state.write().get_form_index();
 
         let content = match self.content.clone() {
             FieldType::Text(text_field) => {
                 let value = text_field.default.unwrap_or_default();
-                // TODO change this
-                let minlength = text_field.min_length.unwrap_or(0) as i64;
-                let maxlength = text_field.max_length.unwrap_or(999999) as i64;
+
+                let minlength = convert(text_field.min_length);
+                let maxlength = convert(text_field.max_length);
 
                 rsx!(
                     Input {
@@ -173,7 +198,7 @@ impl RenderForm for FormField {
                             state
                                 .write()
                                 .insert_user_input_value(
-                                    name.to_string(),
+                                    name(),
                                     FieldDataType::Text(event.data().value()),
                                 );
                         }
@@ -430,16 +455,24 @@ impl RenderForm for FormField {
                 let section_label = desc.clone();
                 desc.clear();
 
-                let Ok(iterator) = self.iter(index) else {
+                let mut list_fields = Vec::new();
+
+                let Ok(iterator) = self.iter(index.clone()) else {
                     return rsx!(  );
                 };
+                let rendered_fields = iterator
+                    .map(|(idx, item)| item.render(idx))
+                    .collect::<Vec<Element>>();
+
+                let rendered_fields = rsx!(
+                    { rendered_fields.iter() }
+                );
+                list_fields.push(rendered_fields);
 
                 rsx!(
-                    div { class: "border border-black group sub-form",
-                        h4 { class: "h4", {section_label} }
-                        for (idx , item) in iterator {
-                            {item.render(idx)}
-                        }
+                    FormList { class: "group sub-form",
+                        div { class: "flex space-x-2 place-items-center", FormListTitle { {section_label} } }
+                        FormListContent { list_fields }
                     }
                 )
             }
@@ -454,9 +487,7 @@ impl RenderForm for FormField {
                         return rsx!(  );
                     };
                     let rendered_fields = iterator
-                        .map(|(idx, item)| {
-                            item.render(idx)
-                        })
+                        .map(|(idx, item)| item.render(idx))
                         .collect::<Vec<Element>>();
 
                     let rendered_fields = rsx!(
@@ -466,7 +497,14 @@ impl RenderForm for FormField {
                 }
 
                 rsx!(
-                    FormList { class: "border border-black group sub-form", list_fields, {list_label} }
+                    FormList { class: "group sub-form", max_size: list_field.max_length,
+                        div { class: "flex space-x-2 place-items-center",
+                            FormListTitle { {list_label} }
+                            FormListTrigger { plus: false }
+                            FormListTrigger { plus: true }
+                        }
+                        FormListContent { list_fields }
+                    }
                 )
             }
             _ => {
