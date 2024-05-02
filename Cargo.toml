@@ -19,5 +19,5 @@ tailwind_fuse = { version = "0.2.0", features = ["variant"] }
 web-sys = {version = "0.3.69", features = ["Element"]}
 props-component-macro = { path = "props-component-macro" }
 
-form_builder = { git = "ssh://github.com/ZialeOrg/form_builder.git", branch = "complete_prelude" }
+form_builder = { git = "ssh://github.com/ZialeOrg/form_builder.git", branch = "fix_iterator_data" }
 slugify = "0.1.0"

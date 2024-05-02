@@ -2,7 +2,7 @@ use dioxus::{dioxus_core::AttributeValue, prelude::*};
 use props_component_macro::props_component;
 use tailwind_fuse::*;
 
-use crate::{attributes::*, organisms::formbuilder::FormState};
+use crate::attributes::*;
 
 #[props_component(id, class)]
 pub fn Input(
@@ -10,12 +10,10 @@ pub fn Input(
     #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
     #[props(default)] size: Size,
     #[props(default)] color: Color,
-    //
-    #[props(default = false)] show_tips: bool,
+    // TODO WIP
+    // #[props(default = false)] show_tips: bool,
 ) -> Element {
     let class = tw_merge!(props.base(), props.color(), props.size(), &props.class);
-
-    let tips = props.generate_default_tips();
 
     let oninput = move |event| {
         if let Some(oc) = &props.oninput {
@@ -23,17 +21,19 @@ pub fn Input(
         }
     };
 
-    if let Some(state) = try_consume_context::<Signal<FormState>>() {
-        match state.read().boool {
-            true => props
-                .attributes
-                .push(DataAttr::Valid.to_attr(DataValidValue::True)),
-            false => props
-                .attributes
-                .push(DataAttr::Valid.to_attr(DataValidValue::False)),
-        };
-        log::debug!("ff");
-    }
+    // TODO WIP
+    // let tips = props.generate_default_tips();
+    // if let Some(state) = try_consume_context::<Signal<FormState>>() {
+    //     match state.read().boool {
+    //         true => props
+    //             .attributes
+    //             .push(DataAttr::Valid.to_attr(DataValidValue::True)),
+    //         false => props
+    //             .attributes
+    //             .push(DataAttr::Valid.to_attr(DataValidValue::False)),
+    //     };
+    // }
+
     rsx! {
         input {
             ..props.attributes,
@@ -41,15 +41,15 @@ pub fn Input(
             class,
             id: props.id
         }
-        for tip in tips {
-            {tip}
-        }
-        span { class: "ml-2 hidden peer-data-[valid=true]:block text-success", "Validation test success" }
-        span { class: "ml-2 hidden peer-data-[valid=false]:block text-destructive",
-            "Validation test failure"
-        }
     }
 }
+// for tip in tips {
+//     {tip}
+// }
+// span { class: "ml-2 hidden peer-data-[valid=true]:block text-success", "Validation test success" }
+// span { class: "ml-2 hidden peer-data-[valid=false]:block text-destructive",
+//     "Validation test failure"
+// }
 
 impl TipsFormat for InputProps {
     fn tips_format(&self) -> &str {
@@ -64,13 +64,13 @@ impl DefaultTips for InputProps {
             .iter()
             .fold(Vec::<Element>::new(), |mut acc, attr| {
                 acc.append(
-                    &mut TipsError::variants()
+                    &mut FormError::variants()
                         .iter()
                         .map(|tips| {
                             if tips.to_string() == attr.name {
                                 tips.generate_rsx(attr.value.clone(), self.tips_format())
                             } else {
-                                rsx!()
+                                rsx!(  )
                             }
                         })
                         .collect::<Vec<Element>>(),
@@ -81,48 +81,54 @@ impl DefaultTips for InputProps {
     }
 }
 
-pub enum TipsError {
-    MinLength,
+pub enum FormError {
     MaxLength,
+    MinLength,
     Required,
+    // TODO Custom
 }
 
-impl TipsError {
-    pub fn variants() -> Vec<TipsError> {
+impl FormError {
+    pub fn variants() -> Vec<FormError> {
         vec![
-            TipsError::MinLength,
-            TipsError::MaxLength,
-            TipsError::Required,
+            FormError::MinLength,
+            FormError::MaxLength,
+            FormError::Required,
         ]
     }
 
+    // TODO need to return an Option<Element> there to avoid having tons of <pre> tags in browsers
     pub fn generate_rsx(&self, value: AttributeValue, tips_format: &str) -> Element {
         match self {
-            TipsError::MaxLength => {
+            FormError::MaxLength => {
                 let AttributeValue::Int(value) = value else {
-                    return rsx!();
+                    return rsx!(  );
                 };
                 if value == 9999 {
-                    return rsx!();
+                    return rsx!(  );
                 } else {
                     let content = format!("Max Length = {value}");
 
-                    rsx!(div {class:tips_format, {content}})
+                    rsx!(
+                        div { class: tips_format, {content} }
+                    )
                 }
             }
-            TipsError::MinLength => {
+            FormError::MinLength => {
                 let AttributeValue::Int(value) = value else {
-                    return rsx!();
+                    return rsx!(  );
                 };
                 if value == 0 {
-                    return rsx!();
+                    return rsx!(  );
                 } else {
                     let content = format!("Min Length = {value}");
 
-                    rsx!(div {class:tips_format, {content}})
+                    rsx!(
+                        div { class: tips_format, {content} }
+                    )
                 }
             }
-            TipsError::Required => {
+            FormError::Required => {
                 rsx!(
                     div { class: tips_format, { "This field is required" } }
                 )
@@ -131,21 +137,17 @@ impl TipsError {
     }
 }
 
-impl std::fmt::Display for TipsError {
+impl std::fmt::Display for FormError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            TipsError::MinLength => write!(f, "minlength"),
-            TipsError::MaxLength => write!(f, "maxlength"),
-            TipsError::Required => write!(f, "required"),
+            FormError::MinLength => write!(f, "minlength"),
+            FormError::MaxLength => write!(f, "maxlength"),
+            FormError::Required => write!(f, "required"),
         }
     }
 }
 
-pub struct Tips {
-    str: String,
-}
-
-pub trait DefaultTips {
+pub trait DefaultTips: TipsFormat {
     fn generate_default_tips(&self) -> Vec<Element>;
 }
 
