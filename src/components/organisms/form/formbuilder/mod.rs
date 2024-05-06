@@ -197,10 +197,7 @@ impl RenderForm for FormField {
                         oninput: move |event: FormEvent| {
                             state
                                 .write()
-                                .insert_user_input_value(
-                                    name(),
-                                    FieldDataType::Text(event.data().value()),
-                                );
+                                .insert_user_input_value(name(), FieldDataType::Text(event.data().value()));
                         }
                     }
                 )

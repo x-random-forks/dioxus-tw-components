@@ -34,4 +34,4 @@ pub mod tabs;
 pub use tabs::{Tabs, TabsContent, TabsList, TabsTrigger};
 
 pub mod toast;
-pub use toast::{Toast, ToastContent, ToastTrigger};
+pub use toast::{ToastList, Toast, ToastPosition};

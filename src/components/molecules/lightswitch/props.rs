@@ -1,50 +1,79 @@
 use dioxus::prelude::*;
 use props_component_macro::props_component;
 use tailwind_fuse::*;
+use web_sys::HtmlElement;
+
+use crate::hooks::{use_document, use_window};
 
 pub struct LightSwitchState {
     active: bool,
+    dom_body: Option<HtmlElement>,
 }
 
 impl LightSwitchState {
     pub fn new(active: bool) -> Self {
-        Self { active }
-    }
-
-    pub fn is_on(&self) -> Option<String> {
-        if self.active {
-            Some("dark".to_string())
-        } else {
-            None
+        Self {
+            active,
+            dom_body: None,
         }
     }
 
-    pub fn toggle(&mut self) {
-        self.active = !self.active;
+    pub fn set_body(&mut self, body: Option<HtmlElement>) {
+        self.dom_body = body;
+    }
+
+    pub fn set_dark_theme(&mut self) {
+        if let Some(body) = &self.dom_body {
+            let mut body_class = body.class_name();
+            // In case there is something else in the body class adds space before
+            let dark = " dark";
+            match body_class.find(dark) {
+                None => {
+                    self.active = true;
+                    body_class.push_str(dark);
+                }
+                Some(index) => {
+                    self.active = false;
+                    body_class.replace_range(index..index + dark.len(), "");
+                }
+            }
+            body.set_class_name(&body_class);
+        }
+    }
+
+    fn is_active(&self) -> bool {
+        self.active
     }
 }
 
-#[props_component(class, id)]
+/// This component inserts/remove "dark" in the DOM body tag class
+/// Uses only web_sys for now so it won't work for anything else than web
+#[props_component(class, id, children)]
 pub fn LightSwitch() -> Element {
-    let mut class = tw_merge!(props.class);
+    let class = tw_merge!(props.class);
 
-    let mut state = try_consume_context::<Signal<LightSwitchState>>();
+    let mut state = use_signal(|| LightSwitchState::new(false));
 
     let onclick = move |_| {
-        if let Some(state) = state.as_mut() {
-            state.write().toggle();
-        }
+        state.write().set_dark_theme();
     };
 
-    let icon = if let Some(state) = state.as_ref() {
-        use_correct_theme_icon(*state)
-    } else {
-        class = tw_join!(class, "LightSwitch did not find its state :(");
-        use_error_icon()
+    let icon = use_correct_theme_icon(state);
+
+    let onmounted = move |_| {
+        let _ = use_window()
+            .and_then(|window| use_document(&window))
+            .map(|document| state.write().set_body(document.body()));
     };
 
     rsx!(
-        button { r#type: "button", class, onclick: onclick, {icon} }
+        button {
+            r#type: "button",
+            class,
+            onclick,
+            onmounted,
+            {icon}
+        }
     )
 }
 
@@ -90,28 +119,9 @@ pub fn LightSwitch() -> Element {
 //     });
 // }
 
-// <path xmlns="http://www.w3.org/2000/svg" d="M16.2426 7.75736C17.6695 9.18422 18.2275 11.1509 17.9166 13M7.75736 16.2426C5.41421 13.8995 5.41421 10.1005 7.75736 7.75732M4.92893 19.0711C1.02369 15.1658 1.02369 8.83418 4.92893 4.92893M19.0711 4.92898C21.9628 7.8207 22.7133 12.0428 21.3225 15.6251M10.5 10.6771C10.1888 11.0297 10 11.4928 10 12C10 13.1046 10.8954 14 12 14C12.5072 14 12.9703 13.8112 13.3229 13.5M21 21L3 3" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-fn use_error_icon() -> Element {
-    rsx!(
-        svg {
-            view_box: "0 0 24 24",
-            width: 24,
-            height: 24,
-            fill: "none",
-            path {
-                d: "M16.2426 7.75736C17.6695 9.18422 18.2275 11.1509 17.9166 13M7.75736 16.2426C5.41421 13.8995 5.41421 10.1005 7.75736 7.75732M4.92893 19.0711C1.02369 15.1658 1.02369 8.83418 4.92893 4.92893M19.0711 4.92898C21.9628 7.8207 22.7133 12.0428 21.3225 15.6251M10.5 10.6771C10.1888 11.0297 10 11.4928 10 12C10 13.1046 10.8954 14 12 14C12.5072 14 12.9703 13.8112 13.3229 13.5M21 21L3 3",
-                stroke: "#000000",
-                stroke_width: 2,
-                stroke_linecap: "round",
-                stroke_linejoin: "round"
-            }
-        }
-    )
-}
-
 fn use_correct_theme_icon(state: Signal<LightSwitchState>) -> Element {
     rsx!(
-        if !state.read().is_on().is_some() {
+        if !state.read().is_active() {
             svg {
                 view_box: "0 0 24 24",
                 width: 24,

@@ -1,4 +1,4 @@
-use std::ops::Neg;
+use std::{ops::Neg, str::FromStr};
 
 use dioxus::prelude::IntoAttributeValue;
 
@@ -16,6 +16,30 @@ pub enum Color {
     Success,
     Accent,
     Muted,
+}
+
+impl FromStr for Color {
+    type Err = &'static str;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "primary" => Ok(Color::Primary),
+            "secondary" => Ok(Color::Secondary),
+            "destructive" => Ok(Color::Destructive),
+            "success" => Ok(Color::Success),
+            "accent" => Ok(Color::Accent),
+            "muted" => Ok(Color::Muted),
+            "default" | _ => Ok(Color::default()),
+        }
+    }
+}
+
+impl Color {
+    /// This will always return a color, if spelling mistake will return Color::default()
+    pub fn str_to_color<T: ToString>(str: T) -> Color {
+        // Can use unwrap because from_str cannot return an Err in our case
+        str.to_string().parse().unwrap()
+    }
 }
 
 pub trait Colorable {
