@@ -32,3 +32,4 @@ mod formdesc;
 pub use formdesc::FormDesc;
 
 pub mod formbuilder;
+pub use formbuilder::RenderForm;
