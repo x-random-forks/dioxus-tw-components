@@ -35,55 +35,47 @@ impl FormState {
         self.form_response = answer;
     }
 
-    pub fn set_data_answer(
-        &mut self,
-        index: usize,
-        new_data: FieldDataType,
-    ) -> Result<(), DataError> {
-        self.form_response.set_data(index, new_data)
-    }
-
     pub fn insert_user_input_value(&mut self, key: String, value: FieldDataType) {
         self.user_input.insert(key, value);
-    }
-
-    pub fn insert_checkbox_user_input(&mut self, key: String, value: Vec<String>) {
-        self.user_input.insert(key, FieldDataType::Checkbox(value));
-    }
-
-    pub fn is_checkbox_empty(&self, key: &str) -> bool {
-        if let Some(FieldDataType::Checkbox(values)) = self.user_input.get(key) {
-            values.is_empty()
-        } else {
-            true
-        }
-    }
-
-    pub fn remove_checkbox_user_input(&mut self, key: String) {
-        self.user_input.remove(&key);
-    }
-
-    pub fn is_key_present_checkbox(&self, key: &str) -> bool {
-        self.user_input.contains_key(key)
-    }
-
-    pub fn user_input_to_response(&mut self) {
-        for (index, field) in self.user_input.iter() {
-            self.form_response
-                .set_data(index.parse::<usize>().unwrap(), field.clone())
-                .unwrap();
-        }
     }
 
     pub fn get_form_index(&mut self) -> ReadOnlySignal<String> {
         let index = self.form_index.to_string();
         self.form_index += 1;
-        log::debug!("Form index {}", self.form_index);
         ReadOnlySignal::new(Signal::new(index))
     }
- 
+
     pub fn toogle(&mut self) {
         self.boool = !self.boool;
+    }
+
+    /// Key is the name of the checkbox
+    /// Value is the value corresponding to the checkbox
+    /// Event is the dioxus event, always "true" or "false" for checkboxes
+    pub fn handle_checkbox_input(&mut self, key: &str, value: &str, event: &str) {
+        let is_checked = event == "true";
+
+        if let Some(FieldDataType::Checkbox(vec)) = self.user_input.get_mut(key) {
+            if is_checked && !vec.contains(&value.to_string()) {
+                vec.push(value.to_string());
+            } else if !is_checked {
+                vec.retain(|str| str != value);
+            }
+        } else if is_checked {
+            self.user_input.insert(
+                key.to_string(),
+                FieldDataType::Checkbox(vec![value.to_string()]),
+            );
+        }
+    }
+
+    pub fn user_input_to_response(&mut self) {
+        for (key, field) in self.user_input.iter() {
+            self.form_response
+                .set_data(key.to_index(), field.clone())
+                .unwrap();
+        }
+        log::debug!("{:#?}", self.form_response);
     }
 }
 
@@ -91,7 +83,6 @@ impl RenderForm for Form {
     fn render(&self, _index: Vec<usize>) -> Element {
         let mut state = use_context_provider(|| Signal::new(FormState::new()));
         // TODO Find why is the form rendered 2 times
-        log::debug!("State created");
         state.write().form_index = 0;
 
         state.write().set_answer(self.new_answer());
@@ -100,21 +91,7 @@ impl RenderForm for Form {
             // let form = self.clone();
             move |_event: FormEvent| {
                 log::debug!("{:?}", state.read().user_input);
-                // log::debug!("{:#?}", state.read().form_response);
-
-                // state.write().toogle();
-                // log::debug!("{}", state.read().boool);
-
-                // state.write().response_to_answer();
-
-                // let is_valid = form.is_valid(&mut state.write().answer.data());
-                // log::debug!("Is valid: {}", is_valid);
-
-                // for field in state.read().answer.iter().unwrap() {
-                //     if field.error.is_some() {
-                //         log::debug!("{:#?}", field.error);
-                //     }
-                // }
+                state.write().user_input_to_response();
             }
         };
 
@@ -123,24 +100,22 @@ impl RenderForm for Form {
             .unwrap()
             .map(|(idx, field)| {
                 if field.label.is_empty() {
-                    return rsx!(  );
+                    return rsx!();
                 }
-                rsx!(
-                    { field.render(idx) }
-                )
+                rsx!({ field.render(idx) })
             })
             .collect();
 
         rsx!(
             Form { class: "group is-form", onsubmit, id: "ex-form",
-                FormHeader { 
+                FormHeader {
                     h2 { class: "h2", {&*self.label} }
                     if let Some(description) = &self.description {
                         p { class: "paragraph font-medium", {description.clone()} }
                     }
                 }
                 {rendered_fields.iter()},
-                FormFooter { 
+                FormFooter {
                     Button {
                         class: "w-full",
                         variant: ButtonVariant::Ghost,
@@ -154,19 +129,6 @@ impl RenderForm for Form {
     }
 }
 
-fn convert(v: Option<usize>) -> Option<i64> {
-    if let Some(v) = v {
-        if v > std::i64::MAX as usize {
-            Some(v as i64)
-        }
-        else {
-            None
-        }
-    } else {
-        None
-    }
-}
-
 impl RenderForm for FormField {
     fn render(&self, index: Vec<usize>) -> Element {
         let mut state = consume_context::<Signal<FormState>>();
@@ -177,133 +139,124 @@ impl RenderForm for FormField {
         // let required = self.is_required;
 
         let idx = use_signal(|| index.iter().sum::<usize>() + index.len());
-        // let name = use_signal(|| slugify!(&idx.clone().to_string()));
-        let name = state.write().get_form_index();
+
+        let name = use_signal(|| index.to_string());
+        // log::debug!("name: {}", name());
 
         let content = match self.content.clone() {
             FieldType::Text(text_field) => {
                 let value = text_field.default.unwrap_or_default();
 
-                let minlength = convert(text_field.min_length);
-                let maxlength = convert(text_field.max_length);
+                let minlength = opt_usize_to_opt_i64(text_field.min_length);
+                let maxlength = opt_usize_to_opt_i64(text_field.max_length);
 
-                rsx!(
-                    Input {
-                        r#type: "text",
-                        name,
-                        minlength,
-                        maxlength,
-                        value,
-                        oninput: move |event: FormEvent| {
-                            state
-                                .write()
-                                .insert_user_input_value(name(), FieldDataType::Text(event.data().value()));
-                        }
+                rsx!(Input {
+                    r#type: "text",
+                    name,
+                    minlength,
+                    maxlength,
+                    value,
+                    oninput: move |event: FormEvent| {
+                        state.write().insert_user_input_value(
+                            name(),
+                            FieldDataType::Text(event.data().value()),
+                        );
                     }
-                )
+                })
             }
             FieldType::Email(email_field) => {
                 let value = email_field.default.clone().unwrap_or("".to_string());
 
-                rsx!(
-                    Input {
-                        r#type: "email",
-                        name,
-                        value,
-                        oninput: move |event: FormEvent| {
-                            state
-                                .write()
-                                .insert_user_input_value(name(), FieldDataType::Email(event.data().value()));
-                            state
-                                .write()
-                                .set_data_answer(idx(), FieldDataType::Email(event.data().value()))
-                                .unwrap();
-                        }
+                rsx!(Input {
+                    r#type: "email",
+                    name,
+                    value,
+                    oninput: move |event: FormEvent| {
+                        // TODO ?
+                        state.write().insert_user_input_value(
+                            name(),
+                            FieldDataType::Email(event.data().value()),
+                        );
                     }
-                )
+                })
             }
             FieldType::Date(date_field) => {
                 let value = date_field.default.clone().unwrap_or("".to_string());
 
-                rsx!(
-                    Input {
-                        r#type: "date",
-                        name,
-                        value,
-                        oninput: move |event: FormEvent| {
-                            state
-                                .write()
-                                .insert_user_input_value(name(), FieldDataType::Date(event.data().value()));
-                        }
+                rsx!(Input {
+                    r#type: "date",
+                    name,
+                    value,
+                    oninput: move |event: FormEvent| {
+                        state.write().insert_user_input_value(
+                            name(),
+                            FieldDataType::Date(event.data().value()),
+                        );
                     }
-                )
+                })
             }
             FieldType::Integer(integer_field) => {
                 let value = integer_field.default.clone().unwrap_or(0);
                 let min = integer_field.min.unwrap_or(0) as i64;
                 let max = integer_field.max.unwrap_or(9999999999) as i64;
 
-                rsx!(
-                    Input {
-                        r#type: "number",
-                        name,
-                        min,
-                        max,
-                        value,
-                        oninput: move |event: FormEvent| {
-                            let Ok(value) = event.data().value().parse::<i64>() else {
-                                log::error!("Error parsing value");
-                                return;
-                            };
-                            state.write().insert_user_input_value(name(), FieldDataType::Integer(value));
-                        }
+                rsx!(Input {
+                    r#type: "number",
+                    name,
+                    min,
+                    max,
+                    value,
+                    oninput: move |event: FormEvent| {
+                        let Ok(value) = event.data().value().parse::<i64>() else {
+                            log::error!("Error parsing value");
+                            return;
+                        };
+                        state
+                            .write()
+                            .insert_user_input_value(name(), FieldDataType::Integer(value));
                     }
-                )
+                })
             }
             FieldType::Float(float_field) => {
                 let value = float_field.default.clone().unwrap_or(0.0);
                 let min = float_field.min.unwrap_or(0.0) as f64;
                 let max = float_field.max.unwrap_or(9999999.9) as f64;
 
-                rsx!(
-                    Input {
-                        step: "0.001",
-                        r#type: "number",
-                        name,
-                        min,
-                        max,
-                        value,
-                        oninput: move |event: FormEvent| {
-                            let Ok(value) = event.data().value().parse::<f64>() else {
-                                log::error!("Error parsing value");
-                                return;
-                            };
-                            state.write().insert_user_input_value(name(), FieldDataType::Float(value));
-                        }
+                rsx!(Input {
+                    step: "0.001",
+                    r#type: "number",
+                    name,
+                    min,
+                    max,
+                    value,
+                    oninput: move |event: FormEvent| {
+                        let Ok(value) = event.data().value().parse::<f64>() else {
+                            log::error!("Error parsing value");
+                            return;
+                        };
+                        state
+                            .write()
+                            .insert_user_input_value(name(), FieldDataType::Float(value));
                     }
-                )
+                })
             }
             FieldType::TextArea(textarea_field) => {
                 let value = textarea_field.default.clone().unwrap_or("".to_string());
                 let minlength = textarea_field.min_length.unwrap_or(0) as i64;
                 let maxlength = textarea_field.max_length.unwrap_or(9999) as i64;
 
-                rsx!(
-                    TextArea {
-                        name,
-                        minlength,
-                        maxlength,
-                        value,
-                        oninput: move |event: FormEvent| {
-                            state
-                                .write()
-                                .insert_user_input_value(
-                                    name(),
-                                    FieldDataType::TextArea(event.data().value()),
-                                );
-                        }
+                rsx!(TextArea {
+                    name,
+                    minlength,
+                    maxlength,
+                    value,
+                    oninput: move |event: FormEvent| {
+                        state.write().insert_user_input_value(
+                            name(),
+                            FieldDataType::TextArea(event.data().value()),
+                        );
                     }
-                )
+                })
             }
             FieldType::Checkbox(checkbox_field) => {
                 let variants = checkbox_field.variants.clone();
@@ -317,47 +270,7 @@ impl RenderForm for FormField {
                                 oninput: {
                                     let variant = variant.clone();
                                     move |event: FormEvent| {
-                                        let is_key_present = state.read().is_key_present_checkbox(&idx.to_string());
-                                        let event_value = event.data().value();
-                                        if !is_key_present {
-                                            if event_value == "true" {
-                                                state
-                                                    .write()
-                                                    .insert_checkbox_user_input(
-                                                        name(),
-                                                        vec![variant.clone().to_string()],
-                                                    );
-                                            } else {
-                                                if let Some(FieldDataType::Checkbox(values)) = state
-                                                    .write()
-                                                    .user_input
-                                                    .get_mut(&name())
-                                                {
-                                                    values.retain(|x| x != &variant);
-                                                }
-                                            }
-                                        } else {
-                                            if event_value == "true" {
-                                                if let Some(FieldDataType::Checkbox(values)) = state
-                                                    .write()
-                                                    .user_input
-                                                    .get_mut(&name())
-                                                {
-                                                    values.push(variant.to_string());
-                                                }
-                                            } else {
-                                                if let Some(FieldDataType::Checkbox(values)) = state
-                                                    .write()
-                                                    .user_input
-                                                    .get_mut(&name())
-                                                {
-                                                    values.retain(|x| x != &variant);
-                                                }
-                                                if state.read().is_checkbox_empty(&name()) {
-                                                    state.write().remove_checkbox_user_input(name());
-                                                }
-                                            }
-                                        }
+                                        state.write().handle_checkbox_input(&name(), &variant, &event.data().value());
                                     }
                                 }
                             }
@@ -394,21 +307,21 @@ impl RenderForm for FormField {
                 let max = slider_field.max;
                 let step = slider_field.step;
 
-                rsx!(
-                    Slider {
-                        name,
-                        min,
-                        max,
-                        step,
-                        oninput: move |event: FormEvent| {
-                            let Ok(value) = event.data().value().parse::<i64>() else {
-                                log::error!("Error parsing value");
-                                return;
-                            };
-                            state.write().insert_user_input_value(name(), FieldDataType::Slider(value));
-                        }
+                rsx!(Slider {
+                    name,
+                    min,
+                    max,
+                    step,
+                    oninput: move |event: FormEvent| {
+                        let Ok(value) = event.data().value().parse::<i64>() else {
+                            log::error!("Error parsing value");
+                            return;
+                        };
+                        state
+                            .write()
+                            .insert_user_input_value(name(), FieldDataType::Slider(value));
                     }
-                )
+                })
             }
             FieldType::Combobox(combobox_field) => {
                 let variants = combobox_field.variants.clone();
@@ -455,15 +368,13 @@ impl RenderForm for FormField {
                 let mut list_fields = Vec::new();
 
                 let Ok(iterator) = self.iter(index.clone()) else {
-                    return rsx!(  );
+                    return rsx!();
                 };
                 let rendered_fields = iterator
                     .map(|(idx, item)| item.render(idx))
                     .collect::<Vec<Element>>();
 
-                let rendered_fields = rsx!(
-                    { rendered_fields.iter() }
-                );
+                let rendered_fields = rsx!({ rendered_fields.iter() });
                 list_fields.push(rendered_fields);
 
                 rsx!(
@@ -479,17 +390,19 @@ impl RenderForm for FormField {
 
                 let mut list_fields = Vec::new();
 
-                for _ in 0..list_field.max_length {
+                for i in 0..list_field.max_length {
                     let Ok(iterator) = self.iter(index.clone()) else {
-                        return rsx!(  );
+                        return rsx!();
                     };
+
                     let rendered_fields = iterator
-                        .map(|(idx, item)| item.render(idx))
+                        .map(|(mut idx, item)| {
+                            *idx.last_mut().unwrap() = i;
+                            item.render(idx)
+                        })
                         .collect::<Vec<Element>>();
 
-                    let rendered_fields = rsx!(
-                        { rendered_fields.iter() }
-                    );
+                    let rendered_fields = rsx!({ rendered_fields.iter() });
                     list_fields.push(rendered_fields);
                 }
 
@@ -505,7 +418,7 @@ impl RenderForm for FormField {
                 )
             }
             _ => {
-                rsx!(  )
+                rsx!()
             }
         };
 
@@ -523,4 +436,46 @@ impl RenderForm for FormField {
 
 fn sanitize_string(str1: impl std::fmt::Display, str2: impl std::fmt::Display) -> String {
     slugify!(&format!("{}{}", str1, str2))
+}
+
+fn opt_usize_to_opt_i64(v: Option<usize>) -> Option<i64> {
+    if let Some(v) = v {
+        if v > std::i64::MAX as usize {
+            Some(v as i64)
+        } else {
+            None
+        }
+    } else {
+        None
+    }
+}
+
+pub trait IndexToString
+where
+    Self: ToString,
+{
+    fn to_index(&self) -> Vec<usize>;
+}
+
+impl IndexToString for String {
+    fn to_index(&self) -> Vec<usize> {
+        self.split("-")
+            .map(|num| num.parse::<usize>().unwrap_or_default())
+            .collect()
+    }
+}
+
+pub trait StringToIndex {
+    fn to_string(&self) -> String;
+}
+
+impl StringToIndex for Vec<usize> {
+    fn to_string(&self) -> String {
+        let mut str = String::from("");
+        for nb in self.iter() {
+            str.push_str("-");
+            str.push_str(&nb.to_string());
+        }
+        str.chars().skip(1).collect::<String>()
+    }
 }

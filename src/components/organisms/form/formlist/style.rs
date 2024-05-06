@@ -21,6 +21,6 @@ impl BaseClass for FormListTriggerProps {
 
 impl BaseClass for FormListContentProps {
     fn base(&self) -> &'static str {
-        "border-l-2 pl-2 pb-4"
+        "pl-2 pb-4"
     }
 }
