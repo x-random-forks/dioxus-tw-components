@@ -2,7 +2,7 @@ mod checkbox;
 pub use checkbox::Checkbox;
 
 mod form;
-pub use form::{Form, FormFooter, FormHeader};
+pub use form::{Form, FormFooter, FormHeader, FormChild, FormTitle, FormDesc, FormLabel};
 
 mod formlist;
 pub use formlist::{FormList, FormListTrigger, FormListTitle, FormListContent};
@@ -24,12 +24,3 @@ pub use textarea::TextArea;
 
 mod toggle;
 pub use toggle::Toggle;
-
-pub mod formlabel;
-pub use formlabel::FormLabel;
-
-mod formdesc;
-pub use formdesc::FormDesc;
-
-pub mod formbuilder;
-pub use formbuilder::RenderForm;

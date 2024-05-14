@@ -1,58 +1,46 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+/* :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --primary: 292 100% 30%;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 123 100% 22%;
+    --secondary-foreground: 123 100% 70%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --success: 142 70% 45%;
+    --success-foreground: 120 100% 97.3%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
+    --global-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.3);
+    --global-radius: 10px;
+}
 
+.dark {
+    --background: 20 14.3% 4.1%;
+    --foreground: 0 0% 95%;
+    --primary: 346.8 77.2% 49.8%;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 10% 3.9%;
+    --global-shadow: 0 0px 0px 0px rgba(255, 255, 255, 0.3);
+} */
 @layer base {
-    :root {
-        /* HSL Colors */
-        --background: 0 0% 100%;
-        --foreground: 240 10% 3.9%;
-        --primary: 292 100% 30%;
-        --primary-foreground: 355.7 100% 97.3%;
-        --secondary: 123 100% 22%;
-        --secondary-foreground: 123 100% 70%;
-        --accent: 240 4.8% 95.9%;
-        --accent-foreground: 240 5.9% 10%;
-        --muted: 240 4.8% 95.9%;
-        --muted-foreground: 240 3.8% 46.1%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 0 0% 98%;
-        --success: 142 70% 45%;
-        --success-foreground: 120 100% 97.3%;
-        --border: 240 5.9% 90%;
-        --input: 240 5.9% 90%;
-        --ring: 240 10% 3.9%;
-        /* Control global shadow */
-        /* See: https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow */
-        --global-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.3);
-        /* Control global border radius */
-        /* Can be px, em, rem, %, */
-        /* Can also control each corner independently  */
-        --global-radius: 10px;
-    }
-
-    .dark {
-        /* HSL Colors */
-        --background: 20 14.3% 4.1%;
-        --foreground: 0 0% 95%;
-        --primary: 346.8 77.2% 49.8%;
-        --primary-foreground: 355.7 100% 97.3%;
-        --secondary: 240 3.7% 15.9%;
-        --secondary-foreground: 0 0% 98%;
-        --accent: 12 6.5% 15.1%;
-        --accent-foreground: 0 0% 98%;
-        --border: 240 3.7% 15.9%;
-        --input: 240 3.7% 15.9%;
-        --ring: 240 10% 3.9%;
-        --global-shadow: 0 0px 0px 0px rgba(255, 255, 255, 0.3);
-    }
-
     .h1 {
         @apply text-4xl font-extrabold md:text-5xl;
     }
       
     .h2 {
-        @apply text-3xl font-bold md:text-4xl;
+        @apply text-2xl font-bold md:text-4xl;
     }
 
     .h3 {

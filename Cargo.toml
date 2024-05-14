@@ -1,5 +1,3 @@
-workspace = { members = ["props-component-macro"] }
-
 [package]
 name = "dioxus_components"
 version = "0.1.0"
@@ -9,15 +7,16 @@ edition = "2021"
 # name = "dioxus_comps"
 
 [dependencies]
-log = "0.4.17"
 
-dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "c9ab09b3480ba2ad3b77d16c5e86382a62258194", features = ["web"] }
+props-component-macro = { path = "./props-component-macro" }
+log = "0.4.17"
+dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "472031d1f51557601797d1cb469f09e4f3e0ca71", features = ["web"] }
 dioxus-logger = "0.4.1"
 manganis = "0.2.1"
 console = "0.15.8"
 tailwind_fuse = { version = "0.2.0", features = ["variant"] }
 web-sys = {version = "0.3.69", features = ["Element"]}
-props-component-macro = { path = "props-component-macro" }
 
 form_builder = { git = "ssh://github.com/ZialeOrg/form_builder.git", branch = "feat-version1.0" }
 slugify = "0.1.0"
+

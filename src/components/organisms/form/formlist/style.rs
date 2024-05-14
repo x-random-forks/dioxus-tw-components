@@ -9,18 +9,18 @@ impl BaseClass for FormListProps {
 
 impl BaseClass for FormListTitleProps {
     fn base(&self) -> &'static str {
-        "h4 grow"
+        "h4"
     }
 }
 
 impl BaseClass for FormListTriggerProps {
     fn base(&self) -> &'static str {
-        "size-10 border inline-flex place-content-center place-items-center ml-auto"
+        "size-10 border inline-flex place-content-center place-items-center"
     }
 }
 
 impl BaseClass for FormListContentProps {
     fn base(&self) -> &'static str {
-        "pl-2 pb-4"
+        ""
     }
 }
