@@ -1,4 +1,4 @@
-use crate::{atoms::{ButtonVariant, Separator}, components::atoms::Button};
+use crate::{atoms::Separator, components::atoms::Button};
 use dioxus::prelude::*;
 use props_component_macro::props_component;
 use tailwind_fuse::*;

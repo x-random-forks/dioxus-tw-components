@@ -10,8 +10,8 @@ pub use formlist::{FormList, FormListTrigger, FormListTitle, FormListContent};
 mod input;
 pub use input::Input;
 
-pub mod radiogroup;
-pub use radiogroup::{RadioGroup, RadioItem};
+pub mod radio;
+pub use radio::Radio;
 
 pub mod select;
 pub use select::{SelectGroup, SelectItem, SelectLabel, SelectPlaceholder};
