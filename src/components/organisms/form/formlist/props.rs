@@ -97,7 +97,7 @@ pub fn FormListContent(#[props(default)] list_fields: Vec<Element>) -> Element {
         .take(state.read().num_to_render())
         .map(|x| rsx!(
             { x }.clone(),
-            Separator { class: "mt-4 last:opacity-0 last:mt-0" }
+            Separator { class: "last:opacity-0 last:mt-0" }
         ));
 
     rsx!(

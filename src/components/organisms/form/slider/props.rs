@@ -7,6 +7,7 @@ use crate::attributes::*;
 #[props_component(id, class)]
 pub fn Slider(
     #[props(extends = input)] attributes: Vec<Attribute>,
+    #[props(optional)] value: String,
     #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
     #[props(default)] color: Color,
 ) -> Element {
@@ -22,6 +23,7 @@ pub fn Slider(
         input {
             ..props.attributes,
             r#type: "range",
+            value: props.value,
             class,
             id: props.id,
             oninput: oninput

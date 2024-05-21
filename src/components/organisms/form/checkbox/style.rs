@@ -19,7 +19,7 @@ impl Colorable for CheckboxProps {
             }
             Color::Success => "accent-success focus:ring-success focus:ring-2 focus:ring-offset-1",
             Color::Default | _ => {
-                "accent-foreground focus:ring-focus focus:ring-2 focus:ring-offset-1"
+                "accent-foreground focus:ring-foreground focus:ring-2 focus:ring-offset-1"
             }
         }
     }

@@ -6,12 +6,11 @@ use crate::attributes::*;
 
 #[props_component(id, class)]
 pub fn Input(
-    #[props(extends = input)] mut attributes: Vec<Attribute>,
+    #[props(extends = input)] attributes: Vec<Attribute>,
+    #[props(optional)] value: String,
     #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
     #[props(default)] size: Size,
     #[props(default)] color: Color,
-    // TODO WIP
-    // #[props(default = false)] show_tips: bool,
 ) -> Element {
     let class = tw_merge!(props.base(), props.color(), props.size(), &props.class);
 
@@ -21,23 +20,14 @@ pub fn Input(
         }
     };
 
-    // TODO WIP
-    // let tips = props.generate_default_tips();
-    // if let Some(state) = try_consume_context::<Signal<FormState>>() {
-    //     match state.read().boool {
-    //         true => props
-    //             .attributes
-    //             .push(DataAttr::Valid.to_attr(DataValidValue::True)),
-    //         false => props
-    //             .attributes
-    //             .push(DataAttr::Valid.to_attr(DataValidValue::False)),
-    //     };
-    // }
+    // let value = props.attributes.iter().find(|attr| attr.name == "value");
+    // log::info!("value: {:#?}", value);
 
     rsx! {
         input {
             ..props.attributes,
-            oninput: oninput,
+            value: props.value,
+            oninput,
             class,
             id: props.id
         }

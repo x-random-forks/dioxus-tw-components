@@ -7,6 +7,7 @@ use crate::attributes::*;
 #[props_component(id, class)]
 pub fn TextArea(
     #[props(extends = textarea)] attributes: Vec<Attribute>,
+    #[props(optional)] value: String,
     #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
     #[props(default)] color: Color,
 ) -> Element {
@@ -20,7 +21,8 @@ pub fn TextArea(
 
     rsx!(
         textarea {
-            ..props.attributes,
+            ..props.attributes.clone(),
+            value: props.value,
             class,
             oninput: oninput,
             id: props.id
