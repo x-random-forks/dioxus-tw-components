@@ -7,6 +7,7 @@ use crate::attributes::*;
 #[props_component(class, children, id)]
 pub fn Radio(
     #[props(extends = input)] attributes: Vec<Attribute>,
+    #[props(optional, default = false)] checked: bool,
     #[props(optional)] oninput: EventHandler<FormEvent>,
     #[props(default)] color: Color,
 ) -> Element {
@@ -17,6 +18,7 @@ pub fn Radio(
             ..props.attributes,
             id: &*props.id,
             r#type: "radio",
+            checked: props.checked,
             oninput: move |e| {
                 props.oninput.call(e);
             },

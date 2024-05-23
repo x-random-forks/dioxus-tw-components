@@ -17,7 +17,7 @@ pub mod select;
 pub use select::{SelectGroup, SelectItem, SelectLabel, SelectPlaceholder};
 
 mod slider;
-pub use slider::Slider;
+pub use slider::{Slider, SliderTicks, SliderLabel};
 
 mod textarea;
 pub use textarea::TextArea;

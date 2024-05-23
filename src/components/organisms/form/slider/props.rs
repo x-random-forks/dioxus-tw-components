@@ -9,12 +9,19 @@ pub fn Slider(
     #[props(extends = input)] attributes: Vec<Attribute>,
     #[props(optional)] value: String,
     #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
+    #[props(optional)] onmounted: Option<EventHandler<Event<MountedData>>>,
     #[props(default)] color: Color,
 ) -> Element {
     let class = tw_merge!(props.base(), props.color(), props.class);
 
     let oninput = move |event| {
         if let Some(oc) = &props.oninput {
+            oc.call(event)
+        }
+    };
+
+    let onmounted = move |event: Event<MountedData>| {
+        if let Some(oc) = &props.onmounted {
             oc.call(event)
         }
     };
@@ -26,7 +33,44 @@ pub fn Slider(
             value: props.value,
             class,
             id: props.id,
-            oninput: oninput
+            onmounted,
+            oninput
+        }
+    )
+}
+
+#[props_component(id, class)]
+pub fn SliderTicks(
+    #[props(optional, default = 10)] step: i64,
+    #[props(optional, default = 0)] min: i64,
+    #[props(optional, default = 100)] max: i64,
+) -> Element {
+    let class = tw_merge!(props.class);
+
+    rsx!(
+        datalist { class, id: props.id,
+            for i in props.min..props.max {
+                if i % props.step == 0 {
+                    option { value: i }
+                }
+            }
+            option { value: props.max }
+        }
+    )
+}
+
+#[props_component(id, class)]
+pub fn SliderLabel(
+    #[props(optional, default = 0)] value: i64,
+    #[props(optional, default = 100)] max: i64,
+) -> Element {
+    let class = tw_merge!(props.base(), props.class);
+
+    rsx!(
+        div { class,
+            {props.value.to_string()},
+            " / "
+            {props.max.to_string()}
         }
     )
 }

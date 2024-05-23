@@ -20,3 +20,9 @@ impl Colorable for SliderProps {
         }
     }
 }
+
+impl BaseClass for SliderLabelProps {
+    fn base(&self) -> &'static str {
+        "text-xs"
+    }
+}
