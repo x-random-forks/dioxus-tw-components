@@ -1,4 +1,4 @@
-/* :root {
+:root {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --primary: 292 100% 30%;
@@ -33,7 +33,8 @@
     --input: 240 3.7% 15.9%;
     --ring: 240 10% 3.9%;
     --global-shadow: 0 0px 0px 0px rgba(255, 255, 255, 0.3);
-} */
+}
+
 @layer base {
     .h1 {
         @apply text-4xl font-extrabold md:text-5xl;

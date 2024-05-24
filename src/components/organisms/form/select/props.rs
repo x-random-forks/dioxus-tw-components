@@ -57,17 +57,28 @@ pub fn SelectLabel(#[props(extends = optgroup)] attributes: Vec<Attribute>) -> E
 #[props_component(class, id, children)]
 pub fn SelectItem(
     #[props(extends = option)] attributes: Vec<Attribute>,
-    #[props(default = false)] selected: bool,
+    #[props(optional, default = None)] selected: Option<bool>,
 ) -> Element {
     let class = tw_merge!(props.base(), props.class);
 
-    rsx!(
-        option {
-            ..props.attributes,
-            selected: props.selected,
-            class,
-            id: props.id,
-            {props.children}
-        }
-    )
+    if let Some(selected) = props.selected {
+        rsx!(
+            option {
+                ..props.attributes,
+                class,
+                selected,
+                id: props.id,
+                {props.children}
+            }
+        )
+    } else {
+        rsx!(
+            option {
+                ..props.attributes,
+                class,
+                id: props.id,
+                {props.children}
+            }
+        )
+    }
 }

@@ -29,7 +29,7 @@ impl AccordionState {
         self.active_items.clear();
         self.active_items.push(id);
     }
-
+    
     fn is_active(&self, id: &str) -> bool {
         self.active_items.contains(&id.to_string())
     }

@@ -56,6 +56,29 @@ pub enum Size {
     Xl,
 }
 
+impl FromStr for Size {
+    type Err = &'static str;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "xs" => Ok(Size::Xs),
+            "sm" => Ok(Size::Sm),
+            "md" => Ok(Size::Md),
+            "lg" => Ok(Size::Lg),
+            "xl" => Ok(Size::Xl),
+            "default" | _ => Ok(Size::default()),
+        }
+    }
+}
+
+impl Size {
+    /// This will always return a size, if spelling mistake will return Size::default()
+    pub fn str_to_size<T: ToString>(str: T) -> Size {
+        // Can use unwrap because from_str cannot return an Err in our case
+        str.to_string().parse().unwrap()
+    }
+}
+
 pub trait Sizable {
     fn size(&self) -> &'static str;
 }

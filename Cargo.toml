@@ -2,9 +2,12 @@
 name = "dioxus_components"
 version = "0.1.0"
 edition = "2021"
+authors = ["Louis Truchelut"]
 
-# [lib]
-# name = "dioxus_comps"
+[lib]
+name = "dioxus_components"
+authors = ["Louis Truchelut"]
+path = "src/lib.rs"
 
 [dependencies]
 
@@ -12,11 +15,10 @@ props-component-macro = { path = "./props-component-macro" }
 log = "0.4.17"
 dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "472031d1f51557601797d1cb469f09e4f3e0ca71", features = ["web"] }
 dioxus-logger = "0.4.1"
-manganis = "0.2.1"
+manganis = "0.2.2"
 console = "0.15.8"
 tailwind_fuse = { version = "0.2.0", features = ["variant"] }
 web-sys = {version = "0.3.69", features = ["Element"]}
 
 form_builder = { git = "ssh://github.com/ZialeOrg/form_builder.git", branch = "feat-version1.0" }
 slugify = "0.1.0"
-
