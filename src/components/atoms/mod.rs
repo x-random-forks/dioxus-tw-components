@@ -5,11 +5,11 @@ mod label;
 pub use label::Label;
 
 /// A placeholder/skeleton
-mod placeholder;
+pub mod placeholder;
 pub use placeholder::Placeholder;
 
-mod separator;
+pub mod separator;
 pub use separator::Separator;
 
-mod spacer;
+pub mod spacer;
 pub use spacer::Spacer;

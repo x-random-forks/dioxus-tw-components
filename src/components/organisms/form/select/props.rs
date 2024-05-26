@@ -73,12 +73,7 @@ pub fn SelectItem(
         )
     } else {
         rsx!(
-            option {
-                ..props.attributes,
-                class,
-                id: props.id,
-                {props.children}
-            }
+            option { ..props.attributes, class, id: props.id, {props.children} }
         )
     }
 }

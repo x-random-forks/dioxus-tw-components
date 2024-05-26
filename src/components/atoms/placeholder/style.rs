@@ -3,7 +3,7 @@ use crate::attributes::*;
 
 impl BaseClass for PlaceholderProps {
     fn base(&self) -> &'static str {
-        "bg-foreground/20 rounded-global-radius"
+        "bg-foreground/50 rounded-global-radius w-24 h-24"
     }
 }
 

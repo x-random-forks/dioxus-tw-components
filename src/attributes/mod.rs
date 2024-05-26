@@ -22,7 +22,7 @@ impl FromStr for Color {
     type Err = &'static str;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
+        match s.to_lowercase().as_str() {
             "primary" => Ok(Color::Primary),
             "secondary" => Ok(Color::Secondary),
             "destructive" => Ok(Color::Destructive),
@@ -67,7 +67,7 @@ impl FromStr for Size {
     type Err = &'static str;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
+        match s.to_lowercase().as_str() {
             "xs" => Ok(Size::Xs),
             "sm" => Ok(Size::Sm),
             "md" => Ok(Size::Md),
@@ -113,6 +113,31 @@ pub enum Animation {
     #[default]
     Full,
     Custom(&'static str),
+}
+
+impl FromStr for Animation {
+    type Err = &'static str;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s.to_lowercase().as_str() {
+            "none" => Ok(Animation::None),
+            "light" => Ok(Animation::Light),
+            "custom" => Ok(Animation::Custom("")),
+            "full" | _ => Ok(Animation::Full),
+        }
+    }
+}
+
+impl std::fmt::Display for Animation {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let s = match self {
+            Animation::None => "None",
+            Animation::Light => "Light",
+            Animation::Full => "Full",
+            Animation::Custom(_str) => "Custom",
+        };
+        f.write_str(s)
+    }
 }
 
 pub trait Animatable {
