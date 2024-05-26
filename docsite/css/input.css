@@ -69,11 +69,11 @@
     }
 
     .paragraph {
-        @apply font-normal;
+        @apply font-normal text-foreground;
     }
 
     .span {
-        @apply font-normal;
+        @apply font-normal text-foreground;
     }
 
     .anchor {

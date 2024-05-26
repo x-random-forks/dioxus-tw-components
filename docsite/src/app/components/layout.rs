@@ -7,7 +7,11 @@ use crate::app::router::Route;
 pub fn SideBarComponent() -> Element {
     rsx!(
         ComponentPage { 
-            SideBarTemplate { "NAVBAR" }
+            SideBarTemplate { 
+                "NAVBAR"
+                Link { to: "components/atoms/button", "Button" }
+                Link { to: "components/atoms/placeholder", "Placeholder" }
+            }
             DocTemplate { Outlet::<Route> {} }
         }
     )
