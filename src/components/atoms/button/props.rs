@@ -43,7 +43,7 @@ pub fn Button(
             ..props.attributes,
             class,
             id: props.id,
-            onclick: onclick,
+            onclick,
             {props.children}
         }
     )

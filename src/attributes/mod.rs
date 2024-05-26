@@ -34,11 +34,18 @@ impl FromStr for Color {
     }
 }
 
-impl Color {
-    /// This will always return a color, if spelling mistake will return Color::default()
-    pub fn str_to_color<T: ToString>(str: T) -> Color {
-        // Can use unwrap because from_str cannot return an Err in our case
-        str.to_string().parse().unwrap()
+impl std::fmt::Display for Color {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let s = match self {
+            Color::Default => "Default",
+            Color::Primary => "Primary",
+            Color::Secondary => "Secondary",
+            Color::Destructive => "Destructive",
+            Color::Success => "Success",
+            Color::Accent => "Accent",
+            Color::Muted => "Muted",
+        };
+        f.write_str(s)
     }
 }
 
@@ -71,11 +78,16 @@ impl FromStr for Size {
     }
 }
 
-impl Size {
-    /// This will always return a size, if spelling mistake will return Size::default()
-    pub fn str_to_size<T: ToString>(str: T) -> Size {
-        // Can use unwrap because from_str cannot return an Err in our case
-        str.to_string().parse().unwrap()
+impl std::fmt::Display for Size {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let s = match self {
+            Size::Xs => "Xs",
+            Size::Sm => "Sm",
+            Size::Md => "Md",
+            Size::Lg => "Lg",
+            Size::Xl => "Xl",
+        };
+        f.write_str(s)
     }
 }
 

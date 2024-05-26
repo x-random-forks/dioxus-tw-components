@@ -68,7 +68,8 @@
         @apply font-normal;
     }
 
-    .anchor {
+    /* Not used anymore */
+    /* .anchor {
         @apply text-foreground/70 hover:text-foreground transition-colors cursor-pointer;
     }
 
@@ -150,7 +151,7 @@
 
     .py-extralarge {
         @apply py-[1.5rem] md:py-[1.75rem] lg:py-[2rem] xl:py-[2.25rem]
-    }
+    } */
 }
     
 /* TODO */

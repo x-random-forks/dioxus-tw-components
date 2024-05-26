@@ -1,3 +1,5 @@
+use std::str::FromStr;
+
 use super::props::*;
 use crate::attributes::*;
 
@@ -13,6 +15,18 @@ pub enum ButtonVariant {
     Default,
     Outline,
     Ghost,
+}
+
+impl FromStr for ButtonVariant {
+    type Err = &'static str;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "outline" => Ok(ButtonVariant::Outline),
+            "ghost" => Ok(ButtonVariant::Ghost),
+            "default" | _ => Ok(ButtonVariant::Default)
+        }
+    }
 }
 
 impl Variation for ButtonProps {
@@ -63,11 +77,11 @@ impl Colorable for ButtonProps {
 impl Sizable for ButtonProps {
     fn size(&self) -> &'static str {
         match self.size {
-            Size::Xs => "px-extrasmall py-extrasmall d-text-extrasmall",
-            Size::Sm => "px-small py-small d-text-small",
-            Size::Md => "px-small py-small d-text-small",
-            Size::Lg => "px-medium py-medium d-text-medium",
-            Size::Xl => "px-large py-large d-text-large",
+            Size::Xs => "px-2 py-1 text-sm",
+            Size::Sm => "px-3 py-1.5 text-sm",
+            Size::Md => "px-4 py-2 text-base",
+            Size::Lg => "px-7 py-3 text-lg",
+            Size::Xl => "px-9 py-4 text-xl",
         }
     }
 }
@@ -79,5 +93,16 @@ impl Animatable for ButtonProps {
             Animation::Light | Animation::Full => "transition-colors duration-150",
             Animation::Custom(animation) => animation,
         }
+    }
+}
+
+impl std::fmt::Display for ButtonVariant {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let s = match self {
+            ButtonVariant::Default => "Default",
+            ButtonVariant::Outline => "Outline",
+            ButtonVariant::Ghost => "Ghost  "
+        };
+        f.write_str(s)
     }
 }
