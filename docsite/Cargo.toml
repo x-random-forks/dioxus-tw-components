@@ -24,3 +24,5 @@ dioxus_components = { path = "../." }
 
 web-sys = {version = "0.3.69", features = ["Element"]}
 
+[workspace]
+# Used to isolate this crate from a possible workspace

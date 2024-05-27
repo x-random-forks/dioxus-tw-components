@@ -29,7 +29,9 @@ fn PreviewDemo<T: DemoComp>() -> Element {
 #[component]
 pub fn PreviewGroupAttr(children: Element) -> Element {
     rsx!(
-        div { class: "grid grid-flow-col w-full", { children } }
+        div { class: "grid grid-cols-4 gap- grid-auto-rows auto-flow-dense w-full",
+            { children }
+        }
     )
 }
 
@@ -43,11 +45,15 @@ pub fn PreviewWindow(children: Element) -> Element {
 }
 
 #[component]
-pub fn PreviewCustomClass(signal: Signal<String>) -> Element {
+pub fn PreviewClass(signal_class: Signal<String>, signal_override: Signal<String>) -> Element {
     rsx!(
         div { class: "flex flex-row items-center gap-2",
             "Class"
-            Input { oninput: move |event: FormEvent| { signal.set(event.data().value()) } }
+            Input { oninput: move |event: FormEvent| { signal_class.set(event.data().value()) } }
+        }
+        div { class: "flex flex-row items-center gap-2",
+            "Override"
+            Input { oninput: move |event: FormEvent| { signal_override.set(event.data().value()) } }
         }
     )
 }

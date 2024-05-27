@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 use props_component_macro::props_component;
 use tailwind_fuse::*;
 
-use crate::{attributes::*};
+use crate::attributes::*;
 
 #[props_component(id, class, children)]
 pub fn Form(
@@ -62,7 +62,7 @@ pub fn FormTitle() -> Element {
 #[props_component(class, children)]
 pub fn FormDesc() -> Element {
     let class = tw_merge!(props.base(), props.class);
-    
+
     rsx!(
         p { class, {props.children} }
     )
@@ -81,13 +81,17 @@ pub fn FormLabel(#[props(default)] r#for: String) -> Element {
 pub fn FormChild(
     #[props(default, optional)] title: String,
     #[props(default, optional)] description: String,
+    #[props(optional)] reset: Option<Element>,
 ) -> Element {
     let class = tw_merge!(props.base(), &props.class);
 
     rsx!(
         div { class,
             FormTitle { {props.title} }
-            FormDesc { {props.description} }
+            div { class: "flex flex-row",
+                FormDesc { {props.description} }
+                {props.reset}
+            }
             {props.children}
         }
     )

@@ -128,6 +128,7 @@ pub trait DemoComp {
 
 pub struct DemoState {
     custom_class: Signal<String>,
+    override_class: Signal<String>,
     color: Signal<Color>,
     size: Signal<Size>,
     variant: Signal<ButtonVariant>,
@@ -138,6 +139,7 @@ impl DemoState {
     pub fn new() -> Self {
         Self {
             custom_class: use_signal(|| String::new()),
+            override_class: use_signal(|| String::new()),
             color: use_signal(|| Color::default()),
             size: use_signal(|| Size::default()),
             variant: use_signal(|| ButtonVariant::default()),
@@ -147,6 +149,10 @@ impl DemoState {
 
     pub fn get_custom_class(&self) -> Signal<String> {
         self.custom_class
+    }
+
+    pub fn get_override_class(&self) -> Signal<String> {
+        self.override_class
     }
 
     pub fn get_color(&self) -> Signal<Color> {

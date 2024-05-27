@@ -5,7 +5,7 @@ use dioxus_components::{
 };
 
 use crate::app::{
-    components::preview::{PreviewCustomClass, PreviewFull, PreviewGroupAttr},
+    components::preview::{PreviewClass, PreviewFull, PreviewGroupAttr},
     doctrait::{DemoAttribute, DemoComp, DemoState},
 };
 
@@ -29,6 +29,7 @@ impl DemoComp for ButtonProps {
                 variant: demo_state.get_variant()(),
                 animation: demo_state.get_animation()(),
                 class: demo_state.get_custom_class()(),
+                override_class: demo_state.get_override_class()(),
                 "Button"
             }
         )
@@ -36,7 +37,10 @@ impl DemoComp for ButtonProps {
 
     fn select_attributes(demo_state: &DemoState) -> Element {
         rsx!(
-            PreviewCustomClass { signal: demo_state.get_custom_class() }
+            PreviewClass {
+                signal_class: demo_state.get_custom_class(),
+                signal_override: demo_state.get_override_class()
+            }
             PreviewGroupAttr { 
                 {Color::demo_attr(demo_state.get_color())},
                 {Size::demo_attr(demo_state.get_size())},

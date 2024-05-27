@@ -8,9 +8,17 @@ pub fn SideBarComponent() -> Element {
     rsx!(
         ComponentPage { 
             SideBarTemplate { 
-                "NAVBAR"
-                Link { to: "components/atoms/button", "Button" }
-                Link { to: "components/atoms/placeholder", "Placeholder" }
+                ul {
+                    li {
+                        Link { to: "/components/atoms/button", "Button" }
+                    }
+                    li {
+                        Link { to: "/components/atoms/buttongroup", "ButtonGroup" }
+                    }
+                    li {
+                        Link { to: "/components/atoms/placeholder", "Placeholder" }
+                    }
+                }
             }
             DocTemplate { Outlet::<Route> {} }
         }
@@ -20,7 +28,7 @@ pub fn SideBarComponent() -> Element {
 #[component]
 pub fn SideBarTemplate(children: Element) -> Element {
     rsx!(
-        aside { class: "max-w-[220px] border border-black", Scrollable { {children} } }
+        aside { class: "max-w-[220px] border border-black flex flex-col", Scrollable { {children} } }
     )
 }
 
@@ -32,7 +40,6 @@ pub fn ComponentPage(children: Element) -> Element {
         }
     )
 }
-
 
 #[component]
 pub fn DocTemplate(children: Element) -> Element {

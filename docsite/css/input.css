@@ -1,47 +1,47 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
     :root {
-        --background: 0, 0%, 100%;
-        --foreground: 240, 10%, 3.9%;
-        --primary: 292, 100%, 30%;
-        --primary-foreground: 355.7, 100%, 97.3%;
-        --secondary: 123, 100%, 22%;
-        --secondary-foreground: 123, 100%, 70%;
-        --accent: 240, 4.8%, 95.9%;
-        --accent-foreground: 240, 5.9%, 10%;
-        --muted: 240, 4.8%, 95.9%;
-        --muted-foreground: 240, 3.8%, 46.1%;
-        --destructive: 0, 84.2%, 60.2%;
-        --destructive-foreground: 0, 0%, 98%;
-        --success: 142, 70%, 45%;
-        --success-foreground: 120, 100%, 97.3%;
-        --border: 240, 5.9%, 90%;
-        --input: 240, 5.9%, 90%;
-        --ring: 240, 10%, 3.9%;
+        --background: 0deg 0% 100%;
+        --foreground: 240deg 10% 3.9%;
+        --primary: 292deg 100% 30%;
+        --primary-foreground: 355deg, 100% 97.3%;
+        --secondary: 123deg 100% 22%;
+        --secondary-foreground: 123deg 100% 70%;
+        --accent: 240deg 4.8% 95.9%;
+        --accent-foreground: 240deg 5.9% 10%;
+        --muted: 240deg 4.8% 95.9%;
+        --muted-foreground: 240deg 3.8% 46.1%;
+        --destructive: 0deg 84.2% 60.2%;
+        --destructive-foreground: 0deg 0% 98%;
+        --success: 142deg 70% 45%;
+        --success-foreground: 120deg 100% 97.3%;
+        --border: 240deg 5.9% 90%;
+        --input: 240deg 5.9% 90%;
+        --ring: 240deg 10% 3.9%;
         --global-radius: 10px;
     }
     
     .dark {
-        --background: 240, 10%, 3.9%;
-        --foreground: 0, 0%, 100%;
-        --primary: 292, 100%, 50%;
-        --primary-foreground: 0, 0%, 100%;
-        --secondary: 123, 100%, 40%;
-        --secondary-foreground: 0, 0%, 100%;
-        --accent: 240, 5%, 70%;
-        --accent-foreground: 0, 0%, 100%;
-        --muted: 240, 5%, 60%;
-        --muted-foreground: 0, 0%, 100%;
-        --destructive: 0, 84.2%, 30%;
-        --destructive-foreground: 0, 0%, 100%;
-        --success: 142, 70%, 60%;
-        --success-foreground: 0, 0%, 100%;
-        --border: 240, 5%, 50%;
-        --input: 240, 5%, 50%;
-        --ring: 0, 0%, 100%;
+        --background: 240deg 10% 3.9%;
+        --foreground: 0deg 0% 100%;
+        --primary: 292deg 100% 50%;
+        --primary-foreground: 0deg 0% 100%;
+        --secondary: 123deg 100% 40%;
+        --secondary-foreground: 0deg 0% 100%;
+        --accent: 240deg 5% 70%;
+        --accent-foreground: 0deg 0% 100%;
+        --muted: 240deg 5% 60%;
+        --muted-foreground: 0deg 0% 100%;
+        --destructive: 0deg 84.%, 30%;
+        --destructive-foreground: 0deg 0% 100%;
+        --success: 142deg 70% 60%;
+        --success-foreground: 0deg 0% 100%;
+        --border: 240deg 5% 50%;
+        --input: 240deg 5% 50%;
+        --ring: 0deg 0% 100%;
     }
 
     .h1 {
@@ -102,4 +102,4 @@
       /* background: var(--color-primary); */
       background: #000000;
     }
-  }
+}

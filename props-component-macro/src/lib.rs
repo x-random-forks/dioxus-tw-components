@@ -14,7 +14,8 @@ use syn::{
 /// the generation of component for the Dioxus web framework and to have some general attributes to be added
 /// almost automatically and in the same way everywhere. For now we handle 3 attributes of this kind, these being
 /// 1. id: *String* => used to give an id to the component
-/// 2. class: *String* => used add custom style to the component
+/// 2. class: *String* => used add custom style to the component, will add class and class_override to override the whole
+/// class of the component
 /// 3. children: *Element* => used to pass something to render as a child to the component \
 /// **Example**
 /// ```ignore
@@ -38,6 +39,8 @@ use syn::{
 ///     #[props(into)]
 ///     #[props(default)]
 ///     pub class: String,
+///     #[props(into, optional)]
+///     pub class_override: String,
 ///     pub children: Element
 /// }
 ///
@@ -231,7 +234,8 @@ impl AcceptedAttribute {
             name: "class".to_string(),
             field: quote! {
             /// Custom added styling class for the component
-            #[props(into)] #[props(default)]pub class: String },
+            #[props(into)] #[props(default)]pub class: String,
+            #[props(into, optional)] pub override_class: String },
             let_statement: quote! { let class = &props.class; },
         }
     }

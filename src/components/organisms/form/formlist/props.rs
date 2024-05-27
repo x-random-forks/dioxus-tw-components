@@ -1,4 +1,4 @@
-use crate::{atoms::Separator, components::atoms::Button};
+use crate::{atoms::{buttongroup::ButtonGroup, Separator}, components::atoms::Button};
 use dioxus::prelude::*;
 use props_component_macro::props_component;
 use tailwind_fuse::*;
@@ -60,7 +60,7 @@ pub fn FormListTrigger(#[props(default = false)] plus: bool) -> Element {
     // Useless div to wrap around the trigger
     let class = "inline-block";
 
-    let mut state = consume_context::<Signal<FormListState>>();
+    let mut state = use_context::<Signal<FormListState>>();
 
     let onclick = move |_| {
         if props.plus {

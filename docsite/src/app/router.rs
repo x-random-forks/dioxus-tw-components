@@ -13,6 +13,8 @@ pub enum Route {
         #[layout(SideBarComponent)]
             #[route("/components/atoms/button")]
             ButtonPage {},
+            #[route("/components/atoms/buttongroup")]
+            ButtonGroupPage {},
             #[route("/components/atoms/placeholder")]
             PlaceholderPage {}
 }   
