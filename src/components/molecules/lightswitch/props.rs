@@ -50,7 +50,7 @@ impl LightSwitchState {
 /// Uses only web_sys for now so it won't work for anything else than web
 #[props_component(class, id, children)]
 pub fn LightSwitch() -> Element {
-    let class = tw_merge!(props.class);
+    let class = tw_merge!(&props.class);
 
     let mut state = use_signal(|| LightSwitchState::new(false));
 
@@ -126,9 +126,10 @@ fn use_correct_theme_icon(state: Signal<LightSwitchState>) -> Element {
                 view_box: "0 0 24 24",
                 width: 24,
                 height: 24,
-                stroke: "currentColor",
+                // stroke: "currentColor",
                 stroke_width: 2,
                 fill: "none",
+                class: "stroke-foreground",
                 stroke_linecap: "round",
                 stroke_linejoin: "round",
                 circle { cx: 12, cy: 12, r: 5 }
@@ -186,7 +187,7 @@ fn use_correct_theme_icon(state: Signal<LightSwitchState>) -> Element {
                 view_box: "0 0 24 24",
                 width: 24,
                 height: 24,
-                stroke: "currentColor",
+                class: "stroke-foreground",
                 stroke_width: 2,
                 fill: "none",
                 stroke_linecap: "round",

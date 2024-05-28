@@ -113,11 +113,11 @@ pub fn Dropdown(
     )
 }
 
-#[props_component(children)]
+#[props_component(class, children)]
 pub fn DropdownToggle(#[props(extends = div)] mut attributes: Vec<Attribute>) -> Element {
     // Use an "useless div" to wrap the dropdown toggle and get the onclick event, so the user can put
     // Everything inside the DropdownToggle not just only a button
-    let class = "inline-block";
+    let class = tw_merge!(&props.class);
 
     let mut state = consume_context::<Signal<DropdownState>>();
 
@@ -218,7 +218,7 @@ pub fn DropdownContent(
             state.write().close();
         }
     });
-
+    
     props.attributes.push(Attribute::new(
         "data-state",
         state.read().into_value(),

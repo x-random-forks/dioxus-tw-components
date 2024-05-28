@@ -68,11 +68,11 @@
         @apply font-normal text-foreground;
     }
 
-    /* Not used anymore */
-    /* .anchor {
+    .anchor {
         @apply text-foreground/70 hover:text-foreground transition-colors cursor-pointer;
     }
-
+    /* Not used anymore */
+    /*
     .d-text-extrasmall {
         @apply text-[0.5rem] md:text-[0.625rem] lg:text-[0.75rem] xl:text-[0.875rem]
     }
