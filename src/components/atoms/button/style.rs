@@ -56,12 +56,12 @@ impl Variation for ButtonProps {
                 Color::Default => {
                     "bg-transparent border-foreground text-foreground hover:bg-foreground/40"
                 }
-                Color::Primary => "bg-transparent border-primary text-primary hover:bg-primary/90 hover:text-primary-foreground",
-                Color::Secondary => "bg-transparent border-secondary text-secondary hover:bg-secondary/90 hover:text-secondary-foreground",
-                Color::Destructive => "bg-transparent border-destructive text-destructive hover:bg-destructive/90 hover:text-destructive-foreground",
-                Color::Success => "bg-transparent border-success text-success hover:bg-success/90 hover:text-success-foreground",
-                Color::Accent => "bg-transparent border-accent text-accent hover:bg-accent/90 hover:text-accent-foreground",
-                Color::Muted => "bg-transparent border-muted text-muted hover:bg-muted/90 hover:text-muted-foreground",
+                Color::Primary => "bg-transparent border-primary text-primary hover:bg-primary/90 hover:text-primary-foreground active:shadow",
+                Color::Secondary => "bg-transparent border-secondary text-secondary hover:bg-secondary/90 hover:text-secondary-foreground active:shadow",
+                Color::Destructive => "bg-transparent border-destructive text-destructive hover:bg-destructive/90 hover:text-destructive-foreground active:shadow",
+                Color::Success => "bg-transparent border-success text-success hover:bg-success/90 hover:text-success-foreground active:shadow",
+                Color::Accent => "bg-transparent border-accent text-accent hover:bg-accent/90 hover:text-accent-foreground active:shadow",
+                Color::Muted => "bg-transparent border-muted text-muted hover:bg-muted/90 hover:text-muted-foreground active:shadow",
             },
         }
     }

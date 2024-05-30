@@ -1,4 +1,7 @@
-use crate::{atoms::{buttongroup::ButtonGroup, Separator}, components::atoms::Button};
+use crate::atoms::{
+        buttongroup::ButtonGroup,
+        Separator,
+    };
 use dioxus::prelude::*;
 use props_component_macro::props_component;
 use tailwind_fuse::*;
@@ -58,31 +61,50 @@ pub fn FormListTitle() -> Element {
 #[props_component(class, children)]
 pub fn FormListTrigger(#[props(default = false)] plus: bool) -> Element {
     // Useless div to wrap around the trigger
-    let class = "inline-block";
-
+    
     let mut state = use_context::<Signal<FormListState>>();
-
-    let onclick = move |_| {
-        if props.plus {
-            state.write().render_one_more();
-        } else {
-            state.write().render_one_less();
+    
+    rsx!(
+        ButtonGroup { class: "flex flex-col divide-none bg-foreground/5",
+            button {
+                r#type: "button",
+                class: "px-2 py-1.5 border-b border-border font-bold text-foreground rounded-t-global-radius hover:bg-foreground/20 active:bg-foreground-30",
+                onclick: move |_| {
+                    state.write().render_one_more();
+                },
+                "+"
+            }
+            button {
+                r#type: "button",
+                class: "px-2 py-1.5 font-bold text-foreground rounded-b-global-radius first:rounded-b-none hover:bg-foreground/20 active:bg-foreground-30",
+                onclick: move |_| {
+                    state.write().render_one_less();
+                },
+                "-"
+            }
         }
-    };
+    )
+// let class = "inline-block";
+    // let onclick = move |_| {
+    //     if props.plus {
+    //         state.write().render_one_more();
+    //     } else {
+    //         state.write().render_one_less();
+    //     }
+    // };
+    // if let Some(children) = props.children {
+    //     rsx!(
+    //         div { onclick, class, {children} }
+    //     )
+    // } else {
+    //     let button_class = tw_merge!(props.base(), &props.class);
 
-    if let Some(children) = props.children {
-        rsx!(
-            div { onclick, class, {children} }
-        )
-    } else {
-        let button_class = tw_merge!(props.base(), &props.class);
+    //     let text = if props.plus { "+" } else { "-" };
 
-        let text = if props.plus { "+" } else { "-" };
-
-        rsx!(
-            Button { class: button_class, onclick, r#type: "button", {text} }
-        )
-    }
+    //     rsx!(
+    //         Button { class: button_class, onclick, r#type: "button", {text} }
+    //     )
+    // }
 }
 
 #[props_component(class)]
@@ -95,10 +117,12 @@ pub fn FormListContent(#[props(default)] list_fields: Vec<Element>) -> Element {
         .list_fields
         .iter()
         .take(state.read().num_to_render())
-        .map(|x| rsx!(
-            { x }.clone(),
-            Separator { class: "last:opacity-0 last:mt-0" }
-        ));
+        .map(|x| {
+            rsx!(
+                { x }.clone(),
+                Separator { class: "last:opacity-0 last:mt-0" }
+            )
+        });
 
     rsx!(
         div { class, { rendered_list_fields } }
