@@ -19,10 +19,10 @@ pub fn Radio(
             id: &*props.id,
             r#type: "radio",
             checked: props.checked,
+            class,
             oninput: move |e| {
                 props.oninput.call(e);
             },
-            class
         }
     )
 }

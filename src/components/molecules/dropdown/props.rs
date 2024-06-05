@@ -1,7 +1,5 @@
-use dioxus::{
-    html::geometry::euclid::{Point2D, Rect},
-    prelude::*,
-};
+use dioxus::prelude::*;
+use dioxus_elements::geometry::{euclid::Rect, Pixels};
 use props_component_macro::props_component;
 use tailwind_fuse::*;
 use web_sys::wasm_bindgen::closure::Closure;
@@ -9,7 +7,6 @@ use web_sys::wasm_bindgen::closure::Closure;
 use crate::{
     attributes::*,
     hooks::{use_clear_timeout_id, use_set_timeout, use_window},
-    LibState,
 };
 
 #[derive(Clone, Copy)]
@@ -17,8 +14,8 @@ struct DropdownState {
     state_attr_value: DataStateAttrValue,
     timeout_id: i32,
     closing_delay_ms: i32,
-    trigger_rect: Rect<f64, f64>,
-    content_rect: Rect<f64, f64>,
+    trigger_rect: Rect<f64, Pixels>,
+    content_rect: Rect<f64, Pixels>,
 }
 
 impl DropdownState {
@@ -48,21 +45,21 @@ impl DropdownState {
         self.timeout_id
     }
 
-    fn set_toggle_rect(&mut self, rect: Rect<f64, f64>) {
+    fn set_toggle_rect(&mut self, rect: Rect<f64, Pixels>) {
         self.trigger_rect = rect;
     }
 
-    fn set_content_rect(&mut self, rect: Rect<f64, f64>) {
+    fn set_content_rect(&mut self, rect: Rect<f64, Pixels>) {
         self.content_rect = rect;
     }
 
-    fn get_toggle_rect(&self) -> Rect<f64, f64> {
-        self.trigger_rect
-    }
+    // fn get_toggle_rect(&self) -> Rect<f64, Pixels> {
+    //     self.trigger_rect
+    // }
 
-    fn get_content_rect(&self) -> Rect<f64, f64> {
-        self.content_rect
-    }
+    // fn get_content_rect(&self) -> Rect<f64, Pixels> {
+    //     self.content_rect
+    // }
 
     fn get_closing_delay(&self) -> i32 {
         self.closing_delay_ms
@@ -123,7 +120,7 @@ pub fn DropdownToggle(#[props(extends = div)] mut attributes: Vec<Attribute>) ->
 
     let onmounted = move |event: Event<MountedData>| async move {
         match event.get_client_rect().await {
-            Ok(rect) => state.write().set_toggle_rect(rect),
+            Ok(rect) => state.write().set_toggle_rect(rect.into()),
             Err(err) => log::error!("{:?}", err),
         }
     };
@@ -201,22 +198,22 @@ pub fn DropdownContent(
         };
     };
 
-    let app_state = consume_context::<Signal<LibState>>();
+    // let app_state = consume_context::<Signal<LibState>>();
 
     use_memo(move || {
-        let click: Point2D<f64, f64> = app_state
-            .read()
-            .get_last_click_coordinates()
-            .client()
-            .cast_unit();
+        // let click: Point2D<f64, f64> = app_state
+        //     .read()
+        //     .get_last_click_coordinates()
+        //     .client()
+        //     .cast_unit();
 
-        let rect_toggle = state.read().get_toggle_rect();
-        let rect_content = state.read().get_content_rect();
-        let is_active = state.read().is_active();
+        // let rect_toggle = state.read().get_toggle_rect();
+        // let rect_content = state.read().get_content_rect();
+        // let is_active = state.read().is_active();
 
-        if is_active && !rect_toggle.contains(click) && !rect_content.contains(click) {
-            state.write().close();
-        }
+        // if is_active && !rect_toggle.contains(click) && !rect_content.contains(click) {
+        //     state.write().close();
+        // }
     });
     
     props.attributes.push(Attribute::new(

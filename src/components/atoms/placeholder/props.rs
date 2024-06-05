@@ -11,13 +11,13 @@ pub fn Placeholder(
     #[props(default)]
     animation: Animation,
 ) -> Element {
-    let class = tw_merge!(
+    let class_str = tw_merge!(
         props.base(),
         props.animation(),
         props.class
     );
 
     rsx!(
-        div { class }
+        div { class: class_str }
     )
 }
