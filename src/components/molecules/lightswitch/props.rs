@@ -1,8 +1,9 @@
 use dioxus::prelude::*;
-use props_component_macro::props_component;
+use props_component_macro::{props_component, BuildClass};
 use tailwind_fuse::*;
 use web_sys::HtmlElement;
 
+use crate::attributes::*;
 use crate::hooks::{use_document, use_window};
 
 pub struct LightSwitchState {
@@ -50,8 +51,6 @@ impl LightSwitchState {
 /// Uses only web_sys for now so it won't work for anything else than web
 #[props_component(class, id, children)]
 pub fn LightSwitch() -> Element {
-    let class = tw_merge!(&props.class);
-
     let mut state = use_signal(|| LightSwitchState::new(false));
 
     let onclick = move |_| {
@@ -69,7 +68,7 @@ pub fn LightSwitch() -> Element {
     rsx!(
         button {
             r#type: "button",
-            class,
+            class: props.class,
             onclick,
             onmounted,
             {icon}

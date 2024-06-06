@@ -1,15 +1,13 @@
 use super::props::*;
 use crate::attributes::*;
 
-impl BaseClass for CheckboxProps {
+impl Class for CheckboxProps {
     fn base(&self) -> &'static str {
         "peer"
     }
-}
 
-impl Colorable for CheckboxProps {
-    fn color(&self) -> &'static str {
-        match self.color {
+    fn color(&self) -> Option<&'static str> {
+        Some(match self.color {
             Color::Primary => "accent-primary focus:ring-primary focus:ring-2 focus:ring-offset-1",
             Color::Secondary => {
                 "accent-secondary focus:ring-secondary focus:ring-2 focus:ring-offset-1"
@@ -21,6 +19,6 @@ impl Colorable for CheckboxProps {
             Color::Default | _ => {
                 "accent-foreground focus:ring-foreground focus:ring-2 focus:ring-offset-1"
             }
-        }
+        })
     }
 }

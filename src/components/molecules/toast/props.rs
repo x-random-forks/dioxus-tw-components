@@ -1,12 +1,11 @@
 use std::{str::FromStr, string::ToString};
-
 use dioxus::prelude::*;
-use props_component_macro::props_component;
+use props_component_macro::{props_component, BuildClass};
 use tailwind_fuse::tw_merge;
 use web_sys::wasm_bindgen::{closure::Closure, JsValue};
 
 use crate::{
-    attributes::{BaseClass, Color, Colorable},
+    attributes::*,
     hooks::{use_element_by_id, use_set_timeout, use_window},
 };
 
@@ -195,7 +194,7 @@ impl Toast {
             description_tag, description_class, description, description_tag
         );
 
-        let class = tw_merge!(self.base(), &self.color(), &self.class);
+        let class = tw_merge!(self.base(), self.color().unwrap_or_default(), &self.class);
         let class = format!("class=\"{}\"", class);
 
         let id = format!("id=\"{}\"", toast_id);
@@ -211,14 +210,8 @@ const TOAST_ID: &str = "dx-toast";
 
 #[props_component(class, children)]
 pub fn ToastList() -> Element {
-    let class = tw_merge!(
-        props.base(),
-        &props.class,
-        ToastPosition::default().to_string()
-    );
-
     rsx!(
-        ol { role: "alert", id: TOAST_ID, class, {children} }
+        ol { role: "alert", id: TOAST_ID, class: props.class, {props.children} }
     )
 }
 

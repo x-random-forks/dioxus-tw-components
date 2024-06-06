@@ -1,9 +1,8 @@
 use dioxus::prelude::*;
-use props_component_macro::props_component;
+use props_component_macro::{props_component, BuildClass};
 use tailwind_fuse::*;
 
 use crate::attributes::*;
-
 #[props_component(id, class)]
 pub fn TextArea(
     #[props(extends = textarea)] attributes: Vec<Attribute>,
@@ -12,8 +11,6 @@ pub fn TextArea(
     #[props(optional)] onmounted: Option<EventHandler<Event<MountedData>>>,
     #[props(default)] color: Color,
 ) -> Element {
-    let class = tw_merge!(props.base(), props.color(), props.class);
-
     let oninput = move |event| {
         if let Some(oc) = &props.oninput {
             oc.call(event)
@@ -30,7 +27,7 @@ pub fn TextArea(
         textarea {
             ..props.attributes.clone(),
             value: props.value,
-            class,
+            class: props.class,
             onmounted,
             oninput,
             id: props.id

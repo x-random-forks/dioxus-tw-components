@@ -1,7 +1,7 @@
 use crate::attributes::*;
 use crate::hooks::use_element_scroll_height;
 use dioxus::prelude::*;
-use props_component_macro::props_component;
+use props_component_macro::{props_component, BuildClass};
 use tailwind_fuse::*;
 
 struct AccordionState {
@@ -29,7 +29,7 @@ impl AccordionState {
         self.active_items.clear();
         self.active_items.push(id);
     }
-    
+
     fn is_active(&self, id: &str) -> bool {
         self.active_items.contains(&id.to_string())
     }
@@ -63,22 +63,18 @@ pub fn Accordion(
     #[props(default = false)]
     multi_open: bool,
 ) -> Element {
-    let class = tw_merge!(props.class);
-
     use_context_provider(|| Signal::new(AccordionState::new(props.multi_open)));
 
     rsx!(
-        div { class, id: props.id, {props.children} }
+        div { class: props.class, id: props.id, {props.children} }
     )
 }
 
 /// Wrapper for the [AccordionTrigger] and [AccordionContent] components
 #[props_component(id, class, children)]
 pub fn AccordionItem() -> Element {
-    let class = tw_merge!(props.base(), props.class);
-
     rsx!(
-        div { class, id: props.id, {props.children} }
+        div { class: props.class, id: props.id, {props.children} }
     )
 }
 
@@ -93,8 +89,6 @@ pub fn AccordionTrigger(
     #[props(default = use_default_trigger_decoration())]
     trigger_decoration: Element,
 ) -> Element {
-    let class = tw_merge!(props.base(), props.class);
-
     let mut state = consume_context::<Signal<AccordionState>>();
 
     let sig_id = use_signal(|| props.id.clone());
@@ -131,7 +125,7 @@ pub fn AccordionTrigger(
     rsx!(
         button {
             ..props.attributes,
-            class,
+            class: props.class,
             id: props.id,
             onclick: button_closure,
             onmounted: onmounted,
@@ -160,8 +154,6 @@ pub fn AccordionContent(
     #[props(extends = div)] mut attributes: Vec<Attribute>,
     #[props(default)] animation: Animation,
 ) -> Element {
-    let class = tw_merge!(props.base(), props.animation(), props.class);
-
     // This is the height of the element when visible, we need to calcul it before rendering it to have a smooth transition
     let mut elem_height = use_signal(|| "".to_string());
 
@@ -202,7 +194,7 @@ pub fn AccordionContent(
         div {
             ..props.attributes,
             id: props.id,
-            class,
+            class: props.class,
             height: final_height,
             onmounted: onmounted,
             {props.children}

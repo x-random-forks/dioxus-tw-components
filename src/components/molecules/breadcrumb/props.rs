@@ -1,9 +1,8 @@
 use dioxus::prelude::*;
-use props_component_macro::props_component;
+use props_component_macro::{props_component, BuildClass};
 use tailwind_fuse::*;
 
 use crate::attributes::*;
-
 /// Usage:
 /// ```ignore
 /// Breadcrumb {
@@ -16,28 +15,22 @@ use crate::attributes::*;
 /// ```
 #[props_component(class, id, children)]
 pub fn Breadcrumb(#[props(default)] separator: bool) -> Element {
-    let class = tw_merge!(props.base(), props.class);
-
     rsx!(
-        ol { class, id: props.id, {props.children} }
+        ol { class: props.class, id: props.id, {props.children} }
     )
 }
 
 #[props_component(class, id, children)]
 pub fn BreadcrumbItem() -> Element {
-    let class = tw_merge!(props.base(), props.class);
-
     rsx!(
-        li { class, id: props.id, {props.children} }
+        li {  class: props.class, id: props.id, {props.children} }
     )
 }
 
 #[props_component(class, id, children)]
 pub fn BreadcrumbSeparator() -> Element {
-    let class = tw_merge!(props.base(), props.class);
-
     rsx!(
-        li { class, aria_hidden: "true", id: props.id,
+        li {  class: props.class, aria_hidden: "true", id: props.id,
             if props.children == None {
                 "\u{203A}"
             } else {

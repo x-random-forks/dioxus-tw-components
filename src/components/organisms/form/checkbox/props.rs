@@ -1,9 +1,8 @@
 use dioxus::prelude::*;
-use props_component_macro::props_component;
+use props_component_macro::{props_component, BuildClass};
 use tailwind_fuse::*;
 
 use crate::attributes::*;
-
 #[props_component(id, class)]
 pub fn Checkbox(
     #[props(extends = input)] attributes: Vec<Attribute>,
@@ -11,8 +10,6 @@ pub fn Checkbox(
     #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
     #[props(default)] color: Color,
 ) -> Element {
-    let class = tw_merge!(props.base(), props.color(), props.class);
-
     let oninput = move |event| {
         if let Some(oc) = &props.oninput {
             oc.call(event)
@@ -24,7 +21,7 @@ pub fn Checkbox(
             ..props.attributes,
             r#type: "checkbox",
             checked: props.checked,
-            class,
+            class: props.class,
             oninput: oninput,
             id: props.id
         }

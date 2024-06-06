@@ -1,19 +1,13 @@
 use dioxus::prelude::*;
-use props_component_macro::props_component;
+use props_component_macro::{props_component, BuildClass};
 use tailwind_fuse::*;
 
 use crate::attributes::*;
 
 #[props_component(id, class, children)]
 pub fn ButtonGroup() -> Element {
-    let class = if props.override_class.is_empty() {
-        tw_merge!(props.base(), props.class)
-    } else {
-        props.override_class
-    };
-
     rsx!(
-        div { class, {props.children} }
+        div { class: props.class, {props.children} }
     )
 }
 
@@ -28,15 +22,6 @@ pub fn ButtonGroupItem(
         // #[props(default)] color: Color,
         // #[props(default)] size: Size,
 ) -> Element {
-    let class = if props.override_class.is_empty() {
-        tw_merge!(
-            props.base(),
-            props.class
-        )
-    } else {
-        props.override_class
-    };
-
     let onclick = move |event| {
         if let Some(oc) = &props.onclick {
             oc.call(event)
@@ -46,7 +31,7 @@ pub fn ButtonGroupItem(
     rsx!(
         button {
             ..props.attributes,
-            class,
+            class: props.class,
             id: props.id,
             onclick,
             {props.children}

@@ -3,9 +3,6 @@ pub use button::{Button, ButtonVariant};
 
 pub mod buttongroup;
 
-mod label;
-pub use label::Label;
-
 /// A placeholder/skeleton
 pub mod placeholder;
 pub use placeholder::Placeholder;

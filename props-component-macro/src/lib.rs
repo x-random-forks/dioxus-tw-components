@@ -34,7 +34,7 @@ use syn::{
 ///     #[props(default = Color::Destructive)]
 ///     pub color: Color,
 ///     #[props(into)]
-///     #[props(default = crate::hooks::use_unique_id())]
+///     #[props(optional)]
 ///     pub id: String,
 ///     #[props(into)]
 ///     #[props(default)]
@@ -63,7 +63,6 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
             vec_attr.push(attr.clone());
         } else if attr.path().is_ident("derive") {
             vec_attr_props.push(attr.clone());
-            // println!("Derive: {:?}", attr);
         }
     }
 
@@ -72,21 +71,20 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
 
     // Let statement are not used right now since they made the code far more complex to resolve problems about borrowing and such
     // any_mut is used to check if any of the parameters of the function is mutable, if so we will make the props mutable
-    let (mut fields, mut let_statements, any_mut) =
-        make_struct_fields_and_let_statements(&input.sig.inputs);
+    let (mut fields, any_mut) = make_struct_fields(&input.sig.inputs);
 
     let args = parse_macro_input!(args as ParsedArg);
     let accepted_attributes = AttributeConfig::default();
+
+    let mut has_class_attr = false;
 
     for arg in args.args {
         match accepted_attributes.accepted(arg.to_string()) {
             Ok(index) => {
                 fields.push(accepted_attributes.add_attributes[index].field.clone());
-                let_statements.push(
-                    accepted_attributes.add_attributes[index]
-                        .let_statement
-                        .clone(),
-                )
+                if arg.to_string() == "class" {
+                    has_class_attr = true;
+                }
             }
             Err(e) => panic!("{e}"),
         }
@@ -98,13 +96,26 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
     let props = match any_mut {
         true => quote! { mut props: #name_struct },
         false => quote! {
-            props: #name_struct
+            mut props: #name_struct
         },
+    };
+
+    // If a class attributes is found we also derive BuildClass, a macro which automatically build the final class of the props
+    let derive = if has_class_attr {
+        quote! {#[derive(Clone, Props, PartialEq, BuildClass)]}
+    } else {
+        quote! {#[derive(Clone, Props, PartialEq)]}
+    };
+
+    let build_class = if has_class_attr {
+        quote! {props.build_class();}
+    } else {
+        quote! {}
     };
 
     let expanded = quote! {
 
-        #[derive(Clone, Props, PartialEq)]
+        #derive
         #(#vec_attr_props)*
         pub struct #name_struct {
             #(#fields),*
@@ -112,8 +123,7 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
 
         #(#vec_attr)*
         pub fn #name(#props) #output {
-            #(#let_statements)*
-
+            #build_class
             let result = (|| #block)();
             result
         }
@@ -125,15 +135,10 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
 /// This function takes a list of function parameters and generates a list of struct fields and
 /// let statements for each parameter. The generated struct fields and let statements are used in
 /// the props_component macro to generate the new struct and function.
-fn make_struct_fields_and_let_statements(
+fn make_struct_fields(
     inputs: &syn::punctuated::Punctuated<syn::FnArg, syn::token::Comma>,
-) -> (
-    Vec<proc_macro2::TokenStream>,
-    Vec<proc_macro2::TokenStream>,
-    bool,
-) {
+) -> (Vec<proc_macro2::TokenStream>, bool) {
     let mut fields = Vec::new();
-    let let_statements = Vec::new();
     let mut any_mut = false;
 
     for input in inputs {
@@ -152,11 +157,10 @@ fn make_struct_fields_and_let_statements(
             let attr = &pat_type.attrs;
 
             fields.push(quote! { #(#attr)*pub #ident: #ty });
-            // let_statements.push(quote! { let #ident = &props.#ident; });
         }
     }
 
-    (fields, let_statements, any_mut)
+    (fields, any_mut)
 }
 
 /// This struct represents a list of identifiers parsed from the arguments of the props_component
@@ -215,7 +219,12 @@ impl AttributeConfig {
 struct AcceptedAttribute {
     name: String,
     field: proc_macro2::TokenStream,
-    let_statement: proc_macro2::TokenStream,
+}
+
+impl PartialEq for AcceptedAttribute {
+    fn eq(&self, other: &Self) -> bool {
+        self.name == other.name
+    }
 }
 
 impl AcceptedAttribute {
@@ -224,8 +233,7 @@ impl AcceptedAttribute {
             name: "id".to_string(),
             field: quote! {
             /// Unique ID of the component
-            #[props(into)] #[props(default = crate::hooks::use_unique_id())]pub id: String },
-            let_statement: quote! { let id = &props.id; },
+            #[props(into, optional)] pub id: String },
         }
     }
 
@@ -234,9 +242,9 @@ impl AcceptedAttribute {
             name: "class".to_string(),
             field: quote! {
             /// Custom added styling class for the component
-            #[props(into)] #[props(default)]pub class: String,
+            #[props(into, optional)] pub class: String,
+            /// Override the whole class
             #[props(into, optional)] pub override_class: String },
-            let_statement: quote! { let class = &props.class; },
         }
     }
 
@@ -246,7 +254,111 @@ impl AcceptedAttribute {
             field: quote! {
             /// Children of the component to render
             pub children: Element },
-            let_statement: quote! { let children = &props.children; },
+        }
+    }
+}
+
+/// Derive macro to automaticaly build the final class of the component, doing so by parsing the props struct
+#[proc_macro_derive(BuildClass)]
+pub fn build_class_derive(input: TokenStream) -> TokenStream {
+    // Parse the input tokens into a syntax tree
+    let ast: syn::DeriveInput = syn::parse(input).unwrap();
+
+    // Get the name of the struct
+    let name = &ast.ident;
+
+    // Get all the fields of the struct
+    let struct_fields = if let syn::Data::Struct(syn::DataStruct { fields, .. }) = &ast.data {
+        fields
+    } else {
+        panic!("MyTrait can only be derived for structs");
+    };
+
+    // Iter on watched_fields and all the struct fields to only keep in watched one the one we want
+    let mut watched_fields = WatchedFields::get_all_facultative()
+        .into_iter()
+        .filter(|watched_field| {
+            struct_fields.iter().any(|struct_field| {
+                struct_field
+                    .ident
+                    .as_ref()
+                    .map(|ident| ident.to_string() == watched_field.ident.to_string())
+                    .unwrap_or(false)
+            })
+        })
+        .collect::<Vec<WatchedFields>>();
+
+    // Add self.base() and &self.class to tw_merge!()
+    watched_fields.push(WatchedFields::get_base());
+    watched_fields.push(WatchedFields::get_class());
+
+    // Iter on left watched fields to construst the tw_merge!() method
+    let str = watched_fields
+        .iter()
+        .map(|field| field.method.to_string())
+        .collect::<Vec<String>>()
+        .join(",")
+        .parse::<proc_macro2::TokenStream>()
+        .unwrap();
+
+    let gen = quote! {
+        impl BuildClass for #name {
+            fn build_class(&mut self) {
+                if !self.override_class.is_empty() {
+                    self.class = self.override_class.to_owned();
+                    return;
+                }
+                self.class = tw_merge!(#str);
+            }
+        }
+    };
+
+    gen.into()
+}
+
+#[derive(Debug)]
+struct WatchedFields {
+    ident: &'static str,
+    method: &'static str,
+}
+
+impl WatchedFields {
+    fn get_all_facultative() -> Vec<Self> {
+        vec![
+            WatchedFields {
+                ident: "color",
+                method: "self.color().unwrap_or_default()",
+            },
+            WatchedFields {
+                ident: "size",
+                method: "self.size().unwrap_or_default()",
+            },
+            WatchedFields {
+                ident: "animation",
+                method: "self.animation().unwrap_or_default()",
+            },
+            WatchedFields {
+                ident: "variant",
+                method: "self.variant().unwrap_or_default()",
+            },
+            WatchedFields {
+                ident: "orientation",
+                method: "self.orientation().unwrap_or_default()",
+            },
+        ]
+    }
+
+    fn get_base() -> Self {
+        WatchedFields {
+            ident: "base",
+            method: "self.base()",
+        }
+    }
+
+    fn get_class() -> Self {
+        WatchedFields {
+            ident: "class",
+            method: "&self.class",
         }
     }
 }

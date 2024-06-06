@@ -1,9 +1,8 @@
 use dioxus::prelude::*;
-use props_component_macro::props_component;
+use props_component_macro::{props_component, BuildClass};
 use tailwind_fuse::*;
 
 use crate::attributes::*;
-
 #[props_component(class, children, id)]
 pub fn Radio(
     #[props(extends = input)] attributes: Vec<Attribute>,
@@ -11,15 +10,13 @@ pub fn Radio(
     #[props(optional)] oninput: EventHandler<FormEvent>,
     #[props(default)] color: Color,
 ) -> Element {
-    let class = tw_merge!(props.base(), props.color(), props.class);
-
     rsx!(
         input {
             ..props.attributes,
             id: &*props.id,
             r#type: "radio",
             checked: props.checked,
-            class,
+            class: props.class,
             oninput: move |e| {
                 props.oninput.call(e);
             },

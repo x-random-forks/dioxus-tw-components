@@ -11,7 +11,7 @@ path = "src/docsite/main.rs"
 
 [dependencies]
 
-dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "472031d1f51557601797d1cb469f09e4f3e0ca71", features = ["web", "router"] }
+dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "0eb16f27d4a66f654d18fe46fa7f0d50180a1a28", features = ["web", "router"] }
 dioxus-logger = "0.4.1"
 manganis = "0.2.2"
 console_error_panic_hook = "0.1.7"

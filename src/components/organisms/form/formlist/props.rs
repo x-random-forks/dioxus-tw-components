@@ -3,11 +3,10 @@ use crate::atoms::{
         Separator,
     };
 use dioxus::prelude::*;
-use props_component_macro::props_component;
+use props_component_macro::{props_component, BuildClass};
 use tailwind_fuse::*;
 
 use crate::attributes::*;
-
 pub struct FormListState {
     max_size: usize,
     current_size: usize,
@@ -40,28 +39,22 @@ impl FormListState {
 
 #[props_component(class, children)]
 pub fn FormList(#[props(default = 1)] max_size: usize) -> Element {
-    let class = tw_merge!(props.base(), &props.class);
-
     use_context_provider(|| Signal::new(FormListState::new(props.max_size)));
 
     rsx!(
-        div { class, {props.children} }
+        div { class: props.class, {props.children} }
     )
 }
 
 #[props_component(class, children)]
 pub fn FormListTitle() -> Element {
-    let class = tw_merge!(props.base(), &props.class);
-
     rsx!(
-        div { class, {props.children} }
+        div { class: props.class, {props.children} }
     )
 }
 
 #[props_component(class, children)]
 pub fn FormListTrigger(#[props(default = false)] plus: bool) -> Element {
-    // Useless div to wrap around the trigger
-    
     let mut state = use_context::<Signal<FormListState>>();
     
     rsx!(
@@ -84,33 +77,11 @@ pub fn FormListTrigger(#[props(default = false)] plus: bool) -> Element {
             }
         }
     )
-// let class = "inline-block";
-    // let onclick = move |_| {
-    //     if props.plus {
-    //         state.write().render_one_more();
-    //     } else {
-    //         state.write().render_one_less();
-    //     }
-    // };
-    // if let Some(children) = props.children {
-    //     rsx!(
-    //         div { onclick, class, {children} }
-    //     )
-    // } else {
-    //     let button_class = tw_merge!(props.base(), &props.class);
 
-    //     let text = if props.plus { "+" } else { "-" };
-
-    //     rsx!(
-    //         Button { class: button_class, onclick, r#type: "button", {text} }
-    //     )
-    // }
 }
 
 #[props_component(class)]
 pub fn FormListContent(#[props(default)] list_fields: Vec<Element>) -> Element {
-    let class = tw_merge!(props.base(), &props.class);
-
     let state = consume_context::<Signal<FormListState>>();
 
     let rendered_list_fields = props
@@ -125,6 +96,6 @@ pub fn FormListContent(#[props(default)] list_fields: Vec<Element>) -> Element {
         });
 
     rsx!(
-        div { class, { rendered_list_fields } }
+        div { class: props.class, { rendered_list_fields } }
     )
 }

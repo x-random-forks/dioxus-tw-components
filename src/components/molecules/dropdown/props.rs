@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 use dioxus_elements::geometry::{euclid::Rect, Pixels};
-use props_component_macro::props_component;
+use props_component_macro::{props_component, BuildClass};
 use tailwind_fuse::*;
 use web_sys::wasm_bindgen::closure::Closure;
 
@@ -94,8 +94,6 @@ pub fn Dropdown(
     #[props(default = -1)]
     closing_delay_ms: i32,
 ) -> Element {
-    let class = tw_merge!(props.base(), &props.class);
-
     let state = use_context_provider(|| Signal::new(DropdownState::new(props.closing_delay_ms)));
 
     props.attributes.push(Attribute::new(
@@ -106,16 +104,12 @@ pub fn Dropdown(
     ));
 
     rsx!(
-        div { ..props.attributes, class, id: props.id, {props.children} }
+        div { ..props.attributes, class: props.class, id: props.id, {props.children} }
     )
 }
 
 #[props_component(class, children)]
 pub fn DropdownToggle(#[props(extends = div)] mut attributes: Vec<Attribute>) -> Element {
-    // Use an "useless div" to wrap the dropdown toggle and get the onclick event, so the user can put
-    // Everything inside the DropdownToggle not just only a button
-    let class = tw_merge!(&props.class);
-
     let mut state = consume_context::<Signal<DropdownState>>();
 
     let onmounted = move |event: Event<MountedData>| async move {
@@ -158,7 +152,7 @@ pub fn DropdownToggle(#[props(extends = div)] mut attributes: Vec<Attribute>) ->
     rsx!(
         div {
             ..props.attributes,
-            class,
+            class: props.class,
             onmounted: onmounted,
             onclick: onclick,
             onmouseleave: onmouseleave,
@@ -172,8 +166,6 @@ pub fn DropdownContent(
     #[props(extends = div)] mut attributes: Vec<Attribute>,
     #[props(default)] animation: Animation,
 ) -> Element {
-    let class = tw_merge!(props.base(), props.animation(), &props.class);
-
     let mut state = consume_context::<Signal<DropdownState>>();
 
     let onmounted = move |event: Event<MountedData>| async move {
@@ -226,7 +218,7 @@ pub fn DropdownContent(
     rsx!(
         div {
             ..props.attributes,
-            class,
+            class: props.class,
             id: props.id,
             onmounted: onmounted,
             onmouseleave: onmouseleave,

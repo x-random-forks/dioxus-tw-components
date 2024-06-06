@@ -1,27 +1,25 @@
 use super::props::*;
 use crate::attributes::*;
 
-impl BaseClass for ToastListProps {
+impl Class for ToastListProps {
     fn base(&self) -> &'static str {
         "fixed z-50 w-full md:m-4 md:max-w-[400px]"
     }
 }
 
-impl BaseClass for Toast {
+impl Class for Toast {
     fn base(&self) -> &'static str {
         "p-4 m-2 rounded-global-radius"
     }
-}
 
-impl Colorable for Toast {
-    fn color(&self) -> &'static str {
-        match self.color {
+    fn color(&self) -> Option<&'static str> {
+        Some(match self.color {
             Color::Primary => "bg-primary text-primary-foreground",
             Color::Secondary => "bg-secondary text-secondary-foreground",
             Color::Destructive => "bg-destructive text-destructive-foreground",
             Color::Success => "bg-success text-success-foreground",
-            Color::Default | _ => "bg-background text-foreground",
-        }
+            _ => "bg-background text-foreground",
+        })
     }
 }
 

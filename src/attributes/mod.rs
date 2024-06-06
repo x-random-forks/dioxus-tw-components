@@ -2,6 +2,36 @@ use std::{ops::Neg, str::FromStr};
 
 use dioxus::prelude::IntoAttributeValue;
 
+pub trait Class {
+    fn base(&self) -> &'static str {
+        ""
+    }
+
+    fn color(&self) -> Option<&'static str> {
+        None
+    }
+
+    fn size(&self) -> Option<&'static str> {
+        None
+    }
+
+    fn variant(&self) -> Option<&'static str> {
+        None
+    }
+
+    fn animation(&self) -> Option<&'static str> {
+        None
+    }
+
+    fn orientation(&self) -> Option<&'static str> {
+        None
+    }
+}
+
+pub trait BuildClass: Class {
+    fn build_class(&mut self);
+}
+
 pub trait BaseClass {
     fn base(&self) -> &'static str;
 }
@@ -49,10 +79,6 @@ impl std::fmt::Display for Color {
     }
 }
 
-pub trait Colorable {
-    fn color(&self) -> &'static str;
-}
-
 #[derive(Default, Clone, Copy, PartialEq)]
 pub enum Size {
     Xs,
@@ -91,10 +117,6 @@ impl std::fmt::Display for Size {
     }
 }
 
-pub trait Sizable {
-    fn size(&self) -> &'static str;
-}
-
 #[derive(Default, Clone, Copy, PartialEq)]
 pub enum Orientation {
     #[default]
@@ -102,9 +124,6 @@ pub enum Orientation {
     Vertical,
 }
 
-pub trait Orientable {
-    fn orientation(&self) -> &'static str;
-}
 
 #[derive(Default, Clone, Copy, PartialEq)]
 pub enum Animation {
@@ -138,21 +157,6 @@ impl std::fmt::Display for Animation {
         };
         f.write_str(s)
     }
-}
-
-pub trait Animatable {
-    fn animation(&self) -> &'static str;
-}
-
-#[derive(Default, Clone, Copy, PartialEq)]
-pub enum Side {
-    #[default]
-    Left,
-    Right,
-}
-
-pub trait Variation {
-    fn variant(&self) -> &'static str;
 }
 
 // TODO use this everywhere we can

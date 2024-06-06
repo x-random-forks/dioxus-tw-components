@@ -1,9 +1,8 @@
 use dioxus::prelude::*;
-use props_component_macro::props_component;
+use props_component_macro::{props_component, BuildClass};
 use tailwind_fuse::*;
 
 use crate::attributes::*;
-
 #[props_component(id, class)]
 pub fn Input(
     #[props(extends = input)] attributes: Vec<Attribute>,
@@ -13,8 +12,6 @@ pub fn Input(
     #[props(default)] size: Size,
     #[props(default)] color: Color,
 ) -> Element {
-    let class = tw_merge!(props.base(), props.color(), props.size(), &props.class);
-
     let oninput = move |event| {
         if let Some(oc) = &props.oninput {
             oc.call(event)
@@ -33,7 +30,7 @@ pub fn Input(
             value: props.value,
             onmounted,
             oninput,
-            class,
+            class: props.class,
             id: props.id
         }
     }

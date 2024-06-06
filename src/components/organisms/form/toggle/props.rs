@@ -1,9 +1,8 @@
 use dioxus::prelude::*;
-use props_component_macro::props_component;
+use props_component_macro::{props_component, BuildClass};
 use tailwind_fuse::*;
 
 use crate::attributes::*;
-
 // Specifically stylised input type checkbox
 // The input use the tailwind peer class, you can use at your advantage to style the children
 // eg peer-disabled:font-mute will change children text-color when the input is disabled (Label component already does this by default)
@@ -16,14 +15,6 @@ pub fn Toggle(
     #[props(default)] size: Size,
     #[props(default)] animation: Animation,
 ) -> Element {
-    let class = tw_merge!(
-        props.base(),
-        props.color(),
-        props.size(),
-        props.animation(),
-        props.class
-    );
-
     let mut state = match props.checked {
         true => DataStateAttrValue::Active,
         false => DataStateAttrValue::Inactive,
@@ -48,7 +39,7 @@ pub fn Toggle(
             ..props.attributes,
             r#type: "button",
             id: props.id,
-            class,
+            class: props.class,
             onclick
         }
     )

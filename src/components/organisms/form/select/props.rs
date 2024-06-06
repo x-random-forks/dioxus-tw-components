@@ -1,17 +1,14 @@
 use dioxus::prelude::*;
-use props_component_macro::props_component;
+use props_component_macro::{props_component, BuildClass};
 use tailwind_fuse::*;
 
 use crate::attributes::*;
-
 #[props_component(class, id, children)]
 pub fn SelectGroup(
     #[props(extends = select)] attributes: Vec<Attribute>,
 
     #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
 ) -> Element {
-    let class = tw_merge!(props.base(), props.class);
-
     let oninput = move |event| {
         if let Some(oc) = &props.oninput {
             oc.call(event)
@@ -21,7 +18,7 @@ pub fn SelectGroup(
     rsx!(
         select {
             ..props.attributes,
-            class,
+            class: props.class,
             id: props.id,
             oninput: oninput,
             {props.children}
@@ -31,14 +28,12 @@ pub fn SelectGroup(
 
 #[props_component(class, id, children)]
 pub fn SelectPlaceholder() -> Element {
-    let class = tw_merge!(props.base(), props.class);
-
     rsx!(
         option {
             disabled: true,
             selected: true,
             value: r#"{""}"#,
-            class,
+            class: props.class,
             id: props.id,
             {props.children}
         }
@@ -47,10 +42,8 @@ pub fn SelectPlaceholder() -> Element {
 
 #[props_component(class, id, children)]
 pub fn SelectLabel(#[props(extends = optgroup)] attributes: Vec<Attribute>) -> Element {
-    let class = tw_merge!(props.base(), props.class);
-
     rsx!(
-        optgroup { ..props.attributes, class, id: props.id, {props.children} }
+        optgroup { ..props.attributes, class: props.class, id: props.id, {props.children} }
     )
 }
 
@@ -59,13 +52,11 @@ pub fn SelectItem(
     #[props(extends = option)] attributes: Vec<Attribute>,
     #[props(optional, default = None)] selected: Option<bool>,
 ) -> Element {
-    let class = tw_merge!(props.base(), props.class);
-
     if let Some(selected) = props.selected {
         rsx!(
             option {
                 ..props.attributes,
-                class,
+                class: props.class,
                 selected,
                 id: props.id,
                 {props.children}
@@ -73,7 +64,7 @@ pub fn SelectItem(
         )
     } else {
         rsx!(
-            option { ..props.attributes, class, id: props.id, {props.children} }
+            option { ..props.attributes, class: props.class, id: props.id, {props.children} }
         )
     }
 }

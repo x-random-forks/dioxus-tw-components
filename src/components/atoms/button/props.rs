@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use props_component_macro::props_component;
+use props_component_macro::{props_component, BuildClass};
 use tailwind_fuse::*;
 
 use crate::attributes::*;
@@ -22,20 +22,6 @@ pub fn Button(
     #[props(default = Animation::Full)]
     animation: Animation,
 ) -> Element {
-    // Order matters there ! Because tw_merge!() will override the first class it finds that overlap another with the last one it finds
-    let class = if props.override_class.is_empty() {
-        tw_merge!(
-            props.base(),
-            props.color(),
-            props.variant(),
-            props.size(),
-            props.animation(),
-            props.class
-        )
-    } else {
-        props.override_class
-    };
-
     let onclick = move |event| {
         if let Some(oc) = &props.onclick {
             oc.call(event)
@@ -45,7 +31,7 @@ pub fn Button(
     rsx!(
         button {
             ..props.attributes,
-            class,
+            class: props.class,
             id: props.id,
             onclick,
             {props.children}

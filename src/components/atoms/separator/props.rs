@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use props_component_macro::props_component;
+use props_component_macro::{props_component, BuildClass};
 use tailwind_fuse::*;
 
 use crate::attributes::*;
@@ -11,9 +11,7 @@ pub fn Separator(
     #[props(default = Orientation::Horizontal)]
     orientation: Orientation,
 ) -> Element {
-    let class_str = tw_merge!(props.base(), props.orientation(), props.class);
-
     rsx!(
-        div { class: class_str }
+        div { class: props.class }
     )
 }

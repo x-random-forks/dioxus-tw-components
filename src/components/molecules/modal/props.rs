@@ -1,9 +1,8 @@
 use dioxus::prelude::*;
-use props_component_macro::props_component;
+use props_component_macro::{props_component, BuildClass};
 use tailwind_fuse::*;
 
 use crate::attributes::*;
-
 #[derive(Clone, Copy)]
 struct ModalState {
     data_state_attr_value: DataStateAttrValue,
@@ -58,8 +57,6 @@ pub fn Modal(#[props(default = false)] is_open: bool) -> Element {
 
 #[props_component(class, id, children)]
 pub fn ModalTrigger() -> Element {
-    let class = tw_merge!(props.base(), props.class);
-
     let mut state = use_context::<Signal<ModalState>>();
 
     let trigger_closure = move |_: Event<MouseData>| {
@@ -67,14 +64,12 @@ pub fn ModalTrigger() -> Element {
     };
 
     rsx!(
-        div { class, id: props.id, onclick: trigger_closure, {props.children} }
+        div { class: props.class, id: props.id, onclick: trigger_closure, {props.children} }
     )
 }
 
 #[props_component(class, id, children)]
 pub fn ModalClose() -> Element {
-    let class = tw_merge!(props.base(), props.class);
-
     let mut state = use_context::<Signal<ModalState>>();
 
     let trigger_closure = move |_: Event<MouseData>| {
@@ -82,7 +77,7 @@ pub fn ModalClose() -> Element {
     };
 
     rsx!(
-        div { class, id: props.id, onclick: trigger_closure, {props.children} }
+        div { class: props.class, id: props.id, onclick: trigger_closure, {props.children} }
     )
 }
 
@@ -91,8 +86,6 @@ pub fn ModalContent(
     #[props(extends = div)] mut attributes: Vec<Attribute>,
     #[props(default = Animation::Full)] animation: Animation,
 ) -> Element {
-    let class = tw_merge!(props.base(), props.animation(), props.class);
-
     let state = use_context::<Signal<ModalState>>();
 
     props.attributes.push(Attribute::new(
@@ -103,7 +96,7 @@ pub fn ModalContent(
     ));
 
     rsx!(
-        div { ..props.attributes, class, id: props.id, {props.children} }
+        div { ..props.attributes, class: props.class, id: props.id, {props.children} }
     )
 }
 
@@ -113,8 +106,6 @@ pub fn ModalBackground(
     #[props(default = true)] interactive: bool,
     #[props(default = Animation::Full)] animation: Animation,
 ) -> Element {
-    let class = tw_merge!(props.base(), props.animation(), props.class);
-
     let mut state = use_context::<Signal<ModalState>>();
 
     let modal_closure = move |_: Event<MouseData>| {
@@ -133,7 +124,7 @@ pub fn ModalBackground(
     rsx!(
         div {
             ..props.attributes,
-            class: "{class}",
+            class: props.class,
             id: props.id,
             onclick: modal_closure,
             {props.children}

@@ -1,9 +1,6 @@
 mod checkbox;
 pub use checkbox::Checkbox;
 
-mod form;
-pub use form::{Form, FormFooter, FormHeader, FormChild, FormTitle, FormDesc, FormLabel};
-
 mod formlist;
 pub use formlist::{FormList, FormListTrigger, FormListTitle, FormListContent};
 

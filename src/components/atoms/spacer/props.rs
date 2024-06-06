@@ -1,15 +1,12 @@
 use dioxus::prelude::*;
-use props_component_macro::props_component;
+use props_component_macro::{props_component, BuildClass};
 use tailwind_fuse::*;
 
 use crate::attributes::*;
-
 // Will have to use to see if it's practical or not, not convinced yet
 #[props_component(class)]
 pub fn Spacer() -> Element {
-    let class_str = tw_merge!(props.base(), props.class);
-
     rsx!(
-        div { class: class_str }
+        div { class: props.class }
     )
 }

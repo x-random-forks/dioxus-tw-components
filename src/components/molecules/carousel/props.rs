@@ -1,6 +1,6 @@
 use crate::{attributes::*, hooks::use_element_scroll_width};
 use dioxus::prelude::*;
-use props_component_macro::props_component;
+use props_component_macro::{props_component, BuildClass};
 use tailwind_fuse::*;
 use web_sys::wasm_bindgen::JsValue;
 
@@ -106,8 +106,6 @@ pub fn Carousel(
     #[props(default = 0)] default_item_key: u32,
     #[props(default = false)] is_circular: bool,
 ) -> Element {
-    let class = tw_merge!(props.base(), props.class);
-
     use_context_provider(|| {
         Signal::new(CarouselState::new(
             props.default_item_key,
@@ -116,24 +114,20 @@ pub fn Carousel(
     });
 
     rsx!(
-        div { class, id: props.id, {props.children} }
+        div { class: props.class, id: props.id, {props.children} }
     )
 }
 
 #[props_component(id, class, children)]
 pub fn CarouselWindow() -> Element {
-    let class = tw_merge!(props.base(), props.class);
-
     rsx!(
-        div { class, id: props.id, {props.children} }
+        div { class: props.class, id: props.id, {props.children} }
     )
 }
 
 /// You need to pass it an id for it to work
 #[props_component(id, class, children)]
 pub fn CarouselContent(#[props(default)] animation: Animation) -> Element {
-    let class = tw_merge!(props.base(), props.animation(), props.class);
-
     let mut carousel_state = consume_context::<Signal<CarouselState>>();
 
     let sig_id = use_signal(|| props.id.clone());
@@ -158,7 +152,7 @@ pub fn CarouselContent(#[props(default)] animation: Animation) -> Element {
 
     rsx!(
         div {
-            class,
+            class: props.class,
             style,
             id: props.id,
             onmounted: onmounted,
@@ -173,8 +167,6 @@ pub fn CarouselItem(
     /// Represent position in the carousel
     item_key: u32,
 ) -> Element {
-    let class = tw_merge!(props.base(), props.class);
-
     let mut state = consume_context::<Signal<CarouselState>>();
 
     let onmounted = move |_| {
@@ -191,7 +183,7 @@ pub fn CarouselItem(
     rsx!(
         div {
             ..props.attributes,
-            class,
+            class: props.class,
             id: props.id,
             onmounted: onmounted,
             {props.children}
@@ -201,8 +193,6 @@ pub fn CarouselItem(
 
 #[props_component(id, class)]
 pub fn CarouselTrigger(#[props(default = false)] next: bool) -> Element {
-    let class = tw_merge!(props.base(), props.class);
-
     let onclick = move |_| {
         let mut carousel_state = consume_context::<Signal<CarouselState>>();
         let content_id = carousel_state.read().content_id.clone();
@@ -219,7 +209,7 @@ pub fn CarouselTrigger(#[props(default = false)] next: bool) -> Element {
     let icon = get_next_prev_icons(props.next);
 
     rsx!(
-        button { class, id: props.id, onclick: onclick, {icon} }
+        button { class: props.class, id: props.id, onclick: onclick, {icon} }
     )
 }
 

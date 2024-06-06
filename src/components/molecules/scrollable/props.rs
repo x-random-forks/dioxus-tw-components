@@ -1,14 +1,11 @@
 use dioxus::prelude::*;
-use props_component_macro::props_component;
+use props_component_macro::{props_component, BuildClass};
 use tailwind_fuse::*;
 
 use crate::attributes::*;
-
 #[props_component(class, children, id)]
 pub fn Scrollable(#[props(default = Orientation::Vertical)] orientation: Orientation) -> Element {
-    let class = tw_merge!(props.base(), props.orientation(), props.class);
-
     rsx!(
-        div { class, id: props.id, {props.children} }
+        div { class: props.class, id: props.id, {props.children} }
     )
 }
