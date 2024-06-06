@@ -32,10 +32,6 @@ pub trait BuildClass: Class {
     fn build_class(&mut self);
 }
 
-pub trait BaseClass {
-    fn base(&self) -> &'static str;
-}
-
 #[derive(Default, Clone, Copy, PartialEq)]
 pub enum Color {
     #[default]
