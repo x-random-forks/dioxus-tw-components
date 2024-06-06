@@ -19,7 +19,7 @@ pub fn Radio(
             class: props.class,
             oninput: move |e| {
                 props.oninput.call(e);
-            },
+            }
         }
     )
 }

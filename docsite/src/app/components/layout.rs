@@ -18,6 +18,9 @@ pub fn SideBarComponent() -> Element {
                     li {
                         Link { to: "/components/atoms/placeholder", "Placeholder" }
                     }
+                    li {
+                        Link { to: "/components/molecules/tabs", "Tabs" }
+                    }
                 }
             }
             DocTemplate { Outlet::<Route> {} }

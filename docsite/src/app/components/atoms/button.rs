@@ -5,7 +5,7 @@ use dioxus_components::{
 };
 
 use crate::app::{
-    components::preview::{PreviewClass, PreviewFull, PreviewGroupAttr},
+    components::preview::*,
     doctrait::{DemoAttribute, DemoComp, DemoState},
 };
 

@@ -3,6 +3,7 @@ use dioxus_components::atoms::buttongroup::{ButtonGroup, ButtonGroupItem, Button
 
 use crate::app::{components::preview::PreviewFull, doctrait::DemoComp};
 
+#[component]
 pub fn ButtonGroupPage() -> Element {
     rsx!(
         PreviewFull::<ButtonGroupProps> {}

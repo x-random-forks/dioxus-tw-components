@@ -3,6 +3,7 @@ use props_component_macro::{props_component, BuildClass};
 use tailwind_fuse::*;
 
 use crate::attributes::*;
+
 struct TabsState(String);
 
 #[props_component(class, id, children)]

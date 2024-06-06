@@ -16,7 +16,10 @@ pub fn ProgressTrack(
 #[props_component(class, children, id)]
 pub fn ProgressBar(#[props(default = 50)] progress: u8, #[props(default)] color: Color) -> Element {
     rsx!(
-        div { class: props.class, style: "width: {props.progress}%", id: props.id,
+        div {
+            class: props.class,
+            style: "width: {props.progress}%",
+            id: props.id,
             div { {props.children} }
         }
     )

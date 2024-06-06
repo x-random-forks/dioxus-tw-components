@@ -23,14 +23,14 @@ pub fn Breadcrumb(#[props(default)] separator: bool) -> Element {
 #[props_component(class, id, children)]
 pub fn BreadcrumbItem() -> Element {
     rsx!(
-        li {  class: props.class, id: props.id, {props.children} }
+        li { class: props.class, id: props.id, {props.children} }
     )
 }
 
 #[props_component(class, id, children)]
 pub fn BreadcrumbSeparator() -> Element {
     rsx!(
-        li {  class: props.class, aria_hidden: "true", id: props.id,
+        li { class: props.class, aria_hidden: "true", id: props.id,
             if props.children == None {
                 "\u{203A}"
             } else {
