@@ -3,7 +3,19 @@ use crate::attributes::*;
 
 impl Class for PlaceholderProps {
     fn base(&self) -> &'static str {
-        "bg-foreground/50 rounded-global-radius w-24 h-24"
+        "rounded-global-radius w-24 h-24"
+    }
+
+    fn color(&self) -> Option<&'static str> {
+        Some(match self.color {
+            Color::Default => "bg-foreground/50",
+            Color::Primary => "bg-primary/50",
+            Color::Secondary => "bg-secondary/50",
+            Color::Destructive => "bg-destructive/50",
+            Color::Success => "bg-success/50",
+            Color::Accent => "bg-accent/50",
+            Color::Muted => "bg-muted/50",
+        })
     }
 
     fn animation(&self) -> Option<&'static str> {

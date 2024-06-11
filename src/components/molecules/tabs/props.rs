@@ -7,7 +7,7 @@ use crate::attributes::*;
 struct TabsState(String);
 
 #[props_component(class, id, children)]
-pub fn Tabs(#[props(into)] default_tab: String) -> Element {
+pub fn Tabs(#[props(optional, default = "tabs-0".to_string())] default_tab: String) -> Element {
     use_context_provider(|| Signal::new(TabsState(props.default_tab)));
 
     rsx!(
@@ -24,7 +24,7 @@ pub fn TabsList() -> Element {
 
 #[props_component(class, id, children)]
 pub fn TabsTrigger() -> Element {
-    let mut tab_state = consume_context::<Signal<TabsState>>();
+    let mut tab_state = use_context::<Signal<TabsState>>();
 
     let state = match tab_state.read().0 == props.id {
         true => "active",
@@ -42,7 +42,7 @@ pub fn TabsTrigger() -> Element {
 
 #[props_component(class, id, children)]
 pub fn TabsContent() -> Element {
-    let tab_state = consume_context::<Signal<TabsState>>();
+    let tab_state = use_context::<Signal<TabsState>>();
 
     let (state, is_hidden) = match tab_state.read().0 == props.id {
         true => ("active", false),
@@ -58,4 +58,16 @@ pub fn TabsContent() -> Element {
             { props.children }
         }
     )
+}
+
+impl Named for TabsProps {
+    const NAME: &'static str = "Tabs";
+}
+
+impl Named for TabsTriggerProps {
+    const NAME: &'static str = "TabsTrigger";
+}
+
+impl Named for TabsContentProps {
+    const NAME: &'static str = "TabsContent";
 }

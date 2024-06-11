@@ -1,11 +1,7 @@
 use super::props::*;
 use crate::attributes::*;
 
-impl Class for TabsProps {
-    fn base(&self) -> &'static str {
-        ""
-    }
-}
+impl Class for TabsProps {}
 
 impl Class for TabsListProps {
     fn base(&self) -> &'static str {
@@ -22,6 +18,6 @@ impl Class for TabsTriggerProps {
 
 impl Class for TabsContentProps {
     fn base(&self) -> &'static str {
-        "mt-2 border border-border rounded-global-radius shadow"
+        "mt-2 p-6 bg-background text-foreground border border-border rounded-global-radius shadow"
     }
 }

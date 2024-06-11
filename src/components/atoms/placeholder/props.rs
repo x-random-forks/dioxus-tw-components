@@ -9,9 +9,15 @@ use crate::attributes::*;
 pub fn Placeholder(
     /// Used to control the level of animation of the component
     #[props(default)]
+    color: Color,
+    #[props(default)]
     animation: Animation,
 ) -> Element {
     rsx!(
         div { class: props.class }
     )
+}
+
+impl Named for PlaceholderProps {
+    const NAME: &'static str = "Placeholder";
 }

@@ -8,6 +8,7 @@ impl Class for ButtonProps {
         "text-center font-medium rounded-global-radius shadow-global-shadow disabled:opacity-50 disabled:cursor-not-allowed"
     }
 
+    // Handled in variant
     fn color(&self) -> Option<&'static str> {
         Some("")
     }

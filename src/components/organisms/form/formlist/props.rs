@@ -99,3 +99,7 @@ pub fn FormListContent(#[props(default)] list_fields: Vec<Element>) -> Element {
         div { class: props.class, { rendered_list_fields } }
     )
 }
+
+impl Named for FormListProps {
+    const NAME: &'static str = "Form List";
+}

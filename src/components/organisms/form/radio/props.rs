@@ -8,7 +8,8 @@ pub fn Radio(
     #[props(extends = input)] attributes: Vec<Attribute>,
     #[props(optional, default = false)] checked: bool,
     #[props(optional)] oninput: EventHandler<FormEvent>,
-    #[props(default)] color: Color,
+    #[props(optional, default)] color: Color,
+    #[props(optional, default)] size: Size,
 ) -> Element {
     rsx!(
         input {
@@ -22,4 +23,8 @@ pub fn Radio(
             }
         }
     )
+}
+
+impl Named for RadioProps {
+    const NAME: &'static str = "Radio";
 }

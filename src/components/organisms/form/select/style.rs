@@ -3,24 +3,24 @@ use crate::attributes::*;
 
 impl Class for SelectGroupProps {
     fn base(&self) -> &'static str {
-        "flex flex-col w-full bg-background border border-border px-3 py-2 rounded-global-radius text-foreground"
+        "flex w-full px-2 py-1.5 h-9 bg-background border border-input rounded-global-radius text-foreground text-sm"
     }
 }
 
 impl Class for SelectPlaceholderProps {
     fn base(&self) -> &'static str {
-        "hidden font-bold"
+        "text-foreground hidden font-bold"
     }
 }
 
 impl Class for SelectLabelProps {
     fn base(&self) -> &'static str {
-        "text-sm font-semibold"
+        "text-foreground text-sm font-semibold"
     }
 }
 
 impl Class for SelectItemProps {
     fn base(&self) -> &'static str {
-        "flex pl-2 pr-8 text-sm"
+        "text-foreground text-sm"
     }
 }

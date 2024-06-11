@@ -40,10 +40,10 @@ pub fn SelectPlaceholder() -> Element {
     )
 }
 
-#[props_component(class, id, children)]
+#[props_component(class, id)]
 pub fn SelectLabel(#[props(extends = optgroup)] attributes: Vec<Attribute>) -> Element {
     rsx!(
-        optgroup { ..props.attributes, class: props.class, id: props.id, {props.children} }
+        optgroup { ..props.attributes, class: props.class, id: props.id}
     )
 }
 
@@ -67,4 +67,8 @@ pub fn SelectItem(
             option { ..props.attributes, class: props.class, id: props.id, {props.children} }
         )
     }
+}
+
+impl Named for SelectGroupProps {
+    const NAME: &'static str = "Select";
 }

@@ -19,4 +19,14 @@ impl Class for RadioProps {
             _ => "accent-foreground focus:ring-foreground focus:ring-2 focus:ring-offset-1",
         })
     }
+
+    fn size(&self) -> Option<&'static str> {
+        Some(match self.size {
+            Size::Xs => "size-2",
+            Size::Sm => "size-3",
+            Size::Md => "",
+            Size::Lg => "size-5",
+            Size::Xl => "size-8",
+        })
+    }
 }

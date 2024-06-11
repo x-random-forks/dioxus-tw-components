@@ -8,7 +8,8 @@ pub fn Checkbox(
     #[props(extends = input)] attributes: Vec<Attribute>,
     #[props(optional, default = false)] checked: bool,
     #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
-    #[props(default)] color: Color,
+    #[props(optional, default)] color: Color,
+    #[props(optional, default)] size: Size,
 ) -> Element {
     let oninput = move |event| {
         if let Some(oc) = &props.oninput {
@@ -26,4 +27,8 @@ pub fn Checkbox(
             id: props.id
         }
     )
+}
+
+impl Named for CheckboxProps {
+    const NAME: &'static str = "Checkbox";
 }

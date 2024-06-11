@@ -77,6 +77,7 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
     let accepted_attributes = AttributeConfig::default();
 
     let mut has_class_attr = false;
+    let mut has_children_attr = false;
 
     for arg in args.args {
         match accepted_attributes.accepted(arg.to_string()) {
@@ -84,6 +85,9 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
                 fields.push(accepted_attributes.add_attributes[index].field.clone());
                 if arg.to_string() == "class" {
                     has_class_attr = true;
+                }
+                if arg.to_string() == "children" {
+                    has_children_attr = true;
                 }
             }
             Err(e) => panic!("{e}"),
@@ -100,17 +104,35 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
         },
     };
 
-    // If a class attributes is found we also derive BuildClass, a macro which automatically build the final class of the props
+    // If the class attribute is found we also derive BuildClass, a macro which automatically build the final class of the props
     let derive = if has_class_attr {
-        quote! {#[derive(Clone, Props, PartialEq, BuildClass)]}
+        quote! {#[derive(Clone, Props, PartialEq, BuildClass, Default)]}
     } else {
-        quote! {#[derive(Clone, Props, PartialEq)]}
+        quote! {#[derive(Clone, Props, PartialEq, Default)]}
     };
 
     let build_class = if has_class_attr {
         quote! {props.build_class();}
     } else {
         quote! {}
+    };
+
+    let has_children_impl = if has_children_attr {
+        quote!{
+            impl HasChildren for #name_struct {
+                fn has_children(&self) -> bool {
+                    true
+                }
+
+                fn set_children(&mut self, children: Element) {
+                    self.children = children;
+                }
+            }
+        }
+    } else {
+        quote!{
+            impl HasChildren for #name_struct {}
+        }
     };
 
     let expanded = quote! {
@@ -120,6 +142,8 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
         pub struct #name_struct {
             #(#fields),*
         }
+
+        #has_children_impl
 
         #(#vec_attr)*
         pub fn #name(#props) #output {
@@ -301,6 +325,11 @@ pub fn build_class_derive(input: TokenStream) -> TokenStream {
         .parse::<proc_macro2::TokenStream>()
         .unwrap();
 
+    let set_methods = watched_fields
+        .iter()
+        .map(|field| field.set_method.clone())
+        .collect::<Vec<proc_macro2::TokenStream>>();
+
     let gen = quote! {
         impl BuildClass for #name {
             fn build_class(&mut self) {
@@ -310,6 +339,16 @@ pub fn build_class_derive(input: TokenStream) -> TokenStream {
                 }
                 self.class = tw_merge!(#str);
             }
+
+            fn set_class(&mut self, class: String) {
+                self.class = class;
+            }
+
+            fn set_override_class(&mut self, override_class: String) {
+                self.override_class = override_class;
+            }
+
+            #(#set_methods)*
         }
     };
 
@@ -320,6 +359,7 @@ pub fn build_class_derive(input: TokenStream) -> TokenStream {
 struct WatchedFields {
     ident: &'static str,
     method: &'static str,
+    set_method: proc_macro2::TokenStream,
 }
 
 impl WatchedFields {
@@ -328,22 +368,43 @@ impl WatchedFields {
             WatchedFields {
                 ident: "color",
                 method: "self.color().unwrap_or_default()",
+                set_method: quote! {
+                    fn set_color(&mut self, color: Color) {
+                        self.color = color;
+                    }
+                },
             },
             WatchedFields {
                 ident: "size",
                 method: "self.size().unwrap_or_default()",
+                set_method: quote! {
+                    fn set_size(&mut self, size: Size) {
+                        self.size = size;
+                    }
+                },
             },
             WatchedFields {
                 ident: "animation",
                 method: "self.animation().unwrap_or_default()",
+                set_method: quote! {
+                    fn set_animation(&mut self, animation: Animation) {
+                        self.animation = animation;
+                    }
+                },
             },
             WatchedFields {
                 ident: "variant",
                 method: "self.variant().unwrap_or_default()",
+                set_method: quote! {},
             },
             WatchedFields {
                 ident: "orientation",
                 method: "self.orientation().unwrap_or_default()",
+                set_method: quote! {
+                    fn set_orientation(&mut self, orientation: Orientation) {
+                        self.orientation = orientation;
+                    }
+                },
             },
         ]
     }
@@ -352,6 +413,7 @@ impl WatchedFields {
         WatchedFields {
             ident: "base",
             method: "self.base()",
+            set_method: quote! {},
         }
     }
 
@@ -359,6 +421,7 @@ impl WatchedFields {
         WatchedFields {
             ident: "class",
             method: "&self.class",
+            set_method: quote! {},
         }
     }
 }

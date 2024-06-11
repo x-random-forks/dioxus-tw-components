@@ -34,3 +34,7 @@ pub fn TextArea(
         }
     )
 }
+
+impl Named for TextAreaProps {
+    const NAME: &'static str = "Textarea";
+}

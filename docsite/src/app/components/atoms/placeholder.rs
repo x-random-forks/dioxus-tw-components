@@ -1,38 +1,45 @@
 use dioxus::prelude::*;
-use dioxus_components::{atoms::{placeholder::PlaceholderProps, Placeholder}, attributes::Animation};
+use dioxus_components::atoms::{placeholder::PlaceholderProps, Placeholder};
 
-use crate::app::{components::preview::{PreviewClass, PreviewFull, PreviewGroupAttr}, doctrait::{DemoAttribute, DemoComp, DemoState}};
+use crate::app::{components::preview::*, doctrait::DemoComponent};
 
 #[component]
 pub fn PlaceholderPage() -> Element {
+    let _state = use_context_provider(|| {
+        let mut hash = HashPreview::new();
+        hash.insert(0, FieldPreview::default());
+        Signal::new(hash)
+    });
+
     rsx!(
         PreviewFull::<PlaceholderProps> {}
     )
 }
 
-impl DemoComp for PlaceholderProps {
+impl DemoComponent for PlaceholderProps {
     fn title() -> &'static str {
         "Placeholder"
     }
 
-    fn preview_comp(demo_state: &DemoState) -> Element {
+    fn description() -> &'static str {
+        "A customizable and versatile placeholder for text, images, or other content"
+    }
+
+    fn build_comp_preview() -> Element {
+        let state = use_context::<Signal<HashPreview>>();
+        let preview_comp =
+            build_preview_component::<PlaceholderProps, _>(&state.read()[&0], Placeholder, None);
+
         rsx!(
-            Placeholder {
-                animation: demo_state.get_animation()(),
-                class: demo_state.get_custom_class()(),
-                override_class: demo_state.get_override_class()()
-            }
+            { preview_comp }
         )
     }
 
-    fn select_attributes(demo_state: &DemoState) -> Element {
+    fn build_comp_selectors() -> Element {
+        let state = use_context::<Signal<HashPreview>>();
+
         rsx!(
-            PreviewClass {
-                signal_class: demo_state.get_custom_class(),
-                signal_override: demo_state.get_override_class()
-            }
-            PreviewGroupAttr { {Animation::demo_attr(demo_state.get_animation())} }
+            CompPreviewSelector::<PlaceholderProps> { index: 0, state, comp_props: PlaceholderProps::default() }
         )
     }
 }
-

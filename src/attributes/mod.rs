@@ -1,6 +1,11 @@
 use std::{ops::Neg, str::FromStr};
 
-use dioxus::prelude::IntoAttributeValue;
+use dioxus::{dioxus_core::Element, prelude::IntoAttributeValue};
+
+pub trait HasChildren {
+    fn has_children(&self) -> bool {false}
+    fn set_children(&mut self, _children: Element) {} 
+}
 
 pub trait Class {
     fn base(&self) -> &'static str {
@@ -30,6 +35,43 @@ pub trait Class {
 
 pub trait BuildClass: Class {
     fn build_class(&mut self);
+
+    // All those below are only used for the docsite
+    fn set_class(&mut self, class: String);
+
+    fn set_override_class(&mut self, override_class: String);
+
+    fn has_color(&self) -> bool {
+        self.color().is_some()
+    }
+
+    fn set_color(&mut self, _color: Color) {}
+
+    fn has_size(&self) -> bool {
+        self.size().is_some()
+    }
+
+    fn set_size(&mut self, _size: Size) {}
+
+    fn has_animation(&self) -> bool {
+        self.animation().is_some()
+    }
+
+    fn set_animation(&mut self, _animation: Animation) {}
+
+    fn has_orientation(&self) -> bool {
+        self.orientation().is_some()
+    }
+
+    fn set_orientation(&mut self, _orientation: Orientation) {}
+}
+
+pub trait Named {
+    const NAME: &'static str;
+
+    fn name() -> &'static str {
+        Self::NAME
+    }
 }
 
 #[derive(Default, Clone, Copy, PartialEq)]
@@ -119,7 +161,6 @@ pub enum Orientation {
     Horizontal,
     Vertical,
 }
-
 
 #[derive(Default, Clone, Copy, PartialEq)]
 pub enum Animation {

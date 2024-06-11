@@ -21,4 +21,14 @@ impl Class for CheckboxProps {
             }
         })
     }
+
+    fn size(&self) -> Option<&'static str> {
+        Some(match self.size {
+            Size::Xs => "size-2",
+            Size::Sm => "size-3",
+            Size::Md => "",
+            Size::Lg => "size-5",
+            Size::Xl => "size-8",
+        })
+    }
 }

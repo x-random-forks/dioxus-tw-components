@@ -9,19 +9,24 @@ use crate::attributes::*;
 #[props_component(class, id)]
 pub fn Toggle(
     #[props(extends = button)] mut attributes: Vec<Attribute>,
-    #[props(default = false)] checked: bool,
+    #[props(optional)] checked: Option<bool>,
     #[props(optional)] onclick: Option<EventHandler<MouseEvent>>,
     #[props(default)] color: Color,
     #[props(default)] size: Size,
     #[props(default)] animation: Animation,
 ) -> Element {
-    let mut state = match props.checked {
+    let mut interior_sig = use_signal(|| match props.checked {
+        Some(value) => value,
+        None => false,
+    });
+
+    let state = match interior_sig() {
         true => DataStateAttrValue::Active,
         false => DataStateAttrValue::Inactive,
     };
 
     let onclick = move |_event| {
-        state.toggle();
+        interior_sig.toggle();
         if let Some(oc) = &props.onclick {
             oc.call(_event)
         }
@@ -43,4 +48,8 @@ pub fn Toggle(
             onclick
         }
     )
+}
+
+impl Named for ToggleProps {
+    const NAME: &'static str = "Toggle";
 }

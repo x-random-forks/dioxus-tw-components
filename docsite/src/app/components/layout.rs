@@ -1,25 +1,39 @@
 use dioxus::prelude::*;
-use dioxus_components::molecules::Scrollable;
+use dioxus_components::{atoms::Separator, molecules::Scrollable};
 
 use crate::app::router::Route;
 
 #[component]
 pub fn SideBarComponent() -> Element {
+    let components = vec![
+        "Button",
+        "Buttongroup",
+        "Placeholder",
+        " ",
+        "Tabs",
+        " ",
+        "Checkbox",
+        "FormList",
+        "Input",
+        "Radio",
+        "Select",
+        "Slider",
+        "Textarea",
+        "Toggle",
+    ];
+
     rsx!(
         ComponentPage { 
             SideBarTemplate { 
-                ul {
-                    li {
-                        Link { to: "/components/atoms/button", "Button" }
-                    }
-                    li {
-                        Link { to: "/components/atoms/buttongroup", "ButtonGroup" }
-                    }
-                    li {
-                        Link { to: "/components/atoms/placeholder", "Placeholder" }
-                    }
-                    li {
-                        Link { to: "/components/molecules/tabs", "Tabs" }
+                ul { id: "component-list", class: "pl-2 space-y-1",
+                    for component in components {
+                        if component == " " {
+                            Separator {}
+                        } else {
+                            li { class: "anchor",
+                                Link { to: format!("/components/{}", component.to_lowercase()), {component} }
+                            }
+                        }
                     }
                 }
             }
@@ -38,7 +52,7 @@ pub fn SideBarTemplate(children: Element) -> Element {
 #[component]
 pub fn ComponentPage(children: Element) -> Element {
     rsx!(
-        div { class: "grid grid-cols-[220px_minmax(0,1fr)] max-w-screen-xl border border-primary",
+        div { class: "grid grid-cols-[220px_minmax(0,1fr)] max-w-screen-xl border border-primary min-h-full",
             {children}
         }
     )

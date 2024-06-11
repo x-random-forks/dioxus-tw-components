@@ -18,7 +18,7 @@ pub fn Header() -> Element {
                     }
                     ul { class: "text-sm list-none flex space-x-2",
                         li {
-                            Link { class: "anchor", to: "/components/atoms/button", "Components" }
+                            Link { class: "anchor", to: "/components/", "Components" }
                         }
                     }
                 }

@@ -67,3 +67,7 @@ pub fn SliderLabel(
         }
     )
 }
+
+impl Named for SliderProps {
+    const NAME: &'static str = "Slider";
+}

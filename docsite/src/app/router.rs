@@ -12,19 +12,8 @@ pub enum Route {
         HomePage {},
         #[nest("/components")]
             #[layout(SideBarComponent)]
-                #[nest("/atoms")]
-                #[route("/button")]
-                ButtonPage {},
-                #[route("/buttongroup")]
-                ButtonGroupPage {},
-                #[route("/placeholder")]
-                PlaceholderPage {},
-                #[end_nest]
-                
-                #[nest("/molecules")]
-                #[route("/tabs")]
-                TabsPage {},
-                #[end_nest]
+                #[route("/:name")]
+                ComponentPage {name: String},
             #[end_layout]
         #[end_nest]
 

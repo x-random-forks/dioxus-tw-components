@@ -35,3 +35,7 @@ pub fn Input(
         }
     }
 }
+
+impl Named for InputProps {
+    const NAME: &'static str = "Input";
+}

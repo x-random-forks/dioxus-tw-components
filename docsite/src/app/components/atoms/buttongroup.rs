@@ -1,21 +1,23 @@
 use dioxus::prelude::*;
 use dioxus_components::atoms::buttongroup::{ButtonGroup, ButtonGroupItem, ButtonGroupProps};
 
-use crate::app::{components::preview::PreviewFull, doctrait::DemoComp};
+use crate::app::doctrait::DemoComponent;
 
 #[component]
 pub fn ButtonGroupPage() -> Element {
-    rsx!(
-        PreviewFull::<ButtonGroupProps> {}
-    )
+    rsx!(  )
 }
 
-impl DemoComp for ButtonGroupProps {
+impl DemoComponent for ButtonGroupProps {
     fn title() -> &'static str {
         "Button Group"
     }
+    
+    fn description() -> &'static str {
+        ""
+    }
 
-    fn preview_comp(demo_state: &crate::app::doctrait::DemoState) -> Element {
+    fn build_comp_preview() -> Element {
         rsx!(
             ButtonGroup { 
                 ButtonGroupItem { "A" }
@@ -24,7 +26,7 @@ impl DemoComp for ButtonGroupProps {
         )        
     }
 
-    fn select_attributes(demo_state: &crate::app::doctrait::DemoState) -> Element {
+    fn build_comp_selectors() -> Element {
         rsx!(  )
     }
 }
