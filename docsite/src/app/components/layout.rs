@@ -5,13 +5,15 @@ use crate::app::router::Route;
 
 #[component]
 pub fn SideBarComponent() -> Element {
+    // Use empty strings to render separator
     let components = vec![
         "Button",
         "Buttongroup",
         "Placeholder",
-        " ",
+        "",
+        "LightSwitch",
         "Tabs",
-        " ",
+        "",
         "Checkbox",
         "FormList",
         "Input",
@@ -27,7 +29,7 @@ pub fn SideBarComponent() -> Element {
             SideBarTemplate { 
                 ul { id: "component-list", class: "pl-2 space-y-1",
                     for component in components {
-                        if component == " " {
+                        if component.is_empty() {
                             Separator {}
                         } else {
                             li { class: "anchor",

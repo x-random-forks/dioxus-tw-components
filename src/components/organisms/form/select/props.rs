@@ -43,7 +43,7 @@ pub fn SelectPlaceholder() -> Element {
 #[props_component(class, id)]
 pub fn SelectLabel(#[props(extends = optgroup)] attributes: Vec<Attribute>) -> Element {
     rsx!(
-        optgroup { ..props.attributes, class: props.class, id: props.id}
+        optgroup { ..props.attributes, class: props.class, id: props.id }
     )
 }
 

@@ -63,6 +63,7 @@ where
 
     let vcomp = comp_props.into_vcomponent(render_fn, T::name());
     let dnode_comp = DynamicNode::Component(vcomp);
+    
     rsx!(
         { dnode_comp }
     )

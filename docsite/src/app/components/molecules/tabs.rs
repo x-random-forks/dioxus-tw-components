@@ -30,7 +30,6 @@ impl DemoComponent for TabsProps {
     fn build_comp_preview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
-
         let preview_comp = build_preview_component::<TabsProps, _>(&state.read()[&0], Tabs, rsx!(
             TabsList { 
                 for i in 0..NB_TABS {

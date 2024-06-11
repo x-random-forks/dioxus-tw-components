@@ -4,12 +4,12 @@ pub mod layout;
 pub use layout::SideBarComponent;
 
 pub mod molecules;
-pub use molecules::tabs::TabsPage;
+pub use molecules::{lightswitch::LightSwitchPage, tabs::TabsPage};
 
 pub mod organisms;
 pub use organisms::form::{
     checkbox::CheckboxPage, input::InputPage, radio::RadioPage, select::SelectPage,
-    slider::SliderPage, textarea::TextAreaPage, toggle::TogglePage
+    slider::SliderPage, textarea::TextAreaPage, toggle::TogglePage,
 };
 
 pub mod preview;
@@ -31,6 +31,9 @@ pub fn ComponentPage(name: String) -> Element {
             ),
             "placeholder" => rsx!(
                 PlaceholderPage {}
+            ),
+            "lightswitch" => rsx!(
+                LightSwitchPage {}
             ),
             "tabs" => rsx!(
                 TabsPage {}

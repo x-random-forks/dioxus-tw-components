@@ -15,11 +15,11 @@ impl Class for ButtonProps {
 
     fn size(&self) -> Option<&'static str> {
         Some(match self.size {
-            Size::Xs => "px-2 py-1 text-sm",
-            Size::Sm => "px-3 py-1.5 text-sm",
-            Size::Md => "px-4 py-2 text-base",
-            Size::Lg => "px-7 py-3 text-lg",
-            Size::Xl => "px-9 py-4 text-xl",
+            Size::Xs => "h5 px-2 py-1 text-xs",
+            Size::Sm => "h7 px-3 py-1.5 text-sm",
+            Size::Md => "h9 px-4 py-2 text-sm",
+            Size::Lg => "h11 px-7 py-3 text-lg",
+            Size::Xl => "h14 px-9 py-4 text-xl",
         })
     }
 

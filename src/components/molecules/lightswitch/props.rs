@@ -1,131 +1,121 @@
 use dioxus::prelude::*;
 use props_component_macro::{props_component, BuildClass};
+use serde_json::Value;
 use tailwind_fuse::*;
-use web_sys::HtmlElement;
 
 use crate::attributes::*;
-use crate::hooks::{use_document, use_window};
 
 pub struct LightSwitchState {
     active: bool,
-    dom_body: Option<HtmlElement>,
 }
 
 impl LightSwitchState {
     pub fn new(active: bool) -> Self {
-        Self {
-            active,
-            dom_body: None,
-        }
+        Self { active }
     }
 
-    pub fn set_body(&mut self, body: Option<HtmlElement>) {
-        self.dom_body = body;
-    }
-
-    pub fn set_dark_theme(&mut self) {
-        if let Some(body) = &self.dom_body {
-            let mut body_class = body.class_name();
-            // In case there is something else in the body class adds space before
-            let dark = " dark";
-            match body_class.find(dark) {
-                None => {
-                    self.active = true;
-                    body_class.push_str(dark);
-                }
-                Some(index) => {
-                    self.active = false;
-                    body_class.replace_range(index..index + dark.len(), "");
-                }
-            }
-            body.set_class_name(&body_class);
-        }
-    }
-
-    fn is_active(&self) -> bool {
+    fn toggle(&mut self) -> bool {
+        self.active = !self.active;
         self.active
+    }
+
+    fn get_active(&self) -> bool {
+        self.active
+    }
+
+    fn set_active(&mut self, active: bool) {
+        self.active = active;
     }
 }
 
-/// This component inserts/remove "dark" in the DOM body tag class
-/// Uses only web_sys for now so it won't work for anything else than web
+/// This component inserts/remove "dark" in the DOM on the div with id of main
 #[props_component(class, id, children)]
 pub fn LightSwitch() -> Element {
+    let storage_dark_theme = use_resource(move || async move {
+        // Get dark_theme from localStorage, if not found add it to false
+        let mut eval = eval(
+            r#"
+            var dark_theme = localStorage.getItem("dark_theme");
+            if (dark_theme == null) {
+                var dark_theme = false;
+                localStorage.setItem("dark_theme", dark_theme);
+            } else {
+                let main_div = document.getElementById("main");
+                if (main_div != null && dark_theme == "true") {
+                    main_div.classList.add("dark");
+                }
+            }
+            dioxus.send(dark_theme);
+            "#,
+        );
+
+        let dark = eval.recv().await;
+        dark
+    });
+
     let mut state = use_signal(|| LightSwitchState::new(false));
 
+    use_effect(move || {
+        match &*storage_dark_theme.read_unchecked() {
+            Some(Ok(value)) => match value {
+                Value::String(str) => {
+                    let parsed_str = str.parse::<bool>();
+                    if let Ok(bool_value) = parsed_str {
+                        state.write().set_active(bool_value);
+                    }
+                }
+                _ => {}
+            },
+            Some(Err(_)) => {}
+            None => {}
+        };
+    });
+
     let onclick = move |_| {
-        state.write().set_dark_theme();
+        let dark_theme = state.write().toggle();
+        spawn(async move {
+            // Change value of dark_theme in localStorage
+            let eval = eval(
+                r#"
+                const dark_theme = await dioxus.recv();
+                localStorage.setItem("dark_theme", dark_theme);
+                let main_div = document.getElementById("main");
+                if (main != null) {
+                    if (dark_theme) {
+                        main_div.classList.add("dark");
+                    } else {
+                        main_div.classList.remove("dark");
+                    }
+                }
+                "#,
+            );
+            let _ = eval.send(dark_theme.into());
+        });
     };
 
     let icon = use_correct_theme_icon(state);
-
-    let onmounted = move |_| {
-        let _ = use_window()
-            .and_then(|window| use_document(&window))
-            .map(|document| state.write().set_body(document.body()));
-    };
 
     rsx!(
         button {
             r#type: "button",
             class: props.class,
             onclick,
-            onmounted,
             {icon}
         }
     )
 }
 
-// let dark = light_switch_context.read().0.clone();
-// let _ = use_resource(move || async move {
-//     let eval = eval(
-//         r#"
-//         const html = document.querySelector("html");
-//         const light_switch = "light_switch";
-//         let color = await dioxus.recv();
-//         if (color == "light") {
-//             html.classList.remove("dark");
-//             localStorage.setItem(light_switch, color);
-//         } else {
-//             html.classList.add("dark");
-//             localStorage.setItem(light_switch, color);
-//         }
-//         "#,
-//     );
-//     let test = dark.read().0.clone().into();
-//     log::debug!("JS Dark mode: {}", dark.read().0);
-//     eval.send(test).unwrap();
-// });
-
-// Fetch in Local Storage last saved value of light_switch
-// pub fn use_user_pref_light() {
-//     let mut light_switch_context = use_context::<Signal<LightSwitchSignal>>();
-
-//     let _ = use_resource(move || async move {
-//         let mut eval = eval(
-//             r#"
-//             const light_switch_value = localStorage.getItem("light_switch");
-//             console.log(light_switch_value);
-//             dioxus.send(light_switch_value);
-//             "#,
-//         );
-
-//         if eval.recv().await.unwrap() == "dark" {
-//             light_switch_context.write().0 = "dark".to_string();
-//         } else {
-//             light_switch_context.write().0 = "".to_string();
-//         }
-//     });
-// }
+impl Named for LightSwitchProps {
+    const NAME: &'static str = "LightSwitch";
+}
 
 fn use_correct_theme_icon(state: Signal<LightSwitchState>) -> Element {
     rsx!(
-        if !state.read().is_active() {
+        if !state.read().get_active() {
             svg {
                 view_box: "0 0 24 24",
                 width: 24,
                 height: 24,
-                // stroke: "currentColor",
                 stroke_width: 2,
                 fill: "none",
                 class: "stroke-foreground",
