@@ -49,7 +49,3 @@ pub fn Toggle(
         }
     )
 }
-
-impl Named for ToggleProps {
-    const NAME: &'static str = "Toggle";
-}

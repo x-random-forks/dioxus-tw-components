@@ -1,6 +1,6 @@
 use quote::{quote, ToTokens};
 use proc_macro::TokenStream;
-use syn::{parse2, parse_macro_input, Ident, Stmt};
+use syn::{parse2, Stmt};
 
 /// This is used for docsite to generate each component declaration
 #[proc_macro_attribute]
@@ -12,7 +12,7 @@ pub fn preview_comp_macro(attr: TokenStream, item: TokenStream) -> TokenStream {
 
     let mut block = input.block.clone();
 
-    let name = &input.sig.ident;
+    // let name = &input.sig.ident;
 
     let res = quote! {};
     let stmt: Stmt = parse2(res.into()).unwrap();

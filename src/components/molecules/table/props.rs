@@ -32,9 +32,24 @@ pub fn TableFooter(#[props(extends = tfoot)] attributes: Vec<Attribute>) -> Elem
 }
 
 #[props_component(class, id, children)]
-pub fn TableHead(#[props(extends = th)] attributes: Vec<Attribute>) -> Element {
+pub fn TableHead(
+    #[props(extends = th)] attributes: Vec<Attribute>,
+    #[props(optional)] onclick: Option<EventHandler<MouseEvent>>,
+) -> Element {
+    let onclick = move |event| {
+        if let Some(oc) = &props.onclick {
+            oc.call(event)
+        }
+    };
+
     rsx!(
-        th { ..props.attributes, class: props.class, id: props.id, {props.children} }
+        th {
+            ..props.attributes,
+            class: props.class,
+            id: props.id,
+            onclick,
+            {props.children}
+        }
     )
 }
 

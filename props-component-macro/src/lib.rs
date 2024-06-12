@@ -117,6 +117,20 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
         quote! {}
     };
 
+    let mut named = String::new();
+    for (i, c) in name.to_string().chars().enumerate() {
+        if i > 0 && c.is_uppercase() {
+            named.push(' ');
+        }
+        named.push(c);
+    }
+    println!("named {named}");
+    let impl_named = quote!{
+        impl Named for #name_struct {
+            const NAME: &'static str = "#named";
+        }
+    };
+
     let has_children_impl = if has_children_attr {
         quote!{
             impl HasChildren for #name_struct {
@@ -142,6 +156,8 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
         pub struct #name_struct {
             #(#fields),*
         }
+
+        #impl_named
 
         #has_children_impl
 

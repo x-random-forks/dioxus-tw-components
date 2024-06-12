@@ -38,7 +38,3 @@ pub fn Button(
         }
     )
 }
-
-impl Named for ButtonProps {
-    const NAME: &'static str = "Button";
-}

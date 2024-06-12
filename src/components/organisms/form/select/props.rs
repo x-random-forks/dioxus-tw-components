@@ -68,7 +68,3 @@ pub fn SelectItem(
         )
     }
 }
-
-impl Named for SelectGroupProps {
-    const NAME: &'static str = "Select";
-}

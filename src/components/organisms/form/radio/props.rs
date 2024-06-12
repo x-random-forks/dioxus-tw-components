@@ -24,7 +24,3 @@ pub fn Radio(
         }
     )
 }
-
-impl Named for RadioProps {
-    const NAME: &'static str = "Radio";
-}

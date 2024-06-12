@@ -1,9 +1,7 @@
 use dioxus::prelude::*;
-
-use crate::app::{components::preview::*, doctrait::DemoComponent};
 use dioxus_components::molecules::tabs::*;
 
-const NB_TABS: u8 = 3;
+use crate::app::{components::preview::*, doctrait::DemoComponent};
 
 #[component]
 pub fn TabsPage() -> Element {
@@ -30,25 +28,35 @@ impl DemoComponent for TabsProps {
     fn build_comp_preview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
-        let preview_comp = build_preview_component::<TabsProps, _>(&state.read()[&0], Tabs, rsx!(
-            TabsList { 
-                for i in 0..NB_TABS {
-                    TabsTrigger { id: format!("tabs-{i}"),
-                        "Tab "
-                        {i.to_string()}
+        rsx!(
+            Tabs {
+                default_tab: "tabs-0",
+                class: &state.read()[&0].get_class(),
+                override_class: &state.read()[&0].get_override_class(),
+                TabsList { 
+                    TabsTrigger { id: "tabs-0", "Home" }
+                    TabsTrigger { id: "tabs-1", "About" }
+                    TabsTrigger { id: "tabs-2", "Contact" }
+                }
+                TabsContent { id: "tabs-0", class: "space-y-4",
+                    h4 { class: "h4 text-foreground", "Welcome to our home page!" }
+                    p { class: "paragraph text-foreground",
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nisl nunc aliquet nisl, vel aliquet nunc nisl vel nisl. Nulla facilisi."
+                    }
+                }
+                TabsContent { id: "tabs-1", class: "space-y-4",
+                    h4 { class: "h4 text-foreground", "Learn more about us here." }
+                    p { class: "paragraph text-foreground",
+                        "Vivamus eget nisl velit. Sed euismod, nunc vel tincidunt lacinia, nisl nunc aliquet nisl, vel aliquet nunc nisl vel nisl. Nulla facilisi."
+                    }
+                }
+                TabsContent { id: "tabs-2", class: "space-y-4",
+                    h4 { class: "h4 text-foreground", "Get in touch with us using the form below." }
+                    p { class: "paragraph text-foreground",
+                        "Praesent eget nisl velit. Sed euismod, nunc vel tincidunt lacinia, nisl nunc aliquet nisl, vel aliquet nunc nisl vel nisl. Nulla facilisi."
                     }
                 }
             }
-            for i in 0..NB_TABS {
-                TabsContent { id: format!("tabs-{i}"),
-                    "Content "
-                    {i.to_string()}
-                }
-            }
-        ));
-
-        rsx!(
-            {preview_comp}
         )
     }
 

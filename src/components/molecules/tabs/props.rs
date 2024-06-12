@@ -59,15 +59,3 @@ pub fn TabsContent() -> Element {
         }
     )
 }
-
-impl Named for TabsProps {
-    const NAME: &'static str = "Tabs";
-}
-
-impl Named for TabsTriggerProps {
-    const NAME: &'static str = "TabsTrigger";
-}
-
-impl Named for TabsContentProps {
-    const NAME: &'static str = "TabsContent";
-}

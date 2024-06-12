@@ -22,7 +22,7 @@ pub use navbar::Navbar;
 pub mod progressbar;
 pub use progressbar::{ProgressBar, ProgressLabel, ProgressTrack};
 
-mod scrollable;
+pub mod scrollable;
 pub use scrollable::Scrollable;
 
 pub mod table;

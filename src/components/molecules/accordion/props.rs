@@ -48,12 +48,12 @@ impl AccordionState {
 /// ```ignore
 /// Accordion {
 ///     AccordionItem {
-///         AccordionTrigger { "Trigger 1" }
-///         AccordionContent { "Content 1" }
+///         AccordionTrigger { id: "acc-1", "Trigger 1" }
+///         AccordionContent { id: "acc-1", Content 1" }
 ///     }
 ///     AccordionItem {
-///         AccordionTrigger { "Trigger 2" }
-///         AccordionContent { "Content 2" }
+///         AccordionTrigger { id: "acc-2", "Trigger 2" }
+///         AccordionContent { id: "acc-2", "Content 2" }
 ///     }
 /// }
 /// ```
@@ -89,7 +89,7 @@ pub fn AccordionTrigger(
     #[props(default = use_default_trigger_decoration())]
     trigger_decoration: Element,
 ) -> Element {
-    let mut state = consume_context::<Signal<AccordionState>>();
+    let mut state = use_context::<Signal<AccordionState>>();
 
     let sig_id = use_signal(|| props.id.clone());
 
@@ -129,7 +129,7 @@ pub fn AccordionTrigger(
             id: props.id,
             onclick: button_closure,
             onmounted: onmounted,
-            {props.children},
+            p { {props.children} }
             {props.trigger_decoration}
         }
     )
@@ -138,9 +138,9 @@ pub fn AccordionTrigger(
 fn use_default_trigger_decoration() -> Element {
     rsx!(
         svg {
-            class: "transition-transform transform duration-300 group-data-[state=active]:-rotate-180",
-            width: 16,
-            height: 16,
+            class: "fill-foreground/80 transition-transform transform duration-300 group-data-[state=active]:-rotate-180",
+            width: 14,
+            height: 14,
             xmlns: "http://www.w3.org/2000/svg",
             view_box: "0 0 512 512",
             path { d: "M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z" }
@@ -176,7 +176,7 @@ pub fn AccordionContent(
         }
     };
 
-    let state = consume_context::<Signal<AccordionState>>();
+    let state = use_context::<Signal<AccordionState>>();
 
     let final_height = match state.read().is_active(&sig_id()) {
         true => elem_height(),

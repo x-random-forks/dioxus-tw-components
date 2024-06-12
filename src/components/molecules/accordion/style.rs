@@ -5,19 +5,19 @@ impl Class for AccordionProps {}
 
 impl Class for AccordionItemProps {
     fn base(&self) -> &'static str {
-        "border-b"
+        "border-b border-border"
     }
 }
 
 impl Class for AccordionTriggerProps {
     fn base(&self) -> &'static str {
-        "flex flex-1 items-center justify-between p-extrasmall w-full d-text-small font-medium group hover:underline"
+        "flex flex-1 items-center justify-between py-2 space-x-2 font-medium text-foreground group hover:underline"
     }
 }
 
 impl Class for AccordionContentProps {
     fn base(&self) -> &'static str {
-        "d-text-small overflow-hidden px-small"
+        "text-sm text-foreground overflow-hidden"
     }
 
     fn animation(&self) -> Option<&'static str> {

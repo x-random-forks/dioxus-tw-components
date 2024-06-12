@@ -4,7 +4,8 @@ pub mod layout;
 pub use layout::SideBarComponent;
 
 pub mod molecules;
-pub use molecules::{lightswitch::LightSwitchPage, tabs::TabsPage};
+use molecules::{accordion::AccordionPage, breadcrumb::BreadcrumbPage, carousel::CarouselPage, dropdown::DropdownPage, modal::ModalPage, progressbar::ProgressBarPage, scrollable::ScrollablePage, table::TablePage};
+pub use molecules::{lightswitch::LightSwitchPage,sortedtable::SortedTablePage, tabs::TabsPage};
 
 pub mod organisms;
 pub use organisms::form::{
@@ -23,17 +24,38 @@ pub fn ComponentPage(name: String) -> Element {
 
     match route {
         Route::ComponentPage { name } => match name.as_str() {
+            "accordion" => rsx!(
+                AccordionPage {}
+            ),
             "button" => rsx!(
                 ButtonPage {}
             ),
             "buttongroup" => rsx!(
                 ButtonGroupPage {}
             ),
+            "breadcrumb" => rsx!(
+                BreadcrumbPage {}
+            ),
+            "carousel" => rsx!(
+                CarouselPage {}
+            ),
+            "dropdown" => rsx!(
+                DropdownPage {}
+            ),
             "placeholder" => rsx!(
                 PlaceholderPage {}
             ),
+            "modal" => rsx!(
+                ModalPage {}
+            ),
+            "progressbar" => rsx!(
+                ProgressBarPage {}
+            ),
             "lightswitch" => rsx!(
                 LightSwitchPage {}
+            ),
+            "scrollable" => rsx!(
+                ScrollablePage {}
             ),
             "tabs" => rsx!(
                 TabsPage {}
@@ -49,6 +71,12 @@ pub fn ComponentPage(name: String) -> Element {
             ),
             "select" => rsx!(
                 SelectPage {}
+            ),
+            "sortedtable" => rsx!(
+                SortedTablePage {}
+            ),
+            "table" => rsx!(
+                TablePage {}
             ),
             "slider" => rsx!(
                 SliderPage {}

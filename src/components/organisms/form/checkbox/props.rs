@@ -28,7 +28,3 @@ pub fn Checkbox(
         }
     )
 }
-
-impl Named for CheckboxProps {
-    const NAME: &'static str = "Checkbox";
-}

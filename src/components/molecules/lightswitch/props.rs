@@ -31,6 +31,7 @@ impl LightSwitchState {
 /// This component inserts/remove "dark" in the DOM on the div with id of main
 #[props_component(class, id, children)]
 pub fn LightSwitch() -> Element {
+    
     let storage_dark_theme = use_resource(move || async move {
         // Get dark_theme from localStorage, if not found add it to false
         let mut eval = eval(
@@ -96,17 +97,8 @@ pub fn LightSwitch() -> Element {
     let icon = use_correct_theme_icon(state);
 
     rsx!(
-        button {
-            r#type: "button",
-            class: props.class,
-            onclick,
-            {icon}
-        }
+        button { r#type: "button", class: props.class, onclick, {icon} }
     )
-}
-
-impl Named for LightSwitchProps {
-    const NAME: &'static str = "LightSwitch";
 }
 
 fn use_correct_theme_icon(state: Signal<LightSwitchState>) -> Element {

@@ -1,3 +1,3 @@
-mod props;
+pub mod props;
 pub use props::*;
 mod style;

@@ -29,7 +29,7 @@ impl Class for CarouselContentProps {
 
 impl Class for CarouselItemProps {
     fn base(&self) -> &'static str {
-        "relative min-w-0 shrink-0 grow-0 basis-full p-medium"
+        "relative min-w-0 shrink-0 grow-0 basis-full p-2"
     }
 }
 

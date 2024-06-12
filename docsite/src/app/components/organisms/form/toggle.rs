@@ -3,7 +3,6 @@ use dioxus_components::form::toggle::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
-
 #[component]
 pub fn TogglePage() -> Element {
     let _state = use_context_provider(|| {

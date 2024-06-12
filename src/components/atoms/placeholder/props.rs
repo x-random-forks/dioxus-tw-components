@@ -17,7 +17,3 @@ pub fn Placeholder(
         div { class: props.class }
     )
 }
-
-impl Named for PlaceholderProps {
-    const NAME: &'static str = "Placeholder";
-}

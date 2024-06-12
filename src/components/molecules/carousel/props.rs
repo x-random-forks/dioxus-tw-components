@@ -128,7 +128,7 @@ pub fn CarouselWindow() -> Element {
 /// You need to pass it an id for it to work
 #[props_component(id, class, children)]
 pub fn CarouselContent(#[props(default)] animation: Animation) -> Element {
-    let mut carousel_state = consume_context::<Signal<CarouselState>>();
+    let mut carousel_state = use_context::<Signal<CarouselState>>();
 
     let sig_id = use_signal(|| props.id.clone());
 
@@ -167,7 +167,7 @@ pub fn CarouselItem(
     /// Represent position in the carousel
     item_key: u32,
 ) -> Element {
-    let mut state = consume_context::<Signal<CarouselState>>();
+    let mut state = use_context::<Signal<CarouselState>>();
 
     let onmounted = move |_| {
         state.write().increment_carousel_size();
@@ -194,7 +194,7 @@ pub fn CarouselItem(
 #[props_component(id, class)]
 pub fn CarouselTrigger(#[props(default = false)] next: bool) -> Element {
     let onclick = move |_| {
-        let mut carousel_state = consume_context::<Signal<CarouselState>>();
+        let mut carousel_state = use_context::<Signal<CarouselState>>();
         let content_id = carousel_state.read().content_id.clone();
 
         carousel_state
@@ -241,6 +241,7 @@ fn get_next_prev_icons(is_next: bool) -> Element {
                 height: 24,
                 xmlns: "http://www.w3.org/2000/svg",
                 view_box: "0 0 512 512",
+                class: "fill-foreground",
                 path { d: "M294.6 135.1c-4.2-4.5-10.1-7.1-16.3-7.1C266 128 256 138 256 150.3V208H160c-17.7 0-32 14.3-32 32v32c0 17.7 14.3 32 32 32h96v57.7c0 12.3 10 22.3 22.3 22.3c6.2 0 12.1-2.6 16.3-7.1l99.9-107.1c3.5-3.8 5.5-8.7 5.5-13.8s-2-10.1-5.5-13.8L294.6 135.1z" }
             }
         ),
@@ -250,6 +251,7 @@ fn get_next_prev_icons(is_next: bool) -> Element {
                 height: 24,
                 xmlns: "http://www.w3.org/2000/svg",
                 view_box: "0 0 512 512",
+                class: "fill-foreground",
                 transform: "scale(-1, 1)",
                 path { d: "M294.6 135.1c-4.2-4.5-10.1-7.1-16.3-7.1C266 128 256 138 256 150.3V208H160c-17.7 0-32 14.3-32 32v32c0 17.7 14.3 32 32 32h96v57.7c0 12.3 10 22.3 22.3 22.3c6.2 0 12.1-2.6 16.3-7.1l99.9-107.1c3.5-3.8 5.5-8.7 5.5-13.8s-2-10.1-5.5-13.8L294.6 135.1z" }
             }

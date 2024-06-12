@@ -1,0 +1,74 @@
+use dioxus::prelude::*;
+use dioxus_components::molecules::dropdown::*;
+
+use crate::app::{components::preview::*, doctrait::DemoComponent};
+
+#[component]
+pub fn DropdownPage() -> Element {
+    let _state = use_context_provider(|| {
+        let mut hash = HashPreview::new();
+        for index in 0..3 {
+            hash.insert(index, FieldPreview::default());
+        }
+        Signal::new(hash)
+    });
+
+    rsx!(
+        PreviewFull::<DropdownProps> {}
+    )
+}
+
+impl DemoComponent for DropdownProps {
+    fn title() -> &'static str {
+        "Dropdown"
+    }
+
+    fn description() -> &'static str {
+        ""
+    }
+
+    fn build_comp_preview() -> Element {
+        let state = use_context::<Signal<HashPreview>>();
+
+        let content1 = build_preview_component::<DropdownContentProps, _>(
+            &state.read()[&2],
+            DropdownContent,
+            rsx!(
+                p { "Content 1" }
+                p { "Content 2" }
+                p { "Content 3" }
+                p { "Content 4" }
+            ),
+        );
+
+        let toggle = build_preview_component::<DropdownToggleProps, _>(
+            &state.read()[&1],
+            DropdownToggle,
+            rsx!( "Dropdown" ),
+        );
+
+        let dropdown = build_preview_component::<DropdownProps, _>(
+            &state.read()[&0],
+            Dropdown,
+            rsx!(
+                { toggle },
+                { content1 }
+            ),
+        );
+
+        rsx!(
+            { dropdown }
+        )
+    }
+
+    fn build_comp_selectors() -> Element {
+        let state = use_context::<Signal<HashPreview>>();
+
+        rsx!(
+            div { class: "flex flex-col" }
+            CompPreviewSelector::<DropdownProps> { index: 0, state, comp_props: DropdownProps::default() }
+            CompPreviewSelector::<DropdownToggleProps> { index: 1, state, comp_props: DropdownToggleProps::default() }
+            CompPreviewSelector::<DropdownContentProps> { index: 2, state, comp_props: DropdownContentProps::default() }
+        )
+    }
+}
