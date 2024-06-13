@@ -15,11 +15,14 @@ pub fn ProgressBar(
 
 #[props_component(class, children, id)]
 pub fn ProgressBarInner(#[props(default = 50)] progress: u8, #[props(default)] color: Color) -> Element {
+    let progress = if props.progress > 100 {
+        100
+    } else {
+        props.progress
+    };
+
     rsx!(
-        div {
-            class: props.class,
-            style: "width: {props.progress}%",
-            id: props.id,
+        div { class: props.class, style: "width: {progress}%", id: props.id,
             div { {props.children} }
         }
     )
