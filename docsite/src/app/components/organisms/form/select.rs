@@ -20,24 +20,27 @@ impl DemoComponent for SelectGroupProps {
     fn title() -> &'static str {
         "Select"
     }
-    
+
     fn description() -> &'static str {
         "Interactive dropdown list that allows users to select an option. This component provides a user-friendly way to choose from a list of options."
     }
 
     fn build_comp_preview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
-        
-        let preview_comp =
-            build_preview_component::<SelectGroupProps, _>(&state.read()[&0], SelectGroup, rsx!(
+
+        let preview_comp = build_preview_component::<SelectGroupProps, _>(
+            &state.read()[&0],
+            SelectGroup,
+            rsx!(
                 SelectPlaceholder { "Placeholder" }
                 SelectLabel { label: "Items" }
                 SelectItem { "First item" }
                 SelectItem { "Second Item" }
-            ));
+            ),
+        );
 
         rsx!(
-            div { class: "flex space-x-2", {preview_comp} }
+            { preview_comp }
         )
     }
 
@@ -45,9 +48,7 @@ impl DemoComponent for SelectGroupProps {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
-            div { class: "flex flex-col w-full",
-                CompPreviewSelector::<SelectGroupProps> { index: 0, state, comp_props: SelectGroupProps::default() }
-            }
+            CompPreviewSelector::<SelectGroupProps> { index: 0, state, comp_props: SelectGroupProps::default() }
         )
     }
 }

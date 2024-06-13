@@ -77,8 +77,6 @@ impl DemoComponent for TableProps {
     fn build_comp_selectors() -> Element {
         let _state = use_context::<Signal<HashPreview>>();
 
-        rsx!(
-            div { class: "flex flex-col" }
-        )
+        rsx!(  )
     }
 }

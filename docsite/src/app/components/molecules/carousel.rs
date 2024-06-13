@@ -1,5 +1,7 @@
 use dioxus::prelude::*;
+use dioxus_components::atoms::button::Button;
 use dioxus_components::molecules::carousel::*;
+use docsite_macro::{extract_html};
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
@@ -7,16 +9,24 @@ use crate::app::{components::preview::*, doctrait::DemoComponent};
 pub fn CarouselPage() -> Element {
     let _state = use_context_provider(|| {
         let mut hash = HashPreview::new();
-        hash.insert(0, FieldPreview::default().class("w-96".to_string()).clone());
-        hash.insert(1, FieldPreview::default().class("bg-primary".to_string()).clone());
-        hash.insert(2, FieldPreview::default().class("bg-gradient-to-r from-primary to-secondary".to_string()).clone());
-        hash.insert(3, FieldPreview::default().class("bg-secondary".to_string()).clone());
+        hash.insert(0, FieldPreview::default().class("w-96".to_string()));
+        hash.insert(
+            1,
+            FieldPreview::default().class("bg-primary/40".to_string()),
+        );
+        hash.insert(
+            2,
+            FieldPreview::default()
+                .class("bg-gradient-to-r from-primary/40 to-secondary/40".to_string()),
+        );
+        hash.insert(
+            3,
+            FieldPreview::default().class("bg-secondary/40".to_string()),
+        );
         Signal::new(hash)
     });
 
-    rsx!(
-        PreviewFull::<CarouselProps> {}
-    )
+    rsx!(PreviewFull::<CarouselProps> {})
 }
 
 impl DemoComponent for CarouselProps {
@@ -36,7 +46,7 @@ impl DemoComponent for CarouselProps {
                 class: &state.read()[&0].get_class(),
                 override_class: &state.read()[&0].get_override_class(),
                 CarouselTrigger { next: false }
-                CarouselWindow { 
+                CarouselWindow {
                     CarouselContent { id: "carousel-prev",
                         CarouselItem {
                             item_key: 0,
@@ -73,12 +83,10 @@ impl DemoComponent for CarouselProps {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
-            div { class: "flex flex-col",
-                CompPreviewSelector::<CarouselProps> { index: 0, state, comp_props: CarouselProps::default() }
-                CompPreviewSelector::<CarouselItemProps> { index: 1, state, comp_props: CarouselItemProps::default() }
-                CompPreviewSelector::<CarouselItemProps> { index: 2, state, comp_props: CarouselItemProps::default() }
-                CompPreviewSelector::<CarouselItemProps> { index: 3, state, comp_props: CarouselItemProps::default() }
-            }
+            CompPreviewSelector::<CarouselProps> { index: 0, state, comp_props: CarouselProps::default() }
+            CompPreviewSelector::<CarouselItemProps> { index: 1, state, comp_props: CarouselItemProps::default() }
+            CompPreviewSelector::<CarouselItemProps> { index: 2, state, comp_props: CarouselItemProps::default() }
+            CompPreviewSelector::<CarouselItemProps> { index: 3, state, comp_props: CarouselItemProps::default() }
         )
     }
 }

@@ -29,23 +29,47 @@ impl DemoComponent for BreadcrumbProps {
 
     fn build_comp_preview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
-        
-        let item_1 = build_preview_component::<BreadcrumbItemProps, _>(&state.read()[&1], BreadcrumbItem, rsx!( "Home" ));
-        let sep_1 = build_preview_component::<BreadcrumbSeparatorProps, _>(&state.read()[&2], BreadcrumbSeparator, None);
-        let item_2 = build_preview_component::<BreadcrumbItemProps, _>(&state.read()[&3], BreadcrumbItem, rsx!( "Library" ));
-        let sep_2 = build_preview_component::<BreadcrumbSeparatorProps, _>(&state.read()[&4], BreadcrumbSeparator, None);
-        let item_3 = build_preview_component::<BreadcrumbItemProps, _>(&state.read()[&5], BreadcrumbItem, rsx!( "Data" ));
 
-        let full_comp =  build_preview_component::<BreadcrumbProps, _>(&state.read()[&0], Breadcrumb, rsx!(
-            {item_1},
-            {sep_1},
-            {item_2},
-            {sep_2},
-            {item_3}
-        ));
+        let item_1 = build_preview_component::<BreadcrumbItemProps, _>(
+            &state.read()[&1],
+            BreadcrumbItem,
+            rsx!( "Home" ),
+        );
+        let sep_1 = build_preview_component::<BreadcrumbSeparatorProps, _>(
+            &state.read()[&2],
+            BreadcrumbSeparator,
+            None,
+        );
+        let item_2 = build_preview_component::<BreadcrumbItemProps, _>(
+            &state.read()[&3],
+            BreadcrumbItem,
+            rsx!( "Library" ),
+        );
+        let sep_2 = build_preview_component::<BreadcrumbSeparatorProps, _>(
+            &state.read()[&4],
+            BreadcrumbSeparator,
+            None,
+        );
+        let item_3 = build_preview_component::<BreadcrumbItemProps, _>(
+            &state.read()[&5],
+            BreadcrumbItem,
+            rsx!( "Data" ),
+        );
+
+        let full_comp = build_preview_component::<BreadcrumbProps, _>(
+            &state.read()[&0],
+            Breadcrumb,
+            rsx!(
+                { item_1 },
+                { sep_1 },
+                { item_2 },
+                { sep_2 },
+                { item_3 }
+            ),
+        );
 
         rsx!(
-            {full_comp}
+            { full_comp }
         )
     }
 
@@ -53,14 +77,19 @@ impl DemoComponent for BreadcrumbProps {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
-            div { class: "flex flex-col",
-                CompPreviewSelector::<BreadcrumbProps> { index: 0, state, comp_props: BreadcrumbProps::default() }
-                CompPreviewSelector::<BreadcrumbItemProps> { index: 1, state, comp_props: BreadcrumbItemProps::default() }
-                CompPreviewSelector::<BreadcrumbSeparatorProps> { index: 2, state, comp_props: BreadcrumbSeparatorProps::default() }
-                CompPreviewSelector::<BreadcrumbItemProps> { index: 3, state, comp_props: BreadcrumbItemProps::default() }
-                CompPreviewSelector::<BreadcrumbSeparatorProps> { index: 4, state, comp_props: BreadcrumbSeparatorProps::default() }
-                CompPreviewSelector::<BreadcrumbItemProps> { index: 5, state, comp_props: BreadcrumbItemProps::default() }
-            }
+            CompPreviewSelector::<BreadcrumbProps> { index: 0, state, comp_props: BreadcrumbProps::default() }
+            CompPreviewSelector::<BreadcrumbItemProps> { index: 1, state, comp_props: BreadcrumbItemProps::default() }
+            CompPreviewSelector::<BreadcrumbSeparatorProps> { index: 2, state, comp_props: BreadcrumbSeparatorProps::default() }
+            CompPreviewSelector::<BreadcrumbItemProps> { index: 3, state, comp_props: BreadcrumbItemProps::default() }
+            CompPreviewSelector::<BreadcrumbSeparatorProps> { index: 4, state, comp_props: BreadcrumbSeparatorProps::default() }
+            CompPreviewSelector::<BreadcrumbItemProps> { index: 5, state, comp_props: BreadcrumbItemProps::default() }
         )
     }
+}
+
+#[component]
+pub fn PreviewSelectorGroup(children: Element) -> Element {
+    rsx!(
+        div { id: "preview-selector-group", { children } }
+    )
 }

@@ -68,12 +68,10 @@ impl DemoComponent for ModalProps {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
-            div { class: "flex flex-col",
-                CompPreviewSelector::<ModalTriggerProps> { index: 0, state, comp_props: ModalTriggerProps::default() }
-                CompPreviewSelector::<ModalBackgroundProps> { index: 1, state, comp_props: ModalBackgroundProps::default() }
-                CompPreviewSelector::<ModalCloseProps> { index: 2, state, comp_props: ModalCloseProps::default() }
-                CompPreviewSelector::<ModalContentProps> { index: 3, state, comp_props: ModalContentProps::default() }
-            }
+            CompPreviewSelector::<ModalTriggerProps> { index: 0, state, comp_props: ModalTriggerProps::default() }
+            CompPreviewSelector::<ModalBackgroundProps> { index: 1, state, comp_props: ModalBackgroundProps::default() }
+            CompPreviewSelector::<ModalCloseProps> { index: 2, state, comp_props: ModalCloseProps::default() }
+            CompPreviewSelector::<ModalContentProps> { index: 3, state, comp_props: ModalContentProps::default() }
         )
     }
 }

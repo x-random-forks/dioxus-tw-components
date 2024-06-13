@@ -71,11 +71,9 @@ impl DemoComponent for DropdownProps {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
-            div { class: "flex flex-col",
-                CompPreviewSelector::<DropdownProps> { index: 0, state, comp_props: DropdownProps::default() }
-                CompPreviewSelector::<DropdownToggleProps> { index: 1, state, comp_props: DropdownToggleProps::default() }
-                CompPreviewSelector::<DropdownContentProps> { index: 2, state, comp_props: DropdownContentProps::default() }
-            }
+            CompPreviewSelector::<DropdownProps> { index: 0, state, comp_props: DropdownProps::default() }
+            CompPreviewSelector::<DropdownToggleProps> { index: 1, state, comp_props: DropdownToggleProps::default() }
+            CompPreviewSelector::<DropdownContentProps> { index: 2, state, comp_props: DropdownContentProps::default() }
         )
     }
 }

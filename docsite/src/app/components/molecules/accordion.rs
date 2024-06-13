@@ -72,12 +72,10 @@ impl DemoComponent for AccordionProps {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
-            div { class: "flex flex-col",
-                CompPreviewSelector::<AccordionProps> { index: 0, state, comp_props: AccordionProps::default() }
-                CompPreviewSelector::<AccordionContentProps> { index: 1, state, comp_props: AccordionContentProps::default() }
-                CompPreviewSelector::<AccordionContentProps> { index: 2, state, comp_props: AccordionContentProps::default() }
-                CompPreviewSelector::<AccordionContentProps> { index: 3, state, comp_props: AccordionContentProps::default() }
-            }
+            CompPreviewSelector::<AccordionProps> { index: 0, state, comp_props: AccordionProps::default() }
+            CompPreviewSelector::<AccordionContentProps> { index: 1, state, comp_props: AccordionContentProps::default() }
+            CompPreviewSelector::<AccordionContentProps> { index: 2, state, comp_props: AccordionContentProps::default() }
+            CompPreviewSelector::<AccordionContentProps> { index: 3, state, comp_props: AccordionContentProps::default() }
         )
     }
 }

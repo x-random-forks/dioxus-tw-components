@@ -3,7 +3,7 @@ use std::{collections::HashMap, str::FromStr};
 use dioxus::prelude::*;
 use dioxus_components::{
     attributes::*,
-    form::{Input, SelectGroup, SelectItem},
+    form::{Input, SelectGroup, SelectItem, SelectPlaceholder},
 };
 use dioxus_core::DynamicNode;
 
@@ -13,7 +13,6 @@ use crate::app::doctrait::{DemoComponent, IntoVec};
 pub fn PreviewFull<T: DemoComponent + 'static>() -> Element {
     rsx!(
         h1 { class: "h1", {T::title()} }
-        p { class: "paragraph", {T::description()} }
         PreviewDemo::<T> {}
     )
 }
@@ -21,12 +20,14 @@ pub fn PreviewFull<T: DemoComponent + 'static>() -> Element {
 #[component]
 fn PreviewDemo<T: DemoComponent>() -> Element {
     rsx!(
-        section { class: "w-full border border-orange-700",
-            h2 { class: "sr-only", {T::title()} }
-            div { class: "border border-yellow-500", "header" }
-            div { class: "w-full items-center justify-center", PreviewWindow { {T::build_comp_preview()} } }
-            div { class: "border border-red-600", "footer" }
-            PreviewSelectors { {T::build_comp_selectors()} }
+        section { class: "w-full border border-orange-700 space-y-2",
+            h2 { id: "preview-title", class: "sr-only", {T::title()} }
+            div { id: "preview-header", class: "border border-yellow-500", {T::description()} }
+            PreviewWindow { 
+                PreviewWindowComponent { {T::build_comp_preview()} }
+                PreviewWindowSelectors { {T::build_comp_selectors()} }
+            }
+            div { id: "preview-footer", class: "border", "Footer" }
         }
     )
 }
@@ -81,18 +82,20 @@ pub fn CompPreviewSelector<T: BuildClass + std::cmp::PartialEq + 'static>(
     children: Element,
 ) -> Element {
     rsx!(
-        ClassSelector { state, index }
-        if comp_props.has_color() {
-            Selector { state, index, selector_type: SelectorType::Color }
-        }
-        if comp_props.has_size() {
-            Selector { state, index, selector_type: SelectorType::Size }
-        }
-        if comp_props.has_animation() {
-            Selector { state, index, selector_type: SelectorType::Animation }
-        }
-        if comp_props.has_orientation() {
-            Selector { state, index, selector_type: SelectorType::Orientation }
+        div { class: "flex flex-row space-x-4",
+            ClassSelector { state, index }
+            if comp_props.has_color() {
+                Selector { state, index, selector_type: SelectorType::Color }
+            }
+            if comp_props.has_size() {
+                Selector { state, index, selector_type: SelectorType::Size }
+            }
+            if comp_props.has_animation() {
+                Selector { state, index, selector_type: SelectorType::Animation }
+            }
+            if comp_props.has_orientation() {
+                Selector { state, index, selector_type: SelectorType::Orientation }
+            }
         }
     )
 }
@@ -100,9 +103,9 @@ pub fn CompPreviewSelector<T: BuildClass + std::cmp::PartialEq + 'static>(
 #[component]
 pub fn ClassSelector(state: Signal<HashPreview>, index: i32) -> Element {
     rsx!(
-        div { id: "class-selector", class: "",
-            p { class: "paragraph", "Class" }
+        div { id: "class-selector",
             Input {
+                placeholder: "Tailwind class",
                 value: state.read().get(&index).unwrap().get_class(),
                 oninput: move |event: FormEvent| {
                     if let Some(field_preview) = state.write().get_mut(&index) {
@@ -110,8 +113,10 @@ pub fn ClassSelector(state: Signal<HashPreview>, index: i32) -> Element {
                     }
                 }
             }
-            p { class: "paragraph", "Override class" }
+        }
+        div { id: "override-class-selector",
             Input {
+                placeholder: "Override all tailwind class",
                 value: state.read().get(&index).unwrap().get_override_class(),
                 oninput: move |event: FormEvent| {
                     if let Some(field_preview) = state.write().get_mut(&index) {
@@ -189,20 +194,23 @@ impl std::fmt::Display for SelectorType {
 }
 
 #[component]
-pub fn Selector(state: Signal<HashPreview>, index: i32, selector_type: SelectorType) -> Element {
+pub fn Selector(
+    state: Signal<HashPreview>,
+    index: i32,
+    selector_type: ReadOnlySignal<SelectorType>,
+) -> Element {
     let id = format!("{}-selector", selector_type.to_string().to_lowercase());
-    let label = selector_type.to_string();
-    let options = selector_type.into_vec();
+    let options = selector_type.read().into_vec();
 
     rsx!(
-        div { id, class: "",
-            p { class: "paragraph", {label.clone()} }
+        div { id, class: "min-w-24",
             SelectGroup {
                 oninput: move |event: FormEvent| {
                     if let Some(field_preview) = state.write().get_mut(&index) {
-                        selector_type.set_value(field_preview, &event.data().value());
+                        selector_type.read().set_value(field_preview, &event.data().value());
                     }
                 },
+                SelectPlaceholder { {selector_type().to_string()} }
                 for option in options {
                     SelectItem { value: option.to_lowercase(), {option} }
                 }
@@ -211,21 +219,47 @@ pub fn Selector(state: Signal<HashPreview>, index: i32, selector_type: SelectorT
     )
 }
 
+// This is to eventually swap to Radio instead of Select of Selector, Radio seems more messy tho
+// for (_ , option) in options.iter().enumerate() {
+//     Radio {
+//         oninput: move |event: FormEvent| {
+//             if let Some(field_preview) = state.write().get_mut(&index) {
+//                 selector_type.read().set_value(field_preview, &event.data().value());
+//             }
+//         },
+//         name: selector_type.to_string().to_lowercase(),
+//         id: option.to_lowercase(),
+//         value: option.to_lowercase(),
+//         {option.clone()}
+//     }
+// }
+
 #[component]
 pub fn PreviewWindow(children: Element) -> Element {
     rsx!(
-        div { class: "p-4 min-h-64 border border-black flex justify-center items-center",
+        div {
+            id: "preview-window",
+            class: "p-4 min-h-96 border border-border rounded-global-radius flex flex-col items-center space-y-8",
             { children }
         }
     )
 }
 
 #[component]
-pub fn PreviewSelectors(children: Element) -> Element {
+fn PreviewWindowComponent(children: Element) -> Element {
     rsx!(
-        div { class: "grid grid-cols-4 gap- grid-auto-rows auto-flow-dense w-full",
-            { children }
+        div {
+            id: "preview-window-component",
+            class: "min-h-64 min-w-80 grow flex items-center justify-center",
+            {children}
         }
+    )
+}
+
+#[component]
+fn PreviewWindowSelectors(children: Element) -> Element {
+    rsx!(
+        div { id: "preview-window-selectors", class: "flex flex-col", {children} }
     )
 }
 

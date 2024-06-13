@@ -51,10 +51,8 @@ impl DemoComponent for ProgressBarProps {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
-            div { class: "flex flex-col",
-                CompPreviewSelector::<ProgressBarProps> { index: 0, state, comp_props: ProgressBarProps::default() }
-                CompPreviewSelector::<ProgressBarInnerProps> { index: 1, state, comp_props: ProgressBarInnerProps::default() }
-            }
+            CompPreviewSelector::<ProgressBarProps> { index: 0, state, comp_props: ProgressBarProps::default() }
+            CompPreviewSelector::<ProgressBarInnerProps> { index: 1, state, comp_props: ProgressBarInnerProps::default() }
         )
     }
 }

@@ -56,13 +56,8 @@ impl DemoComponent for CheckboxProps {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
-            div { class: "flex flex-col w-full",
-                for index in 0..3 {
-                    div { class: "flex flex-row space-x-2",
-                        p { class: "text-foreground font-bold", {index.to_string()} }
-                        CompPreviewSelector::<CheckboxProps> { index, state, comp_props: CheckboxProps::default() }
-                    }
-                }
+            for index in 0..3 {
+                CompPreviewSelector::<CheckboxProps> { index, state, comp_props: CheckboxProps::default() }
             }
         )
     }

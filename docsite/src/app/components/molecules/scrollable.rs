@@ -65,9 +65,7 @@ impl DemoComponent for ScrollableProps {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
-            div { class: "flex flex-col",
-                CompPreviewSelector::<ScrollableProps> { index: 0, state, comp_props: ScrollableProps::default() }
-            }
+            CompPreviewSelector::<ScrollableProps> { index: 0, state, comp_props: ScrollableProps::default() }
         )
     }
 }
