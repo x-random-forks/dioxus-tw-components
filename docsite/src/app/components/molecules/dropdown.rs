@@ -19,10 +19,7 @@ pub fn DropdownPage() -> Element {
 }
 
 #[component]
-pub fn AbcComp(
-    #[props(extends = GlobalAttributes)]
-    attributes: Vec<Attribute>
-) -> Element {
+pub fn AbcComp(#[props(extends = GlobalAttributes)] attributes: Vec<Attribute>) -> Element {
     rsx!(  )
 }
 
@@ -74,10 +71,11 @@ impl DemoComponent for DropdownProps {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
-            div { class: "flex flex-col" }
-            CompPreviewSelector::<DropdownProps> { index: 0, state, comp_props: DropdownProps::default() }
-            CompPreviewSelector::<DropdownToggleProps> { index: 1, state, comp_props: DropdownToggleProps::default() }
-            CompPreviewSelector::<DropdownContentProps> { index: 2, state, comp_props: DropdownContentProps::default() }
+            div { class: "flex flex-col",
+                CompPreviewSelector::<DropdownProps> { index: 0, state, comp_props: DropdownProps::default() }
+                CompPreviewSelector::<DropdownToggleProps> { index: 1, state, comp_props: DropdownToggleProps::default() }
+                CompPreviewSelector::<DropdownContentProps> { index: 2, state, comp_props: DropdownContentProps::default() }
+            }
         )
     }
 }
