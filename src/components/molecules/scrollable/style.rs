@@ -3,7 +3,7 @@ use crate::attributes::*;
 
 impl Class for ScrollableProps {
     fn base(&self) -> &'static str {
-        "px-extrasmall py-small scrollbar"
+        "scrollbar p-2 border border-border rounded-global-radius min-w-32"
     }
 
     fn orientation(&self) -> Option<&'static str> {

@@ -7,7 +7,7 @@ use crate::app::{components::preview::*, doctrait::DemoComponent};
 pub fn TablePage() -> Element {
     let _state = use_context_provider(|| {
         let mut hash = HashPreview::new();
-        for index in 0..6 {
+        for index in 0..0 {
             hash.insert(index, FieldPreview::default());
         }
         Signal::new(hash)
@@ -24,17 +24,58 @@ impl DemoComponent for TableProps {
     }
 
     fn description() -> &'static str {
-        ""
+        "Nice looking table"
     }
 
     fn build_comp_preview() -> Element {
-        let state = use_context::<Signal<HashPreview>>();
-        
-        rsx!(  )
+        let _state = use_context::<Signal<HashPreview>>();
+
+        rsx! {
+            div { class: "w-96 bg-muted p-4", Table { 
+                TableCaption { "Product Inventory" }
+                TableHeader { TableRow { 
+                    TableHead { "Product Name" }
+                    TableHead { "Quantity" }
+                    TableHead { "Price" }
+                } }
+                TableBody { 
+                    TableRow { 
+                        TableCell { "Widget A" }
+                        TableCell { "100" }
+                        TableCell { "$1.99" }
+                    }
+                    TableRow { 
+                        TableCell { "Widget B" }
+                        TableCell { "50" }
+                        TableCell { "$2.99" }
+                    }
+                    TableRow { 
+                        TableCell { "Widget C" }
+                        TableCell { "25" }
+                        TableCell { "$3.99" }
+                    }
+                    TableRow { 
+                        TableCell { "Widget D" }
+                        TableCell { "75" }
+                        TableCell { "$4.99" }
+                    }
+                    TableRow { 
+                        TableCell { "Widget E" }
+                        TableCell { "125" }
+                        TableCell { "$5.99" }
+                    }
+                }
+                TableFooter { TableRow { 
+                    TableCell { "Total" }
+                    TableCell { "350" }
+                    TableCell { "$27.91" }
+                } }
+            } }
+        }
     }
 
     fn build_comp_selectors() -> Element {
-        let state = use_context::<Signal<HashPreview>>();
+        let _state = use_context::<Signal<HashPreview>>();
 
         rsx!(
             div { class: "flex flex-col" }

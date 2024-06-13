@@ -57,13 +57,17 @@ where
         comp_props.set_animation(state.get_animation());
     }
 
+    if comp_props.has_orientation() {
+        comp_props.set_orientation(state.get_orientation());
+    }
+
     if comp_props.has_children() {
         comp_props.set_children(comp_child);
     }
 
     let vcomp = comp_props.into_vcomponent(render_fn, T::name());
     let dnode_comp = DynamicNode::Component(vcomp);
-    
+
     rsx!(
         { dnode_comp }
     )
@@ -86,6 +90,9 @@ pub fn CompPreviewSelector<T: BuildClass + std::cmp::PartialEq + 'static>(
         }
         if comp_props.has_animation() {
             Selector { state, index, selector_type: SelectorType::Animation }
+        }
+        if comp_props.has_orientation() {
+            Selector { state, index, selector_type: SelectorType::Orientation }
         }
     )
 }
@@ -121,6 +128,7 @@ pub enum SelectorType {
     Color,
     Size,
     Animation,
+    Orientation,
 }
 
 impl SelectorType {
@@ -131,6 +139,10 @@ impl SelectorType {
             SelectorType::Animation => Animation::into_vec()
                 .iter()
                 .map(|a| a.to_string())
+                .collect(),
+            SelectorType::Orientation => Orientation::into_vec()
+                .iter()
+                .map(|s| s.to_string())
                 .collect(),
         }
     }
@@ -145,6 +157,9 @@ impl SelectorType {
             }
             SelectorType::Animation => {
                 field_preview.set_animation(Animation::from_str(value).unwrap_or_default());
+            }
+            SelectorType::Orientation => {
+                field_preview.set_orientation(Orientation::from_str(value).unwrap_or_default());
             }
         }
     }
@@ -164,6 +179,9 @@ impl std::fmt::Display for SelectorType {
                 }
                 SelectorType::Animation => {
                     "Animation"
+                }
+                SelectorType::Orientation => {
+                    "Orientation"
                 }
             }
         )
@@ -232,7 +250,7 @@ impl FieldPreview {
         self.class = class;
     }
 
-    pub fn class(&mut self, class:String) -> &Self {
+    pub fn class(mut self, class: String) -> Self {
         self.class = class;
         self
     }
@@ -275,5 +293,10 @@ impl FieldPreview {
 
     pub fn set_orientation(&mut self, orientation: Orientation) {
         self.orientation = orientation;
+    }
+
+    pub fn orientation(mut self, orientation: Orientation) -> Self {
+        self.orientation = orientation;
+        self
     }
 }

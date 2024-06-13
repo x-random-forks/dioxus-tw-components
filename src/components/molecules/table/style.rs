@@ -3,7 +3,7 @@ use crate::attributes::*;
 
 impl Class for TableProps {
     fn base(&self) -> &'static str {
-        "w-full caption-bottom text-sm"
+        "w-full caption-bottom text-sm text-foreground bg-background"
     }
 }
 

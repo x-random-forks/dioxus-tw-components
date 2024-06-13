@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 use dioxus_components::{
     atoms::ButtonVariant,
-    attributes::{Animation, Color, Size},
+    attributes::{Animation, Color, Orientation, Size},
 };
 
 pub trait IntoVec<T> {
@@ -41,6 +41,12 @@ impl IntoVec<ButtonVariant> for ButtonVariant {
 impl IntoVec<Animation> for Animation {
     fn into_vec() -> Vec<Animation> {
         vec![Animation::Full, Animation::None, Animation::Light]
+    }
+}
+
+impl IntoVec<Orientation> for Orientation {
+    fn into_vec() -> Vec<Orientation> {
+        vec![Orientation::Vertical, Orientation::Horizontal]
     }
 }
 

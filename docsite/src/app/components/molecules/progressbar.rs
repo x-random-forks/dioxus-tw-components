@@ -40,8 +40,7 @@ impl DemoComponent for ProgressBarProps {
                     ProgressBarInner {
                         class: &state.read()[&1].get_class(),
                         override_class: &state.read()[&1].get_override_class(),
-                        color: state.read()[&1].get_color(),
-                        ProgressLabel {}
+                        color: state.read()[&1].get_color()
                     }
                 }
             }

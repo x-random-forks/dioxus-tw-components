@@ -12,6 +12,8 @@ impl Class for ProgressBarProps {
             Color::Secondary => "bg-secondary",
             Color::Destructive => "bg-destructive",
             Color::Success => "bg-success",
+            Color::Muted => "bg-muted",
+            Color::Accent => "bg-accent",
             _ => "bg-background",
         })
     }
