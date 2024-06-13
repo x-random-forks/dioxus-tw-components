@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::molecules::dropdown::*;
+use dioxus_components::{atoms::Separator, molecules::dropdown::*};
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
@@ -16,6 +16,14 @@ pub fn DropdownPage() -> Element {
     rsx!(
         PreviewFull::<DropdownProps> {}
     )
+}
+
+#[component]
+pub fn AbcComp(
+    #[props(extends = GlobalAttributes)]
+    attributes: Vec<Attribute>
+) -> Element {
+    rsx!(  )
 }
 
 impl DemoComponent for DropdownProps {
@@ -36,6 +44,7 @@ impl DemoComponent for DropdownProps {
             rsx!(
                 p { "Content 1" }
                 p { "Content 2" }
+                Separator {}
                 p { "Content 3" }
                 p { "Content 4" }
             ),
