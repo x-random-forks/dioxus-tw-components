@@ -4,7 +4,7 @@ use tailwind_fuse::*;
 
 use crate::attributes::*;
 #[props_component(class, children, id)]
-pub fn ProgressTrack(
+pub fn ProgressBar(
     #[props(default = Color::Primary)] color: Color,
     #[props(default)] size: Size,
 ) -> Element {
@@ -14,7 +14,7 @@ pub fn ProgressTrack(
 }
 
 #[props_component(class, children, id)]
-pub fn ProgressBar(#[props(default = 50)] progress: u8, #[props(default)] color: Color) -> Element {
+pub fn ProgressBarInner(#[props(default = 50)] progress: u8, #[props(default)] color: Color) -> Element {
     rsx!(
         div {
             class: props.class,
