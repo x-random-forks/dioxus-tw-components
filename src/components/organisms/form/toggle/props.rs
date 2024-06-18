@@ -8,7 +8,7 @@ use crate::attributes::*;
 // eg peer-disabled:font-mute will change children text-color when the input is disabled (Label component already does this by default)
 #[props_component(class, id)]
 pub fn Toggle(
-    #[props(extends = button)] mut attributes: Vec<Attribute>,
+    #[props(extends = button, extends = GlobalAttributes)] mut attributes: Vec<Attribute>,
     #[props(optional)] checked: Option<bool>,
     #[props(optional)] onclick: Option<EventHandler<MouseEvent>>,
     #[props(default)] color: Color,

@@ -8,7 +8,7 @@ use crate::attributes::*;
 #[props_component(id, class, children)]
 pub fn Button(
     /// Things like disabled, type,... see [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button)
-    #[props(extends = button)]
+    #[props(extends = button, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
     /// Callback when the button is clicked
     #[props(optional)]

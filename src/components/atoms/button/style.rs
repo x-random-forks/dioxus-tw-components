@@ -5,7 +5,7 @@ use crate::attributes::*;
 
 impl Class for ButtonProps {
     fn base(&self) -> &'static str {
-        "text-center font-medium rounded-global-radius shadow-global-shadow disabled:opacity-50 disabled:cursor-not-allowed"
+        "text-center font-medium rounded-global-radius disabled:opacity-50 disabled:cursor-not-allowed"
     }
 
     // Handled in variant

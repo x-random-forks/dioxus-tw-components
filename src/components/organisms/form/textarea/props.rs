@@ -5,7 +5,7 @@ use tailwind_fuse::*;
 use crate::attributes::*;
 #[props_component(id, class)]
 pub fn TextArea(
-    #[props(extends = textarea)] attributes: Vec<Attribute>,
+    #[props(extends = textarea, extends = GlobalAttributes)] attributes: Vec<Attribute>,
     #[props(optional)] value: String,
     #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
     #[props(optional)] onmounted: Option<EventHandler<Event<MountedData>>>,

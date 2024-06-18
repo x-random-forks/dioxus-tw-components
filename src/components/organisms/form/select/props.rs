@@ -5,7 +5,7 @@ use tailwind_fuse::*;
 use crate::attributes::*;
 #[props_component(class, id, children)]
 pub fn SelectGroup(
-    #[props(extends = select)] attributes: Vec<Attribute>,
+    #[props(extends = select, extends = GlobalAttributes)] attributes: Vec<Attribute>,
 
     #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
 ) -> Element {
@@ -41,7 +41,7 @@ pub fn SelectPlaceholder() -> Element {
 }
 
 #[props_component(class, id)]
-pub fn SelectLabel(#[props(extends = optgroup)] attributes: Vec<Attribute>) -> Element {
+pub fn SelectLabel(#[props(extends = optgroup, extends = GlobalAttributes)] attributes: Vec<Attribute>) -> Element {
     rsx!(
         optgroup { ..props.attributes, class: props.class, id: props.id }
     )
@@ -49,7 +49,7 @@ pub fn SelectLabel(#[props(extends = optgroup)] attributes: Vec<Attribute>) -> E
 
 #[props_component(class, id, children)]
 pub fn SelectItem(
-    #[props(extends = option)] attributes: Vec<Attribute>,
+    #[props(extends = option, extends = GlobalAttributes)] attributes: Vec<Attribute>,
     #[props(optional, default = None)] selected: Option<bool>,
 ) -> Element {
     if let Some(selected) = props.selected {

@@ -5,7 +5,7 @@ use tailwind_fuse::*;
 use crate::attributes::*;
 #[props_component(class, children, id)]
 pub fn Radio(
-    #[props(extends = input)] attributes: Vec<Attribute>,
+    #[props(extends = input, extends = GlobalAttributes)] attributes: Vec<Attribute>,
     #[props(optional, default = false)] checked: bool,
     #[props(optional)] oninput: EventHandler<FormEvent>,
     #[props(optional, default)] color: Color,

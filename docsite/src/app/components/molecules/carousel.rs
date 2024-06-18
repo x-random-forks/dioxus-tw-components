@@ -1,7 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::atoms::button::Button;
 use dioxus_components::molecules::carousel::*;
-use docsite_macro::{extract_html};
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 

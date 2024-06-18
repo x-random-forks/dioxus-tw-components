@@ -5,7 +5,7 @@ use tailwind_fuse::*;
 use crate::attributes::*;
 #[props_component(id, class)]
 pub fn Input(
-    #[props(extends = input)] attributes: Vec<Attribute>,
+    #[props(extends = input, extends = GlobalAttributes)] attributes: Vec<Attribute>,
     #[props(optional)] value: String,
     #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
     #[props(optional)] onmounted: Option<EventHandler<Event<MountedData>>>,

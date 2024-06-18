@@ -5,7 +5,7 @@ use tailwind_fuse::*;
 use crate::attributes::*;
 #[props_component(id, class)]
 pub fn Checkbox(
-    #[props(extends = input)] attributes: Vec<Attribute>,
+    #[props(extends = input, extends = GlobalAttributes)] attributes: Vec<Attribute>,
     #[props(optional, default = false)] checked: bool,
     #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
     #[props(optional, default)] color: Color,

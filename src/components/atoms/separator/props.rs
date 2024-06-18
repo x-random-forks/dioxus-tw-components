@@ -7,11 +7,13 @@ use crate::attributes::*;
 /// A simple separator component
 #[props_component(class)]
 pub fn Separator(
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
     /// Handle the orientation of the separator
     #[props(default = Orientation::Horizontal)]
     orientation: Orientation,
 ) -> Element {
     rsx!(
-        div { class: props.class }
+        div { ..props.attributes, class: props.class }
     )
 }
