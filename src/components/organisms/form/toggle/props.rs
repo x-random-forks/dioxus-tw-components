@@ -11,9 +11,9 @@ pub fn Toggle(
     #[props(extends = button, extends = GlobalAttributes)] mut attributes: Vec<Attribute>,
     #[props(optional)] checked: Option<bool>,
     #[props(optional)] onclick: Option<EventHandler<MouseEvent>>,
-    #[props(default)] color: Color,
-    #[props(default)] size: Size,
-    #[props(default)] animation: Animation,
+    #[props(optional, default)] color: Color,
+    #[props(optional, default)] size: Size,
+    #[props(optional, default)] animation: Animation,
 ) -> Element {
     let mut interior_sig = use_signal(|| match props.checked {
         Some(value) => value,

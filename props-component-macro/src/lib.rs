@@ -124,7 +124,7 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
         }
         named.push(c);
     }
-    println!("named {named}");
+    
     let impl_named = quote!{
         impl Named for #name_struct {
             const NAME: &'static str = "#named";
