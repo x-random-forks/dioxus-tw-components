@@ -3,7 +3,6 @@ use dioxus_components::molecules::carousel::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
-#[component]
 pub fn CarouselPage() -> Element {
     let _state = use_context_provider(|| {
         let mut hash = HashPreview::new();
@@ -24,7 +23,9 @@ pub fn CarouselPage() -> Element {
         Signal::new(hash)
     });
 
-    rsx!(PreviewFull::<CarouselProps> {})
+    rsx!(
+        PreviewFull::<CarouselProps> {}
+    )
 }
 
 impl DemoComponent for CarouselProps {
@@ -36,7 +37,7 @@ impl DemoComponent for CarouselProps {
         ""
     }
 
-    fn build_comp_preview() -> Element {
+    fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
@@ -44,7 +45,7 @@ impl DemoComponent for CarouselProps {
                 class: &state.read()[&0].get_class(),
                 override_class: &state.read()[&0].get_override_class(),
                 CarouselTrigger { next: false }
-                CarouselWindow {
+                CarouselWindow { 
                     CarouselContent { id: "carousel-prev",
                         CarouselItem {
                             item_key: 0,
@@ -77,7 +78,7 @@ impl DemoComponent for CarouselProps {
         )
     }
 
-    fn build_comp_selectors() -> Element {
+    fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(

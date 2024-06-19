@@ -3,7 +3,6 @@ use dioxus_components::molecules::table::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
-#[component]
 pub fn TablePage() -> Element {
     let _state = use_context_provider(|| {
         let mut hash = HashPreview::new();
@@ -27,7 +26,7 @@ impl DemoComponent for TableProps {
         "Nice looking table"
     }
 
-    fn build_comp_preview() -> Element {
+    fn BuildCompPreview() -> Element {
         let _state = use_context::<Signal<HashPreview>>();
 
         rsx! {
@@ -74,7 +73,7 @@ impl DemoComponent for TableProps {
         }
     }
 
-    fn build_comp_selectors() -> Element {
+    fn BuildCompSelectors() -> Element {
         let _state = use_context::<Signal<HashPreview>>();
 
         rsx!(  )

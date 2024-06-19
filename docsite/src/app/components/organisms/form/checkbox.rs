@@ -3,7 +3,6 @@ use dioxus_components::form::checkbox::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
-#[component]
 pub fn CheckboxPage() -> Element {
     let _state = use_context_provider(|| {
         let mut hash = HashPreview::new();
@@ -27,7 +26,7 @@ impl DemoComponent for CheckboxProps {
         "A customizable and interactive checkbox component"
     }
 
-    fn build_comp_preview() -> Element {
+    fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
         let mut vec_prev_comp = Vec::<Element>::new();
         for index in 0..3 {
@@ -52,7 +51,7 @@ impl DemoComponent for CheckboxProps {
         )
     }
 
-    fn build_comp_selectors() -> Element {
+    fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(

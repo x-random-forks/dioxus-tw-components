@@ -15,6 +15,7 @@ pub fn SideBarComponent() -> Element {
         "Breadcrumb",
         "Carousel",
         "Dropdown",
+        "HoverCard",
         "LightSwitch",
         "Modal",
         "ProgressBar",

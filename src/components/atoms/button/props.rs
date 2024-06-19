@@ -1,40 +1,47 @@
 use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
+use props_component_macro::UiComp;
 
+use super::ButtonVariant;
 use crate::attributes::*;
 
-/// A simple button which you can use every HTML attributes on, and style based on variant, color and size
-#[props_component(id, class, children)]
-pub fn Button(
-    /// Things like disabled, type,... see [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button)
+#[derive(Clone, PartialEq, Props, UiComp)]
+pub struct ButtonProps {
     #[props(extends = button, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
-    /// Callback when the button is clicked
+
+    #[props(optional, default)]
+    pub color: ReadOnlySignal<Color>,
+    #[props(optional, default)]
+    pub size: ReadOnlySignal<Size>,
+    #[props(optional, default)]
+    pub variant: ReadOnlySignal<ButtonVariant>,
+    #[props(optional, default)]
+    pub animation: ReadOnlySignal<Animation>,
+
     #[props(optional)]
-    onclick: Option<EventHandler<MouseEvent>>,
-    /// Style variant
-    #[props(default)]
-    variant: super::ButtonVariant,
-    #[props(default)] color: Color,
-    #[props(default)] size: Size,
-    /// Control the on hover and on active effect animation
-    #[props(default = Animation::Full)]
-    animation: Animation,
-) -> Element {
-    let onclick = move |event| {
-        if let Some(oc) = &props.onclick {
-            oc.call(event)
-        }
-    };
+    onclick: EventHandler<MouseEvent>,
+    #[props(optional)]
+    onmouseenter: EventHandler<MouseEvent>,
+    #[props(optional)]
+    onmouseleave: EventHandler<MouseEvent>,
+    #[props(optional)]
+    onfocus: EventHandler<FocusEvent>,
+
+    children: Element,
+}
+
+pub fn Button(mut props: ButtonProps) -> Element {
+    props.build_class();
+
+    let onclick = move |event| props.onclick.call(event);
+    let onmouseenter = move |event| props.onmouseenter.call(event);
+    let onmouseleave = move |event| props.onmouseleave.call(event);
+    let onfocus = move |event| props.onfocus.call(event);
 
     rsx!(
-        button {
-            ..props.attributes,
-            class: props.class,
-            id: props.id,
-            onclick,
-            {props.children}
-        }
+        button { ..props.attributes, onclick, onmouseenter, onmouseleave, onfocus, {props.children} }
     )
 }
+
+// TODO
+// Add support for icons

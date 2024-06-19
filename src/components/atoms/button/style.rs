@@ -2,6 +2,7 @@ use std::str::FromStr;
 
 use super::props::*;
 use crate::attributes::*;
+use dioxus::prelude::*;
 
 impl Class for ButtonProps {
     fn base(&self) -> &'static str {
@@ -14,18 +15,18 @@ impl Class for ButtonProps {
     }
 
     fn size(&self) -> Option<&'static str> {
-        Some(match self.size {
-            Size::Xs => "h5 px-2 py-1 text-xs",
-            Size::Sm => "h7 px-3 py-1.5 text-sm",
-            Size::Md => "h9 px-4 py-2 text-sm",
-            Size::Lg => "h11 px-7 py-3 text-lg",
-            Size::Xl => "h14 px-9 py-4 text-xl",
+        Some(match *self.size.read() {
+            Size::Xs => "h-4 px-2 text-xs",
+            Size::Sm => "h-7 px-3 py-1 text-sm",
+            Size::Md => "h-9 px-4 py-2 text-sm",
+            Size::Lg => "h-11 px-7 py-2 text-lg",
+            Size::Xl => "h-14 px-9 py-3 text-xl",
         })
     }
 
     fn variant(&self) -> Option<&'static str> {
-        Some(match self.variant {
-            ButtonVariant::Default => match self.color {
+        Some(match *self.variant.read() {
+            ButtonVariant::Default => match *self.color.read() {
                 Color::Default => "bg-foreground text-background hover:bg-foreground/80 active:bg-foreground/70 active:shadow",
                 Color::Primary => "bg-primary text-primary-foreground border-primary hover:bg-primary/90 active:bg-primary/80 active:shadow",
                 Color::Secondary => "bg-secondary text-secondary-foreground border-secondary hover:bg-secondary/90 active:bg-secondary/80 active:shadow",
@@ -34,7 +35,7 @@ impl Class for ButtonProps {
                 Color::Accent => "bg-accent text-accent-foreground border-accent hover:bg-accent/90 active:bg-accent/80 active:shadow",
                 Color::Muted => "bg-muted text-muted-foreground border-muted hover:bg-muted/90 active:bg-muted/80 active:shadow",
             },
-            ButtonVariant::Outline => match self.color {
+            ButtonVariant::Outline => match *self.color.read() {
                 Color::Default => {
                     "border bg-transparent border-foreground text-foreground hover:bg-foreground/40"
                 }
@@ -45,7 +46,7 @@ impl Class for ButtonProps {
                 Color::Accent => "border bg-transparent border-accent text-accent hover:bg-accent/90 hover:text-accent-foreground",
                 Color::Muted => "border bg-transparent border-muted text-muted hover:bg-muted/90 hover:text-muted-foreground",
             },
-            ButtonVariant::Ghost => match self.color {
+            ButtonVariant::Ghost => match *self.color.read() {
                 Color::Default => {
                     "bg-transparent border-foreground text-foreground hover:bg-foreground/40"
                 }
@@ -60,7 +61,7 @@ impl Class for ButtonProps {
     }
 
     fn animation(&self) -> Option<&'static str> {
-        Some(match self.animation {
+        Some(match *self.animation.read() {
             Animation::None => "transition-none",
             Animation::Light | Animation::Full => "transition-colors duration-150",
             Animation::Custom(animation) => animation,

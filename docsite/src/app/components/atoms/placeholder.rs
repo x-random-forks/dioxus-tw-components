@@ -3,7 +3,6 @@ use dioxus_components::atoms::{placeholder::PlaceholderProps, Placeholder};
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
-#[component]
 pub fn PlaceholderPage() -> Element {
     let _state = use_context_provider(|| {
         let mut hash = HashPreview::new();
@@ -25,7 +24,7 @@ impl DemoComponent for PlaceholderProps {
         "A customizable and versatile placeholder for text, images, or other content"
     }
 
-    fn build_comp_preview() -> Element {
+    fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
         let preview_comp =
             build_preview_component::<PlaceholderProps, _>(&state.read()[&0], Placeholder, None);
@@ -35,7 +34,7 @@ impl DemoComponent for PlaceholderProps {
         )
     }
 
-    fn build_comp_selectors() -> Element {
+    fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(

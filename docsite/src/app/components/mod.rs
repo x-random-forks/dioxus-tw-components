@@ -4,7 +4,7 @@ pub mod layout;
 pub use layout::SideBarComponent;
 
 pub mod molecules;
-use molecules::{accordion::AccordionPage, breadcrumb::BreadcrumbPage, carousel::CarouselPage, dropdown::DropdownPage, modal::ModalPage, progressbar::ProgressBarPage, scrollable::ScrollablePage, table::TablePage};
+use molecules::{accordion::AccordionPage, breadcrumb::BreadcrumbPage, carousel::CarouselPage, dropdown::DropdownPage, hovercard::HoverCardPage, modal::ModalPage, progressbar::ProgressBarPage, scrollable::ScrollablePage, table::TablePage};
 pub use molecules::{lightswitch::LightSwitchPage,sortedtable::SortedTablePage, tabs::TabsPage};
 
 pub mod organisms;
@@ -41,6 +41,9 @@ pub fn ComponentPage(name: String) -> Element {
             ),
             "dropdown" => rsx!(
                 DropdownPage {}
+            ),
+            "hovercard" => rsx!(
+                HoverCardPage {}
             ),
             "placeholder" => rsx!(
                 PlaceholderPage {}

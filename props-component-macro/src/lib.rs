@@ -1,3 +1,6 @@
+mod deriveuicomp;
+
+use deriveuicomp::impl_my_derive;
 use proc_macro::TokenStream;
 use quote::quote;
 use syn::{
@@ -5,7 +8,6 @@ use syn::{
     parse_macro_input, ItemFn,
 };
 
-///
 /// This procedural macro generates a new struct and function based on the input function.
 /// The generated struct will have the same name as the input function with "Props" appended to it.
 /// The struct will contain fields for each input parameter of the function and additional fields
@@ -124,15 +126,15 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
         }
         named.push(c);
     }
-    
-    let impl_named = quote!{
+
+    let impl_named = quote! {
         impl Named for #name_struct {
             const NAME: &'static str = "#named";
         }
     };
 
     let has_children_impl = if has_children_attr {
-        quote!{
+        quote! {
             impl HasChildren for #name_struct {
                 fn has_children(&self) -> bool {
                     true
@@ -144,7 +146,7 @@ pub fn props_component(args: TokenStream, input: TokenStream) -> TokenStream {
             }
         }
     } else {
-        quote!{
+        quote! {
             impl HasChildren for #name_struct {}
         }
     };
@@ -311,7 +313,7 @@ pub fn build_class_derive(input: TokenStream) -> TokenStream {
     let struct_fields = if let syn::Data::Struct(syn::DataStruct { fields, .. }) = &ast.data {
         fields
     } else {
-        panic!("MyTrait can only be derived for structs");
+        panic!("BuildClass can only be derived on structs");
     };
 
     // Iter on watched_fields and all the struct fields to only keep in watched one the one we want
@@ -355,15 +357,6 @@ pub fn build_class_derive(input: TokenStream) -> TokenStream {
                 }
                 self.class = tw_merge!(#str);
             }
-
-            fn set_class(&mut self, class: String) {
-                self.class = class;
-            }
-
-            fn set_override_class(&mut self, override_class: String) {
-                self.override_class = override_class;
-            }
-
             #(#set_methods)*
         }
     };
@@ -440,4 +433,16 @@ impl WatchedFields {
             set_method: quote! {},
         }
     }
+}
+
+/// This macro is used to derive the UiComp trait on a Props, which will also implement
+/// std::fmt::Display by getting only what is before the "Props" in the struct,
+/// HasChildren by parsing the struct and checking if a children field is present
+/// BuildClass by also parsing the struct and checking if a attributes field is present (which is a Vec<Attribute> which can contain the "class" Attribute)
+/// BuildClass also force to implement Class on your Props, which is used for styling
+#[proc_macro_derive(UiComp)]
+pub fn derive_ui_comp(input: TokenStream) -> TokenStream {
+    let ast = parse_macro_input!(input as syn::DeriveInput);
+
+    impl_my_derive(&ast)
 }

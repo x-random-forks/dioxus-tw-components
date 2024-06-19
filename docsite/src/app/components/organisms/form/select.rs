@@ -3,7 +3,6 @@ use dioxus_components::form::select::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
-#[component]
 pub fn SelectPage() -> Element {
     let _state = use_context_provider(|| {
         let mut hash = HashPreview::new();
@@ -25,7 +24,7 @@ impl DemoComponent for SelectGroupProps {
         "Interactive dropdown list that allows users to select an option. This component provides a user-friendly way to choose from a list of options."
     }
 
-    fn build_comp_preview() -> Element {
+    fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         let preview_comp = build_preview_component::<SelectGroupProps, _>(
@@ -44,7 +43,7 @@ impl DemoComponent for SelectGroupProps {
         )
     }
 
-    fn build_comp_selectors() -> Element {
+    fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(

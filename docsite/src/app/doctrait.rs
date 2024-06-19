@@ -53,6 +53,6 @@ impl IntoVec<Orientation> for Orientation {
 pub trait DemoComponent {
     fn title() -> &'static str;
     fn description() -> &'static str;
-    fn build_comp_preview() -> Element;
-    fn build_comp_selectors() -> Element;
+    fn BuildCompPreview() -> Element;
+    fn BuildCompSelectors() -> Element;
 }

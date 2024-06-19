@@ -3,7 +3,6 @@ use dioxus_components::molecules::progressbar::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
-#[component]
 pub fn ProgressBarPage() -> Element {
     let _state = use_context_provider(|| {
         let mut hash = HashPreview::new();
@@ -27,7 +26,7 @@ impl DemoComponent for ProgressBarProps {
         "Don't go so fast"
     }
 
-    fn build_comp_preview() -> Element {
+    fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
@@ -47,7 +46,7 @@ impl DemoComponent for ProgressBarProps {
         )
     }
 
-    fn build_comp_selectors() -> Element {
+    fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(

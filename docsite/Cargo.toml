@@ -23,6 +23,9 @@ console = "0.15.8"
 
 dioxus_components = { path = "../." }
 
+# TODO REMOVE WHEN HOVER IS DONE
+gloo-timers =  { version = "0.3.0", features = ["futures"] }
+
 web-sys = {version = "0.3.69", features = ["Element"]}
 
 [workspace]

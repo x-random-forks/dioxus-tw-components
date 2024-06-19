@@ -6,8 +6,8 @@ authors = ["Louis Truchelut"]
 
 [lib]
 name = "dioxus_components"
-authors = ["Louis Truchelut"]
 path = "src/lib.rs"
+authors = ["Louis Truchelut"]
 
 [dependencies]
 

@@ -3,7 +3,6 @@ use dioxus_components::{atoms::Separator, attributes::Orientation, molecules::sc
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
-#[component]
 pub fn ScrollablePage() -> Element {
     let _state = use_context_provider(|| {
         let mut hash = HashPreview::new();
@@ -25,7 +24,7 @@ impl DemoComponent for ScrollableProps {
         ""
     }
 
-    fn build_comp_preview() -> Element {
+    fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
@@ -61,7 +60,7 @@ impl DemoComponent for ScrollableProps {
         )
     }
 
-    fn build_comp_selectors() -> Element {
+    fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(

@@ -3,7 +3,6 @@ use dioxus_components::form::radio::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
-#[component]
 pub fn RadioPage() -> Element {
     let _state = use_context_provider(|| {
         let mut hash = HashPreview::new();
@@ -27,7 +26,7 @@ impl DemoComponent for RadioProps {
         "A customizable and interactive radio component"
     }
 
-    fn build_comp_preview() -> Element {
+    fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         let mut vec_prev_comp = Vec::<Element>::new();
@@ -53,7 +52,7 @@ impl DemoComponent for RadioProps {
         )
     }
 
-    fn build_comp_selectors() -> Element {
+    fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(

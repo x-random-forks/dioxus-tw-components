@@ -1,10 +1,19 @@
 use std::{ops::Neg, str::FromStr};
 
-use dioxus::{dioxus_core::Element, prelude::IntoAttributeValue};
+use dioxus::{
+    dioxus_core::{Attribute, AttributeValue, Element},
+    prelude::IntoAttributeValue,
+};
 
+pub trait UiComp: HasChildren + BuildClass + std::fmt::Display {}
+
+// This trait is used for the docsite
 pub trait HasChildren {
-    fn has_children(&self) -> bool {false}
-    fn set_children(&mut self, _children: Element) {} 
+    fn has_children(&self) -> bool {
+        false
+    }
+
+    fn set_children(&mut self, _children: Element) {}
 }
 
 pub trait Class {
@@ -34,13 +43,55 @@ pub trait Class {
 }
 
 pub trait BuildClass: Class {
-    fn build_class(&mut self);
+    fn build_class(&mut self) {
+        let mut class = String::from(self.base());
 
-    // All those below are only used for the docsite
-    fn set_class(&mut self, class: String);
+        if let Some(color) = self.color() {
+            class.push_str(" ");
+            class.push_str(color);
+        }
 
-    fn set_override_class(&mut self, override_class: String);
+        if let Some(size) = self.size() {
+            class.push_str(" ");
+            class.push_str(size);
+        }
 
+        if let Some(variant) = self.variant() {
+            class.push_str(" ");
+            class.push_str(variant);
+        }
+
+        if let Some(animation) = self.animation() {
+            class.push_str(" ");
+            class.push_str(animation);
+        }
+
+        if let Some(orientation) = self.orientation() {
+            class.push_str(" ");
+            class.push_str(orientation);
+        }
+
+        // If the component have a vec attributes
+        if let Some(vec_attributes) = self.get_attributes() {
+            // Find the class attribute in the vec and modify it
+            if let Some(class_attribute) =
+                vec_attributes.iter_mut().find(|attr| attr.name == "class")
+            {
+                if let AttributeValue::Text(ref mut value) = class_attribute.value {
+                    *value = format!("{} {}", value, class);
+                }
+            } else {
+                // Else push the class attribute in the vec
+                vec_attributes.push(Attribute::new("class", class, None, false));
+            }
+        }
+    }
+
+    fn get_attributes(&mut self) -> Option<&mut Vec<Attribute>> {
+        None
+    }
+
+    // All those methods below are used for the docsite
     fn has_color(&self) -> bool {
         self.color().is_some()
     }
@@ -177,7 +228,7 @@ impl std::fmt::Display for Orientation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let s = match self {
             Orientation::Vertical => "vertical",
-            Orientation::Horizontal => "horizontal"
+            Orientation::Horizontal => "horizontal",
         };
         f.write_str(s)
     }

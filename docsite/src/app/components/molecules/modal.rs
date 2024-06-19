@@ -3,7 +3,6 @@ use dioxus_components::molecules::modal::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
-#[component]
 pub fn ModalPage() -> Element {
     let _state = use_context_provider(|| {
         let mut hash = HashPreview::new();
@@ -27,7 +26,7 @@ impl DemoComponent for ModalProps {
         ""
     }
 
-    fn build_comp_preview() -> Element {
+    fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         let trigger = build_preview_component::<ModalTriggerProps, _>(
@@ -64,7 +63,7 @@ impl DemoComponent for ModalProps {
         )
     }
 
-    fn build_comp_selectors() -> Element {
+    fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(

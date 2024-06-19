@@ -3,7 +3,6 @@ use dioxus_components::molecules::tabs::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
-#[component]
 pub fn TabsPage() -> Element {
     let _state = use_context_provider(|| {
         let mut hash = HashPreview::new();
@@ -25,7 +24,7 @@ impl DemoComponent for TabsProps {
         "A customizable and user-friendly navigation component that allows users to switch between different views or sections of a website or application"
     }
 
-    fn build_comp_preview() -> Element {
+    fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
@@ -60,7 +59,7 @@ impl DemoComponent for TabsProps {
         )
     }
 
-    fn build_comp_selectors() -> Element {
+    fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(

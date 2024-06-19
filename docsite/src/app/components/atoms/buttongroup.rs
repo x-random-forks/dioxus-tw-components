@@ -3,7 +3,6 @@ use dioxus_components::atoms::buttongroup::{ButtonGroup, ButtonGroupItem, Button
 
 use crate::app::doctrait::DemoComponent;
 
-#[component]
 pub fn ButtonGroupPage() -> Element {
     rsx!(  )
 }
@@ -17,7 +16,7 @@ impl DemoComponent for ButtonGroupProps {
         ""
     }
 
-    fn build_comp_preview() -> Element {
+    fn BuildCompPreview() -> Element {
         rsx!(
             ButtonGroup { 
                 ButtonGroupItem { "A" }
@@ -26,7 +25,7 @@ impl DemoComponent for ButtonGroupProps {
         )        
     }
 
-    fn build_comp_selectors() -> Element {
+    fn BuildCompSelectors() -> Element {
         rsx!(  )
     }
 }

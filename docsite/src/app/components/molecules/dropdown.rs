@@ -3,7 +3,6 @@ use dioxus_components::{atoms::Separator, molecules::dropdown::*};
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
-#[component]
 pub fn DropdownPage() -> Element {
     let _state = use_context_provider(|| {
         let mut hash = HashPreview::new();
@@ -32,7 +31,7 @@ impl DemoComponent for DropdownProps {
         ""
     }
 
-    fn build_comp_preview() -> Element {
+    fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         let content1 = build_preview_component::<DropdownContentProps, _>(
@@ -67,7 +66,7 @@ impl DemoComponent for DropdownProps {
         )
     }
 
-    fn build_comp_selectors() -> Element {
+    fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(

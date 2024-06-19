@@ -24,8 +24,8 @@ fn PreviewDemo<T: DemoComponent>() -> Element {
             h2 { id: "preview-title", class: "sr-only", {T::title()} }
             div { id: "preview-header", class: "border border-yellow-500", {T::description()} }
             PreviewWindow { 
-                PreviewWindowComponent { {T::build_comp_preview()} }
-                PreviewWindowSelectors { {T::build_comp_selectors()} }
+                PreviewWindowComponent { {T::BuildCompPreview()} }
+                PreviewWindowSelectors { {T::BuildCompSelectors()} }
             }
             div { id: "preview-footer", class: "border", "Footer" }
         }
@@ -38,40 +38,42 @@ pub fn build_preview_component<T, M>(
     comp_child: Element,
 ) -> Element
 where
-    T: Default + BuildClass + HasChildren + Properties + Named,
+    T: Default + BuildClass + HasChildren + Properties,
     M: 'static,
 {
-    let mut comp_props = T::default();
+    // let mut comp_props = T::default();
 
-    comp_props.set_class(state.get_class());
-    comp_props.set_override_class(state.get_override_class());
+    // // comp_props.set_class(state.get_class());
+    // // comp_props.set_override_class(state.get_override_class());
 
-    if comp_props.has_color() {
-        comp_props.set_color(state.get_color());
-    }
+    // if comp_props.has_color() {
+    //     comp_props.set_color(state.get_color());
+    // }
 
-    if comp_props.has_size() {
-        comp_props.set_size(state.get_size());
-    }
+    // if comp_props.has_size() {
+    //     comp_props.set_size(state.get_size());
+    // }
 
-    if comp_props.has_animation() {
-        comp_props.set_animation(state.get_animation());
-    }
+    // if comp_props.has_animation() {
+    //     comp_props.set_animation(state.get_animation());
+    // }
 
-    if comp_props.has_orientation() {
-        comp_props.set_orientation(state.get_orientation());
-    }
+    // if comp_props.has_orientation() {
+    //     comp_props.set_orientation(state.get_orientation());
+    // }
 
-    if comp_props.has_children() {
-        comp_props.set_children(comp_child);
-    }
+    // if comp_props.has_children() {
+    //     comp_props.set_children(comp_child);
+    // }
 
-    let vcomp = comp_props.into_vcomponent(render_fn, T::name());
-    let dnode_comp = DynamicNode::Component(vcomp);
+    // let vcomp = comp_props.into_vcomponent(render_fn, "");
+    // let dnode_comp = DynamicNode::Component(vcomp);
 
-    rsx!(
-        { dnode_comp }
-    )
+    // rsx!(
+    //     { dnode_comp }
+    // )
+
+    rsx!()
 }
 
 #[component]

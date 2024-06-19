@@ -3,7 +3,6 @@ use dioxus_components::form::slider::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
-#[component]
 pub fn SliderPage() -> Element {
     let _state = use_context_provider(|| {
         let mut hash = HashPreview::new();
@@ -25,7 +24,7 @@ impl DemoComponent for SliderProps {
         "Allows users to select a value within a specified range"
     }
 
-    fn build_comp_preview() -> Element {
+    fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
         let preview_comp =
             build_preview_component::<SliderProps, _>(&state.read()[&0], Slider, None);
@@ -35,7 +34,7 @@ impl DemoComponent for SliderProps {
         )
     }
 
-    fn build_comp_selectors() -> Element {
+    fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(

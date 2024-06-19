@@ -3,7 +3,6 @@ use dioxus_components::form::textarea::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
-#[component]
 pub fn TextAreaPage() -> Element {
     let _state = use_context_provider(|| {
         let mut hash = HashPreview::new();
@@ -25,7 +24,7 @@ impl DemoComponent for TextAreaProps {
         "A customizable and interactive textarea component"
     }
 
-    fn build_comp_preview() -> Element {
+    fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
         let preview_comp =
             build_preview_component::<TextAreaProps, _>(&state.read()[&0], TextArea, None);
@@ -35,7 +34,7 @@ impl DemoComponent for TextAreaProps {
         )
     }
 
-    fn build_comp_selectors() -> Element {
+    fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(

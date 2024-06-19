@@ -9,3 +9,4 @@ pub mod scrollable;
 pub mod sortedtable;
 pub mod table;
 pub mod tabs;
+pub mod hovercard;

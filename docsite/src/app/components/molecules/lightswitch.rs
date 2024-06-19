@@ -3,7 +3,6 @@ use dioxus_components::molecules::lightswitch::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
-#[component]
 pub fn LightSwitchPage() -> Element {
     let _state = use_context_provider(|| {
         let mut hash = HashPreview::new();
@@ -25,7 +24,7 @@ impl DemoComponent for LightSwitchProps {
         "Turn off the light !"
     }
 
-    fn build_comp_preview() -> Element {
+    fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
         let preview_comp =
             build_preview_component::<LightSwitchProps, _>(&state.read()[&0], LightSwitch, rsx!( "LightSwitch" ));
@@ -35,7 +34,7 @@ impl DemoComponent for LightSwitchProps {
         )
     }
 
-    fn build_comp_selectors() -> Element {
+    fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(

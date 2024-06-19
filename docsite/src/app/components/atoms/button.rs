@@ -3,7 +3,6 @@ use dioxus_components::atoms::{button::ButtonProps, Button};
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
-#[component]
 pub fn ButtonPage() -> Element {
     let _state = use_context_provider(|| {
         let mut hash = HashPreview::new();
@@ -25,7 +24,7 @@ impl DemoComponent for ButtonProps {
         "A simple yet customizable button"
     }
 
-    fn build_comp_preview() -> Element {
+    fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
         let preview_comp =
             build_preview_component::<ButtonProps, _>(&state.read()[&0], Button, rsx!( "Button" ));
@@ -35,7 +34,7 @@ impl DemoComponent for ButtonProps {
         )
     }
 
-    fn build_comp_selectors() -> Element {
+    fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
