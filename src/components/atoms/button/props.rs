@@ -1,10 +1,9 @@
 use dioxus::prelude::*;
-use props_component_macro::UiComp;
-
+use dioxus_components_macro::UiComp;
 use super::ButtonVariant;
 use crate::attributes::*;
 
-#[derive(Clone, PartialEq, Props, UiComp)]
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
 pub struct ButtonProps {
     #[props(extends = button, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -39,7 +38,14 @@ pub fn Button(mut props: ButtonProps) -> Element {
     let onfocus = move |event| props.onfocus.call(event);
 
     rsx!(
-        button { ..props.attributes, onclick, onmouseenter, onmouseleave, onfocus, {props.children} }
+        button {
+            ..props.attributes,
+            onclick,
+            onmouseenter,
+            onmouseleave,
+            onfocus,
+            {props.children}
+        }
     )
 }
 

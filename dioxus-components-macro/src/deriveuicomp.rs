@@ -1,12 +1,9 @@
 use proc_macro::TokenStream;
 use quote::quote;
-use syn::{
-    Fields, Ident,
-};
+use syn::{Fields, Ident};
 
 pub fn impl_my_derive(ast: &syn::DeriveInput) -> TokenStream {
     let struct_name = &ast.ident;
-
 
     let struct_fields = if let syn::Data::Struct(syn::DataStruct { fields, .. }) = &ast.data {
         fields
@@ -41,8 +38,13 @@ fn derive_traits(struct_name: &Ident, fields: &Fields) -> Vec<proc_macro2::Token
             }
         }
     };
-    
-    vec![buildclass_trait, haschildren_trait, uicomp_trait, display_trait]
+
+    vec![
+        buildclass_trait,
+        haschildren_trait,
+        uicomp_trait,
+        display_trait,
+    ]
 }
 
 fn build_buildclass_trait(struct_name: &Ident, fields: &Fields) -> proc_macro2::TokenStream {
@@ -72,30 +74,32 @@ fn build_buildclass_trait(struct_name: &Ident, fields: &Fields) -> proc_macro2::
 }
 
 fn build_haschildren_trait(struct_name: &Ident, fields: &Fields) -> proc_macro2::TokenStream {
-        // Search for "children" in the fields of the struct
-        let search_attributes = fields.iter().find(|field| {
-            if let Some(ident) = &field.ident {
-                ident.to_string() == "children"
-            } else {
-                false
-            }
-        });
-    
-        // impl has_children as true and set_children accordingly else let the default definition of both
-        if let Some(_) = search_attributes {
-            quote! {
-                impl HasChildren for #struct_name {
-                    fn has_children(&self) -> bool {
-                        true
-                    }
+    // Search for "children" in the fields of the struct
+    let search_attributes = fields.iter().find(|field| {
+        if let Some(ident) = &field.ident {
+            ident.to_string() == "children"
+        } else {
+            false
+        }
+    });
 
-                    fn set_children(&mut self, children: Element) {
-                        self.children = children;
-                    }
+    // impl has_children as true and set_children accordingly else let the default definition of both
+    if let Some(_) = search_attributes {
+        quote! {
+            impl HasChildren for #struct_name {
+                fn has_children(&self) -> bool {
+                    true
+                }
+
+                fn set_children(&mut self, children: Element) {
+                    self.children = children;
                 }
             }
-        } else {
-            quote! {
-            }
-        }.into()
+        }
+    } else {
+        quote! {
+            impl HasChildren for #struct_name {}
+        }
+    }
+    .into()
 }

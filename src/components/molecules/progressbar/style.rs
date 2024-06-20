@@ -1,5 +1,6 @@
 use super::props::*;
 use crate::attributes::*;
+use dioxus::prelude::*;
 
 impl Class for ProgressBarProps {
     fn base(&self) -> &'static str {
@@ -7,7 +8,7 @@ impl Class for ProgressBarProps {
     }
 
     fn color(&self) -> Option<&'static str> {
-        Some(match self.color {
+        Some(match *self.color.read() {
             Color::Primary => "bg-primary",
             Color::Secondary => "bg-secondary",
             Color::Destructive => "bg-destructive",
@@ -19,7 +20,7 @@ impl Class for ProgressBarProps {
     }
 
     fn size(&self) -> Option<&'static str> {
-        Some(match self.size {
+        Some(match *self.size.read() {
             Size::Xs => "h-1 text-xs",
             Size::Sm => "h-2 text-xs",
             Size::Md => "h-4 text-sm",
@@ -35,7 +36,7 @@ impl Class for ProgressBarInnerProps {
     }
 
     fn color(&self) -> Option<&'static str> {
-        Some(match self.color {
+        Some(match *self.color.read() {
             Color::Primary => "bg-primary-foreground [&>*]:text-primary",
             Color::Secondary => "bg-secondary-foreground [&>*]:text-secondary",
             Color::Destructive => "bg-destructive-foreground [&>*]:text-destructive",

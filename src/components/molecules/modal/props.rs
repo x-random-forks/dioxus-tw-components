@@ -1,8 +1,7 @@
-use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
-
 use crate::attributes::*;
+use dioxus::prelude::*;
+use dioxus_components_macro::UiComp;
+
 #[derive(Clone, Copy)]
 struct ModalState {
     data_state_attr_value: DataStateAttrValue,
@@ -30,6 +29,14 @@ impl IntoAttributeValue for ModalState {
     }
 }
 
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct ModalProps {
+    #[props(default = false)]
+    is_open: bool,
+
+    children: Element,
+}
+
 /// Usage: \
 /// ```ignore
 /// Modal {
@@ -46,8 +53,7 @@ impl IntoAttributeValue for ModalState {
 ///    }
 /// }
 /// ```
-#[props_component(children)]
-pub fn Modal(#[props(default = false)] is_open: bool) -> Element {
+pub fn Modal(props: ModalProps) -> Element {
     use_context_provider(|| Signal::new(ModalState::new(props.is_open)));
 
     rsx!(
@@ -55,29 +61,47 @@ pub fn Modal(#[props(default = false)] is_open: bool) -> Element {
     )
 }
 
-#[props_component(class, id, children)]
-pub fn ModalTrigger() -> Element {
-    let mut state = use_context::<Signal<ModalState>>();
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct ModalTriggerProps {
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
 
-    let trigger_closure = move |_: Event<MouseData>| {
-        state.write().toggle();
-    };
-
-    rsx!(
-        div { class: props.class, id: props.id, onclick: trigger_closure, {props.children} }
-    )
+    children: Element,
 }
 
-#[props_component(class, id, children)]
-pub fn ModalClose() -> Element {
+pub fn ModalTrigger(mut props: ModalTriggerProps) -> Element {
     let mut state = use_context::<Signal<ModalState>>();
+
+    props.build_class();
 
     let onclick = move |_: Event<MouseData>| {
         state.write().toggle();
     };
 
     rsx!(
-        button { class: props.class, id: props.id, onclick,
+        div { ..props.attributes, onclick, {props.children} }
+    )
+}
+
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct ModalCloseProps {
+    #[props(extends = button, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
+pub fn ModalClose(mut props: ModalCloseProps) -> Element {
+    let mut state = use_context::<Signal<ModalState>>();
+
+    props.build_class();
+
+    let onclick = move |_: Event<MouseData>| {
+        state.write().toggle();
+    };
+
+    rsx!(
+        button { ..props.attributes, onclick,
             svg {
                 xmlns: "http://www.w3.org/2000/svg",
                 view_box: "0 0 256 256",
@@ -90,12 +114,21 @@ pub fn ModalClose() -> Element {
     )
 }
 
-#[props_component(class, id, children)]
-pub fn ModalContent(
-    #[props(extends = div)] mut attributes: Vec<Attribute>,
-    #[props(default = Animation::Full)] animation: Animation,
-) -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct ModalContentProps {
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    #[props(optional, default)]
+    pub animation: ReadOnlySignal<Animation>,
+
+    children: Element,
+}
+
+pub fn ModalContent(mut props: ModalContentProps) -> Element {
     let state = use_context::<Signal<ModalState>>();
+
+    props.build_class();
 
     props.attributes.push(Attribute::new(
         "data-state",
@@ -105,20 +138,32 @@ pub fn ModalContent(
     ));
 
     rsx!(
-        div { ..props.attributes, class: props.class, id: props.id, {props.children} }
+        div { ..props.attributes, {props.children} }
     )
 }
 
-#[props_component(class, id, children)]
-pub fn ModalBackground(
-    #[props(extends = div)] mut attributes: Vec<Attribute>,
-    #[props(default = true)] interactive: bool,
-    #[props(default)] color: Color,
-    #[props(default = Animation::Full)] animation: Animation,
-) -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct ModalBackgroundProps {
+    #[props(optional, default = true)]
+    interactive: bool,
+
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    #[props(optional, default)]
+    pub color: ReadOnlySignal<Color>,
+    #[props(optional, default)]
+    pub animation: ReadOnlySignal<Animation>,
+
+    children: Element,
+}
+
+pub fn ModalBackground(mut props: ModalBackgroundProps) -> Element {
     let mut state = use_context::<Signal<ModalState>>();
 
-    let modal_closure = move |_: Event<MouseData>| {
+    props.build_class();
+
+    let onclick = move |_: Event<MouseData>| {
         if props.interactive {
             state.write().toggle();
         }
@@ -132,12 +177,6 @@ pub fn ModalBackground(
     ));
 
     rsx!(
-        div {
-            ..props.attributes,
-            class: props.class,
-            id: props.id,
-            onclick: modal_closure,
-            {props.children}
-        }
+        div { ..props.attributes, onclick, {props.children} }
     )
 }

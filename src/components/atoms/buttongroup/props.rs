@@ -1,40 +1,40 @@
-use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
-
 use crate::attributes::*;
+use dioxus::prelude::*;
+use dioxus_components_macro::UiComp;
 
-#[props_component(id, class, children)]
-pub fn ButtonGroup() -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct ButtonGroupProps {
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
+pub fn ButtonGroup(mut props: ButtonGroupProps) -> Element {
+    props.build_class();
+
     rsx!(
-        div { class: props.class, {props.children} }
+        div { ..props.attributes, {props.children} }
     )
 }
 
-#[props_component(id, class, children)]
-pub fn ButtonGroupItem(
-        /// Things like disabled, type,... see [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button)
-        #[props(extends = button)]
-        attributes: Vec<Attribute>,
-        /// Callback when the button is clicked
-        #[props(optional)]
-        onclick: Option<EventHandler<MouseEvent>>
-        // #[props(default)] color: Color,
-        // #[props(default)] size: Size,
-) -> Element {
-    let onclick = move |event| {
-        if let Some(oc) = &props.onclick {
-            oc.call(event)
-        }
-    };
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct ButtonGroupItemProps {
+    #[props(extends = button, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    #[props(optional)]
+    onclick: EventHandler<MouseEvent>,
+
+    children: Element,
+}
+
+pub fn ButtonGroupItem(mut props: ButtonGroupItemProps) -> Element {
+    props.build_class();
+
+    let onclick = move |event| props.onclick.call(event);
 
     rsx!(
-        button {
-            ..props.attributes,
-            class: props.class,
-            id: props.id,
-            onclick,
-            {props.children}
-        }
+        button { ..props.attributes, onclick, {props.children} }
     )
 }

@@ -1,26 +1,34 @@
-use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
-
 use crate::attributes::*;
-#[props_component(class, children, id)]
-pub fn Radio(
-    #[props(extends = input, extends = GlobalAttributes)] attributes: Vec<Attribute>,
-    #[props(optional, default = false)] checked: bool,
-    #[props(optional)] oninput: EventHandler<FormEvent>,
-    #[props(optional, default)] color: Color,
-    #[props(optional, default)] size: Size,
-) -> Element {
+use dioxus::prelude::*;
+use dioxus_components_macro::UiComp;
+
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct RadioProps {
+    #[props(extends = input, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+    #[props(optional, default = false)]
+    checked: bool,
+
+    #[props(optional)]
+    oninput: EventHandler<FormEvent>,
+
+    #[props(optional, default)]
+    pub color: ReadOnlySignal<Color>,
+    #[props(optional, default)]
+    pub size: ReadOnlySignal<Size>,
+}
+
+pub fn Radio(mut props: RadioProps) -> Element {
+    props.build_class();
+
+    let oninput = move |event| props.oninput.call(event);
+
     rsx!(
         input {
             ..props.attributes,
-            id: &*props.id,
             r#type: "radio",
             checked: props.checked,
-            class: props.class,
-            oninput: move |e| {
-                props.oninput.call(e);
-            }
+            oninput
         }
     )
 }

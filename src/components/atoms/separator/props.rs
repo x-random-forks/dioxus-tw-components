@@ -1,19 +1,21 @@
 use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
-
+use dioxus_components_macro::UiComp;
 use crate::attributes::*;
 
-/// A simple separator component
-#[props_component(class)]
-pub fn Separator(
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct SeparatorProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
-    /// Handle the orientation of the separator
-    #[props(default = Orientation::Horizontal)]
-    orientation: Orientation,
+    
+    #[props(optional, default)]
+    pub orientation: ReadOnlySignal<Orientation>,
+}
+
+pub fn Separator(mut props: SeparatorProps
 ) -> Element {
+    props.build_class();
+    
     rsx!(
-        div { ..props.attributes, class: props.class }
+        div { ..props.attributes }
     )
 }

@@ -7,11 +7,10 @@ authors = ["Louis Truchelut"]
 [lib]
 name = "dioxus_components"
 path = "src/lib.rs"
-authors = ["Louis Truchelut"]
 
 [dependencies]
 
-props-component-macro = { path = "./props-component-macro" }
+dioxus-components-macro = { path = "./dioxus-components-macro" }
 log = "0.4.17"
 dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "0eb16f27d4a66f654d18fe46fa7f0d50180a1a28", features = ["web"] }
 dioxus-logger = "0.4.1"

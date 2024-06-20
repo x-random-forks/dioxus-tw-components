@@ -1,5 +1,6 @@
 use super::props::*;
 use crate::attributes::*;
+use dioxus::prelude::*;
 
 impl Class for CarouselProps {
     fn base(&self) -> &'static str {
@@ -19,7 +20,7 @@ impl Class for CarouselContentProps {
     }
 
     fn animation(&self) -> Option<&'static str> {
-        Some(match self.animation {
+        Some(match *self.animation.read() {
             Animation::None => "transition-none",
             Animation::Light | Animation::Full => "transform transition-transform duration-500",
             Animation::Custom(animation) => animation,

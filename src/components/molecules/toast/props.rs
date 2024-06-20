@@ -1,13 +1,9 @@
-use std::{str::FromStr, string::ToString};
+use crate::attributes::*;
+use crate::hooks::{use_element_by_id, use_set_timeout, use_window};
 use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::tw_merge;
+use dioxus_components_macro::UiComp;
+use std::{str::FromStr, string::ToString};
 use web_sys::wasm_bindgen::{closure::Closure, JsValue};
-
-use crate::{
-    attributes::*,
-    hooks::{use_element_by_id, use_set_timeout, use_window},
-};
 
 /// Used to keep track of the number of toasts created
 /// This number is used to create a unique ID in the DOM to then grab it and do whatever with it
@@ -74,7 +70,7 @@ impl FromStr for ToastPosition {
 
 impl ToastPosition {
     /// Will always return a position, if spelling mistake will return ToastPosition::default()
-    pub fn str_to_toast_pos<T:ToString>(str: T) -> ToastPosition {
+    pub fn str_to_toast_pos<T: ToString>(str: T) -> ToastPosition {
         str.to_string().parse().unwrap()
     }
 }
@@ -180,13 +176,13 @@ impl Toast {
     /// Build the whole toast
     fn build(&self, toast_id: &str) -> String {
         let title_tag = &self.title_tag.clone().unwrap_or("h6".to_string());
-        let title_class = tw_merge!("h6", &self.title_class);
+        let title_class = format!("h6 {}", &self.title_class);
         let title_class = format!("class=\"{}\"", title_class);
         let title = &self.title;
         let title = format!("<{} {}>{}</{}>", title_tag, title_class, title, title_tag);
 
         let description_tag = &self.description_tag.clone().unwrap_or("span".to_string());
-        let description_class = tw_merge!("span", &self.description_class);
+        let description_class = format!("paragraph {}", &self.title_class);
         let description_class = format!("class=\"{}\"", description_class);
         let description = &self.description;
         let description = format!(
@@ -194,7 +190,12 @@ impl Toast {
             description_tag, description_class, description, description_tag
         );
 
-        let class = tw_merge!(self.base(), self.color().unwrap_or_default(), &self.class);
+        let class = format!(
+            "{} {} {}",
+            self.base(),
+            self.color().unwrap_or_default(),
+            &self.class
+        );
         let class = format!("class=\"{}\"", class);
 
         let id = format!("id=\"{}\"", toast_id);
@@ -208,10 +209,19 @@ impl Toast {
 
 const TOAST_ID: &str = "dx-toast";
 
-#[props_component(class, children)]
-pub fn ToastList() -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct ToastListProps {
+    #[props(extends = ol, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
+pub fn ToastList(mut props: ToastListProps) -> Element {
+    props.build_class();
+
     rsx!(
-        ol { role: "alert", id: TOAST_ID, class: props.class, {props.children} }
+        ol { role: "alert", id: TOAST_ID, ..props.attributes, {props.children} }
     )
 }
 

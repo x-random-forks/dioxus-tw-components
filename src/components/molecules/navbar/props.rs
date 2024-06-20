@@ -1,11 +1,19 @@
-use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
-
 use crate::attributes::*;
-#[props_component(class, id)]
-pub fn Navbar(#[props(default)] children: Element) -> Element {
+use dioxus::prelude::*;
+use dioxus_components_macro::UiComp;
+
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct NavbarProps {
+    #[props(extends = nav, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+    
+    children: Element,
+}
+
+pub fn Navbar(mut props: NavbarProps) -> Element {
+    props.build_class();
+    
     rsx!(
-        nav { class: props.class, id: props.id, {props.children} }
+        nav { ..props.attributes, {props.children} }
     )
 }

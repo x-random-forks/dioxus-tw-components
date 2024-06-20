@@ -1,5 +1,6 @@
 use super::props::*;
 use crate::attributes::*;
+use dioxus::prelude::*;
 
 impl Class for ScrollableProps {
     fn base(&self) -> &'static str {
@@ -7,7 +8,7 @@ impl Class for ScrollableProps {
     }
 
     fn orientation(&self) -> Option<&'static str> {
-        Some(match self.orientation {
+        Some(match *self.orientation.read() {
             Orientation::Horizontal => {
                 "overflow-y-auto overflow-x-hidden -rotate-90 origin-[right_top] -rotate-90"
             }

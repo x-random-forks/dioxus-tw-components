@@ -1,5 +1,6 @@
 use super::props::*;
 use crate::attributes::*;
+use dioxus::prelude::*;
 
 impl Class for TextAreaProps {
     fn base(&self) -> &'static str {
@@ -7,7 +8,7 @@ impl Class for TextAreaProps {
     }
 
     fn color(&self) -> Option<&'static str> {
-        Some(match self.color {
+        Some(match *self.color.read() {
             Color::Primary => "border-primary",
             Color::Secondary => "border-secondary",
             Color::Destructive => "border-destructive",

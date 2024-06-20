@@ -1,5 +1,6 @@
 use super::props::*;
 use crate::attributes::*;
+use dioxus::prelude::*;
 
 impl Class for CheckboxProps {
     fn base(&self) -> &'static str {
@@ -7,7 +8,7 @@ impl Class for CheckboxProps {
     }
 
     fn color(&self) -> Option<&'static str> {
-        Some(match self.color {
+        Some(match *self.color.read() {
             Color::Primary => "accent-primary focus:ring-primary focus:ring-2 focus:ring-offset-1",
             Color::Secondary => {
                 "accent-secondary focus:ring-secondary focus:ring-2 focus:ring-offset-1"
@@ -23,7 +24,7 @@ impl Class for CheckboxProps {
     }
 
     fn size(&self) -> Option<&'static str> {
-        Some(match self.size {
+        Some(match *self.size.read() {
             Size::Xs => "size-2",
             Size::Sm => "size-3",
             Size::Md => "",

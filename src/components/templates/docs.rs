@@ -1,13 +1,20 @@
-use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
-
 use crate::attributes::*;
+use dioxus::prelude::*;
+use dioxus_components_macro::UiComp;
 
-#[props_component(class, children, id)]
-pub fn DocsTemplate() -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct DocsTemplateProps {
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
+pub fn DocsTemplate(mut props: DocsTemplateProps) -> Element {
+    props.build_class();
+
     rsx!(
-        div { class: props.class, id: props.id, { props.children } }
+        div { ..props.attributes, { props.children } }
     )
 }
 

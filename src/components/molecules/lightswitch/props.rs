@@ -1,9 +1,7 @@
-use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use serde_json::Value;
-use tailwind_fuse::*;
-
 use crate::attributes::*;
+use dioxus::prelude::*;
+use dioxus_components_macro::UiComp;
+use serde_json::Value;
 
 pub struct LightSwitchState {
     active: bool,
@@ -28,9 +26,17 @@ impl LightSwitchState {
     }
 }
 
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct LightSwitchProps {
+    #[props(extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
 /// This component inserts/remove "dark" in the DOM on the div with id of main
-#[props_component(class, id, children)]
-pub fn LightSwitch() -> Element {
+pub fn LightSwitch(mut props: LightSwitchProps) -> Element {
+    props.build_class();
     
     let storage_dark_theme = use_resource(move || async move {
         // Get dark_theme from localStorage, if not found add it to false
@@ -97,7 +103,7 @@ pub fn LightSwitch() -> Element {
     let icon = use_correct_theme_icon(state);
 
     rsx!(
-        button { r#type: "button", class: props.class, onclick, {icon} }
+        button { r#type: "button", ..props.attributes, onclick, {icon} }
     )
 }
 

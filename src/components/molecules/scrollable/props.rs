@@ -1,11 +1,22 @@
-use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
-
 use crate::attributes::*;
-#[props_component(class, children, id)]
-pub fn Scrollable(#[props(default = Orientation::Vertical)] orientation: Orientation) -> Element {
+use dioxus::prelude::*;
+use dioxus_components_macro::UiComp;
+
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct ScrollableProps {
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    #[props(optional, default)]
+    pub orientation: ReadOnlySignal<Orientation>,
+
+    children: Element,
+}
+
+pub fn Scrollable(mut props: ScrollableProps) -> Element {
+    props.build_class();
+
     rsx!(
-        div { class: props.class, id: props.id, {props.children} }
+        div { ..props.attributes, {props.children} }
     )
 }

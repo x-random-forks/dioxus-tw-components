@@ -1,12 +1,8 @@
-use crate::atoms::{
-        buttongroup::ButtonGroup,
-        Separator,
-    };
-use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
-
+use crate::atoms::{buttongroup::ButtonGroup, Separator};
 use crate::attributes::*;
+use dioxus::prelude::*;
+use dioxus_components_macro::UiComp;
+
 pub struct FormListState {
     max_size: usize,
     current_size: usize,
@@ -37,26 +33,60 @@ impl FormListState {
     }
 }
 
-#[props_component(class, children)]
-pub fn FormList(#[props(default = 1)] max_size: usize) -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct FormListProps {
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    #[props(default = 1)]
+    max_size: usize,
+
+    children: Element,
+}
+
+pub fn FormList(mut props: FormListProps) -> Element {
     use_context_provider(|| Signal::new(FormListState::new(props.max_size)));
 
+    props.build_class();
+
     rsx!(
-        div { class: props.class, {props.children} }
+        div { ..props.attributes, {props.children} }
     )
 }
 
-#[props_component(class, children)]
-pub fn FormListTitle() -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct FormListTitleProps {
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
+pub fn FormListTitle(mut props: FormListTitleProps) -> Element {
+    props.build_class();
+
     rsx!(
-        div { class: props.class, {props.children} }
+        div { ..props.attributes, {props.children} }
     )
 }
 
-#[props_component(class, children)]
-pub fn FormListTrigger(#[props(default = false)] plus: bool) -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct FormListTriggerProps {
+    #[props(default = false)]
+    plus: bool,
+
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
+// TODO refactor
+pub fn FormListTrigger(mut props: FormListTriggerProps) -> Element {
     let mut state = use_context::<Signal<FormListState>>();
-    
+
+    props.build_class();
+
     rsx!(
         ButtonGroup { class: "flex flex-col divide-none bg-foreground/5",
             button {
@@ -77,12 +107,21 @@ pub fn FormListTrigger(#[props(default = false)] plus: bool) -> Element {
             }
         }
     )
-
 }
 
-#[props_component(class)]
-pub fn FormListContent(#[props(default)] list_fields: Vec<Element>) -> Element {
-    let state = consume_context::<Signal<FormListState>>();
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct FormListContentProps {
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    #[props(default)]
+    list_fields: Vec<Element>,
+}
+
+pub fn FormListContent(mut props: FormListContentProps) -> Element {
+    let state = use_context::<Signal<FormListState>>();
+
+    props.build_class();
 
     let rendered_list_fields = props
         .list_fields
@@ -90,12 +129,12 @@ pub fn FormListContent(#[props(default)] list_fields: Vec<Element>) -> Element {
         .take(state.read().num_to_render())
         .map(|x| {
             rsx!(
-                {{ x }.clone()},
+                { { x }.clone() },
                 Separator { class: "last:opacity-0 last:mt-0" }
             )
         });
 
     rsx!(
-        div { class: props.class, { rendered_list_fields } }
+        div { ..props.attributes, { rendered_list_fields } }
     )
 }

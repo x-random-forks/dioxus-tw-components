@@ -1,8 +1,7 @@
 use crate::attributes::*;
 use crate::hooks::use_element_scroll_height;
 use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
+use dioxus_components_macro::UiComp;
 
 struct AccordionState {
     multi_open: bool,
@@ -13,7 +12,7 @@ impl AccordionState {
     fn new(multi_open: bool) -> Self {
         Self {
             multi_open,
-            active_items: Vec::new(),
+            active_items: Vec::with_capacity(1),
         }
     }
 
@@ -43,6 +42,18 @@ impl AccordionState {
     }
 }
 
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct AccordionProps {
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    /// Control if multiple items can be open at the same time
+    #[props(default = false)]
+    multi_open: bool,
+
+    children: Element,
+}
+
 /// The Accordion component divides the content into collapsible items \
 /// Usage:
 /// ```ignore
@@ -57,67 +68,83 @@ impl AccordionState {
 ///     }
 /// }
 /// ```
-#[props_component(id, class, children)]
-pub fn Accordion(
-    /// Control if multiple items can be open at the same time
-    #[props(default = false)]
-    multi_open: bool,
-) -> Element {
+pub fn Accordion(mut props: AccordionProps) -> Element {
     use_context_provider(|| Signal::new(AccordionState::new(props.multi_open)));
 
+    props.build_class();
+
     rsx!(
-        div { class: props.class, id: props.id, {props.children} }
+        div { ..props.attributes, {props.children} }
     )
+}
+
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct AccordionItemProps {
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
 }
 
 /// Wrapper for the [AccordionTrigger] and [AccordionContent] components
-#[props_component(id, class, children)]
-pub fn AccordionItem() -> Element {
+pub fn AccordionItem(mut props: AccordionItemProps) -> Element {
+    props.build_class();
+
     rsx!(
-        div { class: props.class, id: props.id, {props.children} }
+        div { ..props.attributes, {props.children} }
     )
 }
 
-/// The clickable element that toggles the visibility of the [AccordionContent] component
-#[props_component(id, class, children)]
-pub fn AccordionTrigger(
-    #[props(extends = button)] mut attributes: Vec<Attribute>,
-    /// Determine if the accordion item is open by default
-    #[props(default = false)]
-    is_open: bool,
-    /// Decoration element that is displayed next to the trigger text, by default a chevron svg
-    #[props(default = use_default_trigger_decoration())]
-    trigger_decoration: Element,
-) -> Element {
-    let mut state = use_context::<Signal<AccordionState>>();
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct AccordionTriggerProps {
+    #[props(extends = button, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
 
-    let sig_id = use_signal(|| props.id.clone());
+    #[props(optional)]
+    id: ReadOnlySignal<String>,
+
+    /// Determine if the accordion item is open by default
+    #[props(optional, default = false)]
+    is_open: bool,
+
+    /// Decoration element that is displayed next to the trigger text, by default a chevron svg
+    #[props(optional, default = use_default_trigger_decoration())]
+    trigger_decoration: Element,
+
+    children: Element,
+}
+
+/// The clickable element that toggles the visibility of the [AccordionContent] component
+pub fn AccordionTrigger(mut props: AccordionTriggerProps) -> Element {
+    props.build_class();
+
+    let mut state = use_context::<Signal<AccordionState>>();
 
     let onmounted = move |_| async move {
         if props.is_open {
-            state.write().add_id(sig_id());
+            state.write().add_id(props.id.read().clone());
         }
     };
 
     let button_closure = move |_: Event<MouseData>| {
         // If the current item is active, remove it from the list, effectively closing it
-        if state.read().is_active(&sig_id()) {
-            state.write().remove_id(sig_id());
+        if state.read().is_active(&*props.id.read()) {
+            state.write().remove_id(props.id.read().clone());
         } else {
             // If the current item is not active
             // set it as the only active item if multi_open is false
             // or add it to the list of active items if multi_open is true
             if !state.read().multi_open {
-                state.write().set_id(sig_id());
+                state.write().set_id(props.id.read().clone());
             } else {
-                state.write().add_id(sig_id());
+                state.write().add_id(props.id.read().clone());
             }
         }
     };
 
     props.attributes.push(Attribute::new(
         "data-state",
-        state.read().into_value_id(&sig_id()),
+        state.read().into_value_id(&*props.id.read()),
         None,
         true,
     ));
@@ -125,8 +152,6 @@ pub fn AccordionTrigger(
     rsx!(
         button {
             ..props.attributes,
-            class: props.class,
-            id: props.id,
             onclick: button_closure,
             onmounted: onmounted,
             p { {props.children} }
@@ -148,16 +173,26 @@ fn use_default_trigger_decoration() -> Element {
     )
 }
 
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct AccordionContentProps {
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    #[props(optional)]
+    id: ReadOnlySignal<String>,
+
+    #[props(default)]
+    pub animation: ReadOnlySignal<Animation>,
+
+    children: Element,
+}
+
 /// Collapsible element that is toggled by the [AccordionTrigger] component
-#[props_component(id, class, children)]
-pub fn AccordionContent(
-    #[props(extends = div)] mut attributes: Vec<Attribute>,
-    #[props(default)] animation: Animation,
-) -> Element {
+pub fn AccordionContent(mut props: AccordionContentProps) -> Element {
     // This is the height of the element when visible, we need to calcul it before rendering it to have a smooth transition
     let mut elem_height = use_signal(|| "".to_string());
 
-    let sig_id = use_signal(|| props.id.clone());
+    props.build_class();
 
     let onmounted = move |_| async move {
         if props.animation == Animation::None {
@@ -165,7 +200,7 @@ pub fn AccordionContent(
             return;
         }
 
-        match use_element_scroll_height(&sig_id()) {
+        match use_element_scroll_height(&props.id.read()) {
             Ok(height) => {
                 elem_height.set(format!("{}px", height));
             }
@@ -178,26 +213,19 @@ pub fn AccordionContent(
 
     let state = use_context::<Signal<AccordionState>>();
 
-    let final_height = match state.read().is_active(&sig_id()) {
+    let final_height = match state.read().is_active(&props.id.read()) {
         true => elem_height(),
         false => "0".to_string(),
     };
 
     props.attributes.push(Attribute::new(
         "data-state",
-        state.read().into_value_id(&sig_id()),
+        state.read().into_value_id(&props.id.read()),
         None,
         true,
     ));
 
     rsx!(
-        div {
-            ..props.attributes,
-            id: props.id,
-            class: props.class,
-            height: final_height,
-            onmounted: onmounted,
-            {props.children}
-        }
+        div { ..props.attributes, height: final_height, onmounted, {props.children} }
     )
 }

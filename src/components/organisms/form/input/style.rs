@@ -1,5 +1,6 @@
 use super::props::*;
 use crate::attributes::*;
+use dioxus::prelude::*;
 
 impl Class for InputProps {
     fn base(&self) -> &'static str {
@@ -7,7 +8,7 @@ impl Class for InputProps {
     }
 
     fn color(&self) -> Option<&'static str> {
-        Some(match self.color {
+        Some(match *self.color.read() {
             Color::Primary => "border-primary",
             Color::Secondary => "border-secondary",
             Color::Destructive => "border-destructive",
@@ -17,7 +18,7 @@ impl Class for InputProps {
     }
 
     fn size(&self) -> Option<&'static str> {
-        Some(match self.size {
+        Some(match *self.size.read() {
             Size::Xs => "h-4 text-xs",
             Size::Sm => "h-6 text-xs",
             Size::Md => "h-9 text-sm",

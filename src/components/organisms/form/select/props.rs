@@ -1,70 +1,79 @@
-use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
-
 use crate::attributes::*;
-#[props_component(class, id, children)]
-pub fn SelectGroup(
-    #[props(extends = select, extends = GlobalAttributes)] attributes: Vec<Attribute>,
+use dioxus::prelude::*;
+use dioxus_components_macro::UiComp;
 
-    #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
-) -> Element {
-    let oninput = move |event| {
-        if let Some(oc) = &props.oninput {
-            oc.call(event)
-        }
-    };
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct SelectGroupProps {
+    #[props(extends = select, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    #[props(optional)]
+    oninput: EventHandler<FormEvent>,
+
+    children: Element,
+}
+
+pub fn SelectGroup(mut props: SelectGroupProps) -> Element {
+    props.build_class();
+
+    let oninput = move |event| props.oninput.call(event);
 
     rsx!(
-        select {
-            ..props.attributes,
-            class: props.class,
-            id: props.id,
-            oninput: oninput,
-            {props.children}
-        }
+        select { ..props.attributes, oninput: oninput, {props.children} }
     )
 }
 
-#[props_component(class, id, children)]
-pub fn SelectPlaceholder() -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct SelectPlaceholderProps {
+    #[props(extends = option, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
+pub fn SelectPlaceholder(mut props: SelectPlaceholderProps) -> Element {
+    props.build_class();
+
     rsx!(
-        option {
-            disabled: true,
-            selected: true,
-            value: r#"{""}"#,
-            class: props.class,
-            id: props.id,
-            {props.children}
-        }
+        option { disabled: true, selected: true, value: r#"{""}"#, {props.children} }
     )
 }
 
-#[props_component(class, id)]
-pub fn SelectLabel(#[props(extends = optgroup, extends = GlobalAttributes)] attributes: Vec<Attribute>) -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct SelectLabelProps {
+    #[props(extends = optgroup, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+}
+
+pub fn SelectLabel(mut props: SelectLabelProps) -> Element {
+    props.build_class();
+
     rsx!(
-        optgroup { ..props.attributes, class: props.class, id: props.id }
+        optgroup { ..props.attributes }
     )
 }
 
-#[props_component(class, id, children)]
-pub fn SelectItem(
-    #[props(extends = option, extends = GlobalAttributes)] attributes: Vec<Attribute>,
-    #[props(optional, default = None)] selected: Option<bool>,
-) -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct SelectItemProps {
+    #[props(extends = option, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    #[props(optional, default = None)]
+    selected: Option<bool>,
+
+    children: Element,
+}
+
+pub fn SelectItem(mut props: SelectItemProps) -> Element {
+    props.build_class();
+
     if let Some(selected) = props.selected {
         rsx!(
-            option {
-                ..props.attributes,
-                class: props.class,
-                selected,
-                id: props.id,
-                {props.children}
-            }
+            option { ..props.attributes, selected, {props.children} }
         )
     } else {
         rsx!(
-            option { ..props.attributes, class: props.class, id: props.id, {props.children} }
+            option { ..props.attributes, {props.children} }
         )
     }
 }

@@ -1,20 +1,31 @@
-use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
-
 use crate::attributes::*;
+use dioxus::prelude::*;
+use dioxus_components_macro::UiComp;
+
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct ToggleProps {
+    #[props(extends = button, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+    #[props(optional)]
+    checked: Option<bool>,
+
+    #[props(optional)]
+    onclick: EventHandler<MouseEvent>,
+
+    #[props(optional, default)]
+    pub color: ReadOnlySignal<Color>,
+    #[props(optional, default)]
+    pub size: ReadOnlySignal<Size>,
+    #[props(optional, default)]
+    pub animation: ReadOnlySignal<Animation>,
+}
+
 // Specifically stylised input type checkbox
 // The input use the tailwind peer class, you can use at your advantage to style the children
 // eg peer-disabled:font-mute will change children text-color when the input is disabled (Label component already does this by default)
-#[props_component(class, id)]
-pub fn Toggle(
-    #[props(extends = button, extends = GlobalAttributes)] mut attributes: Vec<Attribute>,
-    #[props(optional)] checked: Option<bool>,
-    #[props(optional)] onclick: Option<EventHandler<MouseEvent>>,
-    #[props(optional, default)] color: Color,
-    #[props(optional, default)] size: Size,
-    #[props(optional, default)] animation: Animation,
-) -> Element {
+pub fn Toggle(mut props: ToggleProps) -> Element {
+    props.build_class();
+
     let mut interior_sig = use_signal(|| match props.checked {
         Some(value) => value,
         None => false,
@@ -25,11 +36,9 @@ pub fn Toggle(
         false => DataStateAttrValue::Inactive,
     };
 
-    let onclick = move |_event| {
+    let onclick = move |event| {
         interior_sig.toggle();
-        if let Some(oc) = &props.onclick {
-            oc.call(_event)
-        }
+        props.onclick.call(event);
     };
 
     props.attributes.push(Attribute::new(
@@ -40,12 +49,6 @@ pub fn Toggle(
     ));
 
     rsx!(
-        button {
-            ..props.attributes,
-            r#type: "button",
-            id: props.id,
-            class: props.class,
-            onclick
-        }
+        button { ..props.attributes, r#type: "button", onclick }
     )
 }

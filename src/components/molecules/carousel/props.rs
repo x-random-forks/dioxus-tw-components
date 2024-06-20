@@ -1,7 +1,6 @@
 use crate::{attributes::*, hooks::use_element_scroll_width};
 use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
+use dioxus_components_macro::UiComp;
 use web_sys::wasm_bindgen::JsValue;
 
 struct CarouselState {
@@ -89,6 +88,19 @@ impl CarouselState {
     }
 }
 
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct CarouselProps {
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    #[props(default = 0)]
+    default_item_key: u32,
+    #[props(default = false)]
+    is_circular: bool,
+
+    children: Element,
+}
+
 /// Usage :
 /// ```ignore
 /// Carousel { default_item_key: 0,
@@ -101,11 +113,7 @@ impl CarouselState {
 ///     }
 ///     CarouselTrigger { next: true }
 /// }
-#[props_component(id, class, children)]
-pub fn Carousel(
-    #[props(default = 0)] default_item_key: u32,
-    #[props(default = false)] is_circular: bool,
-) -> Element {
+pub fn Carousel(mut props: CarouselProps) -> Element {
     use_context_provider(|| {
         Signal::new(CarouselState::new(
             props.default_item_key,
@@ -113,34 +121,59 @@ pub fn Carousel(
         ))
     });
 
+    props.build_class();
+
     rsx!(
-        div { class: props.class, id: props.id, {props.children} }
+        div { ..props.attributes, {props.children} }
     )
 }
 
-#[props_component(id, class, children)]
-pub fn CarouselWindow() -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct CarouselWindowProps {
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
+pub fn CarouselWindow(mut props: CarouselWindowProps) -> Element {
+    props.build_class();
+
     rsx!(
-        div { class: props.class, id: props.id, {props.children} }
+        div { ..props.attributes, {props.children} }
     )
+}
+
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct CarouselContentProps {
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    id: ReadOnlySignal<String>,
+
+    #[props(default)]
+    pub animation: ReadOnlySignal<Animation>,
+
+    children: Element,
 }
 
 /// You need to pass it an id for it to work
-#[props_component(id, class, children)]
-pub fn CarouselContent(#[props(default)] animation: Animation) -> Element {
+pub fn CarouselContent(mut props: CarouselContentProps) -> Element {
     let mut carousel_state = use_context::<Signal<CarouselState>>();
 
-    let sig_id = use_signal(|| props.id.clone());
+    props.build_class();
 
     let onmounted = move |_| async move {
         // Useful when default item is not the first one
         carousel_state
             .write()
-            .set_content_size(use_element_scroll_width(&sig_id()));
+            .set_content_size(use_element_scroll_width(&props.id.read()));
 
         carousel_state.write().translate();
 
-        carousel_state.write().set_content_id(sig_id());
+        carousel_state
+            .write()
+            .set_content_id(props.id.read().clone());
     };
 
     let style = use_memo(move || {
@@ -152,22 +185,30 @@ pub fn CarouselContent(#[props(default)] animation: Animation) -> Element {
 
     rsx!(
         div {
-            class: props.class,
+            ..props.attributes,
             style,
             id: props.id,
-            onmounted: onmounted,
+            onmounted,
             {props.children}
         }
     )
 }
 
-#[props_component(id, class, children)]
-pub fn CarouselItem(
-    #[props(extends = div)] mut attributes: Vec<Attribute>,
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct CarouselItemProps {
     /// Represent position in the carousel
     item_key: u32,
-) -> Element {
+
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
+pub fn CarouselItem(mut props: CarouselItemProps) -> Element {
     let mut state = use_context::<Signal<CarouselState>>();
+
+    props.build_class();
 
     let onmounted = move |_| {
         state.write().increment_carousel_size();
@@ -181,18 +222,22 @@ pub fn CarouselItem(
     ));
 
     rsx!(
-        div {
-            ..props.attributes,
-            class: props.class,
-            id: props.id,
-            onmounted: onmounted,
-            {props.children}
-        }
+        div { ..props.attributes, onmounted, {props.children} }
     )
 }
 
-#[props_component(id, class)]
-pub fn CarouselTrigger(#[props(default = false)] next: bool) -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct CarouselTriggerProps {
+    #[props(default = false)]
+    next: bool,
+
+    #[props(extends = button, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+}
+
+pub fn CarouselTrigger(mut props: CarouselTriggerProps) -> Element {
+    props.build_class();
+
     let onclick = move |_| {
         let mut carousel_state = use_context::<Signal<CarouselState>>();
         let content_id = carousel_state.read().content_id.clone();
@@ -209,7 +254,7 @@ pub fn CarouselTrigger(#[props(default = false)] next: bool) -> Element {
     let icon = get_next_prev_icons(props.next);
 
     rsx!(
-        button { class: props.class, id: props.id, onclick: onclick, {icon} }
+        button { ..props.attributes, onclick, {icon} }
     )
 }
 

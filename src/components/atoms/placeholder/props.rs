@@ -1,21 +1,22 @@
 use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
-
+use dioxus_components_macro::UiComp;
 use crate::attributes::*;
 
-/// A simple placeholder component that can be used to show for example a loading state
-#[props_component(id, class)]
-pub fn Placeholder(
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct PlaceholderProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
-    /// Used to control the level of animation of the component
-    #[props(default)]
-    color: Color,
-    #[props(default)]
-    animation: Animation,
-) -> Element {
+
+    #[props(optional, default)]
+    pub color: ReadOnlySignal<Color>,
+    #[props(optional, default)]
+    pub animation: ReadOnlySignal<Animation>,
+}
+
+pub fn Placeholder(mut props: PlaceholderProps) -> Element {
+    props.build_class();
+
     rsx!(
-        div { ..props.attributes, class: props.class }
+        div { ..props.attributes }
     )
 }

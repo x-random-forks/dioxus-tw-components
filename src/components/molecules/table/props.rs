@@ -1,75 +1,136 @@
-use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
-
 use crate::attributes::*;
-#[props_component(class, id, children)]
-pub fn Table(#[props(extends = table)] attributes: Vec<Attribute>) -> Element {
+use dioxus::prelude::*;
+use dioxus_components_macro::UiComp;
+
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct TableProps {
+    #[props(extends = table, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
+pub fn Table(mut props: TableProps) -> Element {
+    props.build_class();
+
     rsx!(
-        table { ..props.attributes, class: props.class, id: props.id, {props.children} }
+        table { ..props.attributes, {props.children} }
     )
 }
 
-#[props_component(class, id, children)]
-pub fn TableHeader(#[props(extends = thead)] attributes: Vec<Attribute>) -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct TableHeaderProps {
+    #[props(extends = thead, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
+pub fn TableHeader(mut props: TableHeaderProps) -> Element {
+    props.build_class();
+
     rsx!(
-        thead { ..props.attributes, class: props.class, id: props.id, {props.children} }
+        thead { ..props.attributes, {props.children} }
     )
 }
 
-#[props_component(class, id, children)]
-pub fn TableBody(#[props(extends = tbody)] attributes: Vec<Attribute>) -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct TableBodyProps {
+    #[props(extends = tbody, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
+pub fn TableBody(mut props: TableBodyProps) -> Element {
+    props.build_class();
+
     rsx!(
-        tbody { ..props.attributes, class: props.class, id: props.id, {props.children} }
+        tbody { ..props.attributes, {props.children} }
     )
 }
 
-#[props_component(class, id, children)]
-pub fn TableFooter(#[props(extends = tfoot)] attributes: Vec<Attribute>) -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct TableFooterProps {
+    #[props(extends = tfoot, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
+pub fn TableFooter(mut props: TableFooterProps) -> Element {
+    props.build_class();
+
     rsx!(
-        tfoot { ..props.attributes, class: props.class, id: props.id, {props.children} }
+        tfoot { ..props.attributes, {props.children} }
     )
 }
 
-#[props_component(class, id, children)]
-pub fn TableHead(
-    #[props(extends = th)] attributes: Vec<Attribute>,
-    #[props(optional)] onclick: Option<EventHandler<MouseEvent>>,
-) -> Element {
-    let onclick = move |event| {
-        if let Some(oc) = &props.onclick {
-            oc.call(event)
-        }
-    };
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct TableHeadProps {
+    #[props(extends = th, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    #[props(optional)]
+    onclick: EventHandler<MouseEvent>,
+
+    children: Element,
+}
+
+pub fn TableHead(mut props: TableHeadProps) -> Element {
+    props.build_class();
+
+    let onclick = move |event| props.onclick.call(event);
 
     rsx!(
-        th {
-            ..props.attributes,
-            class: props.class,
-            id: props.id,
-            onclick,
-            {props.children}
-        }
+        th { ..props.attributes, onclick, {props.children} }
     )
 }
 
-#[props_component(class, id, children)]
-pub fn TableRow(#[props(extends = tr)] attributes: Vec<Attribute>) -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct TableRowProps {
+    #[props(extends = tr, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
+pub fn TableRow(mut props: TableRowProps) -> Element {
+    props.build_class();
+
     rsx!(
-        tr { ..props.attributes, class: props.class, id: props.id, {props.children} }
+        tr { ..props.attributes, {props.children} }
     )
 }
 
-#[props_component(class, id, children)]
-pub fn TableCell(#[props(extends = td)] attributes: Vec<Attribute>) -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct TableCellProps {
+    #[props(extends = td, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
+pub fn TableCell(mut props: TableCellProps) -> Element {
+    props.build_class();
+
     rsx!(
-        td { ..props.attributes, class: props.class, id: props.id, {props.children} }
+        td { ..props.attributes, {props.children} }
     )
 }
 
-#[props_component(class, id, children)]
-pub fn TableCaption(#[props(extends = caption)] attributes: Vec<Attribute>) -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct TableCaptionProps {
+    #[props(extends = caption, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
+pub fn TableCaption(mut props: TableCaptionProps) -> Element {
+    props.build_class();
+
     rsx!(
-        caption { ..props.attributes, class: props.class, id: props.id, {props.children} }
+        caption { ..props.attributes, {props.children} }
     )
 }

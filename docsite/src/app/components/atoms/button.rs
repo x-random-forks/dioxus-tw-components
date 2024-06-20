@@ -29,7 +29,16 @@ impl DemoComponent for ButtonProps {
         let preview_comp =
             build_preview_component::<ButtonProps, _>(&state.read()[&0], Button, rsx!( "Button" ));
 
+        log::debug!("CLASS: {}", state.read()[&0].get_class());
+
         rsx!(
+            Button {
+                class: state.read()[&0].get_class(),
+                color: state.read()[&0].get_color(),
+                size: state.read()[&0].get_size(),
+                animation: state.read()[&0].get_animation(),
+                "abc"
+            }
             { preview_comp }
         )
     }

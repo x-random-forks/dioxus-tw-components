@@ -1,20 +1,45 @@
-use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
-
 use crate::attributes::*;
-#[props_component(class, children, id)]
-pub fn ProgressBar(
-    #[props(default = Color::Primary)] color: Color,
-    #[props(default)] size: Size,
-) -> Element {
+use dioxus::prelude::*;
+use dioxus_components_macro::UiComp;
+
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct ProgressBarProps {
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    #[props(optional, default)]
+    pub color: ReadOnlySignal<Color>,
+    #[props(optional, default)]
+    pub size: ReadOnlySignal<Size>,
+
+    children: Element,
+}
+
+pub fn ProgressBar(mut props: ProgressBarProps) -> Element {
+    props.build_class();
+
     rsx!(
-        div { class: props.class, id: props.id, {props.children} }
+        div { ..props.attributes, {props.children} }
     )
 }
 
-#[props_component(class, children, id)]
-pub fn ProgressBarInner(#[props(default = 50)] progress: u8, #[props(default)] color: Color) -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct ProgressBarInnerProps {
+    #[props(default = 50)]
+    progress: u8,
+
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    #[props(optional, default)]
+    pub color: ReadOnlySignal<Color>,
+
+    children: Element,
+}
+
+pub fn ProgressBarInner(mut props: ProgressBarInnerProps) -> Element {
+    props.build_class();
+
     let progress = if props.progress > 100 {
         100
     } else {
@@ -22,20 +47,31 @@ pub fn ProgressBarInner(#[props(default = 50)] progress: u8, #[props(default)] c
     };
 
     rsx!(
-        div { class: props.class, style: "width: {progress}%", id: props.id,
+        div { ..props.attributes, style: "width: {progress}%",
             div { {props.children} }
         }
     )
 }
 
-#[props_component(class, children, id)]
-pub fn ProgressLabel(
-    #[props(default = 50)] progress: u8,
-    #[props(default = true)] show_percentage: bool,
-) -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct ProgressLabelProps {
+    #[props(default = 50)]
+    progress: u8,
+    #[props(default = true)]
+    show_percentage: bool,
+
+    #[props(extends = span, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
+pub fn ProgressLabel(mut props: ProgressLabelProps) -> Element {
+    props.build_class();
+
     rsx!(
-        span { class: props.class,
-            {props.progress.to_string()},
+        span { ..props.attributes,
+            "{props.progress.to_string()}"
             if props.show_percentage {
                 "%"
             }

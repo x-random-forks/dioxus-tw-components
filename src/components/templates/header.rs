@@ -1,13 +1,20 @@
-use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
-
 use crate::attributes::*;
+use dioxus::prelude::*;
+use dioxus_components_macro::UiComp;
 
-#[props_component(class, children, id)]
-pub fn HeaderTemplate() -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct HeaderTemplateProps {
+    #[props(extends = header, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
+pub fn HeaderTemplate(mut props: HeaderTemplateProps) -> Element {
+    props.build_class();
+
     rsx!(
-        header { class: props.class, id: props.id, { props.children } }
+        header { ..props.attributes, { props.children } }
     )
 }
 

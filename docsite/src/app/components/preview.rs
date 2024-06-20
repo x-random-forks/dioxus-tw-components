@@ -73,7 +73,7 @@ where
     //     { dnode_comp }
     // )
 
-    rsx!()
+    rsx!(  )
 }
 
 #[component]

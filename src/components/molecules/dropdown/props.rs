@@ -1,13 +1,9 @@
+use crate::attributes::*;
+use crate::hooks::{use_clear_timeout_id, use_set_timeout, use_window};
 use dioxus::prelude::*;
 use dioxus_elements::geometry::{euclid::Rect, Pixels};
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
+use dioxus_components_macro::UiComp;
 use web_sys::wasm_bindgen::closure::Closure;
-
-use crate::{
-    attributes::*,
-    hooks::{use_clear_timeout_id, use_set_timeout, use_window},
-};
 
 #[derive(Clone, Copy)]
 struct DropdownState {
@@ -76,6 +72,18 @@ impl IntoAttributeValue for DropdownState {
     }
 }
 
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct DropdownProps {
+    /// Correponds to the time in ms it takes for the toggle to close itself if not active, -1 disabled this feature (default)
+    #[props(default = -1)]
+    closing_delay_ms: i32,
+
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
 /// Usage:
 /// ```ignore
 /// Dropdown {
@@ -87,14 +95,10 @@ impl IntoAttributeValue for DropdownState {
 ///    }
 /// }
 /// ```
-#[props_component(class, id, children)]
-pub fn Dropdown(
-    #[props(extends = div)] mut attributes: Vec<Attribute>,
-    /// Correponds to the time in ms it takes for the toggle to close itself if not active, -1 disabled this feature (default)
-    #[props(default = -1)]
-    closing_delay_ms: i32,
-) -> Element {
+pub fn Dropdown(mut props: DropdownProps) -> Element {
     let state = use_context_provider(|| Signal::new(DropdownState::new(props.closing_delay_ms)));
+
+    props.build_class();
 
     props.attributes.push(Attribute::new(
         "data-state",
@@ -104,13 +108,22 @@ pub fn Dropdown(
     ));
 
     rsx!(
-        div { ..props.attributes, class: props.class, id: props.id, {props.children} }
+        div { ..props.attributes, {props.children} }
     )
 }
 
-#[props_component(class, children)]
-pub fn DropdownToggle(#[props(extends = div)] mut attributes: Vec<Attribute>) -> Element {
-    let mut state = consume_context::<Signal<DropdownState>>();
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct DropdownToggleProps {
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
+pub fn DropdownToggle(mut props: DropdownToggleProps) -> Element {
+    let mut state = use_context::<Signal<DropdownState>>();
+
+    props.build_class();
 
     let onmounted = move |event: Event<MountedData>| async move {
         match event.get_client_rect().await {
@@ -152,22 +165,30 @@ pub fn DropdownToggle(#[props(extends = div)] mut attributes: Vec<Attribute>) ->
     rsx!(
         div {
             ..props.attributes,
-            class: props.class,
-            onmounted: onmounted,
-            onclick: onclick,
-            onmouseleave: onmouseleave,
+            onmounted,
+            onclick,
+            onmouseleave,
             { props.children }
         }
     )
 }
 
-#[props_component(class, id, children)]
-pub fn DropdownContent(
-    #[props(extends = div)] mut attributes: Vec<Attribute>,
-    #[props(default)] animation: Animation,
-) -> Element {
-    let mut state = consume_context::<Signal<DropdownState>>();
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct DropdownContentProps {
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
 
+    #[props(optional, default)]
+    pub animation: ReadOnlySignal<Animation>,
+
+    children: Element,
+}
+
+pub fn DropdownContent(mut props: DropdownContentProps) -> Element {
+    let mut state = use_context::<Signal<DropdownState>>();
+
+    props.build_class();
+    
     let onmounted = move |event: Event<MountedData>| async move {
         match event.get_client_rect().await {
             Ok(rect) => state.write().set_content_rect(rect),
@@ -190,7 +211,7 @@ pub fn DropdownContent(
         };
     };
 
-    // let app_state = consume_context::<Signal<LibState>>();
+    // let app_state = use_context::<Signal<LibState>>();
 
     use_memo(move || {
         // let click: Point2D<f64, f64> = app_state
@@ -207,7 +228,7 @@ pub fn DropdownContent(
         //     state.write().close();
         // }
     });
-    
+
     props.attributes.push(Attribute::new(
         "data-state",
         state.read().into_value(),
@@ -218,11 +239,9 @@ pub fn DropdownContent(
     rsx!(
         div {
             ..props.attributes,
-            class: props.class,
-            id: props.id,
-            onmounted: onmounted,
-            onmouseleave: onmouseleave,
-            onmouseenter: onmouseenter,
+            onmounted,
+            onmouseleave,
+            onmouseenter,
             {props.children}
         }
     )

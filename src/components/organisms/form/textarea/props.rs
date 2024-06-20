@@ -1,36 +1,36 @@
-use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
-
 use crate::attributes::*;
-#[props_component(id, class)]
-pub fn TextArea(
-    #[props(extends = textarea, extends = GlobalAttributes)] attributes: Vec<Attribute>,
-    #[props(optional)] value: String,
-    #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
-    #[props(optional)] onmounted: Option<EventHandler<Event<MountedData>>>,
-    #[props(default)] color: Color,
-) -> Element {
-    let oninput = move |event| {
-        if let Some(oc) = &props.oninput {
-            oc.call(event)
-        }
-    };
+use dioxus::prelude::*;
+use dioxus_components_macro::UiComp;
 
-    let onmounted = move |event: Event<MountedData>| {
-        if let Some(oc) = &props.onmounted {
-            oc.call(event)
-        }
-    };
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct TextAreaProps {
+    #[props(extends = textarea, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+    #[props(optional)]
+    value: String,
+
+    #[props(optional)]
+    oninput: EventHandler<FormEvent>,
+    #[props(optional)]
+    onmounted: EventHandler<Event<MountedData>>,
+
+    #[props(optional, default)]
+    pub color: ReadOnlySignal<Color>,
+}
+
+pub fn TextArea(mut props: TextAreaProps) -> Element {
+    props.build_class();
+
+    let oninput = move |event| props.oninput.call(event);
+
+    let onmounted = move |event: Event<MountedData>| props.onmounted.call(event);
 
     rsx!(
         textarea {
             ..props.attributes.clone(),
             value: props.value,
-            class: props.class,
             onmounted,
-            oninput,
-            id: props.id
+            oninput
         }
     )
 }

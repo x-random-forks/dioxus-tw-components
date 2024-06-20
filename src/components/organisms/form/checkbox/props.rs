@@ -1,30 +1,34 @@
-use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
-
 use crate::attributes::*;
-#[props_component(id, class)]
-pub fn Checkbox(
-    #[props(extends = input, extends = GlobalAttributes)] attributes: Vec<Attribute>,
-    #[props(optional, default = false)] checked: bool,
-    #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
-    #[props(optional, default)] color: Color,
-    #[props(optional, default)] size: Size,
-) -> Element {
-    let oninput = move |event| {
-        if let Some(oc) = &props.oninput {
-            oc.call(event)
-        }
-    };
+use dioxus::prelude::*;
+use dioxus_components_macro::UiComp;
+
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct CheckboxProps {
+    #[props(extends = input, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+    #[props(optional, default = false)]
+    checked: bool,
+
+    #[props(optional)]
+    oninput: EventHandler<FormEvent>,
+
+    #[props(optional, default)]
+    pub color: ReadOnlySignal<Color>,
+    #[props(optional, default)]
+    pub size: ReadOnlySignal<Size>,
+}
+
+pub fn Checkbox(mut props: CheckboxProps) -> Element {
+    props.build_class();
+
+    let oninput = move |event| props.oninput.call(event);
 
     rsx!(
         input {
             ..props.attributes,
             r#type: "checkbox",
             checked: props.checked,
-            class: props.class,
-            oninput: oninput,
-            id: props.id
+            oninput
         }
     )
 }

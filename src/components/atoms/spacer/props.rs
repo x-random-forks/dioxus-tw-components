@@ -1,12 +1,17 @@
-use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
-
 use crate::attributes::*;
-// Will have to use to see if it's practical or not, not convinced yet
-#[props_component(class)]
-pub fn Spacer() -> Element {
+use dioxus::prelude::*;
+use dioxus_components_macro::UiComp;
+
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct SpacerProps {
+    #[props(extends = div, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+}
+
+pub fn Spacer(mut props: SpacerProps) -> Element {
+    props.build_class();
+
     rsx!(
-        div { class: props.class }
+        div { ..props.attributes }
     )
 }

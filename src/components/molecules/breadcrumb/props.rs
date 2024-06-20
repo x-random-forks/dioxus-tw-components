@@ -1,8 +1,15 @@
-use dioxus::prelude::*;
-use props_component_macro::{props_component, BuildClass};
-use tailwind_fuse::*;
-
 use crate::attributes::*;
+use dioxus::prelude::*;
+use dioxus_components_macro::UiComp;
+
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct BreadcrumbProps {
+    #[props(extends = ol, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
 /// Usage:
 /// ```ignore
 /// Breadcrumb {
@@ -13,24 +20,43 @@ use crate::attributes::*;
 ///     BreadcrumbItem { "Data" },
 /// }
 /// ```
-#[props_component(class, id, children)]
-pub fn Breadcrumb(#[props(default)] separator: bool) -> Element {
+pub fn Breadcrumb(mut props: BreadcrumbProps) -> Element {
+    props.build_class();
+
     rsx!(
-        ol { class: props.class, id: props.id, {props.children} }
+        ol { ..props.attributes, {props.children} }
     )
 }
 
-#[props_component(class, id, children)]
-pub fn BreadcrumbItem() -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct BreadcrumbItemProps {
+    #[props(extends = li, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
+pub fn BreadcrumbItem(mut props: BreadcrumbItemProps) -> Element {
+    props.build_class();
+
     rsx!(
-        li { class: props.class, id: props.id, {props.children} }
+        li { ..props.attributes, {props.children} }
     )
 }
 
-#[props_component(class, id, children)]
-pub fn BreadcrumbSeparator() -> Element {
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct BreadcrumbSeparatorProps {
+    #[props(extends = li, extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+
+    children: Element,
+}
+
+pub fn BreadcrumbSeparator(mut props: BreadcrumbSeparatorProps) -> Element {
+    props.build_class();
+
     rsx!(
-        li { class: props.class, aria_hidden: "true", id: props.id,
+        li { aria_hidden: "true", ..props.attributes,
             if props.children == None {
                 "\u{203A}"
             } else {

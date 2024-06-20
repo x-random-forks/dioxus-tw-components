@@ -77,12 +77,13 @@ pub trait BuildClass: Class {
             if let Some(class_attribute) =
                 vec_attributes.iter_mut().find(|attr| attr.name == "class")
             {
+                log::debug!("VECATTR: {:#?}", class_attribute);
                 if let AttributeValue::Text(ref mut value) = class_attribute.value {
-                    *value = format!("{} {}", value, class);
+                    *value = format!("{} {}", class, value);
                 }
             } else {
                 // Else push the class attribute in the vec
-                vec_attributes.push(Attribute::new("class", class, None, false));
+                vec_attributes.push(Attribute::new("class", class, None, true));
             }
         }
     }

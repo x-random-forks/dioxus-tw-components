@@ -1,5 +1,6 @@
 use super::props::*;
 use crate::attributes::*;
+use dioxus::prelude::*;
 
 impl Class for AccordionProps {}
 
@@ -21,7 +22,7 @@ impl Class for AccordionContentProps {
     }
 
     fn animation(&self) -> Option<&'static str> {
-        Some(match self.animation {
+        Some(match *self.animation.read() {
             Animation::None => "transition-none",
             Animation::Light | Animation::Full => "transition-all",
             Animation::Custom(animation) => animation,
