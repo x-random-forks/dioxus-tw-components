@@ -21,7 +21,7 @@ pub struct BreadcrumbProps {
 /// }
 /// ```
 pub fn Breadcrumb(mut props: BreadcrumbProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         ol { ..props.attributes, {props.children} }
@@ -37,7 +37,7 @@ pub struct BreadcrumbItemProps {
 }
 
 pub fn BreadcrumbItem(mut props: BreadcrumbItemProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         li { ..props.attributes, {props.children} }
@@ -53,7 +53,7 @@ pub struct BreadcrumbSeparatorProps {
 }
 
 pub fn BreadcrumbSeparator(mut props: BreadcrumbSeparatorProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         li { aria_hidden: "true", ..props.attributes,

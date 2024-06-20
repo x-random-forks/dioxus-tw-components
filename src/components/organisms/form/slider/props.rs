@@ -19,7 +19,7 @@ pub struct SliderProps {
 }
 
 pub fn Slider(mut props: SliderProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     let oninput = move |event| props.oninput.call(event);
 
@@ -50,7 +50,7 @@ pub struct SliderTicksProps {
 }
 
 pub fn SliderTicks(mut props: SliderTicksProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         datalist { ..props.attributes,
@@ -76,7 +76,7 @@ pub struct SliderLabelProps {
 }
 
 pub fn SliderLabel(mut props: SliderLabelProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         div { ..props.attributes,

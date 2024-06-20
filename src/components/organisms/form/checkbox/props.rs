@@ -19,7 +19,7 @@ pub struct CheckboxProps {
 }
 
 pub fn Checkbox(mut props: CheckboxProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     let oninput = move |event| props.oninput.call(event);
 

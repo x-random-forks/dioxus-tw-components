@@ -11,7 +11,7 @@ pub struct DocsTemplateProps {
 }
 
 pub fn DocsTemplate(mut props: DocsTemplateProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         div { ..props.attributes, { props.children } }

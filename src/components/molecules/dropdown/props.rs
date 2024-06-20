@@ -98,7 +98,7 @@ pub struct DropdownProps {
 pub fn Dropdown(mut props: DropdownProps) -> Element {
     let state = use_context_provider(|| Signal::new(DropdownState::new(props.closing_delay_ms)));
 
-    props.build_class();
+    props.update_class_attribute();
 
     props.attributes.push(Attribute::new(
         "data-state",
@@ -123,7 +123,7 @@ pub struct DropdownToggleProps {
 pub fn DropdownToggle(mut props: DropdownToggleProps) -> Element {
     let mut state = use_context::<Signal<DropdownState>>();
 
-    props.build_class();
+    props.update_class_attribute();
 
     let onmounted = move |event: Event<MountedData>| async move {
         match event.get_client_rect().await {
@@ -187,7 +187,7 @@ pub struct DropdownContentProps {
 pub fn DropdownContent(mut props: DropdownContentProps) -> Element {
     let mut state = use_context::<Signal<DropdownState>>();
 
-    props.build_class();
+    props.update_class_attribute();
     
     let onmounted = move |event: Event<MountedData>| async move {
         match event.get_client_rect().await {

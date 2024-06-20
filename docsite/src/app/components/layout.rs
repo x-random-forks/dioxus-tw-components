@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::{atoms::Separator, molecules::Scrollable};
+use dioxus_components::{atoms::Separator, attributes::Orientation, molecules::Scrollable};
 
 use crate::app::router::Route;
 
@@ -23,6 +23,7 @@ pub fn SideBarComponent() -> Element {
         "SortedTable",
         "Table",
         "Tabs",
+        "Toast",
         "",
         "Checkbox",
         "FormList",
@@ -57,7 +58,9 @@ pub fn SideBarComponent() -> Element {
 #[component]
 pub fn SideBarTemplate(children: Element) -> Element {
     rsx!(
-        aside { class: "max-w-[220px] border border-black flex flex-col", Scrollable { {children} } }
+        aside { class: "max-w-[220px] border border-black flex flex-col",
+            Scrollable { orientation: Orientation::Vertical, {children} }
+        }
     )
 }
 

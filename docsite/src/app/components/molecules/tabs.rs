@@ -28,10 +28,7 @@ impl DemoComponent for TabsProps {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
-            Tabs {
-                default_tab: "tabs-0",
-                class: &state.read()[&0].get_class(),
-                override_class: &state.read()[&0].get_override_class(),
+            Tabs { default_tab: "tabs-0", class: state.read()[&0].get_class(),
                 TabsList { 
                     TabsTrigger { id: "tabs-0", "Home" }
                     TabsTrigger { id: "tabs-1", "About" }

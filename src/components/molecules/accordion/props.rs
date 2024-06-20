@@ -71,7 +71,7 @@ pub struct AccordionProps {
 pub fn Accordion(mut props: AccordionProps) -> Element {
     use_context_provider(|| Signal::new(AccordionState::new(props.multi_open)));
 
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         div { ..props.attributes, {props.children} }
@@ -88,7 +88,7 @@ pub struct AccordionItemProps {
 
 /// Wrapper for the [AccordionTrigger] and [AccordionContent] components
 pub fn AccordionItem(mut props: AccordionItemProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         div { ..props.attributes, {props.children} }
@@ -116,7 +116,7 @@ pub struct AccordionTriggerProps {
 
 /// The clickable element that toggles the visibility of the [AccordionContent] component
 pub fn AccordionTrigger(mut props: AccordionTriggerProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     let mut state = use_context::<Signal<AccordionState>>();
 
@@ -192,20 +192,20 @@ pub fn AccordionContent(mut props: AccordionContentProps) -> Element {
     // This is the height of the element when visible, we need to calcul it before rendering it to have a smooth transition
     let mut elem_height = use_signal(|| "".to_string());
 
-    props.build_class();
+    props.update_class_attribute();
 
     let onmounted = move |_| async move {
         if props.animation == Animation::None {
             elem_height.set("auto".to_string());
             return;
         }
-
+        
         match use_element_scroll_height(&props.id.read()) {
             Ok(height) => {
                 elem_height.set(format!("{}px", height));
             }
             Err(e) => {
-                log::error!("Failed to get element height: {:?}, setting it to auto", e);
+                log::error!("AccordionContent: Failed to get element height(id probably not set): setting it to auto: {:?}", e);
                 elem_height.set("auto".to_string());
             }
         }
@@ -226,6 +226,12 @@ pub fn AccordionContent(mut props: AccordionContentProps) -> Element {
     ));
 
     rsx!(
-        div { ..props.attributes, height: final_height, onmounted, {props.children} }
+        div {
+            ..props.attributes,
+            id: props.id,
+            height: final_height,
+            onmounted,
+            {props.children}
+        }
     )
 }

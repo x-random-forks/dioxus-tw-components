@@ -36,7 +36,7 @@ pub struct LightSwitchProps {
 
 /// This component inserts/remove "dark" in the DOM on the div with id of main
 pub fn LightSwitch(mut props: LightSwitchProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
     
     let storage_dark_theme = use_resource(move || async move {
         // Get dark_theme from localStorage, if not found add it to false

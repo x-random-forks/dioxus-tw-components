@@ -19,7 +19,7 @@ pub struct TextAreaProps {
 }
 
 pub fn TextArea(mut props: TextAreaProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     let oninput = move |event| props.oninput.call(event);
 

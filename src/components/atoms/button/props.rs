@@ -30,7 +30,7 @@ pub struct ButtonProps {
 }
 
 pub fn Button(mut props: ButtonProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     let onclick = move |event| props.onclick.call(event);
     let onmouseenter = move |event| props.onmouseenter.call(event);

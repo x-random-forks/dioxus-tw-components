@@ -16,7 +16,7 @@ pub struct ProgressBarProps {
 }
 
 pub fn ProgressBar(mut props: ProgressBarProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         div { ..props.attributes, {props.children} }
@@ -38,7 +38,7 @@ pub struct ProgressBarInnerProps {
 }
 
 pub fn ProgressBarInner(mut props: ProgressBarInnerProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     let progress = if props.progress > 100 {
         100
@@ -67,7 +67,7 @@ pub struct ProgressLabelProps {
 }
 
 pub fn ProgressLabel(mut props: ProgressLabelProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         span { ..props.attributes,

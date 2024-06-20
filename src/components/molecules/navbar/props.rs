@@ -11,7 +11,7 @@ pub struct NavbarProps {
 }
 
 pub fn Navbar(mut props: NavbarProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
     
     rsx!(
         nav { ..props.attributes, {props.children} }

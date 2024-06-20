@@ -9,7 +9,7 @@ pub struct SpacerProps {
 }
 
 pub fn Spacer(mut props: SpacerProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         div { ..props.attributes }

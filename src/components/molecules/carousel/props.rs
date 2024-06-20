@@ -121,7 +121,7 @@ pub fn Carousel(mut props: CarouselProps) -> Element {
         ))
     });
 
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         div { ..props.attributes, {props.children} }
@@ -137,7 +137,7 @@ pub struct CarouselWindowProps {
 }
 
 pub fn CarouselWindow(mut props: CarouselWindowProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         div { ..props.attributes, {props.children} }
@@ -161,7 +161,7 @@ pub struct CarouselContentProps {
 pub fn CarouselContent(mut props: CarouselContentProps) -> Element {
     let mut carousel_state = use_context::<Signal<CarouselState>>();
 
-    props.build_class();
+    props.update_class_attribute();
 
     let onmounted = move |_| async move {
         // Useful when default item is not the first one
@@ -208,7 +208,7 @@ pub struct CarouselItemProps {
 pub fn CarouselItem(mut props: CarouselItemProps) -> Element {
     let mut state = use_context::<Signal<CarouselState>>();
 
-    props.build_class();
+    props.update_class_attribute();
 
     let onmounted = move |_| {
         state.write().increment_carousel_size();
@@ -236,7 +236,7 @@ pub struct CarouselTriggerProps {
 }
 
 pub fn CarouselTrigger(mut props: CarouselTriggerProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     let onclick = move |_| {
         let mut carousel_state = use_context::<Signal<CarouselState>>();

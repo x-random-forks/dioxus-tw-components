@@ -14,7 +14,7 @@ pub struct SelectGroupProps {
 }
 
 pub fn SelectGroup(mut props: SelectGroupProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     let oninput = move |event| props.oninput.call(event);
 
@@ -32,7 +32,7 @@ pub struct SelectPlaceholderProps {
 }
 
 pub fn SelectPlaceholder(mut props: SelectPlaceholderProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         option { disabled: true, selected: true, value: r#"{""}"#, {props.children} }
@@ -46,7 +46,7 @@ pub struct SelectLabelProps {
 }
 
 pub fn SelectLabel(mut props: SelectLabelProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         optgroup { ..props.attributes }
@@ -65,7 +65,7 @@ pub struct SelectItemProps {
 }
 
 pub fn SelectItem(mut props: SelectItemProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     if let Some(selected) = props.selected {
         rsx!(

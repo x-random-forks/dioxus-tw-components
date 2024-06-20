@@ -19,7 +19,7 @@ pub struct RadioProps {
 }
 
 pub fn Radio(mut props: RadioProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     let oninput = move |event| props.oninput.call(event);
 

@@ -11,7 +11,7 @@ pub struct TableProps {
 }
 
 pub fn Table(mut props: TableProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         table { ..props.attributes, {props.children} }
@@ -27,7 +27,7 @@ pub struct TableHeaderProps {
 }
 
 pub fn TableHeader(mut props: TableHeaderProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         thead { ..props.attributes, {props.children} }
@@ -43,7 +43,7 @@ pub struct TableBodyProps {
 }
 
 pub fn TableBody(mut props: TableBodyProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         tbody { ..props.attributes, {props.children} }
@@ -59,7 +59,7 @@ pub struct TableFooterProps {
 }
 
 pub fn TableFooter(mut props: TableFooterProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         tfoot { ..props.attributes, {props.children} }
@@ -78,7 +78,7 @@ pub struct TableHeadProps {
 }
 
 pub fn TableHead(mut props: TableHeadProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     let onclick = move |event| props.onclick.call(event);
 
@@ -96,7 +96,7 @@ pub struct TableRowProps {
 }
 
 pub fn TableRow(mut props: TableRowProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         tr { ..props.attributes, {props.children} }
@@ -112,7 +112,7 @@ pub struct TableCellProps {
 }
 
 pub fn TableCell(mut props: TableCellProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         td { ..props.attributes, {props.children} }
@@ -128,7 +128,7 @@ pub struct TableCaptionProps {
 }
 
 pub fn TableCaption(mut props: TableCaptionProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         caption { ..props.attributes, {props.children} }

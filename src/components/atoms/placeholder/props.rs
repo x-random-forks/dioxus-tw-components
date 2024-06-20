@@ -14,7 +14,7 @@ pub struct PlaceholderProps {
 }
 
 pub fn Placeholder(mut props: PlaceholderProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         div { ..props.attributes }

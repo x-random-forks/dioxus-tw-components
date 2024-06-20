@@ -11,7 +11,7 @@ pub struct HeaderTemplateProps {
 }
 
 pub fn HeaderTemplate(mut props: HeaderTemplateProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         header { ..props.attributes, { props.children } }

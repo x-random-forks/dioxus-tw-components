@@ -41,32 +41,21 @@ impl DemoComponent for CarouselProps {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
-            Carousel {
-                class: &state.read()[&0].get_class(),
-                override_class: &state.read()[&0].get_override_class(),
+            Carousel { class: state.read()[&0].get_class(),
                 CarouselTrigger { next: false }
                 CarouselWindow { 
                     CarouselContent { id: "carousel-prev",
-                        CarouselItem {
-                            item_key: 0,
-                            class: &state.read()[&1].get_class(),
-                            override_class: &state.read()[&1].get_override_class(),
+                        CarouselItem { item_key: 0, class: state.read()[&1].get_class(),
                             div { class: "flex items-center justify-center h-full w-full font-bold text-foreground",
                                 "Item 1"
                             }
                         }
-                        CarouselItem {
-                            item_key: 1,
-                            class: &state.read()[&2].get_class(),
-                            override_class: &state.read()[&2].get_override_class(),
+                        CarouselItem { item_key: 1, class: state.read()[&2].get_class(),
                             div { class: "flex items-center justify-center h-full w-full font-bold text-foreground",
                                 "Item 2"
                             }
                         }
-                        CarouselItem {
-                            item_key: 2,
-                            class: &state.read()[&3].get_class(),
-                            override_class: &state.read()[&3].get_override_class(),
+                        CarouselItem { item_key: 2, class: state.read()[&3].get_class(),
                             div { class: "flex items-center justify-center h-full w-full font-bold text-foreground",
                                 "Item 3"
                             }

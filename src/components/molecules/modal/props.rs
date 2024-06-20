@@ -72,11 +72,9 @@ pub struct ModalTriggerProps {
 pub fn ModalTrigger(mut props: ModalTriggerProps) -> Element {
     let mut state = use_context::<Signal<ModalState>>();
 
-    props.build_class();
+    props.update_class_attribute();
 
-    let onclick = move |_: Event<MouseData>| {
-        state.write().toggle();
-    };
+    let onclick = move |_: Event<MouseData>| state.write().toggle();
 
     rsx!(
         div { ..props.attributes, onclick, {props.children} }
@@ -94,7 +92,7 @@ pub struct ModalCloseProps {
 pub fn ModalClose(mut props: ModalCloseProps) -> Element {
     let mut state = use_context::<Signal<ModalState>>();
 
-    props.build_class();
+    props.update_class_attribute();
 
     let onclick = move |_: Event<MouseData>| {
         state.write().toggle();
@@ -128,7 +126,7 @@ pub struct ModalContentProps {
 pub fn ModalContent(mut props: ModalContentProps) -> Element {
     let state = use_context::<Signal<ModalState>>();
 
-    props.build_class();
+    props.update_class_attribute();
 
     props.attributes.push(Attribute::new(
         "data-state",
@@ -161,7 +159,7 @@ pub struct ModalBackgroundProps {
 pub fn ModalBackground(mut props: ModalBackgroundProps) -> Element {
     let mut state = use_context::<Signal<ModalState>>();
 
-    props.build_class();
+    props.update_class_attribute();
 
     let onclick = move |_: Event<MouseData>| {
         if props.interactive {

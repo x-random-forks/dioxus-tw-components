@@ -4,8 +4,12 @@ pub mod layout;
 pub use layout::SideBarComponent;
 
 pub mod molecules;
-use molecules::{accordion::AccordionPage, breadcrumb::BreadcrumbPage, carousel::CarouselPage, dropdown::DropdownPage, hovercard::HoverCardPage, modal::ModalPage, progressbar::ProgressBarPage, scrollable::ScrollablePage, table::TablePage};
-pub use molecules::{lightswitch::LightSwitchPage,sortedtable::SortedTablePage, tabs::TabsPage};
+use molecules::{
+    accordion::AccordionPage, breadcrumb::BreadcrumbPage, carousel::CarouselPage,
+    dropdown::DropdownPage, hovercard::HoverCardPage, modal::ModalPage,
+    progressbar::ProgressBarPage, scrollable::ScrollablePage, table::TablePage, toast::ToastPage,
+};
+pub use molecules::{lightswitch::LightSwitchPage, sortedtable::SortedTablePage, tabs::TabsPage};
 
 pub mod organisms;
 pub use organisms::form::{
@@ -89,6 +93,9 @@ pub fn ComponentPage(name: String) -> Element {
             ),
             "toggle" => rsx!(
                 TogglePage {}
+            ),
+            "toast" => rsx!(
+                ToastPage {}
             ),
             _ => {
                 rsx!( "Component not found" )

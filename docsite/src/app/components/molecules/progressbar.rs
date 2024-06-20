@@ -32,15 +32,10 @@ impl DemoComponent for ProgressBarProps {
         rsx!(
             div { class: "bg-muted w-96 h-fit p-4",
                 ProgressBar {
-                    class: &state.read()[&0].get_class(),
-                    override_class: &state.read()[&0].get_override_class(),
+                    class: state.read()[&0].get_class(),
                     color: state.read()[&0].get_color(),
                     size: state.read()[&0].get_size(),
-                    ProgressBarInner {
-                        class: &state.read()[&1].get_class(),
-                        override_class: &state.read()[&1].get_override_class(),
-                        color: state.read()[&1].get_color()
-                    }
+                    ProgressBarInner { class: state.read()[&1].get_class(), color: state.read()[&1].get_color() }
                 }
             }
         )

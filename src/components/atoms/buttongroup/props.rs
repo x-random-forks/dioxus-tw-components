@@ -11,7 +11,7 @@ pub struct ButtonGroupProps {
 }
 
 pub fn ButtonGroup(mut props: ButtonGroupProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         div { ..props.attributes, {props.children} }
@@ -30,7 +30,7 @@ pub struct ButtonGroupItemProps {
 }
 
 pub fn ButtonGroupItem(mut props: ButtonGroupItemProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     let onclick = move |event| props.onclick.call(event);
 

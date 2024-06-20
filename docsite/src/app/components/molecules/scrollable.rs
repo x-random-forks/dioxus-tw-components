@@ -29,8 +29,7 @@ impl DemoComponent for ScrollableProps {
 
         rsx!(
             Scrollable {
-                class: &state.read()[&0].get_class(),
-                override_class: &state.read()[&0].get_override_class(),
+                class: state.read()[&0].get_class(),
                 orientation: state.read()[&0].get_orientation(),
                 div { class: "flex flex-col space-y-2 text-sm font-medium",
                     p { class: "paragraph", "About Us" }

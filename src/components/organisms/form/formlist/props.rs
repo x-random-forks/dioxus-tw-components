@@ -47,7 +47,7 @@ pub struct FormListProps {
 pub fn FormList(mut props: FormListProps) -> Element {
     use_context_provider(|| Signal::new(FormListState::new(props.max_size)));
 
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         div { ..props.attributes, {props.children} }
@@ -63,7 +63,7 @@ pub struct FormListTitleProps {
 }
 
 pub fn FormListTitle(mut props: FormListTitleProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         div { ..props.attributes, {props.children} }
@@ -85,7 +85,7 @@ pub struct FormListTriggerProps {
 pub fn FormListTrigger(mut props: FormListTriggerProps) -> Element {
     let mut state = use_context::<Signal<FormListState>>();
 
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         ButtonGroup { class: "flex flex-col divide-none bg-foreground/5",
@@ -121,7 +121,7 @@ pub struct FormListContentProps {
 pub fn FormListContent(mut props: FormListContentProps) -> Element {
     let state = use_context::<Signal<FormListState>>();
 
-    props.build_class();
+    props.update_class_attribute();
 
     let rendered_list_fields = props
         .list_fields

@@ -17,7 +17,7 @@ pub struct TabsProps {
 pub fn Tabs(mut props: TabsProps) -> Element {
     use_context_provider(|| Signal::new(TabsState(props.default_tab.read().clone())));
 
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         div { ..props.attributes, {props.children} }
@@ -33,7 +33,7 @@ pub struct TabsListProps {
 }
 
 pub fn TabsList(mut props: TabsListProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
     
     rsx!(
         div { ..props.attributes, {props.children} }
@@ -54,7 +54,7 @@ pub struct TabsTriggerProps {
 pub fn TabsTrigger(mut props: TabsTriggerProps) -> Element {
     let mut tab_state = use_context::<Signal<TabsState>>();
 
-    props.build_class();
+    props.update_class_attribute();
 
     let state = match tab_state.read().0 == *props.id.read() {
         true => "active",
@@ -84,7 +84,7 @@ pub struct TabsContentProps {
 pub fn TabsContent(mut props: TabsContentProps) -> Element {
     let tab_state = use_context::<Signal<TabsState>>();
 
-    props.build_class();
+    props.update_class_attribute();
 
     let (state, is_hidden) = match tab_state.read().0 == *props.id.read() {
         true => ("active", false),

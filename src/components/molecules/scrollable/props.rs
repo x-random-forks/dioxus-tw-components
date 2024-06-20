@@ -14,7 +14,7 @@ pub struct ScrollableProps {
 }
 
 pub fn Scrollable(mut props: ScrollableProps) -> Element {
-    props.build_class();
+    props.update_class_attribute();
 
     rsx!(
         div { ..props.attributes, {props.children} }

@@ -43,7 +43,7 @@ pub trait Class {
 }
 
 pub trait BuildClass: Class {
-    fn build_class(&mut self) {
+    fn build_class(&self) -> String {
         let mut class = String::from(self.base());
 
         if let Some(color) = self.color() {
@@ -71,13 +71,18 @@ pub trait BuildClass: Class {
             class.push_str(orientation);
         }
 
+        class
+    }
+
+    fn update_class_attribute(&mut self) {
+        let class = self.build_class();
+
         // If the component have a vec attributes
         if let Some(vec_attributes) = self.get_attributes() {
             // Find the class attribute in the vec and modify it
             if let Some(class_attribute) =
                 vec_attributes.iter_mut().find(|attr| attr.name == "class")
             {
-                log::debug!("VECATTR: {:#?}", class_attribute);
                 if let AttributeValue::Text(ref mut value) = class_attribute.value {
                     *value = format!("{} {}", class, value);
                 }
@@ -126,7 +131,7 @@ pub trait Named {
     }
 }
 
-#[derive(Default, Clone, Copy, PartialEq)]
+#[derive(Default, Debug, Clone, Copy, PartialEq)]
 pub enum Color {
     #[default]
     Default,

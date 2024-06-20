@@ -5,7 +5,6 @@ use dioxus_components::{
     attributes::*,
     form::{Input, SelectGroup, SelectItem, SelectPlaceholder},
 };
-use dioxus_core::DynamicNode;
 
 use crate::app::doctrait::{DemoComponent, IntoVec};
 
@@ -112,17 +111,6 @@ pub fn ClassSelector(state: Signal<HashPreview>, index: i32) -> Element {
                 oninput: move |event: FormEvent| {
                     if let Some(field_preview) = state.write().get_mut(&index) {
                         field_preview.set_class(event.data().value());
-                    }
-                }
-            }
-        }
-        div { id: "override-class-selector",
-            Input {
-                placeholder: "Override all tailwind class",
-                value: state.read().get(&index).unwrap().get_override_class(),
-                oninput: move |event: FormEvent| {
-                    if let Some(field_preview) = state.write().get_mut(&index) {
-                        field_preview.set_override_class(event.data().value());
                     }
                 }
             }
@@ -270,7 +258,6 @@ pub type HashPreview = HashMap<i32, FieldPreview>;
 #[derive(Default, Clone)]
 pub struct FieldPreview {
     class: String,
-    override_class: String,
     color: Color,
     size: Size,
     animation: Animation,
@@ -289,14 +276,6 @@ impl FieldPreview {
     pub fn class(mut self, class: String) -> Self {
         self.class = class;
         self
-    }
-
-    pub fn get_override_class(&self) -> String {
-        self.override_class.clone()
-    }
-
-    pub fn set_override_class(&mut self, override_class: String) {
-        self.override_class = override_class;
     }
 
     pub fn get_color(&self) -> Color {

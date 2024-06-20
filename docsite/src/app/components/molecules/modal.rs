@@ -29,36 +29,19 @@ impl DemoComponent for ModalProps {
     fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
-        let trigger = build_preview_component::<ModalTriggerProps, _>(
-            &state.read()[&0],
-            ModalTrigger,
-            rsx!( "Open" ),
-        );
-
-        let background = build_preview_component::<ModalBackgroundProps, _>(
-            &state.read()[&1],
-            ModalBackground,
-            None,
-        );
-
-        let close =
-            build_preview_component::<ModalCloseProps, _>(&state.read()[&2], ModalClose, rsx!( "X" ));
-
-        let content = build_preview_component::<ModalContentProps, _>(
-            &state.read()[&3],
-            ModalContent,
-            rsx!(
-                div { { close } }
-                div { class: "h4", "TITLE" }
-                div { class: "paragraph", "CONTENT" }
-            ),
-        );
-
         rsx!(
             Modal { 
-                {trigger},
-                {background},
-                {content}
+                ModalTrigger { class: state.read()[&0].get_class(), "OpenModal" }
+                ModalBackground {
+                    class: state.read()[&0].get_class(),
+                    color: state.read()[&1].get_color(),
+                    animation: state.read()[&1].get_animation()
+                }
+                ModalContent { class: state.read()[&2].get_class(),
+                    div { ModalClose {} }
+                    div { class: "h4", "TITLE" }
+                    div { class: "paragraph", "CONTENT" }
+                }
             }
         )
     }

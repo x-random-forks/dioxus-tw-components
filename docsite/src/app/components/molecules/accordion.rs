@@ -30,14 +30,11 @@ impl DemoComponent for AccordionProps {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
-            Accordion {
-                class: &state.read()[&0].get_class(),
-                override_class: &state.read()[&0].get_override_class(),
+            Accordion { class: state.read()[&0].get_class(),
                 AccordionItem { 
                     AccordionTrigger { id: "accordion-1", "Products" }
                     AccordionContent {
-                        class: &state.read()[&1].get_class(),
-                        override_class: &state.read()[&1].get_override_class(),
+                        class: state.read()[&1].get_class(),
                         animation: state.read()[&1].get_animation(),
                         id: "accordion-1",
                         "Check out our latest products!"
@@ -46,8 +43,7 @@ impl DemoComponent for AccordionProps {
                 AccordionItem { 
                     AccordionTrigger { id: "accordion-2", "Services" }
                     AccordionContent {
-                        class: &state.read()[&2].get_class(),
-                        override_class: &state.read()[&2].get_override_class(),
+                        class: state.read()[&2].get_class(),
                         animation: state.read()[&2].get_animation(),
                         id: "accordion-2",
                         "Discover our range of services."
@@ -56,8 +52,7 @@ impl DemoComponent for AccordionProps {
                 AccordionItem { 
                     AccordionTrigger { id: "accordion-3", "Testimonials" }
                     AccordionContent {
-                        class: &state.read()[&3].get_class(),
-                        override_class: &state.read()[&3].get_override_class(),
+                        class: state.read()[&3].get_class(),
                         animation: state.read()[&3].get_animation(),
                         id: "accordion-3",
                         "Read what our customers have to say."
