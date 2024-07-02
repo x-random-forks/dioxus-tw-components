@@ -9,19 +9,19 @@ use dioxus_components::{
 use crate::app::doctrait::{DemoComponent, IntoVec};
 
 #[component]
-pub fn PreviewFull<T: DemoComponent + 'static>() -> Element {
+pub fn PreviewFull<T: DemoComponent + Default + 'static>() -> Element {
     rsx!(
-        h1 { class: "h1", {T::title()} }
+        h1 { class: "h1", "{T::to_string(&T::default())}" }
         PreviewDemo::<T> {}
     )
 }
 
 #[component]
-fn PreviewDemo<T: DemoComponent>() -> Element {
+fn PreviewDemo<T: DemoComponent + Default>() -> Element {
     rsx!(
         section { class: "w-full border border-orange-700 space-y-2",
-            h2 { id: "preview-title", class: "sr-only", {T::title()} }
-            div { id: "preview-header", class: "border border-yellow-500", {T::description()} }
+            h2 { id: "preview-title", class: "sr-only", {T::to_string(&T::default())} }
+            div { id: "preview-header", class: "border border-yellow-500", {T::comp_introduction()} }
             PreviewWindow { 
                 PreviewWindowComponent { {T::BuildCompPreview()} }
                 PreviewWindowSelectors { {T::BuildCompSelectors()} }

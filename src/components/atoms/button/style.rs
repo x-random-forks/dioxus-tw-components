@@ -64,7 +64,6 @@ impl Class for ButtonProps {
         Some(match *self.animation.read() {
             Animation::None => "transition-none",
             Animation::Light | Animation::Full => "transition-colors duration-150",
-            Animation::Custom(animation) => animation,
         })
     }
 }

@@ -16,11 +16,7 @@ pub fn TogglePage() -> Element {
 }
 
 impl DemoComponent for ToggleProps {
-    fn title() -> &'static str {
-        "Toggle"
-    }
-
-    fn description() -> &'static str {
+    fn comp_introduction() -> &'static str {
         "A customizable and interactive toggle component that allows users to switch between two states"
     }
 

@@ -16,20 +16,15 @@ pub fn ButtonPage() -> Element {
 }
 
 impl DemoComponent for ButtonProps {
-    fn title() -> &'static str {
-        "Button"
-    }
-
-    fn description() -> &'static str {
+    fn comp_introduction() -> &'static str {
         "A simple yet customizable button"
     }
 
     fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
+        
         let preview_comp =
             build_preview_component::<ButtonProps, _>(&state.read()[&0], Button, rsx!( "Button" ));
-
-        log::debug!("CLASS: {}", state.read()[&0].get_class());
 
         rsx!(
             Button {

@@ -123,14 +123,6 @@ pub trait BuildClass: Class {
     fn set_orientation(&mut self, _orientation: Orientation) {}
 }
 
-pub trait Named {
-    const NAME: &'static str;
-
-    fn name() -> &'static str {
-        Self::NAME
-    }
-}
-
 #[derive(Default, Debug, Clone, Copy, PartialEq)]
 pub enum Color {
     #[default]
@@ -240,13 +232,12 @@ impl std::fmt::Display for Orientation {
     }
 }
 
-#[derive(Default, Clone, Copy, PartialEq)]
+#[derive(Default, Debug, Clone, Copy, PartialEq)]
 pub enum Animation {
     None,
     Light,
     #[default]
     Full,
-    Custom(&'static str),
 }
 
 impl FromStr for Animation {
@@ -256,7 +247,6 @@ impl FromStr for Animation {
         match s.to_lowercase().as_str() {
             "none" => Ok(Animation::None),
             "light" => Ok(Animation::Light),
-            "custom" => Ok(Animation::Custom("")),
             "full" | _ => Ok(Animation::Full),
         }
     }
@@ -268,7 +258,6 @@ impl std::fmt::Display for Animation {
             Animation::None => "None",
             Animation::Light => "Light",
             Animation::Full => "Full",
-            Animation::Custom(_str) => "Custom",
         };
         f.write_str(s)
     }

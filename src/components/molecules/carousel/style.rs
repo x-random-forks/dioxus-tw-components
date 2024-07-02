@@ -23,7 +23,6 @@ impl Class for CarouselContentProps {
         Some(match *self.animation.read() {
             Animation::None => "transition-none",
             Animation::Light | Animation::Full => "transform transition-transform duration-500",
-            Animation::Custom(animation) => animation,
         })
     }
 }

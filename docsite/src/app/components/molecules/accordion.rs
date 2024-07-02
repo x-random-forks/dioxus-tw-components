@@ -18,11 +18,7 @@ pub fn AccordionPage() -> Element {
 }
 
 impl DemoComponent for AccordionProps {
-    fn title() -> &'static str {
-        "Accordion"
-    }
-
-    fn description() -> &'static str {
+    fn comp_introduction() -> &'static str {
         "Up and down !"
     }
 

@@ -32,7 +32,6 @@ impl Class for ToggleProps {
             Animation::None => "",
             Animation::Light => "after:transition-all",
             Animation::Full => "after:transition-all transition-colors duration-200",
-            Animation::Custom(animation) => animation,
         })
     }
 }

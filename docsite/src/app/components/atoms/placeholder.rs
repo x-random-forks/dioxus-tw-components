@@ -16,11 +16,7 @@ pub fn PlaceholderPage() -> Element {
 }
 
 impl DemoComponent for PlaceholderProps {
-    fn title() -> &'static str {
-        "Placeholder"
-    }
-
-    fn description() -> &'static str {
+    fn comp_introduction() -> &'static str {
         "A customizable and versatile placeholder for text, images, or other content"
     }
 

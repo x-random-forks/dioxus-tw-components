@@ -18,11 +18,7 @@ pub fn ModalPage() -> Element {
 }
 
 impl DemoComponent for ModalProps {
-    fn title() -> &'static str {
-        "Modal"
-    }
-
-    fn description() -> &'static str {
+    fn comp_introduction() -> &'static str {
         ""
     }
 

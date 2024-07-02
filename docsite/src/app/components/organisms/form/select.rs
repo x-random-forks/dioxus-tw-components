@@ -16,11 +16,7 @@ pub fn SelectPage() -> Element {
 }
 
 impl DemoComponent for SelectGroupProps {
-    fn title() -> &'static str {
-        "Select"
-    }
-
-    fn description() -> &'static str {
+    fn comp_introduction() -> &'static str {
         "Interactive dropdown list that allows users to select an option. This component provides a user-friendly way to choose from a list of options."
     }
 

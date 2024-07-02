@@ -1,8 +1,7 @@
-use crate::{attributes::*, hooks::use_unique_id};
+use crate::{attributes::*, hooks::*};
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
-
-const TOAST_ID: &str = "dx-toast";
+use gloo_timers::future::TimeoutFuture;
 
 #[derive(Clone, Default, PartialEq, Props, UiComp)]
 pub struct ToasterProps {
@@ -12,111 +11,60 @@ pub struct ToasterProps {
     children: Element,
 }
 
-/// The toaster must wrap around your App/as high as possible in your app to be used
+/// The toaster must wrap around your App as high as possible to be used
 pub fn Toaster(mut props: ToasterProps) -> Element {
     props.update_class_attribute();
 
-    let mut state =
+    let state =
         use_context_provider::<Signal<ToasterState>>(|| Signal::new(ToasterState::default()));
-
-    let _ = use_effect(move || {
-        log::debug!("Runnning Effect");
-
-        state.read();
-
-    });
-    
-    let _ = use_resource(move || async move {
-        log::debug!("Runnning Effect");
-        
-        if let Some(last) = state.write().toasts.last_mut() {
-            log::debug!("{:#?}", last);
-        }
-
-    });
-    // let binding = state.read();
-    // let Some(last_toast) = binding.toasts.last() else {
-    //         return;
-    // };
-    // // Using an eval to get a working timeout... Did not find a reliable crate to do it yet
-    // // Waiting for the eval to send back a message after the timeout is done to remove the Toast from the vec
-    // // Little problem is that if the user change page it won't get to receive the message back..
-    // let mut eval = eval(
-    //     r#"
-    //     let toast_duration = await dioxus.recv();
-
-    //     setTimeout(() => {
-    //         dioxus.send();
-    //     }, toast_duration)
-    //     "#,
-    // );
-    // // Send the duration to the eval
-    // let _ = eval.send(last_toast.duration_in_ms.into());
-
-    // // Wait for the timeout to be over
-    // let _ = eval.recv().await;
-
-    // // Delete the Toast from Vec<Toast>
-    // binding
-    //     .toasts
-    //     .retain(|toast_from_vec| toast_from_vec.id != last_toast.id);
-
-    // spawn(async move {
-    //     let mut binding = state.write();
-    //     let Some(last_toast) = binding.toasts.last() else {
-    //         return;
-    //     };
-    //     // Using an eval to get a working timeout... Did not find a reliable crate to do it yet
-    //     // Waiting for the eval to send back a message after the timeout is done to remove the Toast from the vec
-    //     // Little problem is that if the user change page it won't get to receive the message back..
-    //     let mut eval = eval(
-    //         r#"
-    //         let toast_duration = await dioxus.recv();
-
-    //         setTimeout(() => {
-    //             dioxus.send();
-    //         }, toast_duration)
-    //         "#,
-    //     );
-    //     // Send the duration to the eval
-    //     let _ = eval.send(last_toast.duration_in_ms.into());
-
-    //     // Wait for the timeout to be over
-    //     let _ = eval.recv().await;
-
-    //     // // Delete the Toast from Vec<Toast>
-    //     // binding
-    //     //     .toasts
-    //     //     .retain(|toast_from_vec| toast_from_vec.id != last_toast.id);
-    // });
 
     rsx!(
         {props.children},
-        ol { role: "alert", id: TOAST_ID, ..props.attributes,
-            for toast in state.read().toasts.iter() {
-                RenderToast { toast: toast.clone() }
+        ol { role: "alert", id: "dx-toast", ..props.attributes,
+            if state.read().toasts.len() > 0 {
+                for index in 0..state.read().toasts.len() {
+                    ToastRenderer { state, toast: state.map(move |state| &state.toasts[index]) }
+                }
             }
         }
     )
 }
 
+/// Used to keep track of all the current toasts, for now it only keeps 1 Toast
+pub struct ToasterState {
+    toasts: Vec<Toast>,
+}
+
+impl std::default::Default for ToasterState {
+    fn default() -> Self {
+        ToasterState { toasts: vec![] }
+    }
+}
+
+/// A Toast with a default duration of 10s
 #[derive(Clone, Debug, PartialEq, UiComp)]
 pub struct Toast {
     id: String,
     title: String,
     description: Element,
-    pub color: Color,
     duration_in_ms: u32,
+    is_closable: bool,
+    pub color: Color,
+    pub animation: Animation,
+    state: ToastState,
 }
 
-impl Default for Toast {
+impl std::default::Default for Toast {
     fn default() -> Self {
         Self {
             id: use_unique_id(),
-            title: String::new(),
+            title: String::default(),
             description: None,
-            duration_in_ms: 50000,
+            duration_in_ms: 6_000,
+            is_closable: true,
             color: Color::default(),
+            animation: Animation::default(),
+            state: ToastState::Opening,
         }
     }
 }
@@ -137,41 +85,116 @@ impl Toast {
         self
     }
 
+    pub fn animation(mut self, animation: Animation) -> Self {
+        self.animation = animation;
+        self
+    }
+
     pub fn duration_in_ms(mut self, duration: u32) -> Self {
         self.duration_in_ms = duration;
         self
     }
+
+    pub fn is_closable(mut self, is_closable: bool) -> Self {
+        self.is_closable = is_closable;
+        self
+    }
 }
 
-#[component]
-pub fn RenderToast(toast: Toast) -> Element {
-    let class = toast.build_class();
+/// Define the state of an individual toast, used to animate the Toast
+#[derive(Clone, Debug, PartialEq)]
+enum ToastState {
+    Opening,
+    Open,
+    Closing,
+    // Close is not needed since it means the Toast does not exist anymore
+}
 
-    let mut state = use_context::<Signal<ToasterState>>();
+impl std::fmt::Display for ToastState {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                ToastState::Opening => "opening",
+                ToastState::Open => "open",
+                ToastState::Closing => "closing",
+            }
+        )
+    }
+}
+
+/// Used to render the Toast, also update the ToasterState
+#[component]
+fn ToastRenderer(mut state: Signal<ToasterState>, toast: MappedSignal<Toast>) -> Element {
+    let class = toast.read().build_class();
+
+    let mut toast_state = use_signal(|| ToastState::Opening);
+
+    let duration_in_ms = toast.read().duration_in_ms;
+    let toast_animation = toast.read().animation;
+
+    // This is to animate the Toast in and out
+    use_future(move || async move {
+        if toast_animation != Animation::None {
+            TimeoutFuture::new(10).await;
+            toast_state.set(ToastState::Open);
+        
+            let animation_play_time = 150;
+            TimeoutFuture::new(duration_in_ms - animation_play_time).await;
+        
+            toast_state.set(ToastState::Closing);
+            TimeoutFuture::new(animation_play_time).await;
+        } else {
+            TimeoutFuture::new(duration_in_ms).await;
+        }
+        
+        state.write().toasts.clear();
+    });
 
     rsx!(
-        li { class, id: "{toast.id}",
-            h6 { class: "h6", "{toast.title}" }
-            button {
-                class: "absolute top-4 right-4 hidden group-hover:block transition-all",
-                r#type: "button",
-                onclick: move |_| {
-                    state.write().toasts.retain(|toast_from_vec| toast_from_vec.id != toast.id);
-                },
-                svg {
-                    xmlns: "http://www.w3.org/2000/svg",
-                    view_box: "0 0 256 256",
-                    width: "15",
-                    height: "15",
-                    class: "fill-foreground/60 hover:fill-foreground",
-                    path { d: "M202.82861,197.17188a3.99991,3.99991,0,1,1-5.65722,5.65624L128,133.65723,58.82861,202.82812a3.99991,3.99991,0,0,1-5.65722-5.65624L122.343,128,53.17139,58.82812a3.99991,3.99991,0,0,1,5.65722-5.65624L128,122.34277l69.17139-69.17089a3.99991,3.99991,0,0,1,5.65722,5.65624L133.657,128Z" }
-                }
+        li {
+            class,
+            id: "{toast.read().id}",
+            "data-state": toast_state.read().to_string(),
+            h6 { class: "h6", "{toast.read().title}" }
+            if toast.read().is_closable {
+                ToastClose { state, toast_state }
             }
-            {toast.description}
+            {&toast.read().description}
         }
     )
 }
 
+/// Used to add a cross mark to manually close the Toast
+/// The Timeout is there to let the animation some time to play
+#[component]
+fn ToastClose(mut state: Signal<ToasterState>, mut toast_state: Signal<ToastState>) -> Element {
+    rsx!(
+        button {
+            class: "absolute top-4 right-4 rounded-global-radius hidden group-hover:block transition-colors focus:outline-none focus:ring focus:ring-foreground",
+            r#type: "button",
+            onclick: move |_| {
+                spawn(async move {
+                    toast_state.set(ToastState::Closing);
+                    TimeoutFuture::new(150).await;
+                    state.write().toasts.clear();
+                });
+            },
+            svg {
+                xmlns: "http://www.w3.org/2000/svg",
+                view_box: "0 0 256 256",
+                width: "15",
+                height: "15",
+                class: "fill-foreground/60 hover:fill-foreground",
+                path { d: "M202.82861,197.17188a3.99991,3.99991,0,1,1-5.65722,5.65624L128,133.65723,58.82861,202.82812a3.99991,3.99991,0,0,1-5.65722-5.65624L122.343,128,53.17139,58.82812a3.99991,3.99991,0,0,1,5.65722-5.65624L128,122.34277l69.17139-69.17089a3.99991,3.99991,0,0,1,5.65722,5.65624L133.657,128Z" }
+            }
+        }
+    )
+}
+
+/// Hook that returns a Fn which take a Toast as argument.
+/// Use this Fn to spawn the Toast
 pub fn use_toast() -> impl Fn(Toast) {
     // Will panic if no Toaster {} upper in the DOM
     let state = use_context::<Signal<ToasterState>>();
@@ -179,222 +202,13 @@ pub fn use_toast() -> impl Fn(Toast) {
     move |toast: Toast| {
         let mut state = state.clone();
 
-        let id = toast.id.clone();
-        let toast_duration = toast.duration_in_ms;
+        // Only allow 1 toast at a time
+        state.write().toasts.clear();
 
-        state.write().toasts.push(toast);
-
-        // spawn(async move {
-        //     // Using an eval to get a working timeout... Did not find a reliable crate to do it yet
-        //     // Waiting for the eval to send back a message after the timeout is done to remove the Toast from the vec
-        //     // Little problem is that if the user change page it won't get to receive the message back..
-        //     let mut eval = eval(
-        //         r#"
-        //             let toast_duration = await dioxus.recv();
-
-        //             setTimeout(() => {
-        //                 dioxus.send();
-        //             }, toast_duration)
-        //         "#,
-        //     );
-        //     // Send the duration to the eval
-        //     let _ = eval.send(toast_duration.into());
-
-        //     // Wait for the timeout to be over
-        //     let _ = eval.recv().await;
-
-        //     // Delete the Toast from Vec<Toast>
-        //     state.write().toasts.retain(|toast| toast.id != id);
-        // });
+        spawn(async move {
+            // To let the browser refresh the UI before spawning a new Toast
+            TimeoutFuture::new(100).await;
+            state.write().toasts.push(toast);
+        });
     }
 }
-
-/// Used to keep track of the number of toasts created
-/// This number is used to create a unique ID in the DOM to then grab it and do whatever with it
-/// In this case we use it to remove it after the toast's timeout is up
-/// This state also contains the current position of the Toast {} since all
-/// the toasts are by default just <li> tag wrapped by the Toast component which is just an <ol> tag
-pub struct ToasterState {
-    max_toast: u32,
-    toast_count: u32,
-    toasts: Vec<Toast>,
-}
-
-impl std::default::Default for ToasterState {
-    fn default() -> Self {
-        ToasterState {
-            max_toast: 3,
-            toast_count: 0,
-            toasts: vec![],
-        }
-    }
-}
-
-impl ToasterState {
-    pub fn new(max_toast: u32) -> Self {
-        ToasterState {
-            max_toast,
-            toast_count: 0,
-            toasts: vec![],
-        }
-    }
-    // fn add_new_toast(&mut self, toast: Toast) {
-    //     let id = toast.id.clone();
-    //     let toast_duration = toast.duration_in_ms;
-
-    //     self.toasts.push(toast);
-
-    //     spawn(async move {
-    //         // Using a eval to retrieve the toast id, and setting a timeout to remove the toast when its duration is up
-    //         let eval = eval(
-    //             r#"
-    //                 let toast_id = await dioxus.recv();
-
-    //                 let toast = document.getElementById(toast_id);
-    //                 if (toast == undefined) {
-    //                     return;
-    //                 }
-
-    //                 let toast_duration = await dioxus.recv();
-
-    //                 setTimeout(() => {
-    //                     toast.remove();
-    //                 }, toast_duration)
-    //             "#,
-    //         );
-
-    //         let _ = eval.send(id.into());
-    //         let _ = eval.send(toast_duration.into());
-    //     });
-    // }
-
-    // // Old
-    // fn increment_toast_count(&mut self) {
-    //     self.toast_count += 1;
-    // }
-
-    // fn decrement_toast_count(&mut self) {
-    //     self.toast_count -= 1;
-    // }
-
-    // fn get_current_position(&self) -> ToastPosition {
-    //     self.current_position
-    // }
-
-    // fn current_position(&mut self, position: ToastPosition) {
-    //     self.current_position = position;
-    // }
-
-    // fn build_toast_id(&self) -> String {
-    //     format!("{}-li-{}", TOAST_ID, self.toast_count)
-    // }
-}
-
-// #[derive(Default, Clone, PartialEq, Copy)]
-// pub enum ToastPosition {
-//     TopLeft,
-//     TopRight,
-//     BottomLeft,
-//     #[default]
-//     BottomRight,
-// }
-
-// impl FromStr for ToastPosition {
-//     type Err = &'static str;
-
-//     fn from_str(s: &str) -> Result<Self, Self::Err> {
-//         match s {
-//             "bottomleft" => Ok(ToastPosition::BottomLeft),
-//             "topleft" => Ok(ToastPosition::TopLeft),
-//             "topright" => Ok(ToastPosition::TopRight),
-//             "bottomright" | _ => Ok(ToastPosition::BottomRight),
-//         }
-//     }
-// }
-
-// impl ToastPosition {
-//     /// Will always return a position, if spelling mistake will return ToastPosition::default()
-//     pub fn str_to_toast_pos<T: ToString>(str: T) -> ToastPosition {
-//         str.to_string().parse().unwrap()
-//     }
-// }
-
-// /// Changes the position of all the toasts currently active
-// /// Uses ToastState, if not declared will do nothing
-// pub fn use_toast_set_position(toast_position: ToastPosition) {
-//     // TODO use try_consume_context() instead
-//     let mut state = use_context::<Signal<ToasterState>>();
-
-//     if let Ok(element) = use_element_by_id(TOAST_ID) {
-//         let current_position = state.read().get_current_position();
-//         if toast_position != current_position {
-//             // Change <ol> tag class to fit its new position
-
-//             let mut class = element.get_attribute("class").unwrap_or_default();
-
-//             match class.find(&current_position.to_string()) {
-//                 None => class.push_str(&toast_position.to_string()),
-//                 Some(index) => class.replace_range(
-//                     index..index + &current_position.to_string().len(),
-//                     &toast_position.to_string(),
-//                 ),
-//             };
-
-//             state.write().current_position(toast_position);
-
-//             element
-//                 .set_attribute("class", &class)
-//                 .unwrap_or_else(|e| log::error!("Failed setting new toast class {:#?}", e));
-//         }
-//     }
-// }
-
-// /// Return a string with the id of the newly created toast in the DOM if success, else a web_sys::JsValue Err
-// /// Will also panic if the function can't find the signal (use_context())
-// pub fn use_toast(toast: Toast) -> Result<String, JsValue> {
-//     // Try getting the Toast in the DOM
-//     let element = use_element_by_id(TOAST_ID)?;
-
-//     // This can panic
-//     let mut state = use_context::<Signal<ToastState>>();
-
-//     let new_toast_id = state.read().build_toast_id();
-
-//     let html = toast.build(&new_toast_id);
-
-//     // Insert the newly build toast in the dom
-//     element.insert_adjacent_html("afterbegin", &html)?;
-
-//     // If succeeded to insert it increment toast_count
-//     state.write().increment_toast_count();
-
-//     // Start the toast timeout if there is any
-//     if let Some(timeout) = toast.timeout {
-//         begin_toast_timeout(&new_toast_id, timeout, state)?;
-//     }
-
-//     Ok(new_toast_id)
-// }
-
-// /// Return the id of the timeout if success
-// /// else a Err(web_sys::JsValue)
-// fn begin_toast_timeout(
-//     toast_id: &str,
-//     timeout: i32,
-//     mut state: Signal<ToastState>,
-// ) -> Result<i32, JsValue> {
-//     let window = use_window()?;
-
-//     let element = use_element_by_id(toast_id).unwrap();
-
-//     let closure = Closure::wrap(Box::new(move || {
-//         element.remove();
-//         state.write().decrement_toast_count();
-//     }) as Box<dyn FnMut()>);
-
-//     let timeout_result = use_set_timeout(&window, &closure, timeout);
-
-//     closure.forget();
-
-//     timeout_result
-// }

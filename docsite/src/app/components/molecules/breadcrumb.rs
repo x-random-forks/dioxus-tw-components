@@ -18,11 +18,7 @@ pub fn BreadcrumbPage() -> Element {
 }
 
 impl DemoComponent for BreadcrumbProps {
-    fn title() -> &'static str {
-        "Breadcrumb"
-    }
-
-    fn description() -> &'static str {
+    fn comp_introduction() -> &'static str {
         "You left some on your way here"
     }
 

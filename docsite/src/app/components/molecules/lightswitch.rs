@@ -16,11 +16,7 @@ pub fn LightSwitchPage() -> Element {
 }
 
 impl DemoComponent for LightSwitchProps {
-    fn title() -> &'static str {
-        "LightSwitch"
-    }
-
-    fn description() -> &'static str {
+    fn comp_introduction() -> &'static str {
         "Turn off the light !"
     }
 

@@ -18,11 +18,7 @@ pub fn CheckboxPage() -> Element {
 }
 
 impl DemoComponent for CheckboxProps {
-    fn title() -> &'static str {
-        "Checkbox"
-    }
-
-    fn description() -> &'static str {
+    fn comp_introduction() -> &'static str {
         "A customizable and interactive checkbox component"
     }
 

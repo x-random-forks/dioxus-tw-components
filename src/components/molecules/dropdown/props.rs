@@ -88,7 +88,7 @@ pub struct DropdownProps {
 /// ```ignore
 /// Dropdown {
 ///    DropdownToggle {
-///       Button { "Dropdown" } // Can be anything like a div, button, etc
+///        "Dropdown"
 ///     }
 ///     DropdownContent {
 ///       div { "content" }
@@ -100,15 +100,8 @@ pub fn Dropdown(mut props: DropdownProps) -> Element {
 
     props.update_class_attribute();
 
-    props.attributes.push(Attribute::new(
-        "data-state",
-        state.read().into_value(),
-        None,
-        false,
-    ));
-
     rsx!(
-        div { ..props.attributes, {props.children} }
+        div { ..props.attributes, "data-state": state.read().into_value(), {props.children} }
     )
 }
 
@@ -155,16 +148,10 @@ pub fn DropdownToggle(mut props: DropdownToggleProps) -> Element {
         }
     };
 
-    props.attributes.push(Attribute::new(
-        "data-state",
-        state.read().into_value(),
-        None,
-        false,
-    ));
-
     rsx!(
         div {
             ..props.attributes,
+            "data-state": state.read().into_value(), 
             onmounted,
             onclick,
             onmouseleave,
@@ -229,16 +216,10 @@ pub fn DropdownContent(mut props: DropdownContentProps) -> Element {
         // }
     });
 
-    props.attributes.push(Attribute::new(
-        "data-state",
-        state.read().into_value(),
-        None,
-        false,
-    ));
-
     rsx!(
         div {
             ..props.attributes,
+            "data-state": state.read().into_value(), 
             onmounted,
             onmouseleave,
             onmouseenter,

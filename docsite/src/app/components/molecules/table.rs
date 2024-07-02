@@ -18,11 +18,7 @@ pub fn TablePage() -> Element {
 }
 
 impl DemoComponent for TableProps {
-    fn title() -> &'static str {
-        "Table"
-    }
-
-    fn description() -> &'static str {
+    fn comp_introduction() -> &'static str {
         "Nice looking table"
     }
 

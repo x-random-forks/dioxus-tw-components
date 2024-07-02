@@ -17,52 +17,27 @@ pub fn DropdownPage() -> Element {
     )
 }
 
-#[component]
-pub fn AbcComp(#[props(extends = GlobalAttributes)] attributes: Vec<Attribute>) -> Element {
-    rsx!(  )
-}
-
 impl DemoComponent for DropdownProps {
-    fn title() -> &'static str {
-        "Dropdown"
-    }
-
-    fn description() -> &'static str {
+    fn comp_introduction() -> &'static str {
         ""
     }
 
     fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
-        let content1 = build_preview_component::<DropdownContentProps, _>(
-            &state.read()[&2],
-            DropdownContent,
-            rsx!(
-                p { "Content 1" }
-                p { "Content 2" }
-                Separator {}
-                p { "Content 3" }
-                p { "Content 4" }
-            ),
-        );
-
-        let toggle = build_preview_component::<DropdownToggleProps, _>(
-            &state.read()[&1],
-            DropdownToggle,
-            rsx!( "Dropdown" ),
-        );
-
-        let dropdown = build_preview_component::<DropdownProps, _>(
-            &state.read()[&0],
-            Dropdown,
-            rsx!(
-                { toggle },
-                { content1 }
-            ),
-        );
-
         rsx!(
-            { dropdown }
+            Dropdown { class: state.read()[&0].get_class(),
+                DropdownToggle { class: state.read()[&1].get_class(), "Dropdown" }
+                DropdownContent {
+                    class: state.read()[&2].get_class(),
+                    animation: state.read()[&2].get_animation(),
+                    div { "Content" }
+                    div { "Content" }
+                    Separator {}
+                    div { "Content" }
+                    div { "Content" }
+                }
+            }
         )
     }
 

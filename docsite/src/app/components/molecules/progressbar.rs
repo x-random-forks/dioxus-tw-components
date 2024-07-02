@@ -18,11 +18,7 @@ pub fn ProgressBarPage() -> Element {
 }
 
 impl DemoComponent for ProgressBarProps {
-    fn title() -> &'static str {
-        "ProgressBar"
-    }
-
-    fn description() -> &'static str {
+    fn comp_introduction() -> &'static str {
         "Don't go so fast"
     }
 

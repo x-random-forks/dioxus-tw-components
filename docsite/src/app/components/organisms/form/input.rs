@@ -16,11 +16,7 @@ pub fn InputPage() -> Element {
 }
 
 impl DemoComponent for InputProps {
-    fn title() -> &'static str {
-        "Input"
-    }
-
-    fn description() -> &'static str {
+    fn comp_introduction() -> &'static str {
         "A customizable and interactive input component"
     }
 

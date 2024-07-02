@@ -50,9 +50,8 @@ impl IntoVec<Orientation> for Orientation {
     }
 }
 
-pub trait DemoComponent {
-    fn title() -> &'static str;
-    fn description() -> &'static str;
+pub trait DemoComponent: std::fmt::Display {
+    fn comp_introduction() -> &'static str;
     fn BuildCompPreview() -> Element;
     fn BuildCompSelectors() -> Element;
 }

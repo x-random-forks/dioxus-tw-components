@@ -25,7 +25,6 @@ impl Class for AccordionContentProps {
         Some(match *self.animation.read() {
             Animation::None => "transition-none",
             Animation::Light | Animation::Full => "transition-all",
-            Animation::Custom(animation) => animation,
         })
     }
 }

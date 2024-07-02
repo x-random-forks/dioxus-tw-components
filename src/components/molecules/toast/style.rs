@@ -3,13 +3,13 @@ use crate::attributes::*;
 
 impl Class for ToasterProps {
     fn base(&self) -> &'static str {
-        "fixed z-50 w-full md:m-4 md:max-w-[400px] bottom-0 right-0"
+        "fixed z-50 w-full md:max-w-[400px] bottom-0 right-0"
     }
 }
 
 impl Class for Toast {
     fn base(&self) -> &'static str {
-        "bg-background text-foreground text-sm border border-border shadow-global-shadow p-4 m-2 rounded-global-radius relative group"
+        "relative group bg-background text-foreground text-sm border border-border shadow-global-shadow p-4 m-2 rounded-global-radius"
     }
 
     // Color is not a ReadOnlySignal so no need to read()
@@ -22,19 +22,11 @@ impl Class for Toast {
             _ => "bg-background text-foreground",
         })
     }
-}
 
-// impl std::fmt::Display for ToastPosition {
-//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!(
-//             f,
-//             "{}",
-//             match self {
-//                 ToastPosition::TopRight => "top-0 right-0",
-//                 ToastPosition::TopLeft => "top-0 left-0",
-//                 ToastPosition::BottomRight => "bottom-0 right-0",
-//                 ToastPosition::BottomLeft => "bottom-0 left-0",
-//             }
-//         )
-//     }
-// }
+    fn animation(&self) -> Option<&'static str> {
+        Some(match self.animation {
+            Animation::Light | Animation::Full => "transition-all duration-150 data-[state=opening]:translate-y-full data-[state=open]:translate-y-0 data-[state=closing]:translate-x-full",
+            _ => "",
+        })
+    }
+}

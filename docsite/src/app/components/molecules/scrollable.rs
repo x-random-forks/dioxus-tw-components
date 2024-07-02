@@ -16,11 +16,7 @@ pub fn ScrollablePage() -> Element {
 }
 
 impl DemoComponent for ScrollableProps {
-    fn title() -> &'static str {
-        "Scrollable"
-    }
-
-    fn description() -> &'static str {
+    fn comp_introduction() -> &'static str {
         ""
     }
 

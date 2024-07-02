@@ -16,11 +16,7 @@ pub fn TabsPage() -> Element {
 }
 
 impl DemoComponent for TabsProps {
-    fn title() -> &'static str {
-        "Tabs"
-    }
-
-    fn description() -> &'static str {
+    fn comp_introduction() -> &'static str {
         "A customizable and user-friendly navigation component that allows users to switch between different views or sections of a website or application"
     }
 

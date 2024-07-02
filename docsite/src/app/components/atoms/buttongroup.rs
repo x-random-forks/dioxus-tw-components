@@ -8,11 +8,7 @@ pub fn ButtonGroupPage() -> Element {
 }
 
 impl DemoComponent for ButtonGroupProps {
-    fn title() -> &'static str {
-        "Button Group"
-    }
-    
-    fn description() -> &'static str {
+    fn comp_introduction() -> &'static str {
         ""
     }
 

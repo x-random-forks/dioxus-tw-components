@@ -16,11 +16,7 @@ pub fn SliderPage() -> Element {
 }
 
 impl DemoComponent for SliderProps {
-    fn title() -> &'static str {
-        "Slider"
-    }
-
-    fn description() -> &'static str {
+    fn comp_introduction() -> &'static str {
         "Allows users to select a value within a specified range"
     }
 

@@ -16,11 +16,7 @@ pub fn TextAreaPage() -> Element {
 }
 
 impl DemoComponent for TextAreaProps {
-    fn title() -> &'static str {
-        "Textarea"
-    }
-
-    fn description() -> &'static str {
+    fn comp_introduction() -> &'static str {
         "A customizable and interactive textarea component"
     }
 

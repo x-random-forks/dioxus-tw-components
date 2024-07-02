@@ -29,11 +29,7 @@ pub fn CarouselPage() -> Element {
 }
 
 impl DemoComponent for CarouselProps {
-    fn title() -> &'static str {
-        "Carousel"
-    }
-
-    fn description() -> &'static str {
+    fn comp_introduction() -> &'static str {
         ""
     }
 

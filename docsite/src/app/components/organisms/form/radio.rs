@@ -18,11 +18,7 @@ pub fn RadioPage() -> Element {
 }
 
 impl DemoComponent for RadioProps {
-    fn title() -> &'static str {
-        "Radio"
-    }
-
-    fn description() -> &'static str {
+    fn comp_introduction() -> &'static str {
         "A customizable and interactive radio component"
     }
 
