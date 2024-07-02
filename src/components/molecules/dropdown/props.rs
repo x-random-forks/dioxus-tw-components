@@ -1,82 +1,76 @@
 use crate::attributes::*;
-use crate::hooks::{use_clear_timeout_id, use_set_timeout, use_window};
+use chrono::{DateTime, Local, TimeDelta};
 use dioxus::prelude::*;
-use dioxus_elements::geometry::{euclid::Rect, Pixels};
 use dioxus_components_macro::UiComp;
-use web_sys::wasm_bindgen::closure::Closure;
+use dioxus_core::AttributeValue;
+use gloo_timers::future::TimeoutFuture;
 
 #[derive(Clone, Copy)]
 struct DropdownState {
-    state_attr_value: DataStateAttrValue,
-    timeout_id: i32,
-    closing_delay_ms: i32,
-    trigger_rect: Rect<f64, Pixels>,
-    content_rect: Rect<f64, Pixels>,
+    is_active: bool,
+    last_hover: DateTime<Local>,
+    is_hovered: bool,
+    closing_delay_ms: TimeDelta,
 }
 
 impl DropdownState {
-    fn new(closing_delay_ms: i32) -> Self {
+    fn new(closing_delay_ms: u32) -> Self {
         Self {
-            state_attr_value: DataStateAttrValue::Inactive,
-            timeout_id: -1,
-            closing_delay_ms,
-            trigger_rect: Rect::zero(),
-            content_rect: Rect::zero(),
+            is_active: false,
+            last_hover: DateTime::default(),
+            is_hovered: false,
+            // 500 is an added tolerance
+            closing_delay_ms: TimeDelta::milliseconds(closing_delay_ms as i64 - 500),
         }
     }
 
     fn toggle(&mut self) {
-        self.state_attr_value = -self.state_attr_value;
+        self.is_active = !self.is_active;
     }
 
     fn close(&mut self) {
-        self.state_attr_value = DataStateAttrValue::Inactive;
+        self.is_active = false;
     }
 
-    fn set_timeout_id(&mut self, id: i32) {
-        self.timeout_id = id;
-    }
-
-    fn get_timeout_id(&self) -> i32 {
-        self.timeout_id
-    }
-
-    fn set_toggle_rect(&mut self, rect: Rect<f64, Pixels>) {
-        self.trigger_rect = rect;
-    }
-
-    fn set_content_rect(&mut self, rect: Rect<f64, Pixels>) {
-        self.content_rect = rect;
-    }
-
-    // fn get_toggle_rect(&self) -> Rect<f64, Pixels> {
-    //     self.trigger_rect
-    // }
-
-    // fn get_content_rect(&self) -> Rect<f64, Pixels> {
-    //     self.content_rect
-    // }
-
-    fn get_closing_delay(&self) -> i32 {
+    fn get_closing_delay(&self) -> TimeDelta {
         self.closing_delay_ms
     }
 
-    fn is_active(&self) -> bool {
-        self.state_attr_value.is_active()
+    fn get_is_active(&self) -> bool {
+        self.is_active
+    }
+
+    fn set_last_hover(&mut self, last_hover: DateTime<Local>) {
+        self.last_hover = last_hover;
+    }
+
+    fn get_last_hover(&self) -> DateTime<Local> {
+        self.last_hover
+    }
+
+    fn get_is_hovered(&self) -> bool {
+        self.is_hovered
+    }
+
+    fn set_is_hovered(&mut self, is_hovered: bool) {
+        self.is_hovered = is_hovered;
     }
 }
 
 impl IntoAttributeValue for DropdownState {
     fn into_value(self) -> dioxus::prelude::dioxus_core::AttributeValue {
-        self.state_attr_value.into_value()
+        match self.is_active {
+            true => AttributeValue::Text("active".to_string()),
+            false => AttributeValue::Text("inactive".to_string()),
+        }
     }
 }
 
 #[derive(Clone, Default, PartialEq, Props, UiComp)]
 pub struct DropdownProps {
-    /// Correponds to the time in ms it takes for the toggle to close itself if not active, -1 disabled this feature (default)
-    #[props(default = -1)]
-    closing_delay_ms: i32,
+    /// Correponds to the time in ms it takes for the toggle to close itself if not active, 0 disable this feature
+    #[props(default = 2_000)]
+    closing_delay_ms: u32,
 
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -96,12 +90,20 @@ pub struct DropdownProps {
 /// }
 /// ```
 pub fn Dropdown(mut props: DropdownProps) -> Element {
-    let state = use_context_provider(|| Signal::new(DropdownState::new(props.closing_delay_ms)));
+    let mut state =
+        use_context_provider(|| Signal::new(DropdownState::new(props.closing_delay_ms)));
 
     props.update_class_attribute();
 
+    let onclick = move |_| {
+        state.write().close();
+    };
+
     rsx!(
         div { ..props.attributes, "data-state": state.read().into_value(), {props.children} }
+        if state.read().get_is_active() {
+            div { class: "fixed top-0 left-0 w-full h-full", onclick }
+        }
     )
 }
 
@@ -118,43 +120,27 @@ pub fn DropdownToggle(mut props: DropdownToggleProps) -> Element {
 
     props.update_class_attribute();
 
-    let onmounted = move |event: Event<MountedData>| async move {
-        match event.get_client_rect().await {
-            Ok(rect) => state.write().set_toggle_rect(rect.into()),
-            Err(err) => log::error!("{:?}", err),
-        }
-    };
-
     let onclick = move |_: MouseEvent| {
         state.write().toggle();
-
-        // Remove the timeout if the dropdown is closed manually
-        let is_active = state.read().is_active();
-
-        if is_active {
-            match use_window() {
-                Ok(ref window) => use_clear_timeout_id(window, state.read().get_timeout_id()),
-                Err(err) => log::error!("{:?}", err),
-            };
-        }
+        state.write().set_last_hover(Local::now());
+        state.write().set_is_hovered(true);
     };
 
     let onmouseleave = move |_| {
-        let closing_delay = state.read().get_closing_delay();
-        let is_active = state.read().is_active();
+        on_mouse_leave(state);
+    };
 
-        if is_active && closing_delay > 0 {
-            begin_timeout(state)
-        }
+    let onmouseenter = move |_| {
+        on_mouse_enter(state);
     };
 
     rsx!(
         div {
             ..props.attributes,
-            "data-state": state.read().into_value(), 
-            onmounted,
+            "data-state": state.read().into_value(),
             onclick,
             onmouseleave,
+            onmouseenter,
             { props.children }
         }
     )
@@ -172,55 +158,22 @@ pub struct DropdownContentProps {
 }
 
 pub fn DropdownContent(mut props: DropdownContentProps) -> Element {
-    let mut state = use_context::<Signal<DropdownState>>();
+    let state = use_context::<Signal<DropdownState>>();
 
     props.update_class_attribute();
-    
-    let onmounted = move |event: Event<MountedData>| async move {
-        match event.get_client_rect().await {
-            Ok(rect) => state.write().set_content_rect(rect),
-            Err(err) => log::error!("{:?}", err),
-        }
-    };
 
     let onmouseleave = move |_| {
-        let closing_delay = state.read().get_closing_delay();
-
-        if closing_delay > 0 {
-            begin_timeout(state)
-        }
+        on_mouse_leave(state);
     };
 
     let onmouseenter = move |_| {
-        match use_window() {
-            Ok(ref window) => use_clear_timeout_id(window, state.read().get_timeout_id()),
-            Err(err) => log::error!("{:?}", err),
-        };
+        on_mouse_enter(state);
     };
-
-    // let app_state = use_context::<Signal<LibState>>();
-
-    use_memo(move || {
-        // let click: Point2D<f64, f64> = app_state
-        //     .read()
-        //     .get_last_click_coordinates()
-        //     .client()
-        //     .cast_unit();
-
-        // let rect_toggle = state.read().get_toggle_rect();
-        // let rect_content = state.read().get_content_rect();
-        // let is_active = state.read().is_active();
-
-        // if is_active && !rect_toggle.contains(click) && !rect_content.contains(click) {
-        //     state.write().close();
-        // }
-    });
 
     rsx!(
         div {
             ..props.attributes,
-            "data-state": state.read().into_value(), 
-            onmounted,
+            "data-state": state.read().into_value(),
             onmouseleave,
             onmouseenter,
             {props.children}
@@ -228,24 +181,37 @@ pub fn DropdownContent(mut props: DropdownContentProps) -> Element {
     )
 }
 
-fn begin_timeout(mut state: Signal<DropdownState>) {
-    let window = match use_window() {
-        Ok(window) => window,
-        Err(err) => {
-            log::error!("{:?}", err);
+fn on_mouse_leave(mut state: Signal<DropdownState>) {
+    let is_active = state.read().get_is_active();
+    let closing_delay = state.read().get_closing_delay();
+
+    spawn(async move {
+        if closing_delay <= TimeDelta::zero() || !is_active {
             return;
         }
-    };
+        state.write().set_is_hovered(false);
 
-    let closure = Closure::wrap(Box::new(move || {
-        state.write().close();
-    }) as Box<dyn FnMut()>);
+        TimeoutFuture::new(
+            closing_delay
+                .num_milliseconds()
+                .try_into()
+                .unwrap_or_default(),
+        )
+        .await;
 
-    let close_delay_duration_ms = state.read().get_closing_delay();
+        let is_hovered = state.read().get_is_hovered();
 
-    if let Ok(id) = use_set_timeout(&window, &closure, close_delay_duration_ms) {
-        state.write().set_timeout_id(id);
-    }
+        let last_hover = state.read().get_last_hover();
+        let now = Local::now();
+        let dt = state.read().get_closing_delay();
 
-    closure.forget();
+        if now - last_hover >= dt && !is_hovered {
+            state.write().close();
+        }
+    });
+}
+
+fn on_mouse_enter(mut state: Signal<DropdownState>) {
+    state.write().set_last_hover(Local::now());
+    state.write().set_is_hovered(true);
 }

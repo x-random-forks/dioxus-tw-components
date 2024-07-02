@@ -4,7 +4,7 @@ use dioxus::prelude::*;
 
 impl Class for DropdownProps {
     fn base(&self) -> &'static str {
-        ""
+        "z-10"
     }
 }
 

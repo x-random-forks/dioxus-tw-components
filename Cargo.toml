@@ -25,3 +25,4 @@ form_builder = { git = "ssh://github.com/ZialeOrg/form_builder.git", branch = "a
 slugify = "0.1.0"
 
 gloo-timers = { version = "0.3.0", features = ["futures"] }
+chrono = "0.4.38"
