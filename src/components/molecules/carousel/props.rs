@@ -1,6 +1,7 @@
 use crate::{attributes::*, hooks::use_element_scroll_width};
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
+use dioxus_core::AttributeValue;
 use web_sys::wasm_bindgen::JsValue;
 
 struct CarouselState {
@@ -65,11 +66,10 @@ impl CarouselState {
         self.content_id = id;
     }
 
-    fn is_current_key_eq_mine(&self, key: u32) -> DataStateAttrValue {
-        if self.current_item_key == key {
-            DataStateAttrValue::Active
-        } else {
-            DataStateAttrValue::Inactive
+    fn is_active_to_attr_value(&self, key: u32) -> AttributeValue {
+        match self.current_item_key == key {
+            true => AttributeValue::Text("active".to_string()),
+            false => AttributeValue::Text("inactive".to_string()),
         }
     }
 
@@ -214,15 +214,13 @@ pub fn CarouselItem(mut props: CarouselItemProps) -> Element {
         state.write().increment_carousel_size();
     };
 
-    props.attributes.push(Attribute::new(
-        "data-state",
-        state.read().is_current_key_eq_mine(props.item_key),
-        None,
-        true,
-    ));
-
     rsx!(
-        div { ..props.attributes, onmounted, {props.children} }
+        div {
+            ..props.attributes,
+            "data-state": state.read().is_active_to_attr_value(props.item_key),
+            onmounted,
+            {props.children}
+        }
     )
 }
 
@@ -236,17 +234,18 @@ pub struct CarouselTriggerProps {
 }
 
 pub fn CarouselTrigger(mut props: CarouselTriggerProps) -> Element {
+    let mut carousel_state = use_context::<Signal<CarouselState>>();
+
     props.update_class_attribute();
 
     let onclick = move |_| {
-        let mut carousel_state = use_context::<Signal<CarouselState>>();
         let content_id = carousel_state.read().content_id.clone();
 
         carousel_state
             .write()
             .set_content_size(use_element_scroll_width(&content_id));
 
-        use_carousel(props.next, carousel_state);
+        scroll_carousel(props.next, carousel_state);
 
         carousel_state.write().translate();
     };
@@ -258,7 +257,7 @@ pub fn CarouselTrigger(mut props: CarouselTriggerProps) -> Element {
     )
 }
 
-fn use_carousel(next: bool, mut carousel_state: Signal<CarouselState>) {
+fn scroll_carousel(next: bool, mut carousel_state: Signal<CarouselState>) {
     let mut carousel_state = carousel_state.write();
     let current_key = carousel_state.current_item_key;
     let carousel_size = carousel_state.carousel_size;

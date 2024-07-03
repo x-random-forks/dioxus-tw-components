@@ -1,6 +1,7 @@
 use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
+use dioxus_core::AttributeValue;
 
 #[derive(Clone, Default, PartialEq, Props, UiComp)]
 pub struct ToggleProps {
@@ -31,24 +32,17 @@ pub fn Toggle(mut props: ToggleProps) -> Element {
         None => false,
     });
 
-    let state = match interior_sig() {
-        true => DataStateAttrValue::Active,
-        false => DataStateAttrValue::Inactive,
-    };
-
     let onclick = move |event| {
         interior_sig.toggle();
         props.onclick.call(event);
     };
 
-    props.attributes.push(Attribute::new(
-        "data-state",
-        state.into_value(),
-        None,
-        false,
-    ));
-
     rsx!(
-        button { ..props.attributes, r#type: "button", onclick }
+        button { ..props.attributes,
+            "data-state": match interior_sig() {
+                true => AttributeValue::Text("active".to_string()),
+                false => AttributeValue::Text("inactive".to_string()),
+            },
+            r#type: "button", onclick }
     )
 }

@@ -58,7 +58,7 @@ impl DropdownState {
 }
 
 impl IntoAttributeValue for DropdownState {
-    fn into_value(self) -> dioxus::prelude::dioxus_core::AttributeValue {
+    fn into_value(self) -> AttributeValue {
         match self.is_active {
             true => AttributeValue::Text("active".to_string()),
             false => AttributeValue::Text("inactive".to_string()),

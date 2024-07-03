@@ -2,6 +2,7 @@ use crate::attributes::*;
 use crate::hooks::use_element_scroll_height;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
+use dioxus_core::AttributeValue;
 
 struct AccordionState {
     multi_open: bool,
@@ -33,11 +34,10 @@ impl AccordionState {
         self.active_items.contains(&id.to_string())
     }
 
-    fn into_value_id(&self, id: &str) -> DataStateAttrValue {
-        if self.active_items.contains(&id.to_string()) {
-            DataStateAttrValue::Active
-        } else {
-            DataStateAttrValue::Inactive
+    fn is_active_to_attr_value(&self, id: String) -> AttributeValue {
+        match self.active_items.contains(&id) {
+            true => AttributeValue::Text("active".to_string()),
+            false => AttributeValue::Text("inactive".to_string()),
         }
     }
 }
@@ -57,16 +57,16 @@ pub struct AccordionProps {
 /// The Accordion component divides the content into collapsible items \
 /// Usage:
 /// ```ignore
-/// Accordion {
+/// rsx!(Accordion {
 ///     AccordionItem {
 ///         AccordionTrigger { id: "acc-1", "Trigger 1" }
-///         AccordionContent { id: "acc-1", Content 1" }
+///         AccordionContent { id: "acc-1", "Content 1" }
 ///     }
 ///     AccordionItem {
 ///         AccordionTrigger { id: "acc-2", "Trigger 2" }
 ///         AccordionContent { id: "acc-2", "Content 2" }
 ///     }
-/// }
+/// })
 /// ```
 pub fn Accordion(mut props: AccordionProps) -> Element {
     use_context_provider(|| Signal::new(AccordionState::new(props.multi_open)));
@@ -108,7 +108,7 @@ pub struct AccordionTriggerProps {
     is_open: bool,
 
     /// Decoration element that is displayed next to the trigger text, by default a chevron svg
-    #[props(optional, default = use_default_trigger_decoration())]
+    #[props(optional, default = default_trigger_decoration())]
     trigger_decoration: Element,
 
     children: Element,
@@ -142,16 +142,10 @@ pub fn AccordionTrigger(mut props: AccordionTriggerProps) -> Element {
         }
     };
 
-    props.attributes.push(Attribute::new(
-        "data-state",
-        state.read().into_value_id(&*props.id.read()),
-        None,
-        true,
-    ));
-
     rsx!(
         button {
             ..props.attributes,
+            "data-state": state.read().is_active_to_attr_value(props.id.read().to_string()),
             onclick: button_closure,
             onmounted: onmounted,
             p { {props.children} }
@@ -160,7 +154,7 @@ pub fn AccordionTrigger(mut props: AccordionTriggerProps) -> Element {
     )
 }
 
-fn use_default_trigger_decoration() -> Element {
+fn default_trigger_decoration() -> Element {
     rsx!(
         svg {
             class: "fill-foreground/80 transition-transform transform duration-300 group-data-[state=active]:-rotate-180",
@@ -218,16 +212,10 @@ pub fn AccordionContent(mut props: AccordionContentProps) -> Element {
         false => "0".to_string(),
     };
 
-    props.attributes.push(Attribute::new(
-        "data-state",
-        state.read().into_value_id(&props.id.read()),
-        None,
-        true,
-    ));
-
     rsx!(
         div {
             ..props.attributes,
+            "data-state": state.read().is_active_to_attr_value(props.id.read().to_string()),
             id: props.id,
             height: final_height,
             onmounted,

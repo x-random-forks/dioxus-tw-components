@@ -1,38 +1,36 @@
 use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
+use dioxus_core::AttributeValue;
 
 #[derive(Clone, Copy)]
 struct ModalState {
-    data_state_attr_value: DataStateAttrValue,
+    is_active: bool,
 }
 
 impl ModalState {
-    fn new(is_open: bool) -> Self {
-        Self {
-            data_state_attr_value: if is_open {
-                DataStateAttrValue::Active
-            } else {
-                DataStateAttrValue::Inactive
-            },
-        }
+    fn new(is_active: bool) -> Self {
+        Self { is_active }
     }
 
     fn toggle(&mut self) {
-        self.data_state_attr_value = -self.data_state_attr_value;
+        self.is_active = !self.is_active;
     }
 }
 
 impl IntoAttributeValue for ModalState {
-    fn into_value(self) -> dioxus_core::AttributeValue {
-        self.data_state_attr_value.into_value()
+    fn into_value(self) -> AttributeValue {
+        match self.is_active {
+            true => AttributeValue::Text("active".to_string()),
+            false => AttributeValue::Text("inactive".to_string()),
+        }
     }
 }
 
 #[derive(Clone, Default, PartialEq, Props, UiComp)]
 pub struct ModalProps {
     #[props(default = false)]
-    is_open: bool,
+    is_active: bool,
 
     children: Element,
 }
@@ -54,7 +52,7 @@ pub struct ModalProps {
 /// }
 /// ```
 pub fn Modal(props: ModalProps) -> Element {
-    use_context_provider(|| Signal::new(ModalState::new(props.is_open)));
+    use_context_provider(|| Signal::new(ModalState::new(props.is_active)));
 
     rsx!(
         { props.children }
@@ -128,15 +126,8 @@ pub fn ModalContent(mut props: ModalContentProps) -> Element {
 
     props.update_class_attribute();
 
-    props.attributes.push(Attribute::new(
-        "data-state",
-        state.read().into_value(),
-        None,
-        false,
-    ));
-
     rsx!(
-        div { ..props.attributes, {props.children} }
+        div { ..props.attributes, "data-state": state.read().into_value(), {props.children} }
     )
 }
 
@@ -167,14 +158,12 @@ pub fn ModalBackground(mut props: ModalBackgroundProps) -> Element {
         }
     };
 
-    props.attributes.push(Attribute::new(
-        "data-state",
-        state.read().into_value(),
-        None,
-        false,
-    ));
-
     rsx!(
-        div { ..props.attributes, onclick, {props.children} }
+        div {
+            ..props.attributes,
+            "data-state": state.read().into_value(),
+            onclick,
+            {props.children}
+        }
     )
 }
