@@ -38,11 +38,14 @@ pub fn Toggle(mut props: ToggleProps) -> Element {
     };
 
     rsx!(
-        button { ..props.attributes,
+        button {
+            ..props.attributes,
             "data-state": match interior_sig() {
                 true => AttributeValue::Text("active".to_string()),
                 false => AttributeValue::Text("inactive".to_string()),
             },
-            r#type: "button", onclick }
+            r#type: "button",
+            onclick
+        }
     )
 }

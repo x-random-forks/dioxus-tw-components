@@ -26,9 +26,10 @@ impl DemoComponent for DropdownProps {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
-            Dropdown { class: state.read()[&0].get_class(), id:"dropdown-demo",
-                DropdownToggle { class: state.read()[&1].get_class(), id:"dropdown-toggle-demo", "Dropdown" }
-                DropdownContent { id:"dropdown-content-demo",
+            Dropdown { class: state.read()[&0].get_class(), id: "dropdown-demo",
+                DropdownToggle { class: state.read()[&1].get_class(), id: "dropdown-toggle-demo", "Dropdown" }
+                DropdownContent {
+                    id: "dropdown-content-demo",
                     class: state.read()[&2].get_class(),
                     animation: state.read()[&2].get_animation(),
                     div { "Content" }

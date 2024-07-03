@@ -4,7 +4,7 @@ use dioxus::prelude::*;
 
 impl Class for DropdownProps {
     fn base(&self) -> &'static str {
-        "z-10"
+        "z-20"
     }
 }
 
@@ -16,7 +16,7 @@ impl Class for DropdownToggleProps {
 
 impl Class for DropdownContentProps {
     fn base(&self) -> &'static str {
-        "absolute z-50 p-2 mt-1 space-y-2 min-w-[8rem] bg-background text-foreground rounded-global-radius border border-input shadow shadow-global-shadow whitespace-nowrap opacity-100 data-[state=inactive]:invisible"
+        "absolute z-20 p-2 mt-1 space-y-2 min-w-[8rem] bg-background text-foreground rounded-global-radius border border-input shadow shadow-global-shadow whitespace-nowrap opacity-100 data-[state=inactive]:invisible"
     }
 
     fn animation(&self) -> Option<&'static str> {

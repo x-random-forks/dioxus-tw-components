@@ -20,7 +20,7 @@ impl DropdownState {
             last_hover: DateTime::default(),
             is_hovered: false,
             // 500 is an added tolerance
-            closing_delay_ms: TimeDelta::milliseconds(closing_delay_ms as i64 - 500),
+            closing_delay_ms: TimeDelta::milliseconds(closing_delay_ms as i64),
         }
     }
 
@@ -69,7 +69,7 @@ impl IntoAttributeValue for DropdownState {
 #[derive(Clone, Default, PartialEq, Props, UiComp)]
 pub struct DropdownProps {
     /// Correponds to the time in ms it takes for the toggle to close itself if not active, 0 disable this feature
-    #[props(default = 2_000)]
+    #[props(default = 100)]
     closing_delay_ms: u32,
 
     #[props(extends = div, extends = GlobalAttributes)]
@@ -80,7 +80,7 @@ pub struct DropdownProps {
 
 /// Usage:
 /// ```ignore
-/// Dropdown {
+/// Dropdown { closing_delay_ms: 500,
 ///    DropdownToggle {
 ///        "Dropdown"
 ///     }
@@ -89,20 +89,24 @@ pub struct DropdownProps {
 ///    }
 /// }
 /// ```
+/// Use 0 closing_delay_ms to disable the auto close feature
 pub fn Dropdown(mut props: DropdownProps) -> Element {
     let mut state =
         use_context_provider(|| Signal::new(DropdownState::new(props.closing_delay_ms)));
 
     props.update_class_attribute();
 
-    let onclick = move |_| {
+    let onclick = move |_event| {
         state.write().close();
     };
 
     rsx!(
         div { ..props.attributes, "data-state": state.read().into_value(), {props.children} }
         if state.read().get_is_active() {
-            div { class: "fixed top-0 left-0 w-full h-full", onclick }
+            div {
+                class: "fixed top-0 left-0 w-full h-full bg-transparent",
+                onclick
+            }
         }
     )
 }
