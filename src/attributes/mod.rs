@@ -1,4 +1,5 @@
 use dioxus::dioxus_core::{Attribute, AttributeValue, Element};
+use tailwind_fuse::tw_merge;
 use std::str::FromStr;
 
 pub trait UiComp: HasChildren + BuildClass + std::fmt::Display {}
@@ -67,7 +68,7 @@ pub trait BuildClass: Class {
             class.push_str(orientation);
         }
 
-        class
+        tw_merge!(class)
     }
 
     fn update_class_attribute(&mut self) {
