@@ -32,7 +32,7 @@ impl Class for ProgressBarProps {
 
 impl Class for ProgressBarInnerProps {
     fn base(&self) -> &'static str {
-        "h-full rounded-global-radius flex items-center justify-center"
+        "h-full rounded-global-radius flex items-center justify-center transition-all"
     }
 
     fn color(&self) -> Option<&'static str> {
