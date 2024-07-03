@@ -1,9 +1,5 @@
-use std::{ops::Neg, str::FromStr};
-
-use dioxus::{
-    dioxus_core::{Attribute, AttributeValue, Element},
-    prelude::IntoAttributeValue,
-};
+use std::str::FromStr;
+use dioxus::dioxus_core::{Attribute, AttributeValue, Element};
 
 pub trait UiComp: HasChildren + BuildClass + std::fmt::Display {}
 
