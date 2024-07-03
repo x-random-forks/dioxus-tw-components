@@ -3,7 +3,6 @@ use chrono::{DateTime, Local, TimeDelta};
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 use dioxus_core::AttributeValue;
-use dioxus_elements::geometry::{euclid::Rect, Pixels};
 use gloo_timers::future::TimeoutFuture;
 
 #[derive(Clone, Copy)]

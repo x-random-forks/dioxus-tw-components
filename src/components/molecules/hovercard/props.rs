@@ -3,9 +3,7 @@ use chrono::{DateTime, Local, TimeDelta};
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 use dioxus_core::AttributeValue;
-use dioxus_elements::geometry::{euclid::Rect, Pixels};
 use gloo_timers::future::TimeoutFuture;
-use serde_json::Value;
 
 #[derive(Clone, Debug)]
 pub struct HoverState {
@@ -35,10 +33,6 @@ impl HoverState {
 
     fn close(&mut self) {
         self.is_active = false;
-    }
-
-    fn get_is_active(&self) -> bool {
-        self.is_active
     }
 
     fn set_is_hovered(&mut self, is_hovered: bool) {
