@@ -116,7 +116,13 @@ pub fn HoverCard(mut props: HoverCardProps) -> Element {
     };
 
     rsx!(
-        div { ..props.attributes, "data-state": state.into_value(), onmouseenter, onmouseleave, {props.children} }
+        div {
+            ..props.attributes,
+            "data-state": state.into_value(),
+            onmouseenter,
+            onmouseleave,
+            {props.children}
+        }
     )
 }
 
