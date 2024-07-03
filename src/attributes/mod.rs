@@ -81,7 +81,7 @@ pub trait BuildClass: Class {
                 vec_attributes.iter_mut().find(|attr| attr.name == "class")
             {
                 if let AttributeValue::Text(ref mut value) = class_attribute.value {
-                    *value = format!("{} {}", class, value);
+                    *value = tw_merge!(class, value.clone());
                 }
             } else {
                 // Else push the class attribute in the vec
