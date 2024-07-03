@@ -10,6 +10,9 @@ pub use carousel::{Carousel, CarouselContent, CarouselItem, CarouselTrigger, Car
 pub mod dropdown;
 pub use dropdown::{Dropdown, DropdownContent, DropdownToggle};
 
+pub mod hovercard;
+pub use hovercard::{HoverCard, HoverCardContent, HoverCardTrigger};
+
 pub mod lightswitch;
 pub use lightswitch::{LightSwitch, LightSwitchState};
 

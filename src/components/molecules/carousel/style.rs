@@ -16,7 +16,7 @@ impl Class for CarouselWindowProps {
 
 impl Class for CarouselContentProps {
     fn base(&self) -> &'static str {
-        "flex aspect-square"
+        "flex"
     }
 
     fn animation(&self) -> Option<&'static str> {

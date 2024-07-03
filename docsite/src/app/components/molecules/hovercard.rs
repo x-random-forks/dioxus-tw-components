@@ -1,96 +1,50 @@
-use std::time::Duration;
-
 use dioxus::prelude::*;
-use gloo_timers::{callback::Timeout, future::{sleep, TimeoutFuture}};
+use dioxus_components::molecules::hovercard::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
 pub fn HoverCardPage() -> Element {
-    rsx!(
-        HoverCard { 
-            HoverCardTrigger { "Hover" }
-            HoverCardContent { 
-                div { class: "border", "CONTENT" }
-            }
-        }
-    )
-}
-
-pub struct HoverState {
-    is_open: bool,
-    timeout: Option<TimeoutFuture>
-}
-
-impl HoverState {
-    fn new() -> Self {
-        Self { is_open: false, timeout: None }
-    }
-
-    fn toggle(&mut self) {
-        self.is_open = !self.is_open;
-    }
-
-    fn open(&mut self) {
-        self.is_open = true;
-    }
-
-    fn close(&mut self) {
-        self.is_open = false;
-    }
-
-    fn set_timeout(&mut self, timeout: TimeoutFuture) {
-        self.timeout = Some(timeout);
-    }
-}
-
-#[component]
-pub fn HoverCard(children: Element) -> Element {
-    let _state = use_context_provider(|| Signal::new(HoverState::new()));
-
-    rsx!(
-        div { {children} }
-    )
-}
-
-#[component]
-pub fn HoverCardTrigger(children: Element) -> Element {
-    // let state = try_use_context::Signal<HoverState>>();
-    let mut state: Signal<HoverState> = use_context();
-
-    rsx!(
-        div {
-            onmouseenter: move |_| {
-                let is_open = state.read().is_open;
-                if !is_open {
-                    spawn(async move {
-                        TimeoutFuture::new(1000).await;
-                        state.write().open();
-                    });
-                } else {
-                    state.write().open();
-                }
-            },
-            onmouseleave: move |_| {
-                spawn(async move {
-                    state.write().set_timeout(sleep(Duration::from_secs(1)));
-                    log::debug!("There");
-                    state.write().close();
-                });
-            },
-            {children}
-        }
-    )
-}
-
-#[component]
-pub fn HoverCardContent(children: Element) -> Element {
-    let mut state: Signal<HoverState> = use_context();
-
-    let hidden = use_memo(move || {
-        !state.read().is_open
+    let _state = use_context_provider(|| {
+        let mut hash = HashPreview::new();
+        hash.insert(0, FieldPreview::default());
+        hash.insert(1, FieldPreview::default());
+        hash.insert(2, FieldPreview::default());
+        Signal::new(hash)
     });
 
     rsx!(
-        div { hidden, {children} }
+        PreviewFull::<HoverCardProps> {}
     )
+}
+
+impl DemoComponent for HoverCardProps {
+    fn comp_introduction() -> &'static str {
+        "A card that appears when hovering over an element"
+    }
+
+    fn BuildCompPreview() -> Element {
+        let state = use_context::<Signal<HashPreview>>();
+
+        rsx!(
+            HoverCard { id: "hover-card-demo", class: state.read()[&0].get_class(),
+                HoverCardTrigger { id: "hover-card-trigger-demo", class: state.read()[&1].get_class(), "Hover me" }
+                HoverCardContent {
+                    id: "hover-card-content-demo",
+                    class: state.read()[&2].get_class(),
+                    animation: state.read()[&2].get_animation(),
+                    div { "Big big big big Content" }
+                }
+            }
+        )
+    }
+
+    fn BuildCompSelectors() -> Element {
+        let state = use_context::<Signal<HashPreview>>();
+
+        rsx!(
+            CompPreviewSelector::<HoverCardProps> { index: 0, state, comp_props: HoverCardProps::default() }
+            CompPreviewSelector::<HoverCardTriggerProps> { index: 1, state, comp_props: HoverCardTriggerProps::default() }
+            CompPreviewSelector::<HoverCardContentProps> { index: 2, state, comp_props: HoverCardContentProps::default() }
+        )
+    }
 }

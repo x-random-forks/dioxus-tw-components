@@ -40,7 +40,7 @@ impl DemoComponent for CarouselProps {
             Carousel { class: state.read()[&0].get_class(),
                 CarouselTrigger { next: false }
                 CarouselWindow { 
-                    CarouselContent { id: "carousel-prev",
+                    CarouselContent { id: "carousel-prev", class: "h-32",
                         CarouselItem { item_key: 0, class: state.read()[&1].get_class(),
                             div { class: "flex items-center justify-center h-full w-full font-bold text-foreground",
                                 "Item 1"

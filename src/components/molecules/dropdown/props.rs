@@ -3,6 +3,7 @@ use chrono::{DateTime, Local, TimeDelta};
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 use dioxus_core::AttributeValue;
+use dioxus_elements::geometry::{euclid::Rect, Pixels};
 use gloo_timers::future::TimeoutFuture;
 
 #[derive(Clone, Copy)]
@@ -19,7 +20,6 @@ impl DropdownState {
             is_active: false,
             last_hover: DateTime::default(),
             is_hovered: false,
-            // 500 is an added tolerance
             closing_delay_ms: TimeDelta::milliseconds(closing_delay_ms as i64),
         }
     }
@@ -68,7 +68,7 @@ impl IntoAttributeValue for DropdownState {
 
 #[derive(Clone, Default, PartialEq, Props, UiComp)]
 pub struct DropdownProps {
-    /// Correponds to the time in ms it takes for the toggle to close itself if not active, 0 disable this feature
+    /// Corresponds to the time in ms it takes for the toggle to close itself if not active, 0 disable this feature
     #[props(default = 100)]
     closing_delay_ms: u32,
 
@@ -96,16 +96,14 @@ pub fn Dropdown(mut props: DropdownProps) -> Element {
 
     props.update_class_attribute();
 
-    let onclick = move |_event| {
-        state.write().close();
-    };
-
     rsx!(
         div { ..props.attributes, "data-state": state.read().into_value(), {props.children} }
         if state.read().get_is_active() {
             div {
                 class: "fixed top-0 left-0 w-full h-full bg-transparent",
-                onclick
+                onclick: move |_event| {
+                    state.write().close();
+                }
             }
         }
     )
@@ -141,6 +139,7 @@ pub fn DropdownToggle(mut props: DropdownToggleProps) -> Element {
     rsx!(
         div {
             ..props.attributes,
+            role: "button",
             "data-state": state.read().into_value(),
             onclick,
             onmouseleave,
@@ -173,6 +172,7 @@ pub fn DropdownContent(mut props: DropdownContentProps) -> Element {
     let onmouseenter = move |_| {
         on_mouse_enter(state);
     };
+
 
     rsx!(
         div {
