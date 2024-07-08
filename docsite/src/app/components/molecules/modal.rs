@@ -34,7 +34,7 @@ impl DemoComponent for ModalProps {
                     animation: state.read()[&1].get_animation()
                 }
                 ModalContent { class: state.read()[&2].get_class(),
-                    div { ModalClose {} }
+                    div { ModalButtonClose {} }
                     div { class: "h4", "TITLE" }
                     div { class: "paragraph", "CONTENT" }
                 }
@@ -48,7 +48,7 @@ impl DemoComponent for ModalProps {
         rsx!(
             CompPreviewSelector::<ModalTriggerProps> { index: 0, state, comp_props: ModalTriggerProps::default() }
             CompPreviewSelector::<ModalBackgroundProps> { index: 1, state, comp_props: ModalBackgroundProps::default() }
-            CompPreviewSelector::<ModalCloseProps> { index: 2, state, comp_props: ModalCloseProps::default() }
+            CompPreviewSelector::<ModalButtonCloseProps> { index: 2, state, comp_props: ModalButtonCloseProps::default() }
             CompPreviewSelector::<ModalContentProps> { index: 3, state, comp_props: ModalContentProps::default() }
         )
     }

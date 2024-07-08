@@ -16,6 +16,10 @@ impl ModalState {
     fn toggle(&mut self) {
         self.is_active = !self.is_active;
     }
+
+    fn close(&mut self) {
+        self.is_active = false;
+    }
 }
 
 impl IntoAttributeValue for ModalState {
@@ -80,14 +84,14 @@ pub fn ModalTrigger(mut props: ModalTriggerProps) -> Element {
 }
 
 #[derive(Clone, Default, PartialEq, Props, UiComp)]
-pub struct ModalCloseProps {
+pub struct ModalButtonCloseProps {
     #[props(extends = button, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 
     children: Element,
 }
 
-pub fn ModalClose(mut props: ModalCloseProps) -> Element {
+pub fn ModalButtonClose(mut props: ModalButtonCloseProps) -> Element {
     let mut state = use_context::<Signal<ModalState>>();
 
     props.update_class_attribute();

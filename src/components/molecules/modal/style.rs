@@ -12,7 +12,7 @@ impl Class for ModalTriggerProps {
     }
 }
 
-impl Class for ModalCloseProps {
+impl Class for ModalButtonCloseProps {
     fn base(&self) -> &'static str {
         "absolute top-4 right-4 rounded-global-radius border border-transparent active:border-border transition-all"
     }

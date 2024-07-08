@@ -17,7 +17,7 @@ pub mod lightswitch;
 pub use lightswitch::{LightSwitch, LightSwitchState};
 
 pub mod modal;
-pub use modal::{Modal, ModalBackground, ModalClose, ModalContent, ModalTrigger};
+pub use modal::{Modal, ModalBackground, ModalButtonClose, ModalContent, ModalTrigger};
 
 mod navbar;
 pub use navbar::Navbar;

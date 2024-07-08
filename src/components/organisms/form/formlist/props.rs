@@ -1,4 +1,3 @@
-use crate::atoms::buttongroup::ButtonGroup;
 use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
@@ -35,18 +34,6 @@ impl FormListState {
     }
 
     fn remove_one(&mut self) {
-        if self.current_size > 1 {
-            self.current_size -= 1;
-        }
-    }
-
-    fn render_one_more(&mut self) {
-        if self.current_size < self.max_size {
-            self.current_size += 1;
-        }
-    }
-
-    fn render_one_less(&mut self) {
         if self.current_size > 1 {
             self.current_size -= 1;
         }
