@@ -36,9 +36,7 @@ impl Class for ButtonProps {
                 Color::Muted => "bg-muted text-muted-foreground border-muted hover:bg-muted/90 active:bg-muted/80 active:shadow",
             },
             ButtonVariant::Outline => match *self.color.read() {
-                Color::Default => {
-                    "border bg-transparent border-foreground text-foreground hover:bg-foreground/40"
-                }
+                Color::Default => "border bg-transparent border-foreground text-foreground hover:bg-foreground/40",
                 Color::Primary => "border bg-transparent border-primary text-primary hover:bg-primary/90 hover:text-primary-foreground",
                 Color::Secondary => "border bg-transparent border-secondary text-secondary hover:bg-secondary/90 hover:text-secondary-foreground",
                 Color::Destructive => "border bg-transparent border-destructive text-destructive hover:bg-destructive/90 hover:text-destructive-foreground",
@@ -47,9 +45,7 @@ impl Class for ButtonProps {
                 Color::Muted => "border bg-transparent border-muted text-muted hover:bg-muted/90 hover:text-muted-foreground",
             },
             ButtonVariant::Ghost => match *self.color.read() {
-                Color::Default => {
-                    "bg-transparent border-foreground text-foreground hover:bg-foreground/40"
-                }
+                Color::Default => "bg-transparent border-foreground text-foreground hover:bg-foreground/40",
                 Color::Primary => "bg-transparent border-primary text-primary hover:bg-primary/90 hover:text-primary-foreground active:shadow",
                 Color::Secondary => "bg-transparent border-secondary text-secondary hover:bg-secondary/90 hover:text-secondary-foreground active:shadow",
                 Color::Destructive => "bg-transparent border-destructive text-destructive hover:bg-destructive/90 hover:text-destructive-foreground active:shadow",
@@ -62,8 +58,9 @@ impl Class for ButtonProps {
 
     fn animation(&self) -> Option<&'static str> {
         Some(match *self.animation.read() {
-            Animation::None => "transition-none",
+            Animation::None => "",
             Animation::Light | Animation::Full => "transition-colors duration-150",
+            // Animation::Full => "relative z-30 after:-z-20 after:absolute after:h-1 after:w-1 after:bg-background/80 after:left-5 overflow-hidden after:bottom-0 after:translate-y-full after:rounded-md after:hover:scale-[300] after:hover:transition-all after:hover:duration-700 after:transition-all after:duration-700 transition-all duration-700",
         })
     }
 }
@@ -93,7 +90,7 @@ impl std::fmt::Display for ButtonVariant {
         let s = match self {
             ButtonVariant::Default => "Default",
             ButtonVariant::Outline => "Outline",
-            ButtonVariant::Ghost => "Ghost  ",
+            ButtonVariant::Ghost => "Ghost",
         };
         f.write_str(s)
     }

@@ -11,3 +11,5 @@ pub mod slider;
 pub mod textarea;
 
 pub mod toggle;
+
+pub mod formlist;

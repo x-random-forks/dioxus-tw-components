@@ -12,6 +12,7 @@ use molecules::{
 pub use molecules::{lightswitch::LightSwitchPage, sortedtable::SortedTablePage, tabs::TabsPage};
 
 pub mod organisms;
+use organisms::form::formlist::FormListPage;
 pub use organisms::form::{
     checkbox::CheckboxPage, input::InputPage, radio::RadioPage, select::SelectPage,
     slider::SliderPage, textarea::TextAreaPage, toggle::TogglePage,
@@ -45,6 +46,9 @@ pub fn ComponentPage(name: String) -> Element {
             ),
             "dropdown" => rsx!(
                 DropdownPage {}
+            ),
+            "formlist" => rsx!(
+                FormListPage {}
             ),
             "hovercard" => rsx!(
                 HoverCardPage {}
