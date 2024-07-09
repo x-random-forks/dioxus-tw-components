@@ -16,10 +16,6 @@ impl ModalState {
     fn toggle(&mut self) {
         self.is_active = !self.is_active;
     }
-
-    fn close(&mut self) {
-        self.is_active = false;
-    }
 }
 
 impl IntoAttributeValue for ModalState {
@@ -58,15 +54,16 @@ pub struct ModalProps {
 pub fn Modal(props: ModalProps) -> Element {
     use_context_provider(|| Signal::new(ModalState::new(props.is_active)));
 
-    rsx!(
-        { props.children }
-    )
+    rsx!({ props.children })
 }
 
 #[derive(Clone, Default, PartialEq, Props, UiComp)]
 pub struct ModalTriggerProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
+
+    #[props(optional, default)]
+    onclick: EventHandler<MouseEvent>,
 
     children: Element,
 }
@@ -76,7 +73,10 @@ pub fn ModalTrigger(mut props: ModalTriggerProps) -> Element {
 
     props.update_class_attribute();
 
-    let onclick = move |_: Event<MouseData>| state.write().toggle();
+    let onclick = move |event: Event<MouseData>| {
+        state.write().toggle();
+        props.onclick.call(event)
+    };
 
     rsx!(
         div { ..props.attributes, onclick, {props.children} }
