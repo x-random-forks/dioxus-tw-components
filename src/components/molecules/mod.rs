@@ -37,4 +37,4 @@ pub mod tabs;
 pub use tabs::{Tabs, TabsContent, TabsList, TabsTrigger};
 
 pub mod toast;
-pub use toast::{Toaster, Toast};
+pub use toast::{Toaster, Toast, use_toast};

@@ -2,7 +2,7 @@ pub mod checkbox;
 pub use checkbox::{Checkbox, CheckboxProps};
 
 pub mod formlist;
-pub use formlist::{FormList, FormListContent, FormListTriggerMinus, FormListTriggerPlus};
+pub use formlist::{FormList, FormListContent, FormListTriggerMinus, FormListTriggerPlus, FormListMaxSize, FormListCurrentSize};
 
 pub mod input;
 pub use input::Input;

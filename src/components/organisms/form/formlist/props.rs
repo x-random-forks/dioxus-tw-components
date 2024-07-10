@@ -116,9 +116,6 @@ pub struct FormListContentProps {
 
     #[props(default)]
     list_fields: Vec<Element>,
-
-    #[props(default, optional)]
-    pub animation: ReadOnlySignal<Animation>,
 }
 
 pub fn FormListContent(mut props: FormListContentProps) -> Element {
@@ -131,35 +128,33 @@ pub fn FormListContent(mut props: FormListContentProps) -> Element {
         state.write().set_max_size(max_size);
     });
 
-    // Height all the fields together
-    let mut fields_height = use_signal(|| 0.);
-
-    // Use the ounmonted event to retrieve the height of the fields
-    let onmounted = move |event: MountedEvent| async move {
-        let rect = event.get_client_rect().await;
-        if let Ok(rect) = rect {
-            fields_height.set(rect.size.height);
-        }
-    };
-
-    let height = use_memo(move || {
-        // If somehow the height of the fields is 0, return an empty string, to still have the div showing in entirety
-        if fields_height() == 0. {
-            return "".to_string();
-        }
-        // Set the height of the div to be the height of a single field times the current size to render
-        format!(
-            "height: {}px;",
-            state.read().get_current_size()
-                * (fields_height() as usize / state.read().get_max_size())
-        )
-    });
+    let fields = props
+        .list_fields
+        .iter()
+        .take(state.read().get_current_size())
+        .map(|field| rsx!(
+            { field.clone() }
+        ));
 
     rsx!(
-        div { ..props.attributes, onmounted, style: height,
-            for field in props.list_fields.iter() {
-                { field.clone() }
-            }
-        }
+        div { ..props.attributes, {fields} }
     )
+}
+
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct FormListMaxSizeProps {}
+
+pub fn FormListMaxSize() -> Element {
+    let state = use_context::<Signal<FormListState>>();
+
+    rsx! ( "{state.read().get_max_size()}" )
+}
+
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct FormListCurrentSizeProps {}
+
+pub fn FormListCurrentSize() -> Element {
+    let state = use_context::<Signal<FormListState>>();
+
+    rsx! ( "{state.read().get_current_size()}" )
 }

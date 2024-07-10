@@ -1,8 +1,9 @@
-use crate::attributes::*;
+use crate::{attributes::*, hooks::{use_document, use_window}};
 use chrono::{DateTime, Local, TimeDelta};
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 use dioxus_core::AttributeValue;
+use dioxus_elements::geometry::euclid::Rect;
 use gloo_timers::future::TimeoutFuture;
 
 #[derive(Clone, Debug)]
@@ -131,6 +132,9 @@ pub struct HoverCardTriggerProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 
+    #[props(optional, default)]
+    onclick: EventHandler<MouseEvent>,
+
     children: Element,
 }
 
@@ -140,8 +144,9 @@ pub fn HoverCardTrigger(mut props: HoverCardTriggerProps) -> Element {
     props.update_class_attribute();
 
     // We need this event here to not close the hover card when clicking its content
-    let onclick = move |_| {
+    let onclick = move |event| {
         state.write().toggle();
+        props.onclick.call(event);
     };
 
     rsx!(
@@ -171,7 +176,49 @@ pub fn HoverCardContent(mut props: HoverCardContentProps) -> Element {
 
     props.update_class_attribute();
 
+    let mut body_width = use_signal(|| 0);
+
+    // Get the body width
+    use_effect(move || {
+        if let Ok(window) = use_window() {
+            let document = use_document(&window).unwrap();
+            let a = document.body().unwrap();
+            body_width.set(a.client_width())
+        }
+    });
+
+    let mut rect_sig = use_signal(|| Rect::default());
+
+    // Retrieve the hover content rect
+    let onmounted = move |event: MountedEvent| async move {
+        let rect = event.get_client_rect().await;        
+        rect_sig.set(rect.unwrap());
+    };
+
+    // Css property to position the hover content
+    let mut position = use_signal(|| String::from(""));
+    
+    use_effect(move || {
+        let rect = rect_sig();
+        let body_width = body_width();
+
+        // Place the content to fit inside the screen
+        if rect.origin.x < 0. {
+            position.set(format!("left: 0px;"))
+        } else if (rect.origin.x + rect.size.width) as u32 as i32 > body_width {
+            position.set(format!("right: 0px;"))
+        } else {
+            position.set("left: 50%; translate: -50%;".to_string())
+        }
+    });
+
     rsx!(
-        div { ..props.attributes, "data-state": state.into_value(), {props.children} }
+        div {
+            ..props.attributes,
+            style: position,
+            "data-state": state.into_value(),
+            onmounted,
+            {props.children}
+        }
     )
 }

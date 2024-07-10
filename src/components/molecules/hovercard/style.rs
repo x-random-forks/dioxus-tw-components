@@ -16,7 +16,7 @@ impl Class for HoverCardTriggerProps {
 
 impl Class for HoverCardContentProps {
     fn base(&self) -> &'static str {
-        "p-4 bg-background whitespace-nowrap border border-border rounded-global-radius shadow-global-shadow z-30 opacity-100 absolute mt-2 left-1/2 -translate-x-1/2 data-[state=inactive]:invisible"
+        "p-4 bg-background whitespace-nowrap border border-border rounded-global-radius shadow-global-shadow z-30 opacity-100 absolute mt-2 data-[state=inactive]:invisible"
     }
 
     fn animation(&self) -> Option<&'static str> {
