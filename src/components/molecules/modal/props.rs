@@ -165,11 +165,6 @@ pub fn ModalBackground(mut props: ModalBackgroundProps) -> Element {
     };
 
     rsx!(
-        div {
-            ..props.attributes,
-            "data-state": state.read().into_value(),
-            onclick,
-            {props.children}
-        }
+        div { ..props.attributes, "data-state": state.read().into_value(), onclick, {props.children} }
     )
 }

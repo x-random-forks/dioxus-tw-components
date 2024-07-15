@@ -139,24 +139,21 @@ fn ToastRenderer(mut state: Signal<ToasterState>, toast: MappedSignal<Toast>) ->
         if toast_animation != Animation::None {
             TimeoutFuture::new(10).await;
             toast_state.set(ToastState::Open);
-        
+
             let animation_play_time = 150;
             TimeoutFuture::new(duration_in_ms - animation_play_time).await;
-        
+
             toast_state.set(ToastState::Closing);
             TimeoutFuture::new(animation_play_time).await;
         } else {
             TimeoutFuture::new(duration_in_ms).await;
         }
-        
+
         state.write().toasts.clear();
     });
 
     rsx!(
-        li {
-            class,
-            id: "{toast.read().id}",
-            "data-state": toast_state.read().to_string(),
+        li { class, id: "{toast.read().id}", "data-state": toast_state.read().to_string(),
             h6 { class: "h6", "{toast.read().title}" }
             if toast.read().is_closable {
                 ToastClose { state, toast_state }
@@ -195,20 +192,22 @@ fn ToastClose(mut state: Signal<ToasterState>, mut toast_state: Signal<ToastStat
 
 /// Hook that returns a Fn which take a Toast as argument.
 /// Use this Fn to spawn the Toast
-pub fn use_toast() -> impl Fn(Toast) {
+pub fn use_toast() -> Signal<impl Fn(Toast)> {
     // Will panic if no Toaster {} upper in the DOM
     let state = use_context::<Signal<ToasterState>>();
 
-    move |toast: Toast| {
-        let mut state = state.clone();
+    use_signal(|| {
+        move |toast: Toast| {
+            let mut state = state.clone();
 
-        // Only allow 1 toast at a time
-        state.write().toasts.clear();
+            // Only allow 1 toast at a time
+            state.write().toasts.clear();
 
-        spawn(async move {
-            // To let the browser refresh the UI before spawning a new Toast
-            TimeoutFuture::new(100).await;
-            state.write().toasts.push(toast);
-        });
-    }
+            spawn(async move {
+                // To let the browser refresh the UI before spawning a new Toast
+                TimeoutFuture::new(100).await;
+                state.write().toasts.push(toast);
+            });
+        }
+    })
 }

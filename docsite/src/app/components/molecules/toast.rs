@@ -34,9 +34,11 @@ impl DemoComponent for Toast {
                     toast(
                         Toast::default()
                             .title("Title")
-                            .description(rsx! {
-                                div { "Content" }
-                            })
+                            .description(
+                                rsx! {
+                                    div { "Content" }
+                                },
+                            )
                             .color(state.read()[&0].get_color())
                             .animation(state.read()[&0].get_animation()),
                     )

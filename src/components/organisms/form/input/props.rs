@@ -10,6 +10,10 @@ pub struct InputProps {
     value: String,
 
     #[props(optional)]
+    onkeypress: EventHandler<KeyboardEvent>,
+    #[props(optional)]
+    onblur: EventHandler<FocusEvent>,
+    #[props(optional)]
     oninput: EventHandler<FormEvent>,
     #[props(optional)]
     onmounted: EventHandler<Event<MountedData>>,
@@ -22,7 +26,9 @@ pub struct InputProps {
 
 pub fn Input(mut props: InputProps) -> Element {
     props.update_class_attribute();
-    
+
+    let onkeypress = move |event| props.onkeypress.call(event);
+    let onblur = move |event| props.onblur.call(event);
     let oninput = move |event| props.oninput.call(event);
 
     let onmounted = move |event: Event<MountedData>| props.onmounted.call(event);
@@ -32,6 +38,8 @@ pub fn Input(mut props: InputProps) -> Element {
             ..props.attributes,
             value: props.value,
             onmounted,
+            onkeypress,
+            onblur,
             oninput
         }
     }
