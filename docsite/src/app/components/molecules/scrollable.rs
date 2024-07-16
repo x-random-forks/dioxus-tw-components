@@ -17,7 +17,7 @@ pub fn ScrollablePage() -> Element {
 
 impl DemoComponent for ScrollableProps {
     fn comp_introduction() -> &'static str {
-        ""
+        "WIP"
     }
 
     fn BuildCompPreview() -> Element {

@@ -22,11 +22,9 @@ impl DemoComponent for SliderProps {
 
     fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
-        let preview_comp =
-            build_preview_component::<SliderProps, _>(&state.read()[&0], Slider, None);
 
         rsx!(
-            { preview_comp }
+            Slider { class: state.read()[&0].get_class(), color: state.read()[&0].get_color() }
         )
     }
 

@@ -19,7 +19,7 @@ pub fn FormListPage() -> Element {
 
 impl DemoComponent for FormListProps {
     fn comp_introduction() -> &'static str {
-        "A list of form fields"
+        "WIP"
     }
 
     fn BuildCompPreview() -> Element {

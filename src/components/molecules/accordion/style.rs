@@ -2,7 +2,11 @@ use super::props::*;
 use crate::attributes::*;
 use dioxus::prelude::*;
 
-impl Class for AccordionProps {}
+impl Class for AccordionProps {
+    fn base(&self) -> &'static str {
+        "space-y-2"
+    }
+}
 
 impl Class for AccordionItemProps {
     fn base(&self) -> &'static str {
@@ -12,13 +16,13 @@ impl Class for AccordionItemProps {
 
 impl Class for AccordionTriggerProps {
     fn base(&self) -> &'static str {
-        "flex flex-1 items-center justify-between py-2 space-x-2 font-medium text-foreground group hover:underline"
+        "flex items-center justify-between w-full font-medium text-foreground group hover:underline"
     }
 }
 
 impl Class for AccordionContentProps {
     fn base(&self) -> &'static str {
-        "text-sm text-foreground overflow-hidden"
+        "text-sm text-foreground overflow-hidden mb-2"
     }
 
     fn animation(&self) -> Option<&'static str> {

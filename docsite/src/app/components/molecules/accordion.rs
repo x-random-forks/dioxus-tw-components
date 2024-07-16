@@ -6,7 +6,8 @@ use crate::app::{components::preview::*, doctrait::DemoComponent};
 pub fn AccordionPage() -> Element {
     let _state = use_context_provider(|| {
         let mut hash = HashPreview::new();
-        for index in 0..4 {
+        hash.insert(0, FieldPreview::default().class("w-96".to_string()));
+        for index in 1..4 {
             hash.insert(index, FieldPreview::default());
         }
         Signal::new(hash)
@@ -33,7 +34,7 @@ impl DemoComponent for AccordionProps {
                         class: state.read()[&1].get_class(),
                         animation: state.read()[&1].get_animation(),
                         id: "accordion-1",
-                        "Check out our latest products!"
+                        p { "Check out our latest products!" }
                     }
                 }
                 AccordionItem { 
@@ -42,7 +43,7 @@ impl DemoComponent for AccordionProps {
                         class: state.read()[&2].get_class(),
                         animation: state.read()[&2].get_animation(),
                         id: "accordion-2",
-                        "Discover our range of services."
+                        p { "Discover our range of services." }
                     }
                 }
                 AccordionItem { 
@@ -51,7 +52,9 @@ impl DemoComponent for AccordionProps {
                         class: state.read()[&3].get_class(),
                         animation: state.read()[&3].get_animation(),
                         id: "accordion-3",
-                        "Read what our customers have to say."
+                        p {
+                            "I've been a customer for over a year now and I'm extremely satisfied with their services. The team is always responsive and goes above and beyond to ensure my needs are met. Their attention to detail is impressive and I highly recommend them to anyone looking for top-notch service."
+                        }
                     }
                 }
             }

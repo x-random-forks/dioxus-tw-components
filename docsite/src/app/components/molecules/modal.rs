@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::{atoms::Button, molecules::modal::*};
+use dioxus_components::molecules::modal::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 

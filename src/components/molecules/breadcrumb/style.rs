@@ -9,7 +9,7 @@ impl Class for BreadcrumbProps {
 
 impl Class for BreadcrumbItemProps {
     fn base(&self) -> &'static str {
-        "font-normal last:text-foreground"
+        "last:text-foreground last:font-medium"
     }
 }
 

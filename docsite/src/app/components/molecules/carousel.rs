@@ -30,7 +30,7 @@ pub fn CarouselPage() -> Element {
 
 impl DemoComponent for CarouselProps {
     fn comp_introduction() -> &'static str {
-        ""
+        "A carousel to display multiple items and navigate through them"
     }
 
     fn BuildCompPreview() -> Element {

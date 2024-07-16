@@ -19,7 +19,7 @@ pub fn DropdownPage() -> Element {
 
 impl DemoComponent for DropdownProps {
     fn comp_introduction() -> &'static str {
-        ""
+        "A dropdown to display a list of items"
     }
 
     fn BuildCompPreview() -> Element {

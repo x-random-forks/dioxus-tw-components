@@ -148,7 +148,7 @@ pub fn AccordionTrigger(mut props: AccordionTriggerProps) -> Element {
             "data-state": state.read().is_active_to_attr_value(props.id.read().to_string()),
             onclick: button_closure,
             onmounted: onmounted,
-            p { {props.children} }
+            div { {props.children} }
             {props.trigger_decoration}
         }
     )
@@ -157,9 +157,9 @@ pub fn AccordionTrigger(mut props: AccordionTriggerProps) -> Element {
 fn default_trigger_decoration() -> Element {
     rsx!(
         svg {
-            class: "fill-foreground/80 transition-transform transform duration-300 group-data-[state=active]:-rotate-180",
-            width: 14,
-            height: 14,
+            class: "fill-foreground/65 transition-transform transform duration-300 group-data-[state=active]:-rotate-180",
+            width: 12,
+            height: 12,
             xmlns: "http://www.w3.org/2000/svg",
             view_box: "0 0 512 512",
             path { d: "M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z" }
@@ -193,7 +193,7 @@ pub fn AccordionContent(mut props: AccordionContentProps) -> Element {
             elem_height.set("auto".to_string());
             return;
         }
-        
+
         match use_element_scroll_height(&props.id.read()) {
             Ok(height) => {
                 elem_height.set(format!("{}px", height));

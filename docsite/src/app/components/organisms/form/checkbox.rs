@@ -24,22 +24,16 @@ impl DemoComponent for CheckboxProps {
 
     fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
-        let mut vec_prev_comp = Vec::<Element>::new();
-        for index in 0..3 {
-            vec_prev_comp.push(build_preview_component::<CheckboxProps, _>(
-                &state.read()[&index],
-                Checkbox,
-                None,
-            ));
-        }
 
         rsx!(
             div { class: "flex space-x-2",
-                for (index , prev_comp) in vec_prev_comp.iter().enumerate() {
+                for i in 0..3 {
                     div { class: "flex flex-col items-center space-y-2",
-                        p { class: "text-foreground font-bold", {index.to_string()} }
-                        {
-                            prev_comp
+                        p { class: "text-foreground font-bold", "{i}" }
+                        Checkbox {
+                            class: state.read()[&i].get_class(),
+                            color: state.read()[&i].get_color(),
+                            size: state.read()[&i].get_size()
                         }
                     }
                 }

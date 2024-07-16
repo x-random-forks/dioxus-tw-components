@@ -1,7 +1,6 @@
 use dioxus::prelude::*;
 use dioxus_components::molecules::table::*;
 
-
 pub struct TestState<T: ToTableData> {
     data: Vec<T>,
     sorted_col_index: usize,
@@ -107,8 +106,12 @@ pub enum KeyType {
 impl std::fmt::Display for KeyType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            KeyType::String(str) => {write!(f, "{str}")},
-            KeyType::Number(nb) => {write!(f, "{nb}")}
+            KeyType::String(str) => {
+                write!(f, "{str}")
+            }
+            KeyType::Number(nb) => {
+                write!(f, "{nb}")
+            }
         }
     }
 }

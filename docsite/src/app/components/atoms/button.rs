@@ -23,18 +23,14 @@ impl DemoComponent for ButtonProps {
     fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
         
-        let preview_comp =
-            build_preview_component::<ButtonProps, _>(&state.read()[&0], Button, rsx!( "Button" ));
-
         rsx!(
             Button {
                 class: state.read()[&0].get_class(),
                 color: state.read()[&0].get_color(),
                 size: state.read()[&0].get_size(),
                 animation: state.read()[&0].get_animation(),
-                "abc"
+                "Button"
             }
-            { preview_comp }
         )
     }
 

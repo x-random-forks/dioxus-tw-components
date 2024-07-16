@@ -37,22 +37,6 @@ impl DemoComponent for BreadcrumbProps {
     }
 
     fn BuildCompSelectors() -> Element {
-        let state = use_context::<Signal<HashPreview>>();
-
-        rsx!(
-            CompPreviewSelector::<BreadcrumbProps> { index: 0, state, comp_props: BreadcrumbProps::default() }
-            CompPreviewSelector::<BreadcrumbItemProps> { index: 1, state, comp_props: BreadcrumbItemProps::default() }
-            CompPreviewSelector::<BreadcrumbSeparatorProps> { index: 2, state, comp_props: BreadcrumbSeparatorProps::default() }
-            CompPreviewSelector::<BreadcrumbItemProps> { index: 3, state, comp_props: BreadcrumbItemProps::default() }
-            CompPreviewSelector::<BreadcrumbSeparatorProps> { index: 4, state, comp_props: BreadcrumbSeparatorProps::default() }
-            CompPreviewSelector::<BreadcrumbItemProps> { index: 5, state, comp_props: BreadcrumbItemProps::default() }
-        )
+        None
     }
-}
-
-#[component]
-pub fn PreviewSelectorGroup(children: Element) -> Element {
-    rsx!(
-        div { id: "preview-selector-group", { children } }
-    )
 }

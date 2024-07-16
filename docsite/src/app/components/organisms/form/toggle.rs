@@ -22,11 +22,14 @@ impl DemoComponent for ToggleProps {
 
     fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
-        let preview_comp =
-            build_preview_component::<ToggleProps, _>(&state.read()[&0], Toggle, None);
 
         rsx!(
-            { preview_comp }
+            Toggle {
+                class: state.read()[&0].get_class(),
+                color: state.read()[&0].get_color(),
+                size: state.read()[&0].get_size(),
+                animation: state.read()[&0].get_animation()
+            }
         )
     }
 

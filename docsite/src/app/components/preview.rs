@@ -11,7 +11,7 @@ use crate::app::doctrait::{DemoComponent, IntoVec};
 #[component]
 pub fn PreviewFull<T: DemoComponent + Default + 'static>() -> Element {
     rsx!(
-        h1 { class: "h1", "{T::to_string(&T::default())}" }
+        h2 { class: "h2", "{T::to_string(&T::default())}" }
         PreviewDemo::<T> {}
     )
 }
@@ -19,60 +19,17 @@ pub fn PreviewFull<T: DemoComponent + Default + 'static>() -> Element {
 #[component]
 fn PreviewDemo<T: DemoComponent + Default>() -> Element {
     rsx!(
-        section { class: "w-full border border-orange-700 space-y-2",
+        section { class: "w-full space-y-2",
             h2 { id: "preview-title", class: "sr-only", {T::to_string(&T::default())} }
-            div { id: "preview-header", class: "border border-yellow-500", {T::comp_introduction()} }
+            div { id: "preview-header", class: "text-foreground/50 font-medium",
+                {T::comp_introduction()}
+            }
             PreviewWindow { 
                 PreviewWindowComponent { {T::BuildCompPreview()} }
                 PreviewWindowSelectors { {T::BuildCompSelectors()} }
             }
-            div { id: "preview-footer", class: "border", "Footer" }
         }
     )
-}
-
-pub fn build_preview_component<T, M>(
-    state: &FieldPreview,
-    render_fn: impl ComponentFunction<T, M>,
-    comp_child: Element,
-) -> Element
-where
-    T: Default + BuildClass + HasChildren + Properties,
-    M: 'static,
-{
-    // let mut comp_props = T::default();
-
-    // // comp_props.set_class(state.get_class());
-    // // comp_props.set_override_class(state.get_override_class());
-
-    // if comp_props.has_color() {
-    //     comp_props.set_color(state.get_color());
-    // }
-
-    // if comp_props.has_size() {
-    //     comp_props.set_size(state.get_size());
-    // }
-
-    // if comp_props.has_animation() {
-    //     comp_props.set_animation(state.get_animation());
-    // }
-
-    // if comp_props.has_orientation() {
-    //     comp_props.set_orientation(state.get_orientation());
-    // }
-
-    // if comp_props.has_children() {
-    //     comp_props.set_children(comp_child);
-    // }
-
-    // let vcomp = comp_props.into_vcomponent(render_fn, "");
-    // let dnode_comp = DynamicNode::Component(vcomp);
-
-    // rsx!(
-    //     { dnode_comp }
-    // )
-
-    rsx!(  )
 }
 
 #[component]

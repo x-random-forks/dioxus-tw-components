@@ -23,19 +23,14 @@ impl DemoComponent for SelectGroupProps {
     fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
-        let preview_comp = build_preview_component::<SelectGroupProps, _>(
-            &state.read()[&0],
-            SelectGroup,
-            rsx!(
-                SelectPlaceholder { "Placeholder" }
-                SelectLabel { label: "Items" }
-                SelectItem { "First item" }
-                SelectItem { "Second Item" }
-            ),
-        );
-
         rsx!(
-            { preview_comp }
+            SelectGroup { class: state.read()[&0].get_class(),
+                SelectPlaceholder { "Select an option" }
+                SelectLabel { label: "Label 1" }
+                SelectItem { "Option 1" }
+                SelectItem { "Option 2" }
+                SelectItem { "Option 3" }
+            }
         )
     }
 

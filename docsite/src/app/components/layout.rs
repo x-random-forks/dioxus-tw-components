@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
-use dioxus_components::{atoms::Separator, attributes::Orientation, molecules::Scrollable};
+use dioxus_components::atoms::Separator;
 
-use crate::app::router::Route;
+use crate::app::{router::Route, theme::ThemePicker};
 
 #[component]
 pub fn SideBarComponent() -> Element {
@@ -36,46 +36,22 @@ pub fn SideBarComponent() -> Element {
     ];
 
     rsx!(
-        ComponentPage { 
-            SideBarTemplate { 
-                ul { id: "component-list", class: "pl-2 space-y-1",
-                    for component in components {
-                        if component.is_empty() {
-                            Separator {}
-                        } else {
-                            li { class: "anchor",
-                                Link { to: format!("/components/{}", component.to_lowercase()), {component} }
-                            }
+        div {
+            id: "component-div",
+            class: "container grid grid-cols-[220px_minmax(0,1fr)] space-x-10",
+            aside { id: "components-list-link", class: "space-y-2",
+                for component in components {
+                    if component.is_empty() {
+                        Separator {}
+                    } else {
+                        p { class: "anchor",
+                            Link { to: format!("/components/{}", component.to_lowercase()), {component} }
                         }
                     }
                 }
             }
-            DocTemplate { Outlet::<Route> {} }
+            ThemePicker {}
+            div { id: "component-main", class: "max-w-screen-lg", Outlet::<Route> {} }
         }
-    )
-}
-
-#[component]
-pub fn SideBarTemplate(children: Element) -> Element {
-    rsx!(
-        aside { class: "max-w-[220px] border border-black flex flex-col",
-            Scrollable { orientation: Orientation::Vertical, {children} }
-        }
-    )
-}
-
-#[component]
-pub fn ComponentPage(children: Element) -> Element {
-    rsx!(
-        div { class: "grid grid-cols-[220px_minmax(0,1fr)] max-w-screen-xl border border-primary min-h-full",
-            {children}
-        }
-    )
-}
-
-#[component]
-pub fn DocTemplate(children: Element) -> Element {
-    rsx!(
-        div { class: "border border-secondary", {children} }
     )
 }
