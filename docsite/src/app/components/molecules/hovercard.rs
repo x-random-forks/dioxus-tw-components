@@ -32,7 +32,7 @@ impl DemoComponent for HoverCardProps {
                     id: "hover-card-content-demo",
                     class: state.read()[&2].get_class(),
                     animation: state.read()[&2].get_animation(),
-                    div { "Big big big big Content" }
+                    div { "Content" }
                 }
             }
         )

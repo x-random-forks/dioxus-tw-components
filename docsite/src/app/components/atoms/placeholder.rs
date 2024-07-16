@@ -22,11 +22,13 @@ impl DemoComponent for PlaceholderProps {
 
     fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
-        let preview_comp =
-            build_preview_component::<PlaceholderProps, _>(&state.read()[&0], Placeholder, None);
 
         rsx!(
-            { preview_comp }
+            Placeholder {
+                class: state.read()[&0].get_class(),
+                color: state.read()[&0].get_color(),
+                animation: state.read()[&0].get_animation()
+            }
         )
     }
 

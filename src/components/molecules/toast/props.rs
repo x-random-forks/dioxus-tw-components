@@ -153,7 +153,10 @@ fn ToastRenderer(mut state: Signal<ToasterState>, toast: MappedSignal<Toast>) ->
     });
 
     rsx!(
-        li { class, id: "{toast.read().id}", "data-state": toast_state.read().to_string(),
+        li {
+            class,
+            id: "{toast.read().id}",
+            "data-state": toast_state.read().to_string(),
             h6 { class: "h6", "{toast.read().title}" }
             if toast.read().is_closable {
                 ToastClose { state, toast_state }

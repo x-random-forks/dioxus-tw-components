@@ -86,31 +86,42 @@ pub fn ModalTrigger(mut props: ModalTriggerProps) -> Element {
 }
 
 #[derive(Clone, Default, PartialEq, Props, UiComp)]
-pub struct ModalButtonCloseProps {
-    #[props(extends = button, extends = GlobalAttributes)]
+pub struct ModalCloseProps {
+    #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 
+    #[props(optional)]
     children: Element,
 }
 
-pub fn ModalButtonClose(mut props: ModalButtonCloseProps) -> Element {
+/// Div to close the content modal, by default it is a cross svg located at the top left corner of the modal
+/// If you provide a children, it will be used instead of the default cross svg and no internal styling will be provided
+pub fn ModalClose(mut props: ModalCloseProps) -> Element {
     let mut state = use_context::<Signal<ModalState>>();
 
-    props.update_class_attribute();
+    let has_children = props.children != Element::default();
+
+    if !has_children {
+        props.update_class_attribute();
+    }
 
     let onclick = move |_: Event<MouseData>| {
         state.write().toggle();
     };
 
     rsx!(
-        button { ..props.attributes, onclick,
-            svg {
-                xmlns: "http://www.w3.org/2000/svg",
-                view_box: "0 0 256 256",
-                width: "15",
-                height: "15",
-                class: "fill-foreground/60 hover:fill-foreground",
-                path { d: "M202.82861,197.17188a3.99991,3.99991,0,1,1-5.65722,5.65624L128,133.65723,58.82861,202.82812a3.99991,3.99991,0,0,1-5.65722-5.65624L122.343,128,53.17139,58.82812a3.99991,3.99991,0,0,1,5.65722-5.65624L128,122.34277l69.17139-69.17089a3.99991,3.99991,0,0,1,5.65722,5.65624L133.657,128Z" }
+        div { ..props.attributes, onclick,
+            if !has_children {
+                svg {
+                    xmlns: "http://www.w3.org/2000/svg",
+                    view_box: "0 0 256 256",
+                    width: "15",
+                    height: "15",
+                    class: "fill-foreground/60 hover:fill-foreground",
+                    path { d: "M202.82861,197.17188a3.99991,3.99991,0,1,1-5.65722,5.65624L128,133.65723,58.82861,202.82812a3.99991,3.99991,0,0,1-5.65722-5.65624L122.343,128,53.17139,58.82812a3.99991,3.99991,0,0,1,5.65722-5.65624L128,122.34277l69.17139-69.17089a3.99991,3.99991,0,0,1,5.65722,5.65624L133.657,128Z" }
+                }
+            } else {
+                {props.children}
             }
         }
     )
@@ -165,6 +176,11 @@ pub fn ModalBackground(mut props: ModalBackgroundProps) -> Element {
     };
 
     rsx!(
-        div { ..props.attributes, "data-state": state.read().into_value(), onclick, {props.children} }
+        div {
+            ..props.attributes,
+            "data-state": state.read().into_value(),
+            onclick,
+            {props.children}
+        }
     )
 }

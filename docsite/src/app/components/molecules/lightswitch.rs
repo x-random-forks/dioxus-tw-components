@@ -22,11 +22,9 @@ impl DemoComponent for LightSwitchProps {
 
     fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
-        let preview_comp =
-            build_preview_component::<LightSwitchProps, _>(&state.read()[&0], LightSwitch, rsx!( "LightSwitch" ));
 
         rsx!(
-            { preview_comp }
+            LightSwitch { class: state.read()[&0].get_class() }
         )
     }
 

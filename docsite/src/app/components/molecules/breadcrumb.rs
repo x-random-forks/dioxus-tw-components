@@ -25,46 +25,14 @@ impl DemoComponent for BreadcrumbProps {
     fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
-        let item_1 = build_preview_component::<BreadcrumbItemProps, _>(
-            &state.read()[&1],
-            BreadcrumbItem,
-            rsx!( "Home" ),
-        );
-        let sep_1 = build_preview_component::<BreadcrumbSeparatorProps, _>(
-            &state.read()[&2],
-            BreadcrumbSeparator,
-            None,
-        );
-        let item_2 = build_preview_component::<BreadcrumbItemProps, _>(
-            &state.read()[&3],
-            BreadcrumbItem,
-            rsx!( "Library" ),
-        );
-        let sep_2 = build_preview_component::<BreadcrumbSeparatorProps, _>(
-            &state.read()[&4],
-            BreadcrumbSeparator,
-            None,
-        );
-        let item_3 = build_preview_component::<BreadcrumbItemProps, _>(
-            &state.read()[&5],
-            BreadcrumbItem,
-            rsx!( "Data" ),
-        );
-
-        let full_comp = build_preview_component::<BreadcrumbProps, _>(
-            &state.read()[&0],
-            Breadcrumb,
-            rsx!(
-                { item_1 },
-                { sep_1 },
-                { item_2 },
-                { sep_2 },
-                { item_3 }
-            ),
-        );
-
         rsx!(
-            { full_comp }
+            Breadcrumb { class: state.read()[&0].get_class(),
+                BreadcrumbItem { class: state.read()[&1].get_class(), "Home" }
+                BreadcrumbSeparator { class: state.read()[&2].get_class() }
+                BreadcrumbItem { class: state.read()[&3].get_class(), "Library" }
+                BreadcrumbSeparator { class: state.read()[&4].get_class() }
+                BreadcrumbItem { class: state.read()[&5].get_class(), "Data" }
+            }
         )
     }
 

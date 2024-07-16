@@ -8,7 +8,7 @@ pub use crate::components::molecules::{Carousel, CarouselContent, CarouselItem, 
 pub use crate::components::molecules::{Dropdown, DropdownContent, DropdownToggle};
 pub use crate::components::molecules::{HoverCard, HoverCardContent, HoverCardTrigger};
 pub use crate::components::molecules::LightSwitch;
-pub use crate::components::molecules::{Modal, ModalContent, ModalBackground, ModalButtonClose, ModalTrigger};
+pub use crate::components::molecules::{Modal, ModalContent, ModalBackground, ModalClose, ModalTrigger};
 pub use crate::components::molecules::Navbar;
 pub use crate::components::molecules::{ProgressBar, ProgressBarInner, ProgressLabel};
 pub use crate::components::molecules::Scrollable;
