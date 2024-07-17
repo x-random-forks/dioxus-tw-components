@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 use dioxus_components::{
-    molecules::{LightSwitch, Navbar},
+    molecules::Navbar,
     templates::HeaderTemplate,
 };
 
@@ -26,7 +26,6 @@ pub fn Header() -> Element {
             div { class: "flex flex-1 items-center justify-end space-x-2 mr-6",
                 DioxusLink {}
                 GithubLink {}
-                LightSwitch { class: "size-10 p-2 flex items-center justify-center rounded-global-radius hover:bg-foreground/30" }
             }
         } }
         main { class: "flex justify-center w-full min-h-screen mt-12", Outlet::<Route> {} }

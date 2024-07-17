@@ -100,14 +100,14 @@ pub fn LightSwitch(mut props: LightSwitchProps) -> Element {
         });
     };
 
-    let icon = use_correct_theme_icon(state);
+    let icon = svg_icon(state);
 
     rsx!(
         button { r#type: "button", ..props.attributes, onclick, {icon} }
     )
 }
 
-fn use_correct_theme_icon(state: Signal<LightSwitchState>) -> Element {
+fn svg_icon(state: Signal<LightSwitchState>) -> Element {
     rsx!(
         if !state.read().get_active() {
             svg {
