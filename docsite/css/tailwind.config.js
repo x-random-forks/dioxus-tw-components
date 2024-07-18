@@ -49,10 +49,10 @@ module.exports = {
     plugins: [],
     // Used to bundle ALL the css Tailwind can make, we use it so you can pass css to component in their demo
     // Also useful in dev to avoid having to recompile both the css from Tailwind and because of that Dioxus
-    // safelist: [
-    //     {
-    //         pattern: /.*/
-    //     }
-    // ]
+    safelist: [
+        {
+            pattern: /.*/
+        }
+    ]
 }
 

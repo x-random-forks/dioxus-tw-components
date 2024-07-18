@@ -1,6 +1,5 @@
 use dioxus::prelude::*;
 use dioxus_components::prelude::*;
-use dioxus_elements::style;
 use std::{collections::HashMap, error::Error};
 
 pub static THEME_MANAGER: GlobalSignal<ThemeManager> = Signal::global(|| ThemeManager::default());
@@ -39,17 +38,28 @@ fn ColorPicker() -> Element {
             return;
         };
 
+        let select_color = if *selected_color.read() == "foreground" {
+            "background".to_string()
+        } else {
+            selected_color.read().to_string()
+        };
+
         // Get the current selected color in the theme manager (as mut ref)
         if let Some(color_choice) = THEME_MANAGER.write().themes[curr_theme]
             .colors
-            .get_mut(&selected_color())
+            .get_mut(&select_color)
         {
             match color_choice {
                 ColorChoice::Simple(color) => {
                     *color = hsl_color;
                 }
                 ColorChoice::Duo(color_bg, color_fg) => {
-                    if selected_color().contains("foreground") {
+                    if select_color == "background" && *selected_color.read() == "foreground" {
+                        *color_fg = hsl_color;
+                        return;
+                    }
+                    
+                    if select_color.contains("foreground") {
                         *color_fg = hsl_color;
                     } else {
                         *color_bg = hsl_color;
@@ -59,23 +69,12 @@ fn ColorPicker() -> Element {
         }
     };
 
-    let mut rect_input = use_signal(|| None);
-
     rsx!(
         div { class: "transition-all hidden group-data-[open=true]:block border-l pl-4",
             div { class: "flex flex-col items-start pb-4 space-y-2",
-                div {
-                    onclick: move |event: MouseEvent| {
-                        log::debug!("CLICK");
-                    },
-                    "CLICK"
-                }
-                input {
-                    onmounted: move |event: MountedEvent| async move {
-                        let rect = event.get_client_rect().await;
-                        *rect_input.write() = Some(rect);
-                    },
-                    id: "color-picker",
+                Input {
+                    role: "button",
+                    id: "color-picker-input",
                     r#type: "color",
                     oninput
                 }
@@ -130,11 +129,18 @@ fn ColorSelector(
                 format!("text-{}-foreground", color_str)
             };
 
+            let is_selected = if &*color_str.read() == "background" {
+                selected_color() == "foreground"
+            } else {
+                selected_color() == format!("{}-foreground", color_str)
+            };
+
             rsx!(
                 ToggleDiv {
-                    is_selected: selected_color() == format!("{}-foreground", color_str),
+                    is_selected,
                     onclick: move |_| {
                         if &*color_str.read() == "background" {
+                            log::debug!("there");
                             *selected_color.write() = "foreground".to_string();
                         } else {
                             *selected_color.write() = format!("{}-foreground", color_str);
@@ -165,7 +171,10 @@ fn ColorSelector(
 
 #[component]
 fn ToggleDiv(is_selected: bool, onclick: EventHandler<MouseEvent>, children: Element) -> Element {
-    let onclick = move |event| onclick.call(event);
+    let onclick = move |event| {
+        onclick.call(event);
+        spawn_open_input();
+    };
 
     rsx!(
         div {
@@ -462,6 +471,19 @@ fn SvgEyedropper() -> Element {
             path { d: "M20.453,8.936a1.961,1.961,0,0,1-2.772,2.772L12.292,6.319a1.961,1.961,0,0,1,2.772-2.772l.673.674a2.859,2.859,0,1,1,4.042,4.041ZM5.286,15.48A2.264,2.264,0,0,0,4.7,16.513,2.257,2.257,0,0,0,3.67,17.1,2.286,2.286,0,0,0,6.9,20.33,2.257,2.257,0,0,0,7.487,19.3a2.264,2.264,0,0,0,1.033-.584l6.67-6.67L11.956,8.81Z" }
         }
     )
+}
+
+fn spawn_open_input() {
+    spawn(async move {
+        let _eval = eval(
+            r#"
+            const input = document.getElementById("color-picker-input");
+            if (input != null) {
+                input.click();
+            }
+            "#,
+        );
+    });
 }
 
 pub trait ToStyle {
