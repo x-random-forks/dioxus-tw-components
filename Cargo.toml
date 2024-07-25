@@ -12,7 +12,7 @@ path = "src/lib.rs"
 
 dioxus-components-macro = { path = "./dioxus-components-macro" }
 log = "0.4.17"
-dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "0eb16f27d4a66f654d18fe46fa7f0d50180a1a28", features = ["web"] }
+dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "f76c80bab20f71acc14b330f3b565926b352cb3f", features = ["web"] }
 dioxus-logger = "0.4.1"
 manganis = "0.2.2"
 console = "0.15.8"

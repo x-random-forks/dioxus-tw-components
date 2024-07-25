@@ -12,7 +12,7 @@ path = "src/docsite/main.rs"
 [dependencies]
 
 docsite-macro = { path = "./docsite-macro" }
-dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "0eb16f27d4a66f654d18fe46fa7f0d50180a1a28", features = ["web", "router"] }
+dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "f76c80bab20f71acc14b330f3b565926b352cb3f", features = ["web", "router"] }
 dioxus-logger = "0.4.1"
 manganis = "0.2.2"
 console_error_panic_hook = "0.1.7"

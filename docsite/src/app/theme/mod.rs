@@ -7,14 +7,14 @@ pub static THEME_MANAGER: GlobalSignal<ThemeManager> = Signal::global(|| ThemeMa
 pub fn ThemePage() -> Element {
     rsx!(
         div {
-            "THEMEME"
+            "THEME"
             ThemePicker {}
         }
     )
 }
 
 pub fn ThemePicker() -> Element {
-    let is_open = use_signal(|| true);
+    let is_open = use_signal(|| false);
 
     rsx!(
         div {
