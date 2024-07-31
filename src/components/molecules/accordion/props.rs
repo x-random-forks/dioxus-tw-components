@@ -148,7 +148,7 @@ pub fn AccordionTrigger(mut props: AccordionTriggerProps) -> Element {
             "data-state": state.read().is_active_to_attr_value(props.id.read().to_string()),
             onclick: button_closure,
             onmounted: onmounted,
-            div { {props.children} }
+            {props.children},
             {props.trigger_decoration}
         }
     )
