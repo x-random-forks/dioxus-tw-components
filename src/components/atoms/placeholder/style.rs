@@ -9,13 +9,13 @@ impl Class for PlaceholderProps {
 
     fn color(&self) -> Option<&'static str> {
         Some(match *self.color.read() {
-            Color::Default => "bg-foreground/50",
-            Color::Primary => "bg-primary/50",
-            Color::Secondary => "bg-secondary/50",
-            Color::Destructive => "bg-destructive/50",
-            Color::Success => "bg-success/50",
-            Color::Accent => "bg-accent/50",
-            Color::Muted => "bg-muted/50",
+            Color::Default => "bg-foreground/20",
+            Color::Primary => "bg-primary/20",
+            Color::Secondary => "bg-secondary/20",
+            Color::Destructive => "bg-destructive/20",
+            Color::Success => "bg-success/20",
+            Color::Accent => "bg-accent/20",
+            Color::Muted => "bg-muted/20",
         })
     }
 
