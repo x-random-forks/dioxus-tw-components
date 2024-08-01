@@ -11,6 +11,9 @@ pub mod hooks;
 
 pub mod prelude;
 
+#[cfg(feature = "theme")]
+pub mod theme;
+
 pub struct LibState {
     last_click_coordinates: Coordinates,
 }

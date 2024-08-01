@@ -20,3 +20,6 @@ pub use crate::components::organisms::form::{Checkbox, FormList, FormListContent
 
 pub use crate::components::{atoms, molecules, organisms, templates};
 pub use crate::hooks;
+
+#[cfg(feature = "theme")]
+pub use crate::theme::{Theme, ThemeManager, ColorChoice, HslColor, RadiusCss, ToStyle, ExportToCss, ThemePicker};

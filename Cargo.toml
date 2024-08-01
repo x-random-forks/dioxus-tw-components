@@ -1,12 +1,18 @@
 [package]
+
 name = "dioxus_components"
 version = "0.1.0"
 edition = "2021"
 authors = ["Louis Truchelut"]
 
 [lib]
+
 name = "dioxus_components"
 path = "src/lib.rs"
+
+[features]
+
+theme = []
 
 [dependencies]
 

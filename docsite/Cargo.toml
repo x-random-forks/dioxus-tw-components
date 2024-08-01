@@ -21,7 +21,7 @@ tracing-wasm = "0.2.1"
 tracing = "0.1.40"
 console = "0.15.8"
 
-dioxus_components = { path = "../." }
+dioxus_components = { path = "../.", features = ["theme"] }
 
 [workspace]
 # Used to isolate this crate from a possible workspace

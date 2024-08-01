@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 use dioxus_components::atoms::Separator;
 
-use crate::app::{router::Route, theme::ThemePicker};
+use crate::app::router::Route;
 
 #[component]
 pub fn SideBarComponent() -> Element {
@@ -50,7 +50,6 @@ pub fn SideBarComponent() -> Element {
                     }
                 }
             }
-            ThemePicker {}
             div { id: "component-main", class: "max-w-screen-lg", Outlet::<Route> {} }
         }
     )
