@@ -21,10 +21,8 @@ pub fn Toaster(mut props: ToasterProps) -> Element {
     rsx!(
         {props.children},
         ol { role: "alert", id: "dx-toast", ..props.attributes,
-            if state.read().toasts.len() > 0 {
-                for index in 0..state.read().toasts.len() {
-                    ToastRenderer { state, toast: state.map(move |state| &state.toasts[index]) }
-                }
+            if let Some(toast) = &state.read().toast {
+                ToastRenderer { state, toast: toast.clone() }
             }
         }
     )
@@ -32,12 +30,12 @@ pub fn Toaster(mut props: ToasterProps) -> Element {
 
 /// Used to keep track of all the current toasts, for now it only keeps 1 Toast
 pub struct ToasterState {
-    toasts: Vec<Toast>,
+    toast: Option<Toast>,
 }
 
 impl std::default::Default for ToasterState {
     fn default() -> Self {
-        ToasterState { toasts: vec![] }
+        ToasterState { toast: None }
     }
 }
 
@@ -99,11 +97,40 @@ impl Toast {
         self.is_closable = is_closable;
         self
     }
+
+    /// Build a toast with destructive background color and title "Error:"
+    /// The string passed as argument will be the description of the Toast
+    pub fn error(description: impl ToString) -> Self {
+        Self {
+            id: use_unique_id(),
+            title: String::from("Error:"),
+            duration_in_ms: 6_000,
+            is_closable: true,
+            color: Color::Destructive,
+            description: rsx! { p { "{description.to_string()}" } },
+            ..Self::default()
+        }
+    }
+
+    /// Build a toast with destructive background color and title "Error:"
+    /// The string passed as argument will be the description of the Toast
+    pub fn success(description: impl ToString) -> Self {
+        Self {
+            id: use_unique_id(),
+            title: String::from("Success"),
+            duration_in_ms: 6_000,
+            is_closable: true,
+            color: Color::Success,
+            description: rsx! { p { "{description.to_string()}" } },
+            ..Self::default()
+        }
+    }
 }
 
 /// Define the state of an individual toast, used to animate the Toast
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Default)]
 enum ToastState {
+    #[default]
     Opening,
     Open,
     Closing,
@@ -126,7 +153,7 @@ impl std::fmt::Display for ToastState {
 
 /// Used to render the Toast, also update the ToasterState
 #[component]
-fn ToastRenderer(mut state: Signal<ToasterState>, toast: MappedSignal<Toast>) -> Element {
+fn ToastRenderer(mut state: Signal<ToasterState>, toast: ReadOnlySignal<Toast>) -> Element {
     let class = toast.read().build_class();
 
     let mut toast_state = use_signal(|| ToastState::Opening);
@@ -149,14 +176,11 @@ fn ToastRenderer(mut state: Signal<ToasterState>, toast: MappedSignal<Toast>) ->
             TimeoutFuture::new(duration_in_ms).await;
         }
 
-        state.write().toasts.clear();
+        state.set(ToasterState { toast: None });
     });
 
     rsx!(
-        li {
-            class,
-            id: "{toast.read().id}",
-            "data-state": toast_state.read().to_string(),
+        li { class, id: "{toast.read().id}", "data-state": toast_state.read().to_string(),
             h6 { class: "h6", "{toast.read().title}" }
             if toast.read().is_closable {
                 ToastClose { state, toast_state }
@@ -178,7 +202,7 @@ fn ToastClose(mut state: Signal<ToasterState>, mut toast_state: Signal<ToastStat
                 spawn(async move {
                     toast_state.set(ToastState::Closing);
                     TimeoutFuture::new(150).await;
-                    state.write().toasts.clear();
+                    state.set(ToasterState { toast: None });
                 });
             },
             svg {
@@ -204,12 +228,12 @@ pub fn use_toast() -> Signal<impl Fn(Toast)> {
             let mut state = state.clone();
 
             // Only allow 1 toast at a time
-            state.write().toasts.clear();
+            state.set(ToasterState { toast: None });
 
             spawn(async move {
                 // To let the browser refresh the UI before spawning a new Toast
                 TimeoutFuture::new(100).await;
-                state.write().toasts.push(toast);
+                state.write().toast = Some(toast);
             });
         }
     })
