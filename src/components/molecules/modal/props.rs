@@ -54,9 +54,7 @@ pub struct ModalProps {
 pub fn Modal(props: ModalProps) -> Element {
     use_context_provider(|| Signal::new(ModalState::new(props.is_active)));
 
-    rsx!(
-        { props.children }
-    )
+    rsx!({ props.children })
 }
 
 #[derive(Clone, Default, PartialEq, Props, UiComp)]
@@ -160,6 +158,8 @@ pub struct ModalBackgroundProps {
     pub color: ReadOnlySignal<Color>,
     #[props(optional, default)]
     pub animation: ReadOnlySignal<Animation>,
+    #[props(optional, default)]
+    onclick: EventHandler<MouseEvent>,
 
     children: Element,
 }
@@ -169,18 +169,14 @@ pub fn ModalBackground(mut props: ModalBackgroundProps) -> Element {
 
     props.update_class_attribute();
 
-    let onclick = move |_: Event<MouseData>| {
+    let onclick = move |event: Event<MouseData>| {
         if props.interactive {
             state.write().toggle();
+            props.onclick.call(event)
         }
     };
 
     rsx!(
-        div {
-            ..props.attributes,
-            "data-state": state.read().into_value(),
-            onclick,
-            {props.children}
-        }
+        div { ..props.attributes, "data-state": state.read().into_value(), onclick, {props.children} }
     )
 }
