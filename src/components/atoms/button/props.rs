@@ -1,50 +1,53 @@
 use dioxus::prelude::*;
-use props_component_macro::props_component;
-use tailwind_fuse::*;
-
+use dioxus_components_macro::UiComp;
+use super::ButtonVariant;
 use crate::attributes::*;
 
-/// A simple button which you can use every HTML attributes on, and style based on variant, color and size
-#[props_component(id, class, children)]
-pub fn Button(
-    /// Things like disabled, type,... see [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button)
-    #[props(extends = button)]
+#[derive(Clone, Default, PartialEq, Props, UiComp)]
+pub struct ButtonProps {
+    #[props(extends = button, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
-    /// Callback when the button is clicked
-    #[props(optional)]
-    onclick: Option<EventHandler<MouseEvent>>,
-    /// Style variant
-    #[props(default)]
-    variant: super::ButtonVariant,
-    #[props(default)] color: Color,
-    #[props(default)] size: Size,
-    /// Control the on hover and on active effect animation
-    #[props(default = Animation::Full)]
-    animation: Animation,
-) -> Element {
-    // Order matters there ! Because tw_merge!() will override the first class it finds that overlap another with the last one it finds
-    let class = tw_merge!(
-        props.base(),
-        props.color(),
-        props.variant(),
-        props.size(),
-        props.animation(),
-        props.class
-    );
 
-    let onclick = move |event| {
-        if let Some(oc) = &props.onclick {
-            oc.call(event)
-        }
-    };
+    #[props(optional, default)]
+    pub color: ReadOnlySignal<Color>,
+    #[props(optional, default)]
+    pub size: ReadOnlySignal<Size>,
+    #[props(optional, default)]
+    pub variant: ReadOnlySignal<ButtonVariant>,
+    #[props(optional, default)]
+    pub animation: ReadOnlySignal<Animation>,
+
+    #[props(optional)]
+    onclick: EventHandler<MouseEvent>,
+    #[props(optional)]
+    onmouseenter: EventHandler<MouseEvent>,
+    #[props(optional)]
+    onmouseleave: EventHandler<MouseEvent>,
+    #[props(optional)]
+    onfocus: EventHandler<FocusEvent>,
+
+    children: Element,
+}
+
+pub fn Button(mut props: ButtonProps) -> Element {
+    props.update_class_attribute();
+
+    let onclick = move |event| props.onclick.call(event);
+    let onmouseenter = move |event| props.onmouseenter.call(event);
+    let onmouseleave = move |event| props.onmouseleave.call(event);
+    let onfocus = move |event| props.onfocus.call(event);
 
     rsx!(
         button {
             ..props.attributes,
-            class,
-            id: props.id,
-            onclick: onclick,
+            onclick,
+            onmouseenter,
+            onmouseleave,
+            onfocus,
             {props.children}
         }
     )
 }
+
+// TODO
+// Add support for icons

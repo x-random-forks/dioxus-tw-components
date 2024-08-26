@@ -1,26 +1,33 @@
-workspace = { members = ["props-component-macro"] }
-
 [package]
+
 name = "dioxus_components"
 version = "0.1.0"
 edition = "2021"
+authors = ["Louis Truchelut"]
 
-# [lib]
-# name = "dioxus_comps"
+[lib]
+
+name = "dioxus_components"
+path = "src/lib.rs"
+
+[features]
+
+theme = []
 
 [dependencies]
+
+dioxus-components-macro = { path = "./dioxus-components-macro" }
 log = "0.4.17"
-
-dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "c9ab09b3480ba2ad3b77d16c5e86382a62258194", features = ["web"] }
+dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "f76c80bab20f71acc14b330f3b565926b352cb3f", features = ["web"] }
 dioxus-logger = "0.4.1"
-manganis = "0.2.1"
+manganis = "0.2.2"
 console = "0.15.8"
-tailwind_fuse = { version = "0.2.0", features = ["variant"] }
-dioxus-free-icons = { version = "0.8", features = ["font-awesome-brands", "font-awesome-regular","feather"] }
+tailwind_fuse = { version = "0.3.1", features = ["variant"] }
 web-sys = {version = "0.3.69", features = ["Element"]}
-props-component-macro = { path = "props-component-macro" }
 
-# This is to keep the dioxus from dioxus-free-icons from conflicting with the one we are using
-# Meaning basically to keep them both on the same version
-[patch.crates-io]
-dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "c9ab09b3480ba2ad3b77d16c5e86382a62258194" }
+serde_json = "1.0.1"
+
+slugify = "0.1.0"
+
+gloo-timers = { version = "0.3.0", features = ["futures"] }
+chrono = "0.4.38"

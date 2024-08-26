@@ -3,16 +3,23 @@
 use dioxus::html::geometry::*;
 
 pub mod attributes;
-pub mod components;
+
+mod components;
+pub use components::*;
+
 pub mod hooks;
-pub mod layout;
+
+pub mod prelude;
+
+#[cfg(feature = "theme")]
+pub mod theme;
 
 pub struct LibState {
     last_click_coordinates: Coordinates,
 }
 
-impl LibState {
-    pub fn default() -> Self {
+impl Default for LibState {
+    fn default() -> Self {
         Self {
             last_click_coordinates: Coordinates::new(
                 ScreenPoint::zero(),
@@ -22,7 +29,9 @@ impl LibState {
             ),
         }
     }
+}
 
+impl LibState {
     pub fn get_last_click_coordinates(&self) -> &Coordinates {
         &self.last_click_coordinates
     }
@@ -31,3 +40,5 @@ impl LibState {
         self.last_click_coordinates = coordinates;
     }
 }
+
+extern crate slugify;

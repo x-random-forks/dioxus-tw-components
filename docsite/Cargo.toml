@@ -1,0 +1,27 @@
+[package]
+name = "dioxus_components_docsite"
+version = "0.1.0"
+edition = "2021"
+authors = ["Louis Truchelut"]
+
+[[bin]]
+name = "dioxus_components_bin_docsite"
+authors = ["Louis Truchelut"]
+path = "src/docsite/main.rs"
+
+[dependencies]
+
+docsite-macro = { path = "./docsite-macro" }
+dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "f76c80bab20f71acc14b330f3b565926b352cb3f", features = ["web", "router"] }
+dioxus-logger = "0.4.1"
+manganis = "0.2.2"
+console_error_panic_hook = "0.1.7"
+log = "0.4.17"
+tracing-wasm = "0.2.1"
+tracing = "0.1.40"
+console = "0.15.8"
+
+dioxus_components = { path = "../.", features = ["theme"] }
+
+[workspace]
+# Used to isolate this crate from a possible workspace

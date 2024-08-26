@@ -1,10 +1,5 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
 @layer base {
-    :root {
-        /* HSL Colors */
+    /* :root {
         --background: 0 0% 100%;
         --foreground: 240 10% 3.9%;
         --primary: 292 100% 30%;
@@ -22,17 +17,11 @@
         --border: 240 5.9% 90%;
         --input: 240 5.9% 90%;
         --ring: 240 10% 3.9%;
-        /* Control global shadow */
-        /* See: https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow */
         --global-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.3);
-        /* Control global border radius */
-        /* Can be px, em, rem, %, */
-        /* Can also control each corner independently  */
         --global-radius: 10px;
     }
 
     .dark {
-        /* HSL Colors */
         --background: 20 14.3% 4.1%;
         --foreground: 0 0% 95%;
         --primary: 346.8 77.2% 49.8%;
@@ -45,14 +34,14 @@
         --input: 240 3.7% 15.9%;
         --ring: 240 10% 3.9%;
         --global-shadow: 0 0px 0px 0px rgba(255, 255, 255, 0.3);
-    }
+    } */
 
     .h1 {
         @apply text-4xl font-extrabold md:text-5xl;
     }
       
     .h2 {
-        @apply text-3xl font-bold md:text-4xl;
+        @apply text-2xl font-bold md:text-4xl;
     }
 
     .h3 {
@@ -72,17 +61,18 @@
     }
 
     .paragraph {
-        @apply font-normal;
+        @apply font-normal text-foreground;
     }
 
     .span {
-        @apply font-normal;
+        @apply font-normal text-foreground;
     }
 
     .anchor {
         @apply text-foreground/70 hover:text-foreground transition-colors cursor-pointer;
     }
-
+    /* Not used anymore */
+    /*
     .d-text-extrasmall {
         @apply text-[0.5rem] md:text-[0.625rem] lg:text-[0.75rem] xl:text-[0.875rem]
     }
@@ -161,7 +151,7 @@
 
     .py-extralarge {
         @apply py-[1.5rem] md:py-[1.75rem] lg:py-[2rem] xl:py-[2.25rem]
-    }
+    } */
 }
     
 /* TODO */
