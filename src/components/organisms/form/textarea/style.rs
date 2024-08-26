@@ -13,7 +13,7 @@ impl Class for TextAreaProps {
             Color::Secondary => "border-secondary",
             Color::Destructive => "border-destructive",
             Color::Success => "border-success",
-            Color::Default | _ => "border-input",
+            _ => "border-input",
         })
     }
 }

@@ -1,6 +1,6 @@
 use dioxus::dioxus_core::{Attribute, AttributeValue, Element};
-use tailwind_fuse::tw_merge;
 use std::str::FromStr;
+use tailwind_fuse::tw_merge;
 
 pub trait UiComp: HasChildren + BuildClass + std::fmt::Display {}
 
@@ -44,27 +44,27 @@ pub trait BuildClass: Class {
         let mut class = String::from(self.base());
 
         if let Some(color) = self.color() {
-            class.push_str(" ");
+            class.push(' ');
             class.push_str(color);
         }
 
         if let Some(size) = self.size() {
-            class.push_str(" ");
+            class.push(' ');
             class.push_str(size);
         }
 
         if let Some(variant) = self.variant() {
-            class.push_str(" ");
+            class.push(' ');
             class.push_str(variant);
         }
 
         if let Some(animation) = self.animation() {
-            class.push_str(" ");
+            class.push(' ');
             class.push_str(animation);
         }
 
         if let Some(orientation) = self.orientation() {
-            class.push_str(" ");
+            class.push(' ');
             class.push_str(orientation);
         }
 
@@ -143,7 +143,7 @@ impl FromStr for Color {
             "success" => Ok(Color::Success),
             "accent" => Ok(Color::Accent),
             "muted" => Ok(Color::Muted),
-            "default" | _ => Ok(Color::default()),
+            _ => Ok(Color::default()),
         }
     }
 }
@@ -183,7 +183,7 @@ impl FromStr for Size {
             "md" => Ok(Size::Md),
             "lg" => Ok(Size::Lg),
             "xl" => Ok(Size::Xl),
-            "default" | _ => Ok(Size::default()),
+            _ => Ok(Size::default()),
         }
     }
 }
@@ -244,7 +244,7 @@ impl FromStr for Animation {
         match s.to_lowercase().as_str() {
             "none" => Ok(Animation::None),
             "light" => Ok(Animation::Light),
-            "full" | _ => Ok(Animation::Full),
+            _ => Ok(Animation::Full),
         }
     }
 }

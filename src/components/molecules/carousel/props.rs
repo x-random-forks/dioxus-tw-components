@@ -268,12 +268,10 @@ fn scroll_carousel(next: bool, mut carousel_state: Signal<CarouselState>) {
         } else if carousel_state.is_circular {
             carousel_state.go_to_item(0);
         }
-    } else {
-        if current_key > 0 {
-            carousel_state.go_to_prev_item();
-        } else if carousel_state.is_circular {
-            carousel_state.go_to_item(carousel_size - 1);
-        }
+    } else if current_key > 0 {
+        carousel_state.go_to_prev_item();
+    } else if carousel_state.is_circular {
+        carousel_state.go_to_item(carousel_size - 1);
     }
 }
 

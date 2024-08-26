@@ -54,7 +54,9 @@ pub struct ModalProps {
 pub fn Modal(props: ModalProps) -> Element {
     use_context_provider(|| Signal::new(ModalState::new(props.is_active)));
 
-    rsx!({ props.children })
+    rsx!(
+        { props.children }
+    )
 }
 
 #[derive(Clone, Default, PartialEq, Props, UiComp)]
@@ -177,6 +179,11 @@ pub fn ModalBackground(mut props: ModalBackgroundProps) -> Element {
     };
 
     rsx!(
-        div { ..props.attributes, "data-state": state.read().into_value(), onclick, {props.children} }
+        div {
+            ..props.attributes,
+            "data-state": state.read().into_value(),
+            onclick,
+            {props.children}
+        }
     )
 }

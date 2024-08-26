@@ -51,14 +51,14 @@ fn build_buildclass_trait(struct_name: &Ident, fields: &Fields) -> proc_macro2::
     // Search for "attributes" in the fields of the struct
     let search_attributes = fields.iter().find(|field| {
         if let Some(ident) = &field.ident {
-            ident.to_string() == "attributes"
+            *ident == "attributes"
         } else {
             false
         }
     });
 
     // If "attributes" is found return the vec as mut in BuildClass Trait
-    if let Some(_) = search_attributes {
+    if search_attributes.is_some() {
         quote! {
             impl BuildClass for #struct_name {
                 fn get_attributes(&mut self) -> Option<&mut Vec<Attribute>> {
@@ -77,14 +77,14 @@ fn build_haschildren_trait(struct_name: &Ident, fields: &Fields) -> proc_macro2:
     // Search for "children" in the fields of the struct
     let search_attributes = fields.iter().find(|field| {
         if let Some(ident) = &field.ident {
-            ident.to_string() == "children"
+            *ident == "children"
         } else {
             false
         }
     });
 
     // impl has_children as true and set_children accordingly else let the default definition of both
-    if let Some(_) = search_attributes {
+    if search_attributes.is_some() {
         quote! {
             impl HasChildren for #struct_name {
                 fn has_children(&self) -> bool {
@@ -101,5 +101,4 @@ fn build_haschildren_trait(struct_name: &Ident, fields: &Fields) -> proc_macro2:
             impl HasChildren for #struct_name {}
         }
     }
-    .into()
 }

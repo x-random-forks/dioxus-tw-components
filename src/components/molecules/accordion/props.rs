@@ -128,7 +128,7 @@ pub fn AccordionTrigger(mut props: AccordionTriggerProps) -> Element {
 
     let button_closure = move |_: Event<MouseData>| {
         // If the current item is active, remove it from the list, effectively closing it
-        if state.read().is_active(&*props.id.read()) {
+        if state.read().is_active(&props.id.read()) {
             state.write().remove_id(props.id.read().clone());
         } else {
             // If the current item is not active

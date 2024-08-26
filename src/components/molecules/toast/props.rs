@@ -21,7 +21,7 @@ pub fn Toaster(mut props: ToasterProps) -> Element {
     rsx!(
         {props.children},
         ol { role: "alert", id: "dx-toast", ..props.attributes,
-            if state.read().toasts.len() > 0 {
+            if !state.read().toasts.is_empty() {
                 for index in 0..state.read().toasts.len() {
                     ToastRenderer { state, toast: state.map(move |state| &state.toasts[index]) }
                 }
@@ -31,14 +31,9 @@ pub fn Toaster(mut props: ToasterProps) -> Element {
 }
 
 /// Used to keep track of all the current toasts, for now it only keeps 1 Toast
+#[derive(Default)]
 pub struct ToasterState {
     toasts: Vec<Toast>,
-}
-
-impl std::default::Default for ToasterState {
-    fn default() -> Self {
-        ToasterState { toasts: vec![] }
-    }
 }
 
 /// A Toast with a default duration of 10s
@@ -201,7 +196,7 @@ pub fn use_toast() -> Signal<impl Fn(Toast)> {
 
     use_signal(|| {
         move |toast: Toast| {
-            let mut state = state.clone();
+            let mut state = state;
 
             // Only allow 1 toast at a time
             state.write().toasts.clear();

@@ -27,10 +27,7 @@ pub struct ToggleProps {
 pub fn Toggle(mut props: ToggleProps) -> Element {
     props.update_class_attribute();
 
-    let mut interior_sig = use_signal(|| match props.checked {
-        Some(value) => value,
-        None => false,
-    });
+    let mut interior_sig = use_signal(|| props.checked.unwrap_or_default());
 
     let onclick = move |event| {
         interior_sig.toggle();

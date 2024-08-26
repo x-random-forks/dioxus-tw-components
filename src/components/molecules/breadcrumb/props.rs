@@ -57,7 +57,7 @@ pub fn BreadcrumbSeparator(mut props: BreadcrumbSeparatorProps) -> Element {
 
     rsx!(
         li { aria_hidden: "true", ..props.attributes,
-            if props.children == None {
+            if props.children.is_none() {
                 "\u{203A}"
             } else {
                 {props.children}
