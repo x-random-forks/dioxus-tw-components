@@ -2,9 +2,9 @@ name: Main CI
 
 on:
   push:
-    branches: [ "implement-cicd" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "implement-cicd" ]
+    branches: [ "main" ]
 
 env:
   CARGO_TERM_COLOR: always
@@ -12,7 +12,7 @@ env:
 
 jobs:
     main: 
-      name: CI
+      name: Main CI
       runs-on: ubuntu-latest
 
       steps: 
