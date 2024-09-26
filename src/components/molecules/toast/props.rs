@@ -29,14 +29,9 @@ pub fn Toaster(mut props: ToasterProps) -> Element {
 }
 
 /// Used to keep track of all the current toasts, for now it only keeps 1 Toast
+#[derive(Default)]
 pub struct ToasterState {
     toast: Option<Toast>,
-}
-
-impl std::default::Default for ToasterState {
-    fn default() -> Self {
-        ToasterState { toast: None }
-    }
 }
 
 /// A Toast with a default duration of 10s
@@ -107,7 +102,9 @@ impl Toast {
             duration_in_ms: 6_000,
             is_closable: true,
             color: Color::Destructive,
-            description: rsx! { p { "{description.to_string()}" } },
+            description: rsx! {
+                p { "{description.to_string()}" }
+            },
             ..Self::default()
         }
     }
@@ -121,7 +118,9 @@ impl Toast {
             duration_in_ms: 6_000,
             is_closable: true,
             color: Color::Success,
-            description: rsx! { p { "{description.to_string()}" } },
+            description: rsx! {
+                p { "{description.to_string()}" }
+            },
             ..Self::default()
         }
     }
@@ -180,7 +179,10 @@ fn ToastRenderer(mut state: Signal<ToasterState>, toast: ReadOnlySignal<Toast>) 
     });
 
     rsx!(
-        li { class, id: "{toast.read().id}", "data-state": toast_state.read().to_string(),
+        li {
+            class,
+            id: "{toast.read().id}",
+            "data-state": toast_state.read().to_string(),
             h6 { class: "h6", "{toast.read().title}" }
             if toast.read().is_closable {
                 ToastClose { state, toast_state }
@@ -225,7 +227,7 @@ pub fn use_toast() -> Signal<impl Fn(Toast)> {
 
     use_signal(|| {
         move |toast: Toast| {
-            let mut state = state.clone();
+            let mut state = state;
 
             // Only allow 1 toast at a time
             state.set(ToasterState { toast: None });

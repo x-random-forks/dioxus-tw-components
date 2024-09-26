@@ -56,7 +56,7 @@ pub fn use_set_timeout(
             callback.as_ref().unchecked_ref(),
             timeout,
         )
-        .or_else(|_| Err(JsValue::from_str("Failed to set timeout")))
+        .map_err(|_| JsValue::from_str("Failed to set timeout"))
 }
 
 /// Wrapper around web_sys::window::clear_timeout_with_handle()

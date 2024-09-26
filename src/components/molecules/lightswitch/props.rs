@@ -37,7 +37,7 @@ pub struct LightSwitchProps {
 /// This component inserts/remove "dark" in the DOM on the div with id of main
 pub fn LightSwitch(mut props: LightSwitchProps) -> Element {
     props.update_class_attribute();
-    
+
     let storage_dark_theme = use_resource(move || async move {
         // Get dark_theme from localStorage, if not found add it to false
         let mut eval = eval(
@@ -56,25 +56,17 @@ pub fn LightSwitch(mut props: LightSwitchProps) -> Element {
             "#,
         );
 
-        let dark = eval.recv().await;
-        dark
+        eval.recv().await
     });
 
     let mut state = use_signal(|| LightSwitchState::new(false));
 
     use_effect(move || {
-        match &*storage_dark_theme.read_unchecked() {
-            Some(Ok(value)) => match value {
-                Value::String(str) => {
-                    let parsed_str = str.parse::<bool>();
-                    if let Ok(bool_value) = parsed_str {
-                        state.write().set_active(bool_value);
-                    }
-                }
-                _ => {}
-            },
-            Some(Err(_)) => {}
-            None => {}
+        if let Some(Ok(Value::String(str))) = &*storage_dark_theme.read_unchecked() {
+            let parsed_str = str.parse::<bool>();
+            if let Ok(bool_value) = parsed_str {
+                state.write().set_active(bool_value);
+            }
         };
     });
 

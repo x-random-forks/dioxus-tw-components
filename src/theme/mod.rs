@@ -85,10 +85,10 @@ impl ExportToCss for ThemeManager {
 
         for theme in self.themes.iter() {
             css.push_str(&theme.export_to_css());
-            css.push_str("\n");
+            css.push('\n');
         }
 
-        css.push_str("}");
+        css.push('}');
         css
     }
 }

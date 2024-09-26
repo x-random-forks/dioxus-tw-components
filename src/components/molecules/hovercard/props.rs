@@ -1,4 +1,7 @@
-use crate::{attributes::*, hooks::{use_document, use_window}};
+use crate::{
+    attributes::*,
+    hooks::{use_document, use_window},
+};
 use chrono::{DateTime, Local, TimeDelta};
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
@@ -55,7 +58,6 @@ impl HoverState {
     fn get_closing_delay(&self) -> TimeDelta {
         self.closing_delay_ms
     }
-
 }
 
 impl IntoAttributeValue for HoverState {
@@ -187,26 +189,26 @@ pub fn HoverCardContent(mut props: HoverCardContentProps) -> Element {
         }
     });
 
-    let mut rect_sig = use_signal(|| Rect::default());
+    let mut rect_sig = use_signal(Rect::default);
 
     // Retrieve the hover content rect
     let onmounted = move |event: MountedEvent| async move {
-        let rect = event.get_client_rect().await;        
+        let rect = event.get_client_rect().await;
         rect_sig.set(rect.unwrap());
     };
 
     // Css property to position the hover content
     let mut position = use_signal(|| String::from(""));
-    
+
     use_effect(move || {
         let rect = rect_sig();
         let body_width = body_width();
 
         // Place the content to fit inside the screen
         if rect.origin.x < 0. {
-            position.set(format!("left: 0px;"))
+            position.set("left: 0px;".to_string())
         } else if (rect.origin.x + rect.size.width) as u32 as i32 > body_width {
-            position.set(format!("right: 0px;"))
+            position.set("right: 0px;".to_string())
         } else {
             position.set("left: 50%; translate: -50%;".to_string())
         }

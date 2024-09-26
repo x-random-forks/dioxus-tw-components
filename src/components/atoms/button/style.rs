@@ -80,7 +80,7 @@ impl FromStr for ButtonVariant {
         match s {
             "outline" => Ok(ButtonVariant::Outline),
             "ghost" => Ok(ButtonVariant::Ghost),
-            "default" | _ => Ok(ButtonVariant::Default),
+            _ => Ok(ButtonVariant::Default),
         }
     }
 }

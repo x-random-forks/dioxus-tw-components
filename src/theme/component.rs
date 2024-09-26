@@ -150,7 +150,7 @@ fn ColorSelector(
                 ToggleDiv {
                     is_selected: *selected_color.read() == *color_str.read(),
                     onclick: move |_| {
-                        *selected_color.write() = color_str.read().clone();
+                        selected_color.write().clone_from(&*color_str.read());
                     },
                     SvgBackground {}
                 }
