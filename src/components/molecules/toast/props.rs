@@ -22,13 +22,13 @@ pub fn Toaster(mut props: ToasterProps) -> Element {
         {props.children},
         ol { role: "alert", id: "dx-toast", ..props.attributes,
             if let Some(toast) = &state.read().toast {
-                ToastRenderer { state, toast: toast.clone() }
+                ToastView { state, toast: toast.clone() }
             }
         }
     )
 }
 
-pub trait ToastRender {
+pub trait ToastRenderer {
     fn description(&mut self, description: Element) -> &mut Self;
     fn color(&mut self, color: Color) -> &mut Self;
     fn title(&mut self, title: impl ToString) -> &mut Self;
@@ -37,10 +37,11 @@ pub trait ToastRender {
     fn is_closable(&mut self, is_closable: bool) -> &mut Self;
     fn success(&mut self, description: impl ToString);
     fn error(&mut self, description: impl ToString);
+    fn loading(&mut self, description: impl ToString);
     fn render(&mut self);
 }
 
-impl ToastRender for Signal<ToasterState> {
+impl ToastRenderer for Signal<ToasterState> {
     fn description(&mut self, description: Element) -> &mut Self {
         let shape = self.read().shape.clone();
         self.write().shape = shape.description(description);
@@ -77,16 +78,65 @@ impl ToastRender for Signal<ToasterState> {
         self
     }
 
+    /// Build a toast with success background color and title "Success"
+    /// The string passed as argument will be the description of the Toast
     fn success(&mut self, description: impl ToString) {
+        let mut shape = self.read().shape.clone();
+        if shape.title == String::new() {
+            shape = shape.title(String::from("Success"));
+        }
+        if shape.color == Color::default() {
+            shape = shape.color(Color::Success);
+        }
+        if shape.description == None {
+            shape = shape.description(rsx! {
+                p { "{description.to_string()}" }
+            });
+        }
         self.set(ToasterState {
-            toast: Some(Toast::success(description)),
+            toast: Some(shape),
             shape: Toast::default(),
         });
     }
 
+    /// Build a toast with destructive background color and title "Error"
+    /// The string passed as argument will be the description of the Toast
     fn error(&mut self, description: impl ToString) {
+        let mut shape = self.read().shape.clone();
+        if shape.title == String::new() {
+            shape = shape.title(String::from("Error"));
+        }
+        if shape.color == Color::default() {
+            shape = shape.color(Color::Destructive);
+        }
+        if shape.description == None {
+            shape = shape.description(rsx! {
+                p { "{description.to_string()}" }
+            });
+        }
         self.set(ToasterState {
-            toast: Some(Toast::error(description)),
+            toast: Some(shape),
+            shape: Toast::default(),
+        });
+    }
+
+    /// Build a toast with primary background color and title "Loading"
+    /// The string passed as argument will be the description of the Toast
+    fn loading(&mut self, description: impl ToString) {
+        let mut shape = self.read().shape.clone();
+        if shape.title == String::new() {
+            shape = shape.title(String::from("Loading"));
+        }
+        if shape.color == Color::default() {
+            shape = shape.color(Color::Primary);
+        }
+        if shape.description == None {
+            shape = shape.description(rsx! {
+                p { "{description.to_string()}" }
+            });
+        }
+        self.set(ToasterState {
+            toast: Some(shape),
             shape: Toast::default(),
         });
     }
@@ -105,26 +155,6 @@ impl ToastRender for Signal<ToasterState> {
 pub struct ToasterState {
     toast: Option<Toast>,
     shape: Toast,
-}
-
-impl ToasterState {
-    // #[allow(clippy::new_ret_no_self)]
-    // pub fn new(&self) -> Toast {
-    //     Toast::default()
-    // }
-
-    pub fn success(&mut self, description: impl ToString) -> &mut Self {
-        self.shape = Toast::success(description);
-        self
-    }
-    pub fn error(&mut self, description: impl ToString) -> &mut Self {
-        self.shape = Toast::error(description);
-        self
-    }
-    pub fn render(&mut self) {
-        self.toast = Some(self.shape.clone());
-        self.shape = Toast::default();
-    }
 }
 
 /// A Toast with a default duration of 10s
@@ -185,32 +215,6 @@ impl Toast {
         self.is_closable = is_closable;
         self
     }
-
-    /// Build a toast with destructive background color and title "Error:"
-    /// The string passed as argument will be the description of the Toast
-    pub fn error(description: impl ToString) -> Self {
-        Self {
-            title: String::from("Error"),
-            color: Color::Destructive,
-            description: rsx! {
-                p { "{description.to_string()}" }
-            },
-            ..Self::default()
-        }
-    }
-
-    /// Build a toast with destructive background color and title "Error:"
-    /// The string passed as argument will be the description of the Toast
-    pub fn success(description: impl ToString) -> Self {
-        Self {
-            title: String::from("Success"),
-            color: Color::Success,
-            description: rsx! {
-                p { "{description.to_string()}" }
-            },
-            ..Self::default()
-        }
-    }
 }
 
 /// Define the state of an individual toast, used to animate the Toast
@@ -239,7 +243,7 @@ impl std::fmt::Display for ToastState {
 
 /// Used to render the Toast, also update the ToasterState
 #[component]
-fn ToastRenderer(mut state: Signal<ToasterState>, toast: ReadOnlySignal<Toast>) -> Element {
+fn ToastView(mut state: Signal<ToasterState>, toast: ReadOnlySignal<Toast>) -> Element {
     let class = toast.read().build_class();
 
     let mut toast_state = use_signal(|| ToastState::Opening);
@@ -306,27 +310,7 @@ fn ToastClose(mut state: Signal<ToasterState>, mut toast_state: Signal<ToastStat
     )
 }
 
-/// Hook that returns a Fn which take a Toast as argument.
-/// Use this Fn to spawn the Toast
-// pub fn use_toast() -> Signal<impl Fn(Toast)> {
-//     // Will panic if no Toaster {} upper in the DOM
-//     let state = use_context::<Signal<ToasterState>>();
-
-//     use_signal(|| {
-//         move |toast: Toast| {
-//             let mut state = state;
-
-//             // Only allow 1 toast at a time
-//             state.set(ToasterState { toast: None });
-
-//             spawn(async move {
-//                 // To let the browser refresh the UI before spawning a new Toast
-//                 TimeoutFuture::new(100).await;
-//                 state.write().toast = Some(toast);
-//             });
-//         }
-//     })
-// }
+/// Hook that returns the ToasterState to spawn a Toast
 pub fn use_toast() -> Signal<ToasterState> {
     // Will panic if no Toaster {} upper in the DOM
     use_context::<Signal<ToasterState>>()
