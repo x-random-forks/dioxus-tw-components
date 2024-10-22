@@ -15,9 +15,7 @@ pub fn App() -> Element {
 
     rsx!(
         Toaster { 
-            div {
-                class: "relative bg-background text-foreground",
-                style: theme_manager.read().to_style(),
+            div { class: "relative bg-background text-foreground", style: theme_manager.read().to_style(),
                 ThemePicker {}
                 Router::<Route> {}
             }
