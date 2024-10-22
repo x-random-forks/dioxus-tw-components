@@ -8,10 +8,10 @@ pub struct FormListState {
 }
 
 impl FormListState {
-    fn new() -> Self {
+    fn new(current_size: usize) -> Self {
         FormListState {
             max_size: 1,
-            current_size: 1,
+            current_size,
         }
     }
 
@@ -48,11 +48,15 @@ pub struct FormListProps {
     #[props(default = 1)]
     max_size: usize,
 
+    // Size of non-empty fields in the list
+    #[props(default = 1)]
+    current_size: usize,
+
     children: Element,
 }
 
 pub fn FormList(mut props: FormListProps) -> Element {
-    use_context_provider(|| Signal::new(FormListState::new()));
+    use_context_provider(|| Signal::new(FormListState::new(props.current_size)));
 
     props.update_class_attribute();
 
@@ -132,9 +136,7 @@ pub fn FormListContent(mut props: FormListContentProps) -> Element {
         .list_fields
         .iter()
         .take(state.read().get_current_size())
-        .map(|field| rsx!(
-            { field.clone() }
-        ));
+        .map(|field| rsx!({ field.clone() }));
 
     rsx!(
         div { ..props.attributes, {fields} }
@@ -147,7 +149,7 @@ pub struct FormListMaxSizeProps {}
 pub fn FormListMaxSize() -> Element {
     let state = use_context::<Signal<FormListState>>();
 
-    rsx! ( "{state.read().get_max_size()}" )
+    rsx!("{state.read().get_max_size()}")
 }
 
 #[derive(Clone, Default, PartialEq, Props, UiComp)]
@@ -156,5 +158,6 @@ pub struct FormListCurrentSizeProps {}
 pub fn FormListCurrentSize() -> Element {
     let state = use_context::<Signal<FormListState>>();
 
-    rsx! ( "{state.read().get_current_size()}" )
+    rsx!("{state.read().get_current_size()}")
 }
+
