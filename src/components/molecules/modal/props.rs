@@ -4,7 +4,7 @@ use dioxus_components_macro::UiComp;
 use dioxus_core::AttributeValue;
 
 #[derive(Clone, Copy)]
-struct ModalState {
+pub struct ModalState {
     is_active: bool,
 }
 
@@ -13,7 +13,7 @@ impl ModalState {
         Self { is_active }
     }
 
-    fn toggle(&mut self) {
+    pub fn toggle(&mut self) {
         self.is_active = !self.is_active;
     }
 }
@@ -76,6 +76,7 @@ pub fn ModalTrigger(mut props: ModalTriggerProps) -> Element {
     props.update_class_attribute();
 
     let onclick = move |event: Event<MouseData>| {
+        event.stop_propagation();
         state.write().toggle();
         props.onclick.call(event)
     };
@@ -105,7 +106,8 @@ pub fn ModalClose(mut props: ModalCloseProps) -> Element {
         props.update_class_attribute();
     }
 
-    let onclick = move |_: Event<MouseData>| {
+    let onclick = move |event: Event<MouseData>| {
+        event.stop_propagation();
         state.write().toggle();
     };
 
@@ -172,6 +174,7 @@ pub fn ModalBackground(mut props: ModalBackgroundProps) -> Element {
     props.update_class_attribute();
 
     let onclick = move |event: Event<MouseData>| {
+        event.stop_propagation();
         if props.interactive {
             state.write().toggle();
             props.onclick.call(event)

@@ -136,7 +136,9 @@ pub fn FormListContent(mut props: FormListContentProps) -> Element {
         .list_fields
         .iter()
         .take(state.read().get_current_size())
-        .map(|field| rsx!({ field.clone() }));
+        .map(|field| rsx!(
+            { field.clone() }
+        ));
 
     rsx!(
         div { ..props.attributes, {fields} }
@@ -149,7 +151,7 @@ pub struct FormListMaxSizeProps {}
 pub fn FormListMaxSize() -> Element {
     let state = use_context::<Signal<FormListState>>();
 
-    rsx!("{state.read().get_max_size()}")
+    rsx!( "{state.read().get_max_size()}" )
 }
 
 #[derive(Clone, Default, PartialEq, Props, UiComp)]
@@ -158,6 +160,6 @@ pub struct FormListCurrentSizeProps {}
 pub fn FormListCurrentSize() -> Element {
     let state = use_context::<Signal<FormListState>>();
 
-    rsx!("{state.read().get_current_size()}")
+    rsx!( "{state.read().get_current_size()}" )
 }
 

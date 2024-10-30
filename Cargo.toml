@@ -18,7 +18,7 @@ theme = []
 
 dioxus-components-macro = { path = "./dioxus-components-macro" }
 log = "0.4.17"
-dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev = "f76c80bab20f71acc14b330f3b565926b352cb3f", features = ["web"] }
+dioxus = { version = "0.5.6", features = ["web"] }
 dioxus-logger = "0.4.1"
 manganis = "0.2.2"
 console = "0.15.8"

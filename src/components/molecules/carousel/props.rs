@@ -215,7 +215,12 @@ pub fn CarouselItem(mut props: CarouselItemProps) -> Element {
     };
 
     rsx!(
-        div { ..props.attributes, "data-state": state.read().is_active_to_attr_value(props.item_key), onmounted, {props.children} }
+        div {
+            ..props.attributes,
+            "data-state": state.read().is_active_to_attr_value(props.item_key),
+            onmounted,
+            {props.children}
+        }
     )
 }
 
