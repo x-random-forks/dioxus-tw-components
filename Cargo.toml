@@ -17,15 +17,15 @@ theme = []
 [dependencies]
 
 dioxus-components-macro = { path = "./dioxus-components-macro" }
-log = "0.4.17"
+log = "0.4.22"
 dioxus = { version = "0.5.6", features = ["web"] }
 dioxus-logger = "0.4.1"
 manganis = "0.2.2"
 console = "0.15.8"
 tailwind_fuse = { version = "0.3.1", features = ["variant"] }
-web-sys = {version = "0.3.69", features = ["Element"]}
+web-sys = {version = "0.3.72", features = ["Element"]}
 
-serde_json = "1.0.1"
+serde_json = "1.0.132"
 
 slugify = "0.1.0"
 

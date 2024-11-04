@@ -11,6 +11,6 @@ proc-macro = true
 authors = ["Louis Truchelut"]
 
 [dependencies]
-proc-macro2 = "1.0.79"
-quote = "1.0.36"
-syn = { version = "2.0.58", features = ["full"] }
+proc-macro2 = "1.0.89"
+quote = "1.0.37"
+syn = { version = "2.0.87", features = ["full"] }
