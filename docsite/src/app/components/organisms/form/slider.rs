@@ -24,7 +24,10 @@ impl DemoComponent for SliderProps {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
-            Slider { class: state.read()[&0].get_class(), color: state.read()[&0].get_color() }
+            Slider {
+                class: state.read()[&0].get_class(),
+                color: state.read()[&0].get_color(),
+            }
         )
     }
 

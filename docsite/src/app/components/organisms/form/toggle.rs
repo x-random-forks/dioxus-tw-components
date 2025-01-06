@@ -28,7 +28,7 @@ impl DemoComponent for ToggleProps {
                 class: state.read()[&0].get_class(),
                 color: state.read()[&0].get_color(),
                 size: state.read()[&0].get_size(),
-                animation: state.read()[&0].get_animation()
+                animation: state.read()[&0].get_animation(),
             }
         )
     }

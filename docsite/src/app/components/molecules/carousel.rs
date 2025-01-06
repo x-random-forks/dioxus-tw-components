@@ -39,7 +39,7 @@ impl DemoComponent for CarouselProps {
         rsx!(
             Carousel { class: state.read()[&0].get_class(),
                 CarouselTrigger { next: false }
-                CarouselWindow { 
+                CarouselWindow {
                     CarouselContent { id: "carousel-prev", class: "h-32",
                         CarouselItem { item_key: 0, class: state.read()[&1].get_class(),
                             div { class: "flex items-center justify-center h-full w-full font-bold text-foreground",
@@ -68,9 +68,21 @@ impl DemoComponent for CarouselProps {
 
         rsx!(
             CompPreviewSelector::<CarouselProps> { index: 0, state, comp_props: CarouselProps::default() }
-            CompPreviewSelector::<CarouselItemProps> { index: 1, state, comp_props: CarouselItemProps::default() }
-            CompPreviewSelector::<CarouselItemProps> { index: 2, state, comp_props: CarouselItemProps::default() }
-            CompPreviewSelector::<CarouselItemProps> { index: 3, state, comp_props: CarouselItemProps::default() }
+            CompPreviewSelector::<CarouselItemProps> {
+                index: 1,
+                state,
+                comp_props: CarouselItemProps::default(),
+            }
+            CompPreviewSelector::<CarouselItemProps> {
+                index: 2,
+                state,
+                comp_props: CarouselItemProps::default(),
+            }
+            CompPreviewSelector::<CarouselItemProps> {
+                index: 3,
+                state,
+                comp_props: CarouselItemProps::default(),
+            }
         )
     }
 }

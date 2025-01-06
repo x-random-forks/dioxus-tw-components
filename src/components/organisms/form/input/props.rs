@@ -2,7 +2,7 @@ use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct InputProps {
     #[props(extends = input, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -35,12 +35,12 @@ pub fn Input(mut props: InputProps) -> Element {
 
     rsx! {
         input {
-            ..props.attributes,
-            value: props.value,
             onmounted,
             onkeypress,
             onblur,
-            oninput
+            oninput,
+            value: props.value,
+            ..props.attributes,
         }
     }
 }

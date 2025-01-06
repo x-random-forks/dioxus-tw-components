@@ -3,7 +3,7 @@ use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 use gloo_timers::future::TimeoutFuture;
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct ToasterProps {
     #[props(extends = ol, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -19,7 +19,7 @@ pub fn Toaster(mut props: ToasterProps) -> Element {
         use_context_provider::<Signal<ToasterState>>(|| Signal::new(ToasterState::default()));
 
     rsx!(
-        {props.children},
+        {props.children}
         ol { role: "alert", id: "dx-toast", ..props.attributes,
             if let Some(toast) = &state.read().toast {
                 ToastView { state, toast: toast.clone() }
@@ -88,7 +88,7 @@ impl ToastRenderer for Signal<ToasterState> {
         if shape.color == Color::default() {
             shape = shape.color(Color::Success);
         }
-        if shape.description == None {
+        if shape.description == rsx! {} {
             shape = shape.description(rsx! {
                 p { "{description.to_string()}" }
             });
@@ -109,7 +109,7 @@ impl ToastRenderer for Signal<ToasterState> {
         if shape.color == Color::default() {
             shape = shape.color(Color::Destructive);
         }
-        if shape.description == None {
+        if shape.description == rsx! {} {
             shape = shape.description(rsx! {
                 p { "{description.to_string()}" }
             });
@@ -130,7 +130,7 @@ impl ToastRenderer for Signal<ToasterState> {
         if shape.color == Color::default() {
             shape = shape.color(Color::Primary);
         }
-        if shape.description == None {
+        if shape.description == rsx! {} {
             shape = shape.description(rsx! {
                 p { "{description.to_string()}" }
             });
@@ -175,7 +175,7 @@ impl std::default::Default for Toast {
         Self {
             id: use_unique_id(),
             title: String::default(),
-            description: None,
+            description: rsx! {},
             duration_in_ms: 6_000,
             is_closable: true,
             color: Color::default(),

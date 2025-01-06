@@ -45,7 +45,9 @@ pub fn SideBarComponent() -> Element {
                         Separator {}
                     } else {
                         p { class: "anchor",
-                            Link { to: format!("/components/{}", component.to_lowercase()), {component} }
+                            Link { to: format!("/components/{}", component.to_lowercase()),
+                                {component}
+                            }
                         }
                     }
                 }

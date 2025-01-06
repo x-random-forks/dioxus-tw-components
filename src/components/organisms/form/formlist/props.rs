@@ -40,7 +40,7 @@ impl FormListState {
     }
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct FormListProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -61,11 +61,11 @@ pub fn FormList(mut props: FormListProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        div { ..props.attributes, {props.children} }
+        div { ..props.attributes,{props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct FormListTriggerPlusProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -80,16 +80,16 @@ pub fn FormListTriggerPlus(mut props: FormListTriggerPlusProps) -> Element {
 
     rsx!(
         div {
-            ..props.attributes,
             onclick: move |_| {
                 state.write().add_one();
             },
+            ..props.attributes,
             {props.children}
         }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct FormListTriggerMinusProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -104,16 +104,16 @@ pub fn FormListTriggerMinus(mut props: FormListTriggerMinusProps) -> Element {
 
     rsx!(
         div {
-            ..props.attributes,
             onclick: move |_| {
                 state.write().remove_one();
             },
+            ..props.attributes,
             {props.children}
         }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct FormListContentProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -137,15 +137,15 @@ pub fn FormListContent(mut props: FormListContentProps) -> Element {
         .iter()
         .take(state.read().get_current_size())
         .map(|field| rsx!(
-            { field.clone() }
+            {field.clone()}
         ));
 
     rsx!(
-        div { ..props.attributes, {fields} }
+        div { ..props.attributes,{fields} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct FormListMaxSizeProps {}
 
 pub fn FormListMaxSize() -> Element {
@@ -154,7 +154,7 @@ pub fn FormListMaxSize() -> Element {
     rsx!( "{state.read().get_max_size()}" )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct FormListCurrentSizeProps {}
 
 pub fn FormListCurrentSize() -> Element {
@@ -162,4 +162,3 @@ pub fn FormListCurrentSize() -> Element {
 
     rsx!( "{state.read().get_current_size()}" )
 }
-

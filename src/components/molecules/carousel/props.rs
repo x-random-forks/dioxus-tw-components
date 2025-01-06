@@ -1,8 +1,9 @@
-use crate::{attributes::*, hooks::use_element_scroll_width};
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 use dioxus_core::AttributeValue;
 use web_sys::wasm_bindgen::JsValue;
+
+use crate::{attributes::*, hooks::use_element_scroll_width};
 
 struct CarouselState {
     is_circular: bool,
@@ -88,7 +89,7 @@ impl CarouselState {
     }
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct CarouselProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -124,11 +125,11 @@ pub fn Carousel(mut props: CarouselProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        div { ..props.attributes, {props.children} }
+        div { ..props.attributes,{props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct CarouselWindowProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -140,11 +141,11 @@ pub fn CarouselWindow(mut props: CarouselWindowProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        div { ..props.attributes, {props.children} }
+        div { ..props.attributes,{props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct CarouselContentProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -184,17 +185,11 @@ pub fn CarouselContent(mut props: CarouselContentProps) -> Element {
     });
 
     rsx!(
-        div {
-            ..props.attributes,
-            style,
-            id: props.id,
-            onmounted,
-            {props.children}
-        }
+        div { style, id: props.id, onmounted, ..props.attributes, {props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct CarouselItemProps {
     /// Represent position in the carousel
     item_key: u32,
@@ -216,15 +211,15 @@ pub fn CarouselItem(mut props: CarouselItemProps) -> Element {
 
     rsx!(
         div {
-            ..props.attributes,
             "data-state": state.read().is_active_to_attr_value(props.item_key),
             onmounted,
+            ..props.attributes,
             {props.children}
         }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct CarouselTriggerProps {
     #[props(default = false)]
     next: bool,
@@ -253,7 +248,7 @@ pub fn CarouselTrigger(mut props: CarouselTriggerProps) -> Element {
     let icon = get_next_prev_icons(props.next);
 
     rsx!(
-        button { ..props.attributes, onclick, {icon} }
+        button { onclick, ..props.attributes, {icon} }
     )
 }
 

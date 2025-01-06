@@ -49,43 +49,45 @@ pub fn SortedTable<T: 'static + std::cmp::PartialEq + ToTableData>(
     let mut state = use_context_provider(|| Signal::new(TestState::<T>::new(data)));
 
     rsx!(
-        Table { 
-            TableHeader { TableRow { 
-                for (index , head) in T::headers_to_strings().iter().enumerate() {
-                    TableHead {
-                        class: "select-none cursor-pointer space-x-2 relative",
-                        onclick: move |_| {
-                            let sorted_col_index = state.read().get_sorted_col_index();
-                            if sorted_col_index == index {
-                                state.write().reverse_data();
-                                state.write().toggle_sort_ascending();
-                            } else {
-                                sort_table_keytype(
-                                    &mut state.write().data,
-                                    |t: &T| t.to_keytype()[index].clone(),
-                                );
-                                state.write().set_sort_ascending(true);
-                            }
-                            state.write().set_sorted_col_index(index);
-                        },
-                        {head},
-                        if state.read().get_sorted_col_index() == index {
-                            svg {
-                                xmlns: "http://www.w3.org/2000/svg",
-                                view_box: "0 0 124 124",
-                                width: "12",
-                                height: "12",
-                                class: "fill-foreground inline ml-1 transition-all",
-                                style: if state.read().get_sort_ascending() { "transform: rotate(-180deg)" },
-                                path { d: "M66.18,29.742c-2.301-2.3-6.101-2.3-8.401,0l-56,56c-3.8,3.801-1.1,10.2,4.2,10.2h112c5.3,0,8-6.399,4.2-10.2L66.18,29.742   z" }
+        Table {
+            TableHeader {
+                TableRow {
+                    for (index , head) in T::headers_to_strings().iter().enumerate() {
+                        TableHead {
+                            class: "select-none cursor-pointer space-x-2 relative",
+                            onclick: move |_| {
+                                let sorted_col_index = state.read().get_sorted_col_index();
+                                if sorted_col_index == index {
+                                    state.write().reverse_data();
+                                    state.write().toggle_sort_ascending();
+                                } else {
+                                    sort_table_keytype(
+                                        &mut state.write().data,
+                                        |t: &T| t.to_keytype()[index].clone(),
+                                    );
+                                    state.write().set_sort_ascending(true);
+                                }
+                                state.write().set_sorted_col_index(index);
+                            },
+                            {head}
+                            if state.read().get_sorted_col_index() == index {
+                                svg {
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    view_box: "0 0 124 124",
+                                    width: "12",
+                                    height: "12",
+                                    class: "fill-foreground inline ml-1 transition-all",
+                                    style: if state.read().get_sort_ascending() { "transform: rotate(-180deg)" },
+                                    path { d: "M66.18,29.742c-2.301-2.3-6.101-2.3-8.401,0l-56,56c-3.8,3.801-1.1,10.2,4.2,10.2h112c5.3,0,8-6.399,4.2-10.2L66.18,29.742   z" }
+                                }
                             }
                         }
                     }
                 }
-            } }
-            TableBody { 
+            }
+            TableBody {
                 for data in state.read().data.iter() {
-                    TableRow { 
+                    TableRow {
                         for field in data.to_keytype().into_iter() {
                             TableCell { {field.to_string()} }
                         }

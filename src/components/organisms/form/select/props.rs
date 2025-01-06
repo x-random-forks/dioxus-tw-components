@@ -2,7 +2,7 @@ use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct SelectGroupProps {
     #[props(extends = select, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -19,11 +19,11 @@ pub fn SelectGroup(mut props: SelectGroupProps) -> Element {
     let oninput = move |event| props.oninput.call(event);
 
     rsx!(
-        select { ..props.attributes, oninput: oninput, {props.children} }
+        select { oninput, ..props.attributes, {props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct SelectPlaceholderProps {
     #[props(extends = option, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -39,7 +39,7 @@ pub fn SelectPlaceholder(mut props: SelectPlaceholderProps) -> Element {
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct SelectLabelProps {
     #[props(extends = optgroup, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -53,7 +53,7 @@ pub fn SelectLabel(mut props: SelectLabelProps) -> Element {
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct SelectItemProps {
     #[props(extends = option, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -69,11 +69,11 @@ pub fn SelectItem(mut props: SelectItemProps) -> Element {
 
     if let Some(selected) = props.selected {
         rsx!(
-            option { ..props.attributes, selected, {props.children} }
+            option { selected, ..props.attributes, {props.children} }
         )
     } else {
         rsx!(
-            option { ..props.attributes, {props.children} }
+            option { ..props.attributes,{props.children} }
         )
     }
 }

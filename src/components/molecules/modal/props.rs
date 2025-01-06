@@ -27,7 +27,7 @@ impl IntoAttributeValue for ModalState {
     }
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct ModalProps {
     #[props(default = false)]
     is_active: bool,
@@ -55,11 +55,11 @@ pub fn Modal(props: ModalProps) -> Element {
     use_context_provider(|| Signal::new(ModalState::new(props.is_active)));
 
     rsx!(
-        { props.children }
+        {props.children}
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct ModalTriggerProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -82,11 +82,11 @@ pub fn ModalTrigger(mut props: ModalTriggerProps) -> Element {
     };
 
     rsx!(
-        div { ..props.attributes, onclick, {props.children} }
+        div { onclick, ..props.attributes, {props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct ModalCloseProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -100,7 +100,7 @@ pub struct ModalCloseProps {
 pub fn ModalClose(mut props: ModalCloseProps) -> Element {
     let mut state = use_context::<Signal<ModalState>>();
 
-    let has_children = props.children != Element::default();
+    let has_children = props.children != rsx! {};
 
     if !has_children {
         props.update_class_attribute();
@@ -112,7 +112,7 @@ pub fn ModalClose(mut props: ModalCloseProps) -> Element {
     };
 
     rsx!(
-        div { ..props.attributes, onclick,
+        div { onclick, ..props.attributes,
             if !has_children {
                 svg {
                     xmlns: "http://www.w3.org/2000/svg",
@@ -129,7 +129,7 @@ pub fn ModalClose(mut props: ModalCloseProps) -> Element {
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct ModalContentProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -146,11 +146,11 @@ pub fn ModalContent(mut props: ModalContentProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        div { ..props.attributes, "data-state": state.read().into_value(), {props.children} }
+        div { "data-state": state.read().into_value(), ..props.attributes, {props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct ModalBackgroundProps {
     #[props(optional, default = true)]
     interactive: bool,
@@ -183,9 +183,9 @@ pub fn ModalBackground(mut props: ModalBackgroundProps) -> Element {
 
     rsx!(
         div {
-            ..props.attributes,
             "data-state": state.read().into_value(),
             onclick,
+            ..props.attributes,
             {props.children}
         }
     )

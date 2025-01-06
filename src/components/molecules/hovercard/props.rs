@@ -69,7 +69,7 @@ impl IntoAttributeValue for HoverState {
     }
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct HoverCardProps {
     /// Corresponds to the time in ms it takes for the toggle to close itself if not hovered
     #[props(default = 500)]
@@ -120,16 +120,16 @@ pub fn HoverCard(mut props: HoverCardProps) -> Element {
 
     rsx!(
         div {
-            ..props.attributes,
             "data-state": state.into_value(),
             onmouseenter,
             onmouseleave,
+            ..props.attributes,
             {props.children}
         }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct HoverCardTriggerProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -153,16 +153,16 @@ pub fn HoverCardTrigger(mut props: HoverCardTriggerProps) -> Element {
 
     rsx!(
         div {
-            ..props.attributes,
             role: "button",
             "data-state": state.into_value(),
             onclick,
+            ..props.attributes,
             {props.children}
         }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct HoverCardContentProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -216,10 +216,10 @@ pub fn HoverCardContent(mut props: HoverCardContentProps) -> Element {
 
     rsx!(
         div {
-            ..props.attributes,
             style: position,
             "data-state": state.into_value(),
             onmounted,
+            ..props.attributes,
             {props.children}
         }
     )

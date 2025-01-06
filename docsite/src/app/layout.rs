@@ -9,25 +9,27 @@ use crate::app::router::Route;
 #[component]
 pub fn Header() -> Element {
     rsx!(
-        HeaderTemplate { class: "flex justify-center", Navbar { 
-            div { class: "flex flex-1 space-x-2 items-center ml-6",
-                Link { class: "mr-6", to: "/",
-                    div { class: "font-bold", "Dioxus Lib Comp" }
+        HeaderTemplate { class: "flex justify-center",
+            Navbar {
+                div { class: "flex flex-1 space-x-2 items-center ml-6",
+                    Link { class: "mr-6", to: "/",
+                        div { class: "font-bold", "Dioxus Lib Comp" }
+                    }
+                    ul { class: "text-sm list-none flex space-x-2",
+                        li {
+                            Link { class: "anchor", to: "/components/", "Components" }
+                        }
+                        li {
+                            Link { class: "anchor", to: "/theme", "Theme" }
+                        }
+                    }
                 }
-                ul { class: "text-sm list-none flex space-x-2",
-                    li {
-                        Link { class: "anchor", to: "/components/", "Components" }
-                    }
-                    li {
-                        Link { class: "anchor", to: "/theme", "Theme" }
-                    }
+                div { class: "flex flex-1 items-center justify-end space-x-2 mr-6",
+                    DioxusLink {}
+                    GithubLink {}
                 }
             }
-            div { class: "flex flex-1 items-center justify-end space-x-2 mr-6",
-                DioxusLink {}
-                GithubLink {}
-            }
-        } }
+        }
         main { class: "flex justify-center w-full min-h-screen mt-12", Outlet::<Route> {} }
     )
 }
@@ -42,7 +44,7 @@ fn DioxusLink() -> Element {
             img {
                 src: "https://avatars.githubusercontent.com/u/79236386?s=200&v=4",
                 class: "h-8 w-auto",
-                alt: "dioxus logo"
+                alt: "dioxus logo",
             }
         }
     )

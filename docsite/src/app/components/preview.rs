@@ -24,7 +24,7 @@ fn PreviewDemo<T: DemoComponent + Default>() -> Element {
             div { id: "preview-header", class: "text-foreground/50 font-medium",
                 {T::comp_introduction()}
             }
-            PreviewWindow { 
+            PreviewWindow {
                 PreviewWindowComponent { {T::BuildCompPreview()} }
                 PreviewWindowSelectors { {T::BuildCompSelectors()} }
             }
@@ -43,16 +43,28 @@ pub fn CompPreviewSelector<T: BuildClass + std::cmp::PartialEq + 'static>(
         div { class: "flex flex-row space-x-4",
             ClassSelector { state, index }
             if comp_props.has_color() {
-                Selector { state, index, selector_type: SelectorType::Color }
+                Selector {
+                    state,
+                    index,
+                    selector_type: SelectorType::Color,
+                }
             }
             if comp_props.has_size() {
                 Selector { state, index, selector_type: SelectorType::Size }
             }
             if comp_props.has_animation() {
-                Selector { state, index, selector_type: SelectorType::Animation }
+                Selector {
+                    state,
+                    index,
+                    selector_type: SelectorType::Animation,
+                }
             }
             if comp_props.has_orientation() {
-                Selector { state, index, selector_type: SelectorType::Orientation }
+                Selector {
+                    state,
+                    index,
+                    selector_type: SelectorType::Orientation,
+                }
             }
         }
     )
@@ -69,7 +81,7 @@ pub fn ClassSelector(state: Signal<HashPreview>, index: i32) -> Element {
                     if let Some(field_preview) = state.write().get_mut(&index) {
                         field_preview.set_class(event.data().value());
                     }
-                }
+                },
             }
         }
     )
@@ -187,7 +199,7 @@ pub fn PreviewWindow(children: Element) -> Element {
         div {
             id: "preview-window",
             class: "p-4 min-h-96 border border-border rounded-global-radius flex flex-col items-center space-y-8",
-            { children }
+            {children}
         }
     )
 }

@@ -1,9 +1,9 @@
-use dioxus::prelude::*;
-use dioxus_components_macro::UiComp;
 use super::ButtonVariant;
 use crate::attributes::*;
+use dioxus::prelude::*;
+use dioxus_components_macro::UiComp;
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct ButtonProps {
     #[props(extends = button, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -39,11 +39,11 @@ pub fn Button(mut props: ButtonProps) -> Element {
 
     rsx!(
         button {
-            ..props.attributes,
             onclick,
             onmouseenter,
             onmouseleave,
             onfocus,
+            ..props.attributes,
             {props.children}
         }
     )
@@ -51,3 +51,4 @@ pub fn Button(mut props: ButtonProps) -> Element {
 
 // TODO
 // Add support for icons
+

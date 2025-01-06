@@ -31,7 +31,10 @@ impl DemoComponent for ProgressBarProps {
                     class: state.read()[&0].get_class(),
                     color: state.read()[&0].get_color(),
                     size: state.read()[&0].get_size(),
-                    ProgressBarInner { class: state.read()[&1].get_class(), color: state.read()[&1].get_color() }
+                    ProgressBarInner {
+                        class: state.read()[&1].get_class(),
+                        color: state.read()[&1].get_color(),
+                    }
                 }
             }
         )
@@ -41,8 +44,16 @@ impl DemoComponent for ProgressBarProps {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
-            CompPreviewSelector::<ProgressBarProps> { index: 0, state, comp_props: ProgressBarProps::default() }
-            CompPreviewSelector::<ProgressBarInnerProps> { index: 1, state, comp_props: ProgressBarInnerProps::default() }
+            CompPreviewSelector::<ProgressBarProps> {
+                index: 0,
+                state,
+                comp_props: ProgressBarProps::default(),
+            }
+            CompPreviewSelector::<ProgressBarInnerProps> {
+                index: 1,
+                state,
+                comp_props: ProgressBarInnerProps::default(),
+            }
         )
     }
 }

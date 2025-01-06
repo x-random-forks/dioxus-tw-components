@@ -28,7 +28,7 @@ impl DemoComponent for InputProps {
                 class: state.read()[&0].get_class(),
                 color: state.read()[&0].get_color(),
                 size: state.read()[&0].get_size(),
-                placeholder: "Input"
+                placeholder: "Input",
             }
         )
     }

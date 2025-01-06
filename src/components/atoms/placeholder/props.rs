@@ -1,8 +1,8 @@
+use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
-use crate::attributes::*;
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct PlaceholderProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,

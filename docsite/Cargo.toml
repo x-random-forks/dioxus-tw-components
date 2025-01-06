@@ -24,4 +24,16 @@ console = "0.15.8"
 dioxus_components = { path = "../.", features = ["theme"] }
 
 [workspace]
+
+[profile]
+
+[profile.wasm-dev]
+inherits = "dev"
+opt-level = 1
+
+[profile.server-dev]
+inherits = "dev"
+
+[profile.android-dev]
+inherits = "dev"
 # Used to isolate this crate from a possible workspace

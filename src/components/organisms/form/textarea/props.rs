@@ -2,7 +2,7 @@ use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct TextAreaProps {
     #[props(extends = textarea, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -27,10 +27,10 @@ pub fn TextArea(mut props: TextAreaProps) -> Element {
 
     rsx!(
         textarea {
-            ..props.attributes.clone(),
-            value: props.value,
             onmounted,
-            oninput
+            oninput,
+            value: props.value,
+            ..props.attributes.clone(),
         }
     )
 }

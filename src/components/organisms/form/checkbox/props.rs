@@ -25,10 +25,10 @@ pub fn Checkbox(mut props: CheckboxProps) -> Element {
 
     rsx!(
         input {
-            ..props.attributes,
             r#type: "checkbox",
+            oninput,
             checked: props.checked,
-            oninput
+            ..props.attributes,
         }
     )
 }

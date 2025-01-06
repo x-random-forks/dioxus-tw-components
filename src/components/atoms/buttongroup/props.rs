@@ -2,7 +2,7 @@ use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct ButtonGroupProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -14,11 +14,11 @@ pub fn ButtonGroup(mut props: ButtonGroupProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        div { ..props.attributes, {props.children} }
+        div { ..props.attributes,{props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct ButtonGroupItemProps {
     #[props(extends = button, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -35,6 +35,6 @@ pub fn ButtonGroupItem(mut props: ButtonGroupItemProps) -> Element {
     let onclick = move |event| props.onclick.call(event);
 
     rsx!(
-        button { ..props.attributes, onclick, {props.children} }
+        button { onclick, ..props.attributes, {props.children} }
     )
 }

@@ -2,7 +2,7 @@ use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct TableProps {
     #[props(extends = table, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -14,11 +14,11 @@ pub fn Table(mut props: TableProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        table { ..props.attributes, {props.children} }
+        table { ..props.attributes,{props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct TableHeaderProps {
     #[props(extends = thead, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -30,11 +30,11 @@ pub fn TableHeader(mut props: TableHeaderProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        thead { ..props.attributes, {props.children} }
+        thead { ..props.attributes,{props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct TableBodyProps {
     #[props(extends = tbody, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -46,11 +46,11 @@ pub fn TableBody(mut props: TableBodyProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        tbody { ..props.attributes, {props.children} }
+        tbody { ..props.attributes,{props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct TableFooterProps {
     #[props(extends = tfoot, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -62,11 +62,11 @@ pub fn TableFooter(mut props: TableFooterProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        tfoot { ..props.attributes, {props.children} }
+        tfoot { ..props.attributes,{props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct TableHeadProps {
     #[props(extends = th, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -83,11 +83,11 @@ pub fn TableHead(mut props: TableHeadProps) -> Element {
     let onclick = move |event| props.onclick.call(event);
 
     rsx!(
-        th { ..props.attributes, onclick, {props.children} }
+        th { onclick, ..props.attributes, {props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct TableRowProps {
     #[props(extends = tr, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -99,11 +99,11 @@ pub fn TableRow(mut props: TableRowProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        tr { ..props.attributes, {props.children} }
+        tr { ..props.attributes,{props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct TableCellProps {
     #[props(extends = td, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -115,11 +115,11 @@ pub fn TableCell(mut props: TableCellProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        td { ..props.attributes, {props.children} }
+        td { ..props.attributes,{props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct TableCaptionProps {
     #[props(extends = caption, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -131,6 +131,6 @@ pub fn TableCaption(mut props: TableCaptionProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        caption { ..props.attributes, {props.children} }
+        caption { ..props.attributes,{props.children} }
     )
 }

@@ -14,7 +14,7 @@ pub fn App() -> Element {
     let theme_manager = use_context_provider(|| Signal::new(ThemeManager::default()));
 
     rsx!(
-        Toaster { 
+        Toaster {
             div {
                 class: "relative bg-background text-foreground",
                 style: theme_manager.read().to_style(),

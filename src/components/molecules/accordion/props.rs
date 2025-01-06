@@ -42,7 +42,7 @@ impl AccordionState {
     }
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct AccordionProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -74,11 +74,11 @@ pub fn Accordion(mut props: AccordionProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        div { ..props.attributes, {props.children} }
+        div { ..props.attributes,{props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct AccordionItemProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -91,11 +91,11 @@ pub fn AccordionItem(mut props: AccordionItemProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        div { ..props.attributes, {props.children} }
+        div { ..props.attributes,{props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct AccordionTriggerProps {
     #[props(extends = button, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -144,11 +144,11 @@ pub fn AccordionTrigger(mut props: AccordionTriggerProps) -> Element {
 
     rsx!(
         button {
-            ..props.attributes,
             "data-state": state.read().is_active_to_attr_value(props.id.read().to_string()),
             onclick: button_closure,
-            onmounted: onmounted,
-            {props.children},
+            onmounted,
+            ..props.attributes,
+            {props.children}
             {props.trigger_decoration}
         }
     )
@@ -167,7 +167,7 @@ fn default_trigger_decoration() -> Element {
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct AccordionContentProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -214,11 +214,11 @@ pub fn AccordionContent(mut props: AccordionContentProps) -> Element {
 
     rsx!(
         div {
-            ..props.attributes,
+            onmounted,
             "data-state": state.read().is_active_to_attr_value(props.id.read().to_string()),
             id: props.id,
             height: final_height,
-            onmounted,
+            ..props.attributes,
             {props.children}
         }
     )
