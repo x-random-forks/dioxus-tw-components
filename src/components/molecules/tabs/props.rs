@@ -96,4 +96,3 @@ pub fn TabsContent(mut props: TabsContentProps) -> Element {
         div { "data-state": state, hidden: is_hidden, ..props.attributes, {props.children} }
     )
 }
-

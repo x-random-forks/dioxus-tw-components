@@ -51,4 +51,3 @@ pub fn Button(mut props: ButtonProps) -> Element {
 
 // TODO
 // Add support for icons
-

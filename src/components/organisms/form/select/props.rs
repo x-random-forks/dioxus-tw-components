@@ -48,9 +48,7 @@ pub struct SelectLabelProps {
 pub fn SelectLabel(mut props: SelectLabelProps) -> Element {
     props.update_class_attribute();
 
-    rsx!(
-        optgroup { ..props.attributes }
-    )
+    rsx!(optgroup { ..props.attributes })
 }
 
 #[derive(Clone, PartialEq, Props, UiComp)]

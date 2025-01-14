@@ -11,7 +11,5 @@ pub struct SpacerProps {
 pub fn Spacer(mut props: SpacerProps) -> Element {
     props.update_class_attribute();
 
-    rsx!(
-        div { ..props.attributes }
-    )
+    rsx!(div { ..props.attributes })
 }
