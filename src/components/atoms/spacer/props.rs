@@ -8,6 +8,14 @@ pub struct SpacerProps {
     attributes: Vec<Attribute>,
 }
 
+impl std::default::Default for SpacerProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+        }
+    }
+}
+
 pub fn Spacer(mut props: SpacerProps) -> Element {
     props.update_class_attribute();
 

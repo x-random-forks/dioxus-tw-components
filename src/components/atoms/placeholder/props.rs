@@ -13,6 +13,16 @@ pub struct PlaceholderProps {
     pub animation: ReadOnlySignal<Animation>,
 }
 
+impl std::default::Default for PlaceholderProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            color: ReadOnlySignal::<Color>::default(),
+            animation: ReadOnlySignal::<Animation>::default(),
+        }
+    }
+}
+
 pub fn Placeholder(mut props: PlaceholderProps) -> Element {
     props.update_class_attribute();
 

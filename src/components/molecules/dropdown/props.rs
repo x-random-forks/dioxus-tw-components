@@ -77,6 +77,16 @@ pub struct DropdownProps {
     children: Element,
 }
 
+impl std::default::Default for DropdownProps {
+    fn default() -> Self {
+        Self {
+            closing_delay_ms: 100,
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 /// Usage:
 /// ```ignore
 /// Dropdown { closing_delay_ms: 500,
@@ -114,6 +124,15 @@ pub struct DropdownToggleProps {
     attributes: Vec<Attribute>,
 
     children: Element,
+}
+
+impl std::default::Default for DropdownToggleProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
 }
 
 pub fn DropdownToggle(mut props: DropdownToggleProps) -> Element {
@@ -157,6 +176,16 @@ pub struct DropdownContentProps {
     pub animation: ReadOnlySignal<Animation>,
 
     children: Element,
+}
+
+impl std::default::Default for DropdownContentProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            animation: ReadOnlySignal::<Animation>::default(),
+            children: Ok(VNode::default())
+        }
+    }
 }
 
 pub fn DropdownContent(mut props: DropdownContentProps) -> Element {

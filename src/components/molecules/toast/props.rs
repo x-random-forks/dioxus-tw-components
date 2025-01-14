@@ -11,6 +11,15 @@ pub struct ToasterProps {
     children: Element,
 }
 
+impl std::default::Default for ToasterProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 /// The toaster must wrap around your App as high as possible to be used
 pub fn Toaster(mut props: ToasterProps) -> Element {
     props.update_class_attribute();

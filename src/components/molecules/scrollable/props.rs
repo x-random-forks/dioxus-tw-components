@@ -13,6 +13,16 @@ pub struct ScrollableProps {
     children: Element,
 }
 
+impl std::default::Default for ScrollableProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            orientation: ReadOnlySignal::<Orientation>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 pub fn Scrollable(mut props: ScrollableProps) -> Element {
     props.update_class_attribute();
 

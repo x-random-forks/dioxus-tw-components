@@ -15,6 +15,16 @@ pub struct ProgressBarProps {
     children: Element,
 }
 
+impl std::default::Default for ProgressBarProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            color: ReadOnlySignal::<Color>::default(),
+            size: ReadOnlySignal::<Size>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
 pub fn ProgressBar(mut props: ProgressBarProps) -> Element {
     props.update_class_attribute();
 
@@ -35,6 +45,17 @@ pub struct ProgressBarInnerProps {
     pub color: ReadOnlySignal<Color>,
 
     children: Element,
+}
+
+impl std::default::Default for ProgressBarInnerProps {
+    fn default() -> Self {
+        Self {
+            progress: 50,
+            attributes: Vec::<Attribute>::default(),
+            color: ReadOnlySignal::<Color>::default(),
+            children: Ok(VNode::default())
+        }
+    }
 }
 
 pub fn ProgressBarInner(mut props: ProgressBarInnerProps) -> Element {
@@ -64,6 +85,17 @@ pub struct ProgressLabelProps {
     attributes: Vec<Attribute>,
 
     children: Element,
+}
+
+impl std::default::Default for ProgressLabelProps {
+    fn default() -> Self {
+        Self {
+            progress: 50,
+            show_percentage: true,
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
 }
 
 pub fn ProgressLabel(mut props: ProgressLabelProps) -> Element {

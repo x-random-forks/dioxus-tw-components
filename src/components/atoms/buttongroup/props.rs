@@ -10,6 +10,15 @@ pub struct ButtonGroupProps {
     children: Element,
 }
 
+impl std::default::Default for ButtonGroupProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 pub fn ButtonGroup(mut props: ButtonGroupProps) -> Element {
     props.update_class_attribute();
 
@@ -27,6 +36,16 @@ pub struct ButtonGroupItemProps {
     onclick: EventHandler<MouseEvent>,
 
     children: Element,
+}
+
+impl std::default::Default for ButtonGroupItemProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            onclick: EventHandler::<MouseEvent>::default(),
+            children: Ok(VNode::default())
+        }
+    }
 }
 
 pub fn ButtonGroupItem(mut props: ButtonGroupItemProps) -> Element {

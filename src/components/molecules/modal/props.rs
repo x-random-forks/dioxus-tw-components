@@ -35,6 +35,15 @@ pub struct ModalProps {
     children: Element,
 }
 
+impl std::default::Default for ModalProps {
+    fn default() -> Self {
+        Self {
+            is_active: false,
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 /// Usage: \
 /// ```ignore
 /// Modal {
@@ -68,6 +77,16 @@ pub struct ModalTriggerProps {
     children: Element,
 }
 
+impl std::default::Default for ModalTriggerProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            onclick: EventHandler::<MouseEvent>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 pub fn ModalTrigger(mut props: ModalTriggerProps) -> Element {
     let mut state = use_context::<Signal<ModalState>>();
 
@@ -91,6 +110,15 @@ pub struct ModalCloseProps {
 
     #[props(optional)]
     children: Element,
+}
+
+impl std::default::Default for ModalCloseProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
 }
 
 /// Div to close the content modal, by default it is a cross svg located at the top left corner of the modal
@@ -138,6 +166,16 @@ pub struct ModalContentProps {
     children: Element,
 }
 
+impl std::default::Default for ModalContentProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            animation: ReadOnlySignal::<Animation>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 pub fn ModalContent(mut props: ModalContentProps) -> Element {
     let state = use_context::<Signal<ModalState>>();
 
@@ -164,6 +202,19 @@ pub struct ModalBackgroundProps {
     onclick: EventHandler<MouseEvent>,
 
     children: Element,
+}
+
+impl std::default::Default for ModalBackgroundProps {
+    fn default() -> Self {
+        Self {
+            interactive: true,
+            attributes: Vec::<Attribute>::default(),
+            color: ReadOnlySignal::<Color>::default(),
+            animation: ReadOnlySignal::<Animation>::default(),
+            onclick: EventHandler::<MouseEvent>::default(),
+            children: Ok(VNode::default())
+        }
+    }
 }
 
 pub fn ModalBackground(mut props: ModalBackgroundProps) -> Element {

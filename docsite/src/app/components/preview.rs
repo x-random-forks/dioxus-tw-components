@@ -9,18 +9,18 @@ use dioxus_components::{
 use crate::app::doctrait::{DemoComponent, IntoVec};
 
 #[component]
-pub fn PreviewFull<T: DemoComponent + Default + 'static>() -> Element {
+pub fn PreviewFull<T: DemoComponent + 'static>() -> Element {
     rsx!(
-        h2 { class: "h2", "{T::to_string(&T::default())}" }
+        h2 { class: "h2", "TODO" }
         PreviewDemo::<T> {}
     )
 }
 
 #[component]
-fn PreviewDemo<T: DemoComponent + Default>() -> Element {
+fn PreviewDemo<T: DemoComponent + 'static>() -> Element {
     rsx!(
         section { class: "w-full space-y-2",
-            h2 { id: "preview-title", class: "sr-only", {T::to_string(&T::default())} }
+            h2 { id: "preview-title", class: "sr-only", "TODO" }
             div { id: "preview-header", class: "text-foreground/50 font-medium",
                 {T::comp_introduction()}
             }

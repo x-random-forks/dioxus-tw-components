@@ -18,6 +18,18 @@ pub struct RadioProps {
     pub size: ReadOnlySignal<Size>,
 }
 
+impl std::default::Default for RadioProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            checked: false,
+            oninput: EventHandler::<FormEvent>::default(),
+            color: ReadOnlySignal::<Color>::default(),
+            size: ReadOnlySignal::<Size>::default(),
+        }
+    }
+}
+
 pub fn Radio(mut props: RadioProps) -> Element {
     props.update_class_attribute();
 

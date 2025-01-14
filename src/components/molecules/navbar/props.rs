@@ -10,6 +10,15 @@ pub struct NavbarProps {
     children: Element,
 }
 
+impl std::default::Default for NavbarProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 pub fn Navbar(mut props: NavbarProps) -> Element {
     props.update_class_attribute();
 

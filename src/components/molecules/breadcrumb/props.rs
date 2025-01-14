@@ -10,6 +10,15 @@ pub struct BreadcrumbProps {
     children: Element,
 }
 
+impl std::default::Default for BreadcrumbProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 /// Usage:
 /// ```ignore
 /// Breadcrumb {
@@ -36,6 +45,15 @@ pub struct BreadcrumbItemProps {
     children: Element,
 }
 
+impl std::default::Default for BreadcrumbItemProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 pub fn BreadcrumbItem(mut props: BreadcrumbItemProps) -> Element {
     props.update_class_attribute();
 
@@ -50,6 +68,15 @@ pub struct BreadcrumbSeparatorProps {
     attributes: Vec<Attribute>,
 
     children: Element,
+}
+
+impl std::default::Default for BreadcrumbSeparatorProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
 }
 
 pub fn BreadcrumbSeparator(mut props: BreadcrumbSeparatorProps) -> Element {

@@ -18,6 +18,18 @@ pub struct SliderProps {
     pub color: ReadOnlySignal<Color>,
 }
 
+impl std::default::Default for SliderProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            value: String::default(),
+            oninput: EventHandler::<FormEvent>::default(),
+            onmounted: EventHandler::<Event<MountedData>>::default(),
+            color: ReadOnlySignal::<Color>::default(),
+        }
+    }
+}
+
 pub fn Slider(mut props: SliderProps) -> Element {
     props.update_class_attribute();
 
@@ -49,6 +61,17 @@ pub struct SliderTicksProps {
     attributes: Vec<Attribute>,
 }
 
+impl std::default::Default for SliderTicksProps {
+    fn default() -> Self {
+        Self {
+            step: 10,
+            min: 0,
+            max: 100,
+            attributes: Vec::<Attribute>::default(),
+        }
+    }
+}
+
 pub fn SliderTicks(mut props: SliderTicksProps) -> Element {
     props.update_class_attribute();
 
@@ -73,6 +96,16 @@ pub struct SliderLabelProps {
     value: i64,
     #[props(optional, default = 100)]
     max: i64,
+}
+
+impl std::default::Default for SliderLabelProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            value: 0,
+            max: 100
+        }
+    }
 }
 
 pub fn SliderLabel(mut props: SliderLabelProps) -> Element {

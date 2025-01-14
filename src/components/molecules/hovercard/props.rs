@@ -81,6 +81,16 @@ pub struct HoverCardProps {
     children: Element,
 }
 
+impl std::default::Default for HoverCardProps {
+    fn default() -> Self {
+        Self {
+            closing_delay_ms: 500,
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 pub fn HoverCard(mut props: HoverCardProps) -> Element {
     let mut state = use_context_provider(|| Signal::new(HoverState::new(props.closing_delay_ms)));
 
@@ -140,6 +150,16 @@ pub struct HoverCardTriggerProps {
     children: Element,
 }
 
+impl std::default::Default for HoverCardTriggerProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            onclick: EventHandler::<MouseEvent>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 pub fn HoverCardTrigger(mut props: HoverCardTriggerProps) -> Element {
     let mut state = use_context::<Signal<HoverState>>();
 
@@ -171,6 +191,16 @@ pub struct HoverCardContentProps {
     pub animation: ReadOnlySignal<Animation>,
 
     children: Element,
+}
+
+impl std::default::Default for HoverCardContentProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            animation: ReadOnlySignal::<Animation>::default(),
+            children: Ok(VNode::default())
+        }
+    }
 }
 
 pub fn HoverCardContent(mut props: HoverCardContentProps) -> Element {

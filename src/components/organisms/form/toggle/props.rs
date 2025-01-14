@@ -21,6 +21,19 @@ pub struct ToggleProps {
     pub animation: ReadOnlySignal<Animation>,
 }
 
+impl std::default::Default for ToggleProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            checked: None,
+            onclick: EventHandler::<MouseEvent>::default(),
+            color: ReadOnlySignal::<Color>::default(),
+            size: ReadOnlySignal::<Size>::default(),
+            animation: ReadOnlySignal::<Animation>::default(),
+        }
+    }
+}
+
 // Specifically stylised input type checkbox
 // The input use the tailwind peer class, you can use at your advantage to style the children
 // eg peer-disabled:font-mute will change children text-color when the input is disabled (Label component already does this by default)

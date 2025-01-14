@@ -13,6 +13,16 @@ pub struct SelectGroupProps {
     children: Element,
 }
 
+impl std::default::Default for SelectGroupProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            oninput: EventHandler::<FormEvent>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 pub fn SelectGroup(mut props: SelectGroupProps) -> Element {
     props.update_class_attribute();
 
@@ -31,6 +41,15 @@ pub struct SelectPlaceholderProps {
     children: Element,
 }
 
+impl std::default::Default for SelectPlaceholderProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 pub fn SelectPlaceholder(mut props: SelectPlaceholderProps) -> Element {
     props.update_class_attribute();
 
@@ -43,6 +62,15 @@ pub fn SelectPlaceholder(mut props: SelectPlaceholderProps) -> Element {
 pub struct SelectLabelProps {
     #[props(extends = optgroup, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
+}
+
+impl std::default::Default for SelectLabelProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
 }
 
 pub fn SelectLabel(mut props: SelectLabelProps) -> Element {
@@ -60,6 +88,16 @@ pub struct SelectItemProps {
     selected: Option<bool>,
 
     children: Element,
+}
+
+impl std::default::Default for SelectItemProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            selected: None,
+            children: Ok(VNode::default())
+        }
+    }
 }
 
 pub fn SelectItem(mut props: SelectItemProps) -> Element {

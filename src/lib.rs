@@ -18,7 +18,7 @@ pub struct LibState {
     last_click_coordinates: Coordinates,
 }
 
-impl Default for LibState {
+impl std::default::Default for LibState {
     fn default() -> Self {
         Self {
             last_click_coordinates: Coordinates::new(

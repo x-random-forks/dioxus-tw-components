@@ -102,6 +102,17 @@ pub struct CarouselProps {
     children: Element,
 }
 
+impl std::default::Default for CarouselProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            default_item_key: 0,
+            is_circular: false,
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 /// Usage :
 /// ```ignore
 /// Carousel { default_item_key: 0,
@@ -137,6 +148,15 @@ pub struct CarouselWindowProps {
     children: Element,
 }
 
+impl std::default::Default for CarouselWindowProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 pub fn CarouselWindow(mut props: CarouselWindowProps) -> Element {
     props.update_class_attribute();
 
@@ -156,6 +176,17 @@ pub struct CarouselContentProps {
     pub animation: ReadOnlySignal<Animation>,
 
     children: Element,
+}
+
+impl std::default::Default for CarouselContentProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            id: ReadOnlySignal::<String>::default(),
+            animation: ReadOnlySignal::<Animation>::default(),
+            children: Ok(VNode::default())
+        }
+    }
 }
 
 /// You need to pass it an id for it to work
@@ -200,6 +231,16 @@ pub struct CarouselItemProps {
     children: Element,
 }
 
+impl std::default::Default for CarouselItemProps {
+    fn default() -> Self {
+        Self {
+            item_key: 0,
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 pub fn CarouselItem(mut props: CarouselItemProps) -> Element {
     let mut state = use_context::<Signal<CarouselState>>();
 
@@ -226,6 +267,15 @@ pub struct CarouselTriggerProps {
 
     #[props(extends = button, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
+}
+
+impl std::default::Default for CarouselTriggerProps {
+    fn default() -> Self {
+        Self {
+            next: false,
+            attributes: Vec::<Attribute>::default(),
+        }
+    }
 }
 
 pub fn CarouselTrigger(mut props: CarouselTriggerProps) -> Element {

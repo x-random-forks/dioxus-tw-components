@@ -54,6 +54,16 @@ pub struct AccordionProps {
     children: Element,
 }
 
+impl std::default::Default for AccordionProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            multi_open: false,
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 /// The Accordion component divides the content into collapsible items \
 /// Usage:
 /// ```ignore
@@ -86,6 +96,15 @@ pub struct AccordionItemProps {
     children: Element,
 }
 
+impl std::default::Default for AccordionItemProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 /// Wrapper for the [AccordionTrigger] and [AccordionContent] components
 pub fn AccordionItem(mut props: AccordionItemProps) -> Element {
     props.update_class_attribute();
@@ -112,6 +131,18 @@ pub struct AccordionTriggerProps {
     trigger_decoration: Element,
 
     children: Element,
+}
+
+impl std::default::Default for AccordionTriggerProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            id: ReadOnlySignal::<String>::default(),
+            is_open: false,
+            trigger_decoration: default_trigger_decoration(),
+            children: Ok(VNode::default())
+        }
+    }
 }
 
 /// The clickable element that toggles the visibility of the [AccordionContent] component
@@ -179,6 +210,17 @@ pub struct AccordionContentProps {
     pub animation: ReadOnlySignal<Animation>,
 
     children: Element,
+}
+
+impl std::default::Default for AccordionContentProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            id: ReadOnlySignal::<String>::default(),
+            animation: ReadOnlySignal::<Animation>::default(),
+            children: Ok(VNode::default())
+        }
+    }
 }
 
 /// Collapsible element that is toggled by the [AccordionTrigger] component

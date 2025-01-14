@@ -24,6 +24,21 @@ pub struct InputProps {
     pub color: ReadOnlySignal<Color>,
 }
 
+impl std::default::Default for InputProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            value: String::default(),
+            onkeypress: EventHandler::<KeyboardEvent>::default(),
+            onblur: EventHandler::<FocusEvent>::default(),
+            oninput: EventHandler::<FormEvent>::default(),
+            onmounted: EventHandler::<Event<MountedData>>::default(),
+            size: ReadOnlySignal::<Size>::default(),
+            color: ReadOnlySignal::<Color>::default(),
+        }
+    }
+}
+
 pub fn Input(mut props: InputProps) -> Element {
     props.update_class_attribute();
 

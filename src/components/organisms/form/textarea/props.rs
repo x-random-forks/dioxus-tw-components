@@ -18,6 +18,18 @@ pub struct TextAreaProps {
     pub color: ReadOnlySignal<Color>,
 }
 
+impl std::default::Default for TextAreaProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            value: String::default(),
+            oninput: EventHandler::<FormEvent>::default(),
+            onmounted: EventHandler::<Event<MountedData>>::default(),
+            color: ReadOnlySigna::<Color>::default(),
+        }
+    }
+}
+
 pub fn TextArea(mut props: TextAreaProps) -> Element {
     props.update_class_attribute();
 

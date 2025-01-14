@@ -10,6 +10,15 @@ pub struct TableProps {
     children: Element,
 }
 
+impl std::default::Default for TableProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 pub fn Table(mut props: TableProps) -> Element {
     props.update_class_attribute();
 
@@ -24,6 +33,15 @@ pub struct TableHeaderProps {
     attributes: Vec<Attribute>,
 
     children: Element,
+}
+
+impl std::default::Default for TableHeaderProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
 }
 
 pub fn TableHeader(mut props: TableHeaderProps) -> Element {
@@ -42,6 +60,15 @@ pub struct TableBodyProps {
     children: Element,
 }
 
+impl std::default::Default for TableBodyProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 pub fn TableBody(mut props: TableBodyProps) -> Element {
     props.update_class_attribute();
 
@@ -56,6 +83,15 @@ pub struct TableFooterProps {
     attributes: Vec<Attribute>,
 
     children: Element,
+}
+
+impl std::default::Default for TableFooterProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
 }
 
 pub fn TableFooter(mut props: TableFooterProps) -> Element {
@@ -77,6 +113,16 @@ pub struct TableHeadProps {
     children: Element,
 }
 
+impl std::default::Default for TableHeadProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            onclick: EventHandler::<MouseEvent>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 pub fn TableHead(mut props: TableHeadProps) -> Element {
     props.update_class_attribute();
 
@@ -95,6 +141,15 @@ pub struct TableRowProps {
     children: Element,
 }
 
+impl std::default::Default for TableRowProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 pub fn TableRow(mut props: TableRowProps) -> Element {
     props.update_class_attribute();
 
@@ -111,6 +166,15 @@ pub struct TableCellProps {
     children: Element,
 }
 
+impl std::default::Default for TableCellProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 pub fn TableCell(mut props: TableCellProps) -> Element {
     props.update_class_attribute();
 
@@ -125,6 +189,15 @@ pub struct TableCaptionProps {
     attributes: Vec<Attribute>,
 
     children: Element,
+}
+
+impl std::default::Default for TableCaptionProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
 }
 
 pub fn TableCaption(mut props: TableCaptionProps) -> Element {

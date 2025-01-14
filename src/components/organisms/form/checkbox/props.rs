@@ -18,6 +18,18 @@ pub struct CheckboxProps {
     pub size: ReadOnlySignal<Size>,
 }
 
+impl std::default::Default for CheckboxProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            checked: false,
+            oninput: EventHandler::<FormEvent>::default(),
+            color: ReadOnlySignal::<Color>::default(),
+            size: ReadOnlySignal::<Size>::default(),
+        }
+    }
+}
+
 pub fn Checkbox(mut props: CheckboxProps) -> Element {
     props.update_class_attribute();
 

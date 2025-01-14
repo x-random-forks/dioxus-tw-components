@@ -29,6 +29,23 @@ pub struct ButtonProps {
     children: Element,
 }
 
+impl std::default::Default for ButtonProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            color: ReadOnlySignal::<Color>::default(),
+            size: ReadOnlySignal::<Size>::default(),
+            variant: ReadOnlySignal::<ButtonVariant>::default(),
+            animation: ReadOnlySignal::<Animation>::default(),
+            onclick: EventHandler::<MouseEvent>::default(),
+            onmouseenter: EventHandler::<MouseEvent>::default(),
+            onmouseleave: EventHandler::<MouseEvent>::default(),
+            onfocus: EventHandler::<FocusEvent>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 pub fn Button(mut props: ButtonProps) -> Element {
     props.update_class_attribute();
 

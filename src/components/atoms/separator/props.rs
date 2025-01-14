@@ -11,6 +11,15 @@ pub struct SeparatorProps {
     pub orientation: ReadOnlySignal<Orientation>,
 }
 
+impl std::default::Default for SeparatorProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            orientation: ReadOnlySignal::<Orientation>::default()
+        }
+    }
+}
+
 pub fn Separator(mut props: SeparatorProps) -> Element {
     props.update_class_attribute();
 

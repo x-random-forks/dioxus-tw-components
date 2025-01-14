@@ -1,4 +1,4 @@
-use dioxus::dioxus_core::{Attribute, AttributeValue, Element};
+use dioxus::dioxus_core::{Attribute, AttributeValue, Element, VNode};
 use std::str::FromStr;
 use tailwind_fuse::tw_merge;
 

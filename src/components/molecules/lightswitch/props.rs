@@ -34,6 +34,15 @@ pub struct LightSwitchProps {
     children: Element,
 }
 
+impl std::default::Default for LightSwitchProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 /// This component inserts/remove "dark" in the DOM on the div with id of main
 pub fn LightSwitch(mut props: LightSwitchProps) -> Element {
     props.update_class_attribute();

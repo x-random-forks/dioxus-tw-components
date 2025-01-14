@@ -37,6 +37,6 @@ impl DemoComponent for BreadcrumbProps {
     }
 
     fn BuildCompSelectors() -> Element {
-        None
+        return rsx! {}; // Empty element
     }
 }

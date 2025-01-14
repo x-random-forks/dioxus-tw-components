@@ -15,6 +15,16 @@ pub struct TabsProps {
     children: Element,
 }
 
+impl std::default::Default for TabsProps {
+    fn default() -> Self {
+        Self {
+            default_tab: ReadOnlySignal::<String>::default(),
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
+}
+
 pub fn Tabs(mut props: TabsProps) -> Element {
     use_context_provider(|| Signal::new(TabsState(props.default_tab.read().clone())));
 
@@ -31,6 +41,15 @@ pub struct TabsListProps {
     attributes: Vec<Attribute>,
 
     children: Element,
+}
+
+impl std::default::Default for TabsListProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: Ok(VNode::default())
+        }
+    }
 }
 
 pub fn TabsList(mut props: TabsListProps) -> Element {
@@ -50,6 +69,16 @@ pub struct TabsTriggerProps {
     id: ReadOnlySignal<String>,
 
     children: Element,
+}
+
+impl std::default::Default for TabsTriggerProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            id: ReadOnlySignal::<String>::default(),
+            children: Ok(VNode::default())
+        }
+    }
 }
 
 pub fn TabsTrigger(mut props: TabsTriggerProps) -> Element {
@@ -80,6 +109,16 @@ pub struct TabsContentProps {
     id: ReadOnlySignal<String>,
 
     children: Element,
+}
+
+impl std::default::Default for TabsContentProps {
+    fn default() -> Self {
+        Props {
+            attributes: Vec::<Attribute>::default(),
+            id: ReadOnlySignal::<String>::default(),
+            children: Ok(VNode::default())
+        }
+    }
 }
 
 pub fn TabsContent(mut props: TabsContentProps) -> Element {

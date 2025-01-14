@@ -3,3 +3,7 @@ target/
 public/
 Cargo.lock
 .vscode/
+*.lock
+package.json
+package-lock.json
+node_modules/
