@@ -1,36 +1,47 @@
 use dioxus::prelude::*;
+use chrono::Datelike;
 use dioxus_components::{
     molecules::Navbar,
     templates::HeaderTemplate,
+    atoms::Separator
 };
 
 use crate::app::router::Route;
 
 #[component]
-pub fn Header() -> Element {
+pub fn Layout() -> Element {
     rsx!(
-        HeaderTemplate { class: "flex justify-center",
-            Navbar {
-                div { class: "flex flex-1 space-x-2 items-center ml-6",
-                    Link { class: "mr-6", to: "/",
-                        div { class: "font-bold", "Dioxus Lib Comp" }
+        div { class: "flex flex-col min-h-screen",
+            HeaderTemplate { class: "flex justify-center",
+                Navbar {
+                    div { class: "flex flex-1 space-x-2 items-center ml-6",
+                        Link { class: "mr-6", to: "/",
+                            div { class: "font-bold", "Dioxus Lib Comp" }
+                        }
+                        ul { class: "text-sm list-none flex space-x-2",
+                            li {
+                                Link { class: "anchor", to: "/components/button", "Components" }
+                            }
+                            li {
+                                Link { class: "anchor", to: "/theme", "Theme" }
+                            }
+                        }
                     }
-                    ul { class: "text-sm list-none flex space-x-2",
-                        li {
-                            Link { class: "anchor", to: "/components/", "Components" }
-                        }
-                        li {
-                            Link { class: "anchor", to: "/theme", "Theme" }
-                        }
+                    div { class: "flex flex-1 items-center justify-end space-x-2 mr-6",
+                        DioxusLink {}
+                        GithubLink {}
                     }
                 }
-                div { class: "flex flex-1 items-center justify-end space-x-2 mr-6",
-                    DioxusLink {}
-                    GithubLink {}
+            }
+
+            main { class: "flex justify-center w-full mt-12 mb-auto", Outlet::<Route> {} }
+
+            footer { class: "h-16 bottom-0 w-full items-center overflow-hidden border-t border-border backdrop-blur bg-background/65",
+                div { class: "container m-5",
+                    h6 { class: "h6 text-sm anchor", "© 2024 - {chrono::Utc::now().year()} | 42 Angoulême" }
                 }
             }
         }
-        main { class: "flex justify-center w-full min-h-screen mt-12", Outlet::<Route> {} }
     )
 }
 

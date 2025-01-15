@@ -68,7 +68,6 @@ impl std::default::Default for SelectLabelProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default())
         }
     }
 }

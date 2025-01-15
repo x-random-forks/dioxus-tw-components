@@ -24,14 +24,22 @@ impl DemoComponent for ProgressBarProps {
 
     fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
+        let mut percentage = use_signal(|| 0);
 
         rsx!(
             div { class: "bg-muted w-96 h-fit p-4",
+                button {
+                    onclick: move |_e| {
+                        percentage += 1;
+                    },
+                    "+1"
+                }
                 ProgressBar {
                     class: state.read()[&0].get_class(),
                     color: state.read()[&0].get_color(),
                     size: state.read()[&0].get_size(),
                     ProgressBarInner {
+                        progress: *percentage.read(),
                         class: state.read()[&1].get_class(),
                         color: state.read()[&1].get_color(),
                     }

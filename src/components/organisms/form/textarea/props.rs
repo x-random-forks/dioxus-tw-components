@@ -25,7 +25,7 @@ impl std::default::Default for TextAreaProps {
             value: String::default(),
             oninput: EventHandler::<FormEvent>::default(),
             onmounted: EventHandler::<Event<MountedData>>::default(),
-            color: ReadOnlySigna::<Color>::default(),
+            color: ReadOnlySignal::<Color>::default(),
         }
     }
 }

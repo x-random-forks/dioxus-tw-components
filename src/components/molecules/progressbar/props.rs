@@ -25,6 +25,7 @@ impl std::default::Default for ProgressBarProps {
         }
     }
 }
+
 pub fn ProgressBar(mut props: ProgressBarProps) -> Element {
     props.update_class_attribute();
 

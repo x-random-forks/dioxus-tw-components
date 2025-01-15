@@ -162,8 +162,8 @@ impl ToastRenderer for Signal<ToasterState> {
 /// Used to keep track of all the current toasts, for now it only keeps 1 Toast
 #[derive(Default)]
 pub struct ToasterState {
-    toast: Option<Toast>,
-    shape: Toast,
+    pub toast: Option<Toast>,
+    pub shape: Toast,
 }
 
 /// A Toast with a default duration of 10s

@@ -22,6 +22,7 @@ tracing = "0.1.40"
 console = "0.15.8"
 
 dioxus_components = { path = "../.", features = ["theme"] }
+chrono = "0.4.39"
 
 [workspace]
 

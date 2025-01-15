@@ -113,7 +113,7 @@ pub struct TabsContentProps {
 
 impl std::default::Default for TabsContentProps {
     fn default() -> Self {
-        Props {
+        Self {
             attributes: Vec::<Attribute>::default(),
             id: ReadOnlySignal::<String>::default(),
             children: Ok(VNode::default())
