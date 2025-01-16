@@ -2,7 +2,7 @@ use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 
-#[derive(Clone, PartialEq, Props, UiComp)]
+#[derive(Default, Clone, PartialEq, Props, UiComp)]
 pub struct RadioProps {
     #[props(extends = input, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -16,18 +16,6 @@ pub struct RadioProps {
     pub color: ReadOnlySignal<Color>,
     #[props(optional, default)]
     pub size: ReadOnlySignal<Size>,
-}
-
-impl std::default::Default for RadioProps {
-    fn default() -> Self {
-        Self {
-            attributes: Vec::<Attribute>::default(),
-            checked: false,
-            oninput: EventHandler::<FormEvent>::default(),
-            color: ReadOnlySignal::<Color>::default(),
-            size: ReadOnlySignal::<Size>::default(),
-        }
-    }
 }
 
 pub fn Radio(mut props: RadioProps) -> Element {

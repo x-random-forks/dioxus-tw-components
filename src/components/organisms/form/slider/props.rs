@@ -2,7 +2,7 @@ use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 
-#[derive(Clone, PartialEq, Props, UiComp)]
+#[derive(Default, Clone, PartialEq, Props, UiComp)]
 pub struct SliderProps {
     #[props(extends = input, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -16,18 +16,6 @@ pub struct SliderProps {
 
     #[props(default)]
     pub color: ReadOnlySignal<Color>,
-}
-
-impl std::default::Default for SliderProps {
-    fn default() -> Self {
-        Self {
-            attributes: Vec::<Attribute>::default(),
-            value: String::default(),
-            oninput: EventHandler::<FormEvent>::default(),
-            onmounted: EventHandler::<Event<MountedData>>::default(),
-            color: ReadOnlySignal::<Color>::default(),
-        }
-    }
 }
 
 pub fn Slider(mut props: SliderProps) -> Element {
@@ -103,7 +91,7 @@ impl std::default::Default for SliderLabelProps {
         Self {
             attributes: Vec::<Attribute>::default(),
             value: 0,
-            max: 100
+            max: 100,
         }
     }
 }

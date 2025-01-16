@@ -2,7 +2,7 @@ use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 
-#[derive(Clone, PartialEq, Props, UiComp)]
+#[derive(Default, Clone, PartialEq, Props, UiComp)]
 pub struct TextAreaProps {
     #[props(extends = textarea, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -16,18 +16,6 @@ pub struct TextAreaProps {
 
     #[props(optional, default)]
     pub color: ReadOnlySignal<Color>,
-}
-
-impl std::default::Default for TextAreaProps {
-    fn default() -> Self {
-        Self {
-            attributes: Vec::<Attribute>::default(),
-            value: String::default(),
-            oninput: EventHandler::<FormEvent>::default(),
-            onmounted: EventHandler::<Event<MountedData>>::default(),
-            color: ReadOnlySignal::<Color>::default(),
-        }
-    }
 }
 
 pub fn TextArea(mut props: TextAreaProps) -> Element {

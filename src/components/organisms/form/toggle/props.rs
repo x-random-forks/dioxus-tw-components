@@ -3,7 +3,7 @@ use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 use dioxus_core::AttributeValue;
 
-#[derive(Clone, PartialEq, Props, UiComp)]
+#[derive(Default, Clone, PartialEq, Props, UiComp)]
 pub struct ToggleProps {
     #[props(extends = button, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -19,19 +19,6 @@ pub struct ToggleProps {
     pub size: ReadOnlySignal<Size>,
     #[props(optional, default)]
     pub animation: ReadOnlySignal<Animation>,
-}
-
-impl std::default::Default for ToggleProps {
-    fn default() -> Self {
-        Self {
-            attributes: Vec::<Attribute>::default(),
-            checked: None,
-            onclick: EventHandler::<MouseEvent>::default(),
-            color: ReadOnlySignal::<Color>::default(),
-            size: ReadOnlySignal::<Size>::default(),
-            animation: ReadOnlySignal::<Animation>::default(),
-        }
-    }
 }
 
 // Specifically stylised input type checkbox

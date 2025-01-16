@@ -14,7 +14,7 @@ impl std::default::Default for TableProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -39,7 +39,7 @@ impl std::default::Default for TableHeaderProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -64,7 +64,7 @@ impl std::default::Default for TableBodyProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -89,7 +89,7 @@ impl std::default::Default for TableFooterProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -118,7 +118,7 @@ impl std::default::Default for TableHeadProps {
         Self {
             attributes: Vec::<Attribute>::default(),
             onclick: EventHandler::<MouseEvent>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -145,7 +145,7 @@ impl std::default::Default for TableRowProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -170,7 +170,7 @@ impl std::default::Default for TableCellProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -195,7 +195,7 @@ impl std::default::Default for TableCaptionProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }

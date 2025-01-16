@@ -14,7 +14,7 @@ impl std::default::Default for NavbarProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }

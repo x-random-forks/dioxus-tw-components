@@ -24,7 +24,7 @@ impl std::default::Default for ButtonGroupProps {
             color: ReadOnlySignal::<Color>::default(),
             size: ReadOnlySignal::<Size>::default(),
             animation: ReadOnlySignal::<Animation>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -39,10 +39,11 @@ struct FieldData {
 pub fn ButtonGroup(mut props: ButtonGroupProps) -> Element {
     props.update_class_attribute();
     let _class = use_context_provider(|| {
-        let mut data = FieldData::default();
-        data.color = props.color;
-        data.size = props.size;
-        data.animation = props.animation;
+        let data = FieldData {
+            color: props.color,
+            size: props.size,
+            animation: props.animation,
+        };
         Signal::new(data)
     });
 
@@ -86,7 +87,7 @@ impl std::default::Default for ButtonGroupItemProps {
             onmouseenter: EventHandler::<MouseEvent>::default(),
             onmouseleave: EventHandler::<MouseEvent>::default(),
             onfocus: EventHandler::<FocusEvent>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }

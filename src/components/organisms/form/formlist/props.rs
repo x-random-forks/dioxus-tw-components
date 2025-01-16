@@ -48,7 +48,6 @@ pub struct FormListProps {
     #[props(default = 1)]
     max_size: usize,
     // Size of non-empty fields in the list
-
     #[props(default = 1)]
     current_size: usize,
 
@@ -61,7 +60,7 @@ impl std::default::Default for FormListProps {
             attributes: Vec::<Attribute>::default(),
             max_size: 1,
             current_size: 1,
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -112,7 +111,7 @@ impl std::default::Default for FormListTriggerMinusProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -133,22 +132,13 @@ pub fn FormListTriggerMinus(mut props: FormListTriggerMinusProps) -> Element {
     )
 }
 
-#[derive(Clone, PartialEq, Props, UiComp)]
+#[derive(Default, Clone, PartialEq, Props, UiComp)]
 pub struct FormListContentProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 
     #[props(default)]
     list_fields: Vec<Element>,
-}
-
-impl std::default::Default for FormListContentProps {
-    fn default() -> Self {
-        Self {
-            attributes: Vec::<Attribute>::default(),
-            list_fields: Vec::<Element>::default(),
-        }
-    }
 }
 
 pub fn FormListContent(mut props: FormListContentProps) -> Element {

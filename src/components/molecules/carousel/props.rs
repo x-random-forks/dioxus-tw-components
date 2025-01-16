@@ -108,7 +108,7 @@ impl std::default::Default for CarouselProps {
             attributes: Vec::<Attribute>::default(),
             default_item_key: 0,
             is_circular: false,
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -152,7 +152,7 @@ impl std::default::Default for CarouselWindowProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -184,7 +184,7 @@ impl std::default::Default for CarouselContentProps {
             attributes: Vec::<Attribute>::default(),
             id: ReadOnlySignal::<String>::default(),
             animation: ReadOnlySignal::<Animation>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -236,7 +236,7 @@ impl std::default::Default for CarouselItemProps {
         Self {
             item_key: 0,
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -260,22 +260,13 @@ pub fn CarouselItem(mut props: CarouselItemProps) -> Element {
     )
 }
 
-#[derive(Clone, PartialEq, Props, UiComp)]
+#[derive(Default, Clone, PartialEq, Props, UiComp)]
 pub struct CarouselTriggerProps {
     #[props(default = false)]
     next: bool,
 
     #[props(extends = button, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
-}
-
-impl std::default::Default for CarouselTriggerProps {
-    fn default() -> Self {
-        Self {
-            next: false,
-            attributes: Vec::<Attribute>::default(),
-        }
-    }
 }
 
 pub fn CarouselTrigger(mut props: CarouselTriggerProps) -> Element {

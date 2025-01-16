@@ -1,6 +1,6 @@
+use crate::molecules::lightswitch::LightSwitch;
 use crate::{prelude::*, theme::*};
 use dioxus::prelude::*;
-use crate::molecules::lightswitch::*;
 
 #[component]
 pub fn ThemePicker() -> Element {

@@ -1,3 +1,5 @@
+[![Main CI](https://github.com/42Angouleme/dioxus-components/actions/workflows/mail.yml/badge.svg)](https://github.com/42Angouleme/dioxus-components/actions/workflows/mail.yml)
+
 This is an internal lib of components.
 
 Basic structure, going straight to the point.

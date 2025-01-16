@@ -39,7 +39,7 @@ impl std::default::Default for ModalProps {
     fn default() -> Self {
         Self {
             is_active: false,
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -82,7 +82,7 @@ impl std::default::Default for ModalTriggerProps {
         Self {
             attributes: Vec::<Attribute>::default(),
             onclick: EventHandler::<MouseEvent>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -116,7 +116,7 @@ impl std::default::Default for ModalCloseProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -171,7 +171,7 @@ impl std::default::Default for ModalContentProps {
         Self {
             attributes: Vec::<Attribute>::default(),
             animation: ReadOnlySignal::<Animation>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -212,7 +212,7 @@ impl std::default::Default for ModalBackgroundProps {
             color: ReadOnlySignal::<Color>::default(),
             animation: ReadOnlySignal::<Animation>::default(),
             onclick: EventHandler::<MouseEvent>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }

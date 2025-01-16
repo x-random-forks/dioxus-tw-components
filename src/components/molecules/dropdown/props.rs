@@ -82,7 +82,7 @@ impl std::default::Default for DropdownProps {
         Self {
             closing_delay_ms: 100,
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -130,7 +130,7 @@ impl std::default::Default for DropdownToggleProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -183,7 +183,7 @@ impl std::default::Default for DropdownContentProps {
         Self {
             attributes: Vec::<Attribute>::default(),
             animation: ReadOnlySignal::<Animation>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }

@@ -42,7 +42,7 @@ impl std::default::Default for LightSwitchProps {
         Self {
             attributes: Vec::<Attribute>::default(),
             onclick: EventHandler::<MouseEvent>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }

@@ -21,7 +21,7 @@ impl std::default::Default for ProgressBarProps {
             attributes: Vec::<Attribute>::default(),
             color: ReadOnlySignal::<Color>::default(),
             size: ReadOnlySignal::<Size>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -54,7 +54,7 @@ impl std::default::Default for ProgressBarInnerProps {
             progress: 50,
             attributes: Vec::<Attribute>::default(),
             color: ReadOnlySignal::<Color>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
@@ -94,7 +94,7 @@ impl std::default::Default for ProgressLabelProps {
             progress: 50,
             show_percentage: true,
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }

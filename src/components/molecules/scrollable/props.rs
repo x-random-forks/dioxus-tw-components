@@ -18,7 +18,7 @@ impl std::default::Default for ScrollableProps {
         Self {
             attributes: Vec::<Attribute>::default(),
             orientation: ReadOnlySignal::<Orientation>::default(),
-            children: Ok(VNode::default())
+            children: Ok(VNode::default()),
         }
     }
 }
