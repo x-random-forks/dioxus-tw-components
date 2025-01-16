@@ -31,6 +31,9 @@ pub struct LightSwitchProps {
     #[props(extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 
+    #[props(optional)]
+    pub onclick: EventHandler<MouseEvent>,
+
     children: Element,
 }
 
@@ -38,6 +41,7 @@ impl std::default::Default for LightSwitchProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
+            onclick: EventHandler::<MouseEvent>::default(),
             children: Ok(VNode::default())
         }
     }
@@ -79,7 +83,7 @@ pub fn LightSwitch(mut props: LightSwitchProps) -> Element {
         };
     });
 
-    let onclick = move |_| {
+    let mut onclick = move |_| {
         let dark_theme = state.write().toggle();
         spawn(async move {
             // Change value of dark_theme in localStorage
@@ -104,7 +108,19 @@ pub fn LightSwitch(mut props: LightSwitchProps) -> Element {
     let icon = svg_icon(state);
 
     rsx!(
-        button { r#type: "button", onclick, ..props.attributes, {icon} }
+        button {
+            r#type: "button",
+            onclick: move |e| {
+                if props.onclick != EventHandler::<MouseEvent>::default() {
+                    state.write().toggle();
+                    props.onclick.call(e);
+                } else {
+                    onclick(e)
+                }
+            },
+            ..props.attributes,
+            {icon}
+        }
     )
 }
 

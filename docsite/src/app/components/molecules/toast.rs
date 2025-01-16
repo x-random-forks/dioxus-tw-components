@@ -36,7 +36,8 @@ impl DemoComponent for Toast {
                                 div { "Content" }
                             })
                             .color(state.read()[&0].get_color())
-                            .animation(state.read()[&0].get_animation());
+                            .animation(state.read()[&0].get_animation())
+                            .render();
                 },
                 "Toasting"
             }

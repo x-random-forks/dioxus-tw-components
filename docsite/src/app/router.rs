@@ -1,7 +1,6 @@
 use dioxus::prelude::*;
 use super::home::HomePage;
 use super::layout::Layout;
-use super::theme::ThemePage;
 use super::components::*;
 use dioxus_components::atoms::Separator;
 
@@ -17,8 +16,6 @@ pub enum Route {
                 ComponentPage {name: String},
             #[end_layout]
         #[end_nest]
-        #[route("/theme")]
-        ThemePage {},
 
         #[route("/:..route")]
         NotFound {route: Vec<String>}

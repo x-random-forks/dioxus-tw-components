@@ -3,7 +3,6 @@ pub mod doctrait;
 pub mod home;
 pub mod layout;
 pub mod router;
-pub mod theme;
 
 use dioxus::prelude::*;
 use dioxus_components::prelude::*;
