@@ -59,7 +59,7 @@ pub fn HomePage() -> Element {
                     Carousel { class: "w-[75%]", is_circular: true,
                         CarouselTrigger { next: false }
                         CarouselWindow {
-                            CarouselContent { id: "home-components-preview", class: "h-32",
+                            CarouselContent { id: "home-components-preview", class: "align-middle",
                                 CarouselItem { item_key: 0, class: "bg-gradient-to-r from-foreground/10 to-foreground/30",
                                     div { class: "flex flex-row h-[6.5rem] items-center justify-center",
                                         div { class: "flex flex-grow items-center justify-center basis 1/3",
