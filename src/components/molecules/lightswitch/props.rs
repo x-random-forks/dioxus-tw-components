@@ -32,7 +32,7 @@ pub struct LightSwitchProps {
     attributes: Vec<Attribute>,
 
     #[props(optional)]
-    pub onclick: EventHandler<MouseEvent>,
+    pub onclick: Option<EventHandler<MouseEvent>>,
 
     children: Element,
 }
@@ -41,7 +41,7 @@ impl std::default::Default for LightSwitchProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            onclick: EventHandler::<MouseEvent>::default(),
+            onclick: None,
             children: Ok(VNode::default()),
         }
     }
@@ -111,11 +111,12 @@ pub fn LightSwitch(mut props: LightSwitchProps) -> Element {
         button {
             r#type: "button",
             onclick: move |e| {
-                if props.onclick != EventHandler::<MouseEvent>::default() {
-                    state.write().toggle();
-                    props.onclick.call(e);
-                } else {
-                    onclick(e)
+                match props.onclick {
+                    Some(p) => {
+                        state.write().toggle();
+                        p.call(e);
+                    },
+                    None => onclick(e),
                 }
             },
             ..props.attributes,
