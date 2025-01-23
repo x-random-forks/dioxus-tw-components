@@ -4,11 +4,11 @@ use dioxus_components_macro::UiComp;
 use dioxus_core::AttributeValue;
 
 #[derive(Clone, Copy)]
-pub struct ModalState {
+pub struct SidePanelState {
     is_active: bool,
 }
 
-impl ModalState {
+impl SidePanelState {
     fn new(is_active: bool) -> Self {
         Self { is_active }
     }
@@ -18,7 +18,7 @@ impl ModalState {
     }
 }
 
-impl IntoAttributeValue for ModalState {
+impl IntoAttributeValue for SidePanelState {
     fn into_value(self) -> AttributeValue {
         match self.is_active {
             true => AttributeValue::Text("active".to_string()),
@@ -28,14 +28,14 @@ impl IntoAttributeValue for ModalState {
 }
 
 #[derive(Clone, PartialEq, Props, UiComp)]
-pub struct ModalProps {
+pub struct SidePanelProps {
     #[props(default = false)]
     is_active: bool,
 
     children: Element,
 }
 
-impl std::default::Default for ModalProps {
+impl std::default::Default for SidePanelProps {
     fn default() -> Self {
         Self {
             is_active: false,
@@ -44,30 +44,14 @@ impl std::default::Default for ModalProps {
     }
 }
 
-/// Usage: \
-/// ```ignore
-/// Modal {
-///     ModalTrigger {
-///          "Open Modal"
-///     }
-///     ModalBackground {}
-///     ModalContent {
-///        div {
-///             ModalClose { "X" }
-///        }
-///        div { class: "h4", "TITLE" }
-///        div { class: "paragraph", "CONTENT" }
-///    }
-/// }
-/// ```
-pub fn Modal(props: ModalProps) -> Element {
-    use_context_provider(|| Signal::new(ModalState::new(props.is_active)));
+pub fn SidePanel(props: SidePanelProps) -> Element {
+    use_context_provider(|| Signal::new(SidePanelState::new(props.is_active)));
 
     rsx!({ props.children })
 }
 
 #[derive(Clone, PartialEq, Props, UiComp)]
-pub struct ModalTriggerProps {
+pub struct SidePanelTriggerProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 
@@ -77,7 +61,7 @@ pub struct ModalTriggerProps {
     children: Element,
 }
 
-impl std::default::Default for ModalTriggerProps {
+impl std::default::Default for SidePanelTriggerProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
@@ -87,8 +71,8 @@ impl std::default::Default for ModalTriggerProps {
     }
 }
 
-pub fn ModalTrigger(mut props: ModalTriggerProps) -> Element {
-    let mut state = use_context::<Signal<ModalState>>();
+pub fn SidePanelTrigger(mut props: SidePanelTriggerProps) -> Element {
+    let mut state = use_context::<Signal<SidePanelState>>();
 
     props.update_class_attribute();
 
@@ -104,7 +88,7 @@ pub fn ModalTrigger(mut props: ModalTriggerProps) -> Element {
 }
 
 #[derive(Clone, PartialEq, Props, UiComp)]
-pub struct ModalCloseProps {
+pub struct SidePanelCloseProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 
@@ -112,7 +96,7 @@ pub struct ModalCloseProps {
     children: Element,
 }
 
-impl std::default::Default for ModalCloseProps {
+impl std::default::Default for SidePanelCloseProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
@@ -121,10 +105,10 @@ impl std::default::Default for ModalCloseProps {
     }
 }
 
-/// Div to close the content modal, by default it is a cross svg located at the top left corner of the modal
+/// Div to close the content side panel, by default it is a cross svg located at the top left corner of the side panel
 /// If you provide a children, it will be used instead of the default cross svg and no internal styling will be provided
-pub fn ModalClose(mut props: ModalCloseProps) -> Element {
-    let mut state = use_context::<Signal<ModalState>>();
+pub fn SidePanelClose(mut props: SidePanelCloseProps) -> Element {
+    let mut state = use_context::<Signal<SidePanelState>>();
 
     let has_children = props.children != Ok(VNode::default());
 
@@ -143,7 +127,7 @@ pub fn ModalClose(mut props: ModalCloseProps) -> Element {
                 svg {
                     xmlns: "http://www.w3.org/2000/svg",
                     view_box: "0 0 256 256",
-                    class: "size-[15px] fill-foreground/60 hover:fill-foreground",
+                    class: "size-[32px] fill-foreground/60 hover:fill-foreground",
                     path { d: "M202.82861,197.17188a3.99991,3.99991,0,1,1-5.65722,5.65624L128,133.65723,58.82861,202.82812a3.99991,3.99991,0,0,1-5.65722-5.65624L122.343,128,53.17139,58.82812a3.99991,3.99991,0,0,1,5.65722-5.65624L128,122.34277l69.17139-69.17089a3.99991,3.99991,0,0,1,5.65722,5.65624L133.657,128Z" }
                 }
             } else {
@@ -154,28 +138,31 @@ pub fn ModalClose(mut props: ModalCloseProps) -> Element {
 }
 
 #[derive(Clone, PartialEq, Props, UiComp)]
-pub struct ModalContentProps {
+pub struct SidePanelContentProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 
     #[props(optional, default)]
     pub animation: ReadOnlySignal<Animation>,
+    #[props(optional, default)]
+    pub side: ReadOnlySignal<Side>,
 
     children: Element,
 }
 
-impl std::default::Default for ModalContentProps {
+impl std::default::Default for SidePanelContentProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
             animation: ReadOnlySignal::<Animation>::default(),
+            side: ReadOnlySignal::<Side>::default(),
             children: Ok(VNode::default()),
         }
     }
 }
 
-pub fn ModalContent(mut props: ModalContentProps) -> Element {
-    let state = use_context::<Signal<ModalState>>();
+pub fn SidePanelContent(mut props: SidePanelContentProps) -> Element {
+    let state = use_context::<Signal<SidePanelState>>();
 
     props.update_class_attribute();
 
@@ -185,7 +172,7 @@ pub fn ModalContent(mut props: ModalContentProps) -> Element {
 }
 
 #[derive(Clone, PartialEq, Props, UiComp)]
-pub struct ModalBackgroundProps {
+pub struct SidePanelBackgroundProps {
     #[props(optional, default = true)]
     interactive: bool,
 
@@ -202,7 +189,7 @@ pub struct ModalBackgroundProps {
     children: Element,
 }
 
-impl std::default::Default for ModalBackgroundProps {
+impl std::default::Default for SidePanelBackgroundProps {
     fn default() -> Self {
         Self {
             interactive: true,
@@ -215,8 +202,8 @@ impl std::default::Default for ModalBackgroundProps {
     }
 }
 
-pub fn ModalBackground(mut props: ModalBackgroundProps) -> Element {
-    let mut state = use_context::<Signal<ModalState>>();
+pub fn SidePanelBackground(mut props: SidePanelBackgroundProps) -> Element {
+    let mut state = use_context::<Signal<SidePanelState>>();
 
     props.update_class_attribute();
 
