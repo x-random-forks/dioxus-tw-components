@@ -15,7 +15,7 @@ impl std::default::Default for ToasterProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }

@@ -1,4 +1,4 @@
-pub use crate::attributes::{Animation, Color, Orientation, Size, Side};
+pub use crate::attributes::{Animation, Color, Orientation, Side, Size};
 
 pub use crate::components::atoms::{Button, ButtonVariant, Placeholder, Separator};
 

@@ -277,11 +277,11 @@ impl std::fmt::Display for Animation {
 
 #[derive(Default, Clone, Copy, PartialEq)]
 pub enum Side {
-    #[default]
     Top,
     Bottom,
     Left,
-    Right
+    #[default]
+    Right,
 }
 
 impl FromStr for Side {
@@ -300,10 +300,10 @@ impl FromStr for Side {
 impl std::fmt::Display for Side {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let s = match self {
-            Side::Top => "top",
-            Side::Bottom => "bottom",
-            Side::Left => "left",
-            Side::Right => "right",
+            Side::Top => "Top",
+            Side::Bottom => "Bottom",
+            Side::Left => "Left",
+            Side::Right => "Right",
         };
         f.write_str(s)
     }

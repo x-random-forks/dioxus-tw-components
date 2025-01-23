@@ -14,7 +14,7 @@ impl std::default::Default for BreadcrumbProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }
@@ -49,7 +49,7 @@ impl std::default::Default for BreadcrumbItemProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }
@@ -74,7 +74,7 @@ impl std::default::Default for BreadcrumbSeparatorProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }

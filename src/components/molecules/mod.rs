@@ -29,7 +29,9 @@ pub mod scrollable;
 pub use scrollable::Scrollable;
 
 pub mod sidepanel;
-pub use sidepanel::{SidePanel, SidePanelBackground, SidePanelClose, SidePanelContent, SidePanelTrigger};
+pub use sidepanel::{
+    SidePanel, SidePanelBackground, SidePanelClose, SidePanelContent, SidePanelTrigger,
+};
 
 pub mod table;
 pub use table::{

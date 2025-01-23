@@ -18,7 +18,7 @@ impl std::default::Default for SelectGroupProps {
         Self {
             attributes: Vec::<Attribute>::default(),
             oninput: EventHandler::<FormEvent>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }
@@ -45,7 +45,7 @@ impl std::default::Default for SelectPlaceholderProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }
@@ -86,7 +86,7 @@ impl std::default::Default for SelectItemProps {
         Self {
             attributes: Vec::<Attribute>::default(),
             selected: None,
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }

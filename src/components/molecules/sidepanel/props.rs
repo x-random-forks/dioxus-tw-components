@@ -39,7 +39,7 @@ impl std::default::Default for SidePanelProps {
     fn default() -> Self {
         Self {
             is_active: false,
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }
@@ -66,7 +66,7 @@ impl std::default::Default for SidePanelTriggerProps {
         Self {
             attributes: Vec::<Attribute>::default(),
             onclick: EventHandler::<MouseEvent>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }
@@ -100,7 +100,7 @@ impl std::default::Default for SidePanelCloseProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default()),
+            children: Ok(VNode::default()), // Default this way to be able to check the children in SidePanelClose
         }
     }
 }
@@ -156,7 +156,7 @@ impl std::default::Default for SidePanelContentProps {
             attributes: Vec::<Attribute>::default(),
             animation: ReadOnlySignal::<Animation>::default(),
             side: ReadOnlySignal::<Side>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }
@@ -197,7 +197,7 @@ impl std::default::Default for SidePanelBackgroundProps {
             color: ReadOnlySignal::<Color>::default(),
             animation: ReadOnlySignal::<Animation>::default(),
             onclick: EventHandler::<MouseEvent>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }

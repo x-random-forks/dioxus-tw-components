@@ -86,7 +86,7 @@ impl std::default::Default for HoverCardProps {
         Self {
             closing_delay_ms: 500,
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }
@@ -155,7 +155,7 @@ impl std::default::Default for HoverCardTriggerProps {
         Self {
             attributes: Vec::<Attribute>::default(),
             onclick: EventHandler::<MouseEvent>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }
@@ -198,7 +198,7 @@ impl std::default::Default for HoverCardContentProps {
         Self {
             attributes: Vec::<Attribute>::default(),
             animation: ReadOnlySignal::<Animation>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }

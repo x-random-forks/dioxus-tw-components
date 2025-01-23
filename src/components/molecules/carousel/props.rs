@@ -108,7 +108,7 @@ impl std::default::Default for CarouselProps {
             attributes: Vec::<Attribute>::default(),
             default_item_key: 0,
             is_circular: false,
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }
@@ -152,7 +152,7 @@ impl std::default::Default for CarouselWindowProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }
@@ -184,7 +184,7 @@ impl std::default::Default for CarouselContentProps {
             attributes: Vec::<Attribute>::default(),
             id: ReadOnlySignal::<String>::default(),
             animation: ReadOnlySignal::<Animation>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }
@@ -236,7 +236,7 @@ impl std::default::Default for CarouselItemProps {
         Self {
             item_key: 0,
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }

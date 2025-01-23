@@ -60,7 +60,7 @@ pub fn HomePage() -> Element {
                         CarouselTrigger { next: false }
                         CarouselWindow {
                             CarouselContent { id: "home-components-preview", class: "align-middle",
-                                CarouselItem { item_key: 0, class: "bg-gradient-to-r from-foreground/10 to-foreground/30",
+                                CarouselItem { item_key: 0, class: "bg-gradient-to-r from-foreground/10 to-foreground/20",
                                     div { class: "flex flex-row h-[6.5rem] items-center justify-center",
                                         div { class: "flex flex-grow items-center justify-center basis 1/3",
                                             Button { "Button" }
@@ -73,7 +73,7 @@ pub fn HomePage() -> Element {
                                         }
                                     }
                                 }
-                                CarouselItem { item_key: 1, class: "bg-gradient-to-r from-foreground/30 via-foreground/20 to-foreground/30",
+                                CarouselItem { item_key: 1, class: "bg-gradient-to-r from-foreground/20 via-foreground/10 to-foreground/20",
                                     div { class: "flex flex-row h-[6.5rem] items-center justify-center",
                                         div { class: "flex flex-grow items-center justify-center basis 1/3",
                                             Dropdown { id: "dropdown-preview-home",
@@ -108,7 +108,7 @@ pub fn HomePage() -> Element {
                                         }
                                     }
                                 }
-                                CarouselItem { item_key: 2, class: "bg-gradient-to-r from-foreground/30 to-foreground/10",
+                                CarouselItem { item_key: 2, class: "bg-gradient-to-r from-foreground/20 to-foreground/10",
                                     div { class: "flex flex-row h-[6.5rem] items-center justify-center",
                                         div { class: "flex flex-grow items-center justify-center basis 1/3",
                                             ButtonGroup {
@@ -138,9 +138,9 @@ pub fn HomePage() -> Element {
                 }
             }
         }
-        div { class: "fixed right-0 top-[15%] pr-20 text-center",
+        div { class: "fixed italic right-0 top-[15%] pr-20 text-center",
             p { "With a theme" }
-            p { "customizer" }
+            p { "customizer !" }
             svg {
                 xmlns: "http://www.w3.org/2000/svg",
                 view_box: "0 0 24 24",

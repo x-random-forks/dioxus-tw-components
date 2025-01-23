@@ -60,7 +60,7 @@ impl std::default::Default for FormListProps {
             attributes: Vec::<Attribute>::default(),
             max_size: 1,
             current_size: 1,
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }
@@ -111,7 +111,7 @@ impl std::default::Default for FormListTriggerMinusProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }

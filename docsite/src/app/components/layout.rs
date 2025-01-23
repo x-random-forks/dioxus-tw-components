@@ -20,6 +20,7 @@ pub fn SideBarComponent() -> Element {
         "Modal",
         "ProgressBar",
         "Scrollable",
+        "SidePanel",
         "SortedTable",
         "Table",
         "Tabs",

@@ -66,6 +66,13 @@ pub fn CompPreviewSelector<T: BuildClass + std::cmp::PartialEq + 'static>(
                     selector_type: SelectorType::Orientation,
                 }
             }
+            if comp_props.has_side() {
+                Selector {
+                    state,
+                    index,
+                    selector_type: SelectorType::Side,
+                }
+            }
         }
     )
 }
@@ -93,6 +100,7 @@ pub enum SelectorType {
     Size,
     Animation,
     Orientation,
+    Side,
 }
 
 impl SelectorType {
@@ -105,6 +113,10 @@ impl SelectorType {
                 .map(|a| a.to_string())
                 .collect(),
             SelectorType::Orientation => Orientation::into_vec()
+                .iter()
+                .map(|s| s.to_string())
+                .collect(),
+            SelectorType::Side => Side::into_vec()
                 .iter()
                 .map(|s| s.to_string())
                 .collect(),
@@ -124,6 +136,9 @@ impl SelectorType {
             }
             SelectorType::Orientation => {
                 field_preview.set_orientation(Orientation::from_str(value).unwrap_or_default());
+            }
+            SelectorType::Side => {
+                field_preview.set_side(Side::from_str(value).unwrap_or_default());
             }
         }
     }
@@ -146,6 +161,9 @@ impl std::fmt::Display for SelectorType {
                 }
                 SelectorType::Orientation => {
                     "Orientation"
+                }
+                SelectorType::Side => {
+                    "Side"
                 }
             }
         )
@@ -231,6 +249,7 @@ pub struct FieldPreview {
     size: Size,
     animation: Animation,
     orientation: Orientation,
+    side: Side,
 }
 
 impl FieldPreview {
@@ -282,5 +301,13 @@ impl FieldPreview {
     pub fn orientation(mut self, orientation: Orientation) -> Self {
         self.orientation = orientation;
         self
+    }
+
+    pub fn get_side(&self) -> Side {
+        self.side.clone()
+    }
+
+    pub fn set_side(&mut self, side: Side) {
+        self.side = side;
     }
 }

@@ -41,7 +41,7 @@ impl std::default::Default for ButtonProps {
             onmouseenter: EventHandler::<MouseEvent>::default(),
             onmouseleave: EventHandler::<MouseEvent>::default(),
             onfocus: EventHandler::<FocusEvent>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }

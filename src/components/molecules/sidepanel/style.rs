@@ -30,13 +30,15 @@ impl Class for SidePanelContentProps {
         Some(match *self.animation.read() {
             Animation::None => "",
             Animation::Light | Animation::Full => {
-                match *self.side.read() {
-                    Side::Top =>    "data-[state=inactive]:translate-y-[0%] data-[state=inactive]:opacity-0 transition-all duration-300",
-                    Side::Bottom => "data-[state=inactive]:translate-y-[0%] data-[state=inactive]:opacity-0 transition-all duration-300",
-                    Side::Left =>   "data-[state=inactive]:translate-x-[0%] data-[state=inactive]:opacity-0 transition-all duration-300",
-                    Side::Right =>  "data-[state=inactive]:translate-x-[0%] data-[state=inactive]:opacity-0 transition-all duration-300",
-                }
-            },
+                "data-[state=inactive]:opacity-0 transition-all duration-300"
+            }
+        })
+    }
+
+    fn side(&self) -> Option<&'static str> {
+        Some(match *self.side.read() {
+            Side::Top | Side::Bottom => "data-[state=inactive]:translate-y-[0%]",
+            Side::Left | Side::Right => "data-[state=inactive]:translate-x-[0%]",
         })
     }
 }
@@ -63,4 +65,3 @@ impl Class for SidePanelBackgroundProps {
         })
     }
 }
-

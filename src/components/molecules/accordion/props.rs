@@ -59,7 +59,7 @@ impl std::default::Default for AccordionProps {
         Self {
             attributes: Vec::<Attribute>::default(),
             multi_open: false,
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }
@@ -100,7 +100,7 @@ impl std::default::Default for AccordionItemProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }
@@ -140,7 +140,7 @@ impl std::default::Default for AccordionTriggerProps {
             id: ReadOnlySignal::<String>::default(),
             is_open: false,
             trigger_decoration: default_trigger_decoration(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }
@@ -218,7 +218,7 @@ impl std::default::Default for AccordionContentProps {
             attributes: Vec::<Attribute>::default(),
             id: ReadOnlySignal::<String>::default(),
             animation: ReadOnlySignal::<Animation>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }

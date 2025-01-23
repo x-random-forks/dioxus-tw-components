@@ -24,7 +24,7 @@ impl std::default::Default for ButtonGroupProps {
             color: ReadOnlySignal::<Color>::default(),
             size: ReadOnlySignal::<Size>::default(),
             animation: ReadOnlySignal::<Animation>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }
@@ -87,7 +87,7 @@ impl std::default::Default for ButtonGroupItemProps {
             onmouseenter: EventHandler::<MouseEvent>::default(),
             onmouseleave: EventHandler::<MouseEvent>::default(),
             onfocus: EventHandler::<FocusEvent>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }

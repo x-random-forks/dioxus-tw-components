@@ -20,7 +20,7 @@ impl std::default::Default for TabsProps {
         Self {
             default_tab: ReadOnlySignal::<String>::default(),
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }
@@ -47,7 +47,7 @@ impl std::default::Default for TabsListProps {
     fn default() -> Self {
         Self {
             attributes: Vec::<Attribute>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }
@@ -76,7 +76,7 @@ impl std::default::Default for TabsTriggerProps {
         Self {
             attributes: Vec::<Attribute>::default(),
             id: ReadOnlySignal::<String>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }
@@ -116,7 +116,7 @@ impl std::default::Default for TabsContentProps {
         Self {
             attributes: Vec::<Attribute>::default(),
             id: ReadOnlySignal::<String>::default(),
-            children: Ok(VNode::default()),
+            children: rsx! {},
         }
     }
 }
