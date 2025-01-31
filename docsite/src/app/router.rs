@@ -35,7 +35,7 @@ pub fn NotFound(route: Vec<String>) -> Element {
                         "We couldn't find that page."
                     }
                     p {
-                        "Please check the URL or go bak to "
+                        "Please check the URL or go back to "
                         Link { to: Route::HomePage {}, strong { "Home Page." } }
                     }
                 }
