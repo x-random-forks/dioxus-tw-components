@@ -26,12 +26,25 @@ impl LightSwitchState {
     }
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct LightSwitchProps {
     #[props(extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 
+    #[props(optional)]
+    pub onclick: Option<EventHandler<MouseEvent>>,
+
     children: Element,
+}
+
+impl std::default::Default for LightSwitchProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            onclick: None,
+            children: rsx! {},
+        }
+    }
 }
 
 /// This component inserts/remove "dark" in the DOM on the div with id of main
@@ -40,7 +53,7 @@ pub fn LightSwitch(mut props: LightSwitchProps) -> Element {
 
     let storage_dark_theme = use_resource(move || async move {
         // Get dark_theme from localStorage, if not found add it to false
-        let mut eval = eval(
+        let mut eval = document::eval(
             r#"
             var dark_theme = localStorage.getItem("dark_theme");
             if (dark_theme == null) {
@@ -70,11 +83,11 @@ pub fn LightSwitch(mut props: LightSwitchProps) -> Element {
         };
     });
 
-    let onclick = move |_| {
+    let mut onclick = move |_| {
         let dark_theme = state.write().toggle();
         spawn(async move {
             // Change value of dark_theme in localStorage
-            let eval = eval(
+            let eval = document::eval(
                 r#"
                 const dark_theme = await dioxus.recv();
                 localStorage.setItem("dark_theme", dark_theme);
@@ -88,14 +101,27 @@ pub fn LightSwitch(mut props: LightSwitchProps) -> Element {
                 }
                 "#,
             );
-            let _ = eval.send(dark_theme.into());
+            let _ = eval.send(dark_theme);
         });
     };
 
     let icon = svg_icon(state);
 
     rsx!(
-        button { r#type: "button", ..props.attributes, onclick, {icon} }
+        button {
+            r#type: "button",
+            onclick: move |e| {
+                match props.onclick {
+                    Some(p) => {
+                        state.write().toggle();
+                        p.call(e);
+                    },
+                    None => onclick(e),
+                }
+            },
+            ..props.attributes,
+            {icon}
+        }
     )
 }
 
@@ -116,49 +142,49 @@ fn svg_icon(state: Signal<LightSwitchState>) -> Element {
                     x1: 12,
                     y1: 1,
                     x2: 12,
-                    y2: 3
+                    y2: 3,
                 }
                 line {
                     x1: 12,
                     y1: 21,
                     x2: 12,
-                    y2: 23
+                    y2: 23,
                 }
                 line {
                     x1: 4.22,
                     y1: 4.22,
                     x2: 5.64,
-                    y2: 5.64
+                    y2: 5.64,
                 }
                 line {
                     x1: 18.36,
                     y1: 18.36,
                     x2: 19.78,
-                    y2: 19.78
+                    y2: 19.78,
                 }
                 line {
                     x1: 1,
                     y1: 12,
                     x2: 3,
-                    y2: 12
+                    y2: 12,
                 }
                 line {
                     x1: 21,
                     y1: 12,
                     x2: 23,
-                    y2: 12
+                    y2: 12,
                 }
                 line {
                     x1: 4.22,
                     y1: 19.78,
                     x2: 5.64,
-                    y2: 18.36
+                    y2: 18.36,
                 }
                 line {
                     x1: 18.36,
                     y1: 5.64,
                     x2: 19.78,
-                    y2: 4.22
+                    y2: 4.22,
                 }
             }
         } else {

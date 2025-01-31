@@ -24,7 +24,10 @@ impl DemoComponent for TextAreaProps {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
-            TextArea { class: state.read()[&0].get_class(), color: state.read()[&0].get_color() }
+            TextArea {
+                class: state.read()[&0].get_class(),
+                color: state.read()[&0].get_color(),
+            }
         )
     }
 

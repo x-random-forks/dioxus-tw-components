@@ -20,6 +20,7 @@ pub fn SideBarComponent() -> Element {
         "Modal",
         "ProgressBar",
         "Scrollable",
+        "SidePanel",
         "SortedTable",
         "Table",
         "Tabs",
@@ -38,14 +39,16 @@ pub fn SideBarComponent() -> Element {
     rsx!(
         div {
             id: "component-div",
-            class: "container grid grid-cols-[220px_minmax(0,1fr)] space-x-10",
+            class: "container grid grid-cols-[220px_minmax(0,1fr)] space-x-10 mb-12",
             aside { id: "components-list-link", class: "space-y-2",
                 for component in components {
                     if component.is_empty() {
                         Separator {}
                     } else {
                         p { class: "anchor",
-                            Link { to: format!("/components/{}", component.to_lowercase()), {component} }
+                            Link { to: format!("/components/{}", component.to_lowercase()),
+                                {component}
+                            }
                         }
                     }
                 }

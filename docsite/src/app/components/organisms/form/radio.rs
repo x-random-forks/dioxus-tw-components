@@ -33,7 +33,7 @@ impl DemoComponent for RadioProps {
                         Radio {
                             class: state.read()[&i].get_class(),
                             color: state.read()[&i].get_color(),
-                            size: state.read()[&i].get_size()
+                            size: state.read()[&i].get_size(),
                         }
                     }
                 }

@@ -2,6 +2,7 @@ pub mod button;
 pub use button::{Button, ButtonVariant};
 
 pub mod buttongroup;
+pub use buttongroup::{ButtonGroup, ButtonGroupItem};
 
 /// A placeholder/skeleton
 pub mod placeholder;

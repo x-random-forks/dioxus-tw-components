@@ -1,17 +1,28 @@
+use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
-use crate::attributes::*;
 
 struct TabsState(String);
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct TabsProps {
-    #[props(optional)] default_tab: ReadOnlySignal<String>,
+    #[props(optional)]
+    default_tab: ReadOnlySignal<String>,
 
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 
-    children: Element
+    children: Element,
+}
+
+impl std::default::Default for TabsProps {
+    fn default() -> Self {
+        Self {
+            default_tab: ReadOnlySignal::<String>::default(),
+            attributes: Vec::<Attribute>::default(),
+            children: rsx! {},
+        }
+    }
 }
 
 pub fn Tabs(mut props: TabsProps) -> Element {
@@ -20,27 +31,36 @@ pub fn Tabs(mut props: TabsProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        div { ..props.attributes, {props.children} }
+        div { ..props.attributes,{props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct TabsListProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 
-    children: Element
+    children: Element,
+}
+
+impl std::default::Default for TabsListProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: rsx! {},
+        }
+    }
 }
 
 pub fn TabsList(mut props: TabsListProps) -> Element {
     props.update_class_attribute();
-    
+
     rsx!(
-        div { ..props.attributes, {props.children} }
+        div { ..props.attributes,{props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct TabsTriggerProps {
     #[props(extends = button, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -49,6 +69,16 @@ pub struct TabsTriggerProps {
     id: ReadOnlySignal<String>,
 
     children: Element,
+}
+
+impl std::default::Default for TabsTriggerProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            id: ReadOnlySignal::<String>::default(),
+            children: rsx! {},
+        }
+    }
 }
 
 pub fn TabsTrigger(mut props: TabsTriggerProps) -> Element {
@@ -66,11 +96,11 @@ pub fn TabsTrigger(mut props: TabsTriggerProps) -> Element {
     };
 
     rsx!(
-        button { "data-state": state, ..props.attributes, onclick, { props.children } }
+        button { onclick, "data-state": state, ..props.attributes, {props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct TabsContentProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -78,7 +108,17 @@ pub struct TabsContentProps {
     #[props(optional)]
     id: ReadOnlySignal<String>,
 
-    children: Element
+    children: Element,
+}
+
+impl std::default::Default for TabsContentProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            id: ReadOnlySignal::<String>::default(),
+            children: rsx! {},
+        }
+    }
 }
 
 pub fn TabsContent(mut props: TabsContentProps) -> Element {
@@ -92,6 +132,6 @@ pub fn TabsContent(mut props: TabsContentProps) -> Element {
     };
 
     rsx!(
-        div { ..props.attributes, "data-state": state, hidden: is_hidden, { props.children } }
+        div { "data-state": state, hidden: is_hidden, ..props.attributes, {props.children} }
     )
 }

@@ -2,7 +2,7 @@ use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Default, Clone, PartialEq, Props, UiComp)]
 pub struct SliderProps {
     #[props(extends = input, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -27,16 +27,16 @@ pub fn Slider(mut props: SliderProps) -> Element {
 
     rsx!(
         input {
-            ..props.attributes,
+            onmounted,
+            oninput,
             r#type: "range",
             value: props.value,
-            onmounted,
-            oninput
+            ..props.attributes,
         }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct SliderTicksProps {
     #[props(optional, default = 10)]
     step: i64,
@@ -49,11 +49,22 @@ pub struct SliderTicksProps {
     attributes: Vec<Attribute>,
 }
 
+impl std::default::Default for SliderTicksProps {
+    fn default() -> Self {
+        Self {
+            step: 10,
+            min: 0,
+            max: 100,
+            attributes: Vec::<Attribute>::default(),
+        }
+    }
+}
+
 pub fn SliderTicks(mut props: SliderTicksProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        datalist { ..props.attributes,
+        datalist {..props.attributes,
             for i in props.min..props.max {
                 if i % props.step == 0 {
                     option { value: i }
@@ -64,7 +75,7 @@ pub fn SliderTicks(mut props: SliderTicksProps) -> Element {
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct SliderLabelProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -75,12 +86,22 @@ pub struct SliderLabelProps {
     max: i64,
 }
 
+impl std::default::Default for SliderLabelProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            value: 0,
+            max: 100,
+        }
+    }
+}
+
 pub fn SliderLabel(mut props: SliderLabelProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        div { ..props.attributes,
-            {props.value.to_string()},
+        div {..props.attributes,
+            {props.value.to_string()}
             " / "
             {props.max.to_string()}
         }

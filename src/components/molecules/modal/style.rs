@@ -22,7 +22,7 @@ impl Class for ModalContentProps {
     fn base(&self) -> &'static str {
         "p-4 flex flex-col top-[50%] left-[50%] z-50 min-w-96 bg-background border border-border rounded-global-radius fixed translate-x-[-50%] translate-y-[-50%] data-[state=inactive]:invisible"
     }
-    
+
     fn animation(&self) -> Option<&'static str> {
         Some(match *self.animation.read() {
             Animation::None => "",
@@ -42,10 +42,10 @@ impl Class for ModalBackgroundProps {
             Color::Secondary => "bg-secondary",
             Color::Destructive => "bg-destructive",
             Color::Success => "bg-success",
-             _ => "bg-foreground",
+            _ => "bg-foreground",
         })
     }
-    
+
     fn animation(&self) -> Option<&'static str> {
         Some(match *self.animation.read() {
             Animation::None => "",
@@ -53,4 +53,3 @@ impl Class for ModalBackgroundProps {
         })
     }
 }
-

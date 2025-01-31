@@ -27,7 +27,7 @@ impl DemoComponent for PlaceholderProps {
             Placeholder {
                 class: state.read()[&0].get_class(),
                 color: state.read()[&0].get_color(),
-                animation: state.read()[&0].get_animation()
+                animation: state.read()[&0].get_animation(),
             }
         )
     }
@@ -36,7 +36,11 @@ impl DemoComponent for PlaceholderProps {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
-            CompPreviewSelector::<PlaceholderProps> { index: 0, state, comp_props: PlaceholderProps::default() }
+            CompPreviewSelector::<PlaceholderProps> {
+                index: 0,
+                state,
+                comp_props: PlaceholderProps::default(),
+            }
         )
     }
 }

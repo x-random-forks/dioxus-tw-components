@@ -69,7 +69,7 @@ impl IntoAttributeValue for HoverState {
     }
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct HoverCardProps {
     /// Corresponds to the time in ms it takes for the toggle to close itself if not hovered
     #[props(default = 500)]
@@ -79,6 +79,16 @@ pub struct HoverCardProps {
     attributes: Vec<Attribute>,
 
     children: Element,
+}
+
+impl std::default::Default for HoverCardProps {
+    fn default() -> Self {
+        Self {
+            closing_delay_ms: 500,
+            attributes: Vec::<Attribute>::default(),
+            children: rsx! {},
+        }
+    }
 }
 
 pub fn HoverCard(mut props: HoverCardProps) -> Element {
@@ -120,16 +130,16 @@ pub fn HoverCard(mut props: HoverCardProps) -> Element {
 
     rsx!(
         div {
-            ..props.attributes,
             "data-state": state.into_value(),
             onmouseenter,
             onmouseleave,
+            ..props.attributes,
             {props.children}
         }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct HoverCardTriggerProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -138,6 +148,16 @@ pub struct HoverCardTriggerProps {
     onclick: EventHandler<MouseEvent>,
 
     children: Element,
+}
+
+impl std::default::Default for HoverCardTriggerProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            onclick: EventHandler::<MouseEvent>::default(),
+            children: rsx! {},
+        }
+    }
 }
 
 pub fn HoverCardTrigger(mut props: HoverCardTriggerProps) -> Element {
@@ -153,16 +173,16 @@ pub fn HoverCardTrigger(mut props: HoverCardTriggerProps) -> Element {
 
     rsx!(
         div {
-            ..props.attributes,
             role: "button",
             "data-state": state.into_value(),
             onclick,
+            ..props.attributes,
             {props.children}
         }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct HoverCardContentProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -171,6 +191,16 @@ pub struct HoverCardContentProps {
     pub animation: ReadOnlySignal<Animation>,
 
     children: Element,
+}
+
+impl std::default::Default for HoverCardContentProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            animation: ReadOnlySignal::<Animation>::default(),
+            children: rsx! {},
+        }
+    }
 }
 
 pub fn HoverCardContent(mut props: HoverCardContentProps) -> Element {
@@ -216,10 +246,10 @@ pub fn HoverCardContent(mut props: HoverCardContentProps) -> Element {
 
     rsx!(
         div {
-            ..props.attributes,
             style: position,
             "data-state": state.into_value(),
             onmounted,
+            ..props.attributes,
             {props.children}
         }
     )

@@ -25,7 +25,7 @@ impl DemoComponent for TabsProps {
 
         rsx!(
             Tabs { default_tab: "tabs-0", class: state.read()[&0].get_class(),
-                TabsList { 
+                TabsList {
                     TabsTrigger { id: "tabs-0", "Home" }
                     TabsTrigger { id: "tabs-1", "About" }
                     TabsTrigger { id: "tabs-2", "Contact" }

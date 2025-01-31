@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 use dioxus_components::{
     atoms::Button,
-    molecules::{toast::use_toast, Toast},
+    molecules::{toast::use_toast, Toast, ToastRenderer},
 };
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
@@ -26,21 +26,18 @@ impl DemoComponent for Toast {
     fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
-        let toast = use_toast();
+        let mut toast = use_toast();
 
         rsx!(
             Button {
                 onclick: move |_| {
-                    toast
-                        .read()(
-                        Toast::default()
-                            .title("Title")
+                    toast.title("Title")
                             .description(rsx! {
                                 div { "Content" }
                             })
                             .color(state.read()[&0].get_color())
-                            .animation(state.read()[&0].get_animation()),
-                    )
+                            .animation(state.read()[&0].get_animation())
+                            .render();
                 },
                 "Toasting"
             }

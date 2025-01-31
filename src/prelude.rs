@@ -1,4 +1,4 @@
-pub use crate::attributes::{Animation, Color, Orientation, Size};
+pub use crate::attributes::{Animation, Color, Orientation, Side, Size};
 
 pub use crate::components::atoms::{Button, ButtonVariant, Placeholder, Separator};
 
@@ -20,6 +20,9 @@ pub use crate::components::molecules::{
 };
 pub use crate::components::molecules::{ProgressBar, ProgressBarInner, ProgressLabel};
 pub use crate::components::molecules::{
+    SidePanel, SidePanelBackground, SidePanelClose, SidePanelContent, SidePanelTrigger,
+};
+pub use crate::components::molecules::{
     Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow,
 };
 pub use crate::components::molecules::{Tabs, TabsContent, TabsList, TabsTrigger};
@@ -37,4 +40,3 @@ pub use crate::hooks;
 pub use crate::theme::{
     ColorChoice, ExportToCss, HslColor, RadiusCss, Theme, ThemeManager, ThemePicker, ToStyle,
 };
-

@@ -12,7 +12,7 @@ pub use component::ThemePicker;
 #[derive(Debug, Clone)]
 pub struct ThemeManager {
     themes: Vec<Theme>,
-    current_theme: usize,
+    pub current_theme: usize,
 }
 
 impl std::default::Default for ThemeManager {

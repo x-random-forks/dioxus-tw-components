@@ -2,7 +2,7 @@ use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct SelectGroupProps {
     #[props(extends = select, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -13,22 +13,41 @@ pub struct SelectGroupProps {
     children: Element,
 }
 
+impl std::default::Default for SelectGroupProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            oninput: EventHandler::<FormEvent>::default(),
+            children: rsx! {},
+        }
+    }
+}
+
 pub fn SelectGroup(mut props: SelectGroupProps) -> Element {
     props.update_class_attribute();
 
     let oninput = move |event| props.oninput.call(event);
 
     rsx!(
-        select { ..props.attributes, oninput: oninput, {props.children} }
+        select { oninput, ..props.attributes, {props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct SelectPlaceholderProps {
     #[props(extends = option, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 
     children: Element,
+}
+
+impl std::default::Default for SelectPlaceholderProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: rsx! {},
+        }
+    }
 }
 
 pub fn SelectPlaceholder(mut props: SelectPlaceholderProps) -> Element {
@@ -39,7 +58,7 @@ pub fn SelectPlaceholder(mut props: SelectPlaceholderProps) -> Element {
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Default, Clone, PartialEq, Props, UiComp)]
 pub struct SelectLabelProps {
     #[props(extends = optgroup, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -48,12 +67,10 @@ pub struct SelectLabelProps {
 pub fn SelectLabel(mut props: SelectLabelProps) -> Element {
     props.update_class_attribute();
 
-    rsx!(
-        optgroup { ..props.attributes }
-    )
+    rsx!(optgroup { ..props.attributes })
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct SelectItemProps {
     #[props(extends = option, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -64,16 +81,26 @@ pub struct SelectItemProps {
     children: Element,
 }
 
+impl std::default::Default for SelectItemProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            selected: None,
+            children: rsx! {},
+        }
+    }
+}
+
 pub fn SelectItem(mut props: SelectItemProps) -> Element {
     props.update_class_attribute();
 
     if let Some(selected) = props.selected {
         rsx!(
-            option { ..props.attributes, selected, {props.children} }
+            option { selected, ..props.attributes, {props.children} }
         )
     } else {
         rsx!(
-            option { ..props.attributes, {props.children} }
+            option { ..props.attributes,{props.children} }
         )
     }
 }

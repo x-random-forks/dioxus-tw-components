@@ -39,11 +39,11 @@ impl DemoComponent for FormListProps {
         let button_class = "w-10";
 
         rsx!(
-            FormList { 
-                FormListTriggerMinus { 
+            FormList {
+                FormListTriggerMinus {
                     Button { class: button_class, "-" }
                 }
-                FormListTriggerPlus { 
+                FormListTriggerPlus {
                     Button { class: button_class, "+" }
                 }
                 FormListContent { list_fields }
@@ -52,6 +52,6 @@ impl DemoComponent for FormListProps {
     }
 
     fn BuildCompSelectors() -> Element {
-        rsx!(  )
+        rsx!()
     }
 }

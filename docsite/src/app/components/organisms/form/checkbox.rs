@@ -33,7 +33,7 @@ impl DemoComponent for CheckboxProps {
                         Checkbox {
                             class: state.read()[&i].get_class(),
                             color: state.read()[&i].get_color(),
-                            size: state.read()[&i].get_size()
+                            size: state.read()[&i].get_size(),
                         }
                     }
                 }
@@ -46,7 +46,11 @@ impl DemoComponent for CheckboxProps {
 
         rsx!(
             for index in 0..3 {
-                CompPreviewSelector::<CheckboxProps> { index, state, comp_props: CheckboxProps::default() }
+                CompPreviewSelector::<CheckboxProps> {
+                    index,
+                    state,
+                    comp_props: CheckboxProps::default(),
+                }
             }
         )
     }

@@ -1,8 +1,7 @@
 use super::props::*;
 use crate::attributes::*;
 
-impl Class for FormListProps {
-}
+impl Class for FormListProps {}
 
 impl Class for FormListTriggerPlusProps {}
 
