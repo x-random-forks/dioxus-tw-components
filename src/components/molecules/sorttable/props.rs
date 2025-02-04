@@ -1,33 +1,42 @@
 use crate::prelude::*;
 use dioxus::prelude::*;
 
+pub trait TableData: Ord + ToString {}
 pub trait ToTableData {
-    fn headers_to_strings() -> Vec<&'static str>;
-    fn to_keytype(&self) -> Vec<KeyType>;
+    fn headers_to_strings() -> Vec<impl ToString>;
+    fn to_keytype<T: Ord + ToString>(&self) -> Vec<KeyType<T>>;
 }
 
 // Used to change the sorting type of the data (eg if a field is number we will not sort the same way as string)
 #[derive(Clone, PartialEq, Eq, PartialOrd, Ord)]
-pub enum KeyType {
+pub enum KeyType<T: Ord + ToString> {
     String(String),
-    Number(isize),
+    Integer(i128),
+    UnsignedInteger(u128),
+    Object(T),
 }
 
-impl std::fmt::Display for KeyType {
+impl<T: Ord + ToString> std::fmt::Display for KeyType<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             KeyType::String(str) => {
                 write!(f, "{str}")
             }
-            KeyType::Number(nb) => {
+            KeyType::Integer(nb) => {
                 write!(f, "{nb}")
+            }
+            KeyType::UnsignedInteger(nb) => {
+                write!(f, "{nb}")
+            }
+            KeyType::Object(data) => {
+                write!(f, "{}", data.to_string())
             }
         }
     }
 }
 
 #[derive(Clone, PartialEq, Props)]
-pub struct SortableTableProps<T: 'static + std::clone::Clone + std::cmp::PartialEq + ToTableData> {
+pub struct SortTableProps<T: 'static + std::clone::Clone + std::cmp::PartialEq + ToTableData> {
     #[props(extends = caption, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 
@@ -36,15 +45,15 @@ pub struct SortableTableProps<T: 'static + std::clone::Clone + std::cmp::Partial
     children: Element,
 }
 
-pub struct TestState<T: ToTableData> {
+pub struct SortTableState<T: ToTableData> {
     data: Vec<T>,
     sorted_col_index: usize,
     sort_ascending: bool,
 }
 
-impl<T: ToTableData> TestState<T> {
+impl<T: ToTableData> SortTableState<T> {
     pub fn new(data: Vec<T>) -> Self {
-        TestState {
+        SortTableState {
             data,
             sorted_col_index: 0,
             sort_ascending: true,
@@ -76,19 +85,22 @@ impl<T: ToTableData> TestState<T> {
     }
 }
 
-fn sort_table_keytype<T: ToTableData, F>(data: &mut Vec<T>, key_extractor: F)
+fn sort_table_keytype<T: ToTableData, F, K: Ord + ToString>(data: &mut Vec<T>, key_extractor: F)
 where
-    F: Fn(&T) -> KeyType,
+    F: Fn(&T) -> KeyType<K>,
 {
     data.sort_by_key(key_extractor);
 }
 
 // TODO Find a way to add the derive UiComp to the component
 // Need to edit the dioxus_components_macro crate
-pub fn SortableTable<T: 'static + std::clone::Clone + std::cmp::PartialEq + ToTableData>(
-    props: SortableTableProps<T>,
+pub fn SortTable<
+    T: std::clone::Clone + std::cmp::PartialEq + ToTableData,
+    K: Ord + ToString + Clone,
+>(
+    props: SortTableProps<T>,
 ) -> Element {
-    let mut state = use_context_provider(|| Signal::new(TestState::<T>::new(props.data)));
+    let mut state = use_context_provider(|| Signal::new(SortTableState::<T>::new(props.data)));
 
     rsx!(
         Table {
@@ -104,13 +116,13 @@ pub fn SortableTable<T: 'static + std::clone::Clone + std::cmp::PartialEq + ToTa
                             } else {
                                 sort_table_keytype(
                                     &mut state.write().data,
-                                    |t: &T| t.to_keytype()[index].clone(),
+                                    |t: &T| t.to_keytype::<K>()[index].clone(),
                                 );
                                 state.write().set_sort_ascending(true);
                             }
                             state.write().set_sorted_col_index(index);
                         },
-                        {head},
+                        {head.to_string()},
                         if state.read().get_sorted_col_index() == index {
                             svg {
                                 xmlns: "http://www.w3.org/2000/svg",
@@ -128,7 +140,7 @@ pub fn SortableTable<T: 'static + std::clone::Clone + std::cmp::PartialEq + ToTa
             TableBody {
                 for data in state.read().data.iter() {
                     TableRow {
-                        for field in data.to_keytype().into_iter() {
+                        for field in data.to_keytype::<K>().into_iter() {
                             TableCell { {field.to_string()} }
                         }
                     }

@@ -1,14 +1,38 @@
 use dioxus::prelude::*;
-use dioxus_components::molecules::sortable_table::{KeyType, SortableTable, ToTableData};
+use dioxus_components::molecules::sorttable::{KeyType, SortTable, TableData, ToTableData};
 
 #[component]
-pub fn SortedTablePage() -> Element {
+pub fn SortedTablePage<K: TableData + Clone + 'static>() -> Element {
     let vec_user = UserTab::get_10_users();
 
     rsx!(
         "Sorted Table"
-        SortableTable { data: vec_user }
+        SortTable::<UserTab, K> { data: vec_user }
     )
+}
+
+#[derive(PartialEq, Eq, PartialOrd, Ord, Clone, Debug)]
+struct TestUser {
+    name: String,
+    age: u32,
+}
+impl TableData for TestUser {}
+impl std::fmt::Display for TestUser {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{} ({})", self.name, self.age)
+    }
+}
+
+#[derive(PartialEq, Eq, PartialOrd, Ord, Clone, Debug)]
+struct TestProject {
+    slug: String,
+    id: u64,
+}
+impl TableData for TestProject {}
+impl std::fmt::Display for TestProject {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{} ({})", self.slug, self.id)
+    }
 }
 
 #[derive(PartialEq, Clone, Debug)]
@@ -23,28 +47,32 @@ struct UserTab {
     libft: u64,
     gnl: u64,
     printf: u64,
+    user: TestUser,
+    project: TestProject,
 }
 
 impl ToTableData for UserTab {
-    fn headers_to_strings() -> Vec<&'static str> {
+    fn headers_to_strings() -> Vec<impl ToString> {
         vec![
             "login", "status", "exam2", "exam3", "exam4", "exam5", "exam6", "libft", "gnl",
-            "printf",
+            "printf", "user",
         ]
     }
 
-    fn to_keytype(&self) -> Vec<KeyType> {
+    fn to_keytype<T: TableData>(&self) -> Vec<KeyType<T>> {
         vec![
             KeyType::String(self.login.to_string()),
             KeyType::String(self.status.to_string()),
-            KeyType::Number(self.exam2.into()),
-            KeyType::Number(self.exam3.into()),
-            KeyType::Number(self.exam4.into()),
-            KeyType::Number(self.exam5.into()),
-            KeyType::Number(self.exam6.into()),
-            KeyType::Number(self.libft.into()),
-            KeyType::Number(self.gnl.into()),
-            KeyType::Number(self.printf.into()),
+            KeyType::UnsignedInteger(self.exam2.into()),
+            KeyType::UnsignedInteger(self.exam3.into()),
+            KeyType::UnsignedInteger(self.exam4.into()),
+            KeyType::UnsignedInteger(self.exam5.into()),
+            KeyType::UnsignedInteger(self.exam6.into()),
+            KeyType::UnsignedInteger(self.libft.into()),
+            KeyType::UnsignedInteger(self.gnl.into()),
+            KeyType::UnsignedInteger(self.printf.into()),
+            KeyType::Object(self.user),
+            KeyType::Object(self.project),
         ]
     }
 }
@@ -63,6 +91,14 @@ impl UserTab {
                 libft: 100,
                 gnl: 95,
                 printf: 98,
+                user: TestUser {
+                    name: "John".to_string(),
+                    age: 25,
+                },
+                project: TestProject {
+                    slug: "project1".to_string(),
+                    id: 1,
+                },
             },
             UserTab {
                 login: "user2",
@@ -75,6 +111,14 @@ impl UserTab {
                 libft: 90,
                 gnl: 88,
                 printf: 92,
+                user: TestUser {
+                    name: "Jane".to_string(),
+                    age: 23,
+                },
+                project: TestProject {
+                    slug: "project2".to_string(),
+                    id: 2,
+                },
             },
             UserTab {
                 login: "user3",
@@ -87,6 +131,14 @@ impl UserTab {
                 libft: 100,
                 gnl: 100,
                 printf: 100,
+                user: TestUser {
+                    name: "Alice".to_string(),
+                    age: 27,
+                },
+                project: TestProject {
+                    slug: "project3".to_string(),
+                    id: 3,
+                },
             },
             UserTab {
                 login: "user4",
@@ -99,6 +151,14 @@ impl UserTab {
                 libft: 95,
                 gnl: 98,
                 printf: 96,
+                user: TestUser {
+                    name: "Bob".to_string(),
+                    age: 26,
+                },
+                project: TestProject {
+                    slug: "project4".to_string(),
+                    id: 4,
+                },
             },
             UserTab {
                 login: "user5",
@@ -111,6 +171,14 @@ impl UserTab {
                 libft: 85,
                 gnl: 82,
                 printf: 88,
+                user: TestUser {
+                    name: "Eve".to_string(),
+                    age: 24,
+                },
+                project: TestProject {
+                    slug: "project5".to_string(),
+                    id: 5,
+                },
             },
             UserTab {
                 login: "user6",
@@ -123,6 +191,14 @@ impl UserTab {
                 libft: 100,
                 gnl: 99,
                 printf: 100,
+                user: TestUser {
+                    name: "Charlie".to_string(),
+                    age: 28,
+                },
+                project: TestProject {
+                    slug: "project6".to_string(),
+                    id: 6,
+                },
             },
             UserTab {
                 login: "user7",
@@ -135,6 +211,14 @@ impl UserTab {
                 libft: 98,
                 gnl: 97,
                 printf: 99,
+                user: TestUser {
+                    name: "David".to_string(),
+                    age: 29,
+                },
+                project: TestProject {
+                    slug: "project7".to_string(),
+                    id: 7,
+                },
             },
             UserTab {
                 login: "user8",
@@ -147,6 +231,14 @@ impl UserTab {
                 libft: 80,
                 gnl: 78,
                 printf: 82,
+                user: TestUser {
+                    name: "Frank".to_string(),
+                    age: 30,
+                },
+                project: TestProject {
+                    slug: "project8".to_string(),
+                    id: 8,
+                },
             },
             UserTab {
                 login: "user9",
@@ -159,6 +251,14 @@ impl UserTab {
                 libft: 100,
                 gnl: 100,
                 printf: 100,
+                user: TestUser {
+                    name: "Grace".to_string(),
+                    age: 31,
+                },
+                project: TestProject {
+                    slug: "project9".to_string(),
+                    id: 9,
+                },
             },
             UserTab {
                 login: "user10",
@@ -171,6 +271,14 @@ impl UserTab {
                 libft: 96,
                 gnl: 94,
                 printf: 97,
+                user: TestUser {
+                    name: "Helen".to_string(),
+                    age: 32,
+                },
+                project: TestProject {
+                    slug: "project10".to_string(),
+                    id: 10,
+                },
             },
         ]
     }

@@ -33,8 +33,8 @@ pub use sidepanel::{
     SidePanel, SidePanelBackground, SidePanelClose, SidePanelContent, SidePanelTrigger,
 };
 
-pub mod sortable_table;
-pub use sortable_table::SortableTable;
+pub mod sorttable;
+pub use sorttable::SortTable;
 
 pub mod table;
 pub use table::{
