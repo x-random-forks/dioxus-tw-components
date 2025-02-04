@@ -10,7 +10,7 @@ pub trait ToTableData {
 #[derive(Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum KeyType {
     String(String),
-    Number(i128),
+    Number(isize),
 }
 
 impl std::fmt::Display for KeyType {
@@ -26,7 +26,7 @@ impl std::fmt::Display for KeyType {
     }
 }
 
-#[derive(Clone, Default, PartialEq, Props)]
+#[derive(Clone, PartialEq, Props)]
 pub struct SortableTableProps<T: 'static + std::clone::Clone + std::cmp::PartialEq + ToTableData> {
     #[props(extends = caption, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
