@@ -170,7 +170,21 @@ pub struct HoverCardContentProps {
     #[props(optional, default)]
     pub animation: ReadOnlySignal<Animation>,
 
+    #[props(default = true)]
+    pub apply_position: bool,
+
     children: Element,
+}
+
+impl std::default::Default for HoverCardContentProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            animation: ReadOnlySignal::<Animation>::default(),
+            apply_position: true,
+            children: rsx! {},
+        }
+    }
 }
 
 pub fn HoverCardContent(mut props: HoverCardContentProps) -> Element {
@@ -217,7 +231,7 @@ pub fn HoverCardContent(mut props: HoverCardContentProps) -> Element {
     rsx!(
         div {
             ..props.attributes,
-            style: position,
+            style: if props.apply_position { position },
             "data-state": state.into_value(),
             onmounted,
             {props.children}
