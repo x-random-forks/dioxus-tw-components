@@ -42,7 +42,7 @@ impl AccordionState {
     }
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct AccordionProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -52,6 +52,16 @@ pub struct AccordionProps {
     multi_open: bool,
 
     children: Element,
+}
+
+impl std::default::Default for AccordionProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            multi_open: false,
+            children: rsx! {},
+        }
+    }
 }
 
 /// The Accordion component divides the content into collapsible items \
@@ -74,11 +84,11 @@ pub fn Accordion(mut props: AccordionProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        div { ..props.attributes, {props.children} }
+        div { ..props.attributes,{props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct AccordionItemProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -86,16 +96,25 @@ pub struct AccordionItemProps {
     children: Element,
 }
 
+impl std::default::Default for AccordionItemProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: rsx! {},
+        }
+    }
+}
+
 /// Wrapper for the [AccordionTrigger] and [AccordionContent] components
 pub fn AccordionItem(mut props: AccordionItemProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        div { ..props.attributes, {props.children} }
+        div { ..props.attributes,{props.children} }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct AccordionTriggerProps {
     #[props(extends = button, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -112,6 +131,18 @@ pub struct AccordionTriggerProps {
     trigger_decoration: Element,
 
     children: Element,
+}
+
+impl std::default::Default for AccordionTriggerProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            id: ReadOnlySignal::<String>::default(),
+            is_open: false,
+            trigger_decoration: default_trigger_decoration(),
+            children: rsx! {},
+        }
+    }
 }
 
 /// The clickable element that toggles the visibility of the [AccordionContent] component
@@ -144,11 +175,11 @@ pub fn AccordionTrigger(mut props: AccordionTriggerProps) -> Element {
 
     rsx!(
         button {
-            ..props.attributes,
             "data-state": state.read().is_active_to_attr_value(props.id.read().to_string()),
             onclick: button_closure,
-            onmounted: onmounted,
-            {props.children},
+            onmounted,
+            ..props.attributes,
+            {props.children}
             {props.trigger_decoration}
         }
     )
@@ -167,7 +198,7 @@ fn default_trigger_decoration() -> Element {
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct AccordionContentProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -179,6 +210,17 @@ pub struct AccordionContentProps {
     pub animation: ReadOnlySignal<Animation>,
 
     children: Element,
+}
+
+impl std::default::Default for AccordionContentProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            id: ReadOnlySignal::<String>::default(),
+            animation: ReadOnlySignal::<Animation>::default(),
+            children: rsx! {},
+        }
+    }
 }
 
 /// Collapsible element that is toggled by the [AccordionTrigger] component
@@ -214,11 +256,11 @@ pub fn AccordionContent(mut props: AccordionContentProps) -> Element {
 
     rsx!(
         div {
-            ..props.attributes,
+            onmounted,
             "data-state": state.read().is_active_to_attr_value(props.id.read().to_string()),
             id: props.id,
             height: final_height,
-            onmounted,
+            ..props.attributes,
             {props.children}
         }
     )

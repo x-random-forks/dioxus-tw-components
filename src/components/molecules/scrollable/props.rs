@@ -2,7 +2,7 @@ use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct ScrollableProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -13,10 +13,20 @@ pub struct ScrollableProps {
     children: Element,
 }
 
+impl std::default::Default for ScrollableProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            orientation: ReadOnlySignal::<Orientation>::default(),
+            children: rsx! {},
+        }
+    }
+}
+
 pub fn Scrollable(mut props: ScrollableProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        div { ..props.attributes, {props.children} }
+        div { ..props.attributes,{props.children} }
     )
 }

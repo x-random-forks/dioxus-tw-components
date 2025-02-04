@@ -27,7 +27,11 @@ impl DemoComponent for DropdownProps {
 
         rsx!(
             Dropdown { class: state.read()[&0].get_class(), id: "dropdown-demo",
-                DropdownToggle { class: state.read()[&1].get_class(), id: "dropdown-toggle-demo", "Dropdown" }
+                DropdownToggle {
+                    class: state.read()[&1].get_class(),
+                    id: "dropdown-toggle-demo",
+                    "Dropdown"
+                }
                 DropdownContent {
                     id: "dropdown-content-demo",
                     class: state.read()[&2].get_class(),
@@ -47,8 +51,16 @@ impl DemoComponent for DropdownProps {
 
         rsx!(
             CompPreviewSelector::<DropdownProps> { index: 0, state, comp_props: DropdownProps::default() }
-            CompPreviewSelector::<DropdownToggleProps> { index: 1, state, comp_props: DropdownToggleProps::default() }
-            CompPreviewSelector::<DropdownContentProps> { index: 2, state, comp_props: DropdownContentProps::default() }
+            CompPreviewSelector::<DropdownToggleProps> {
+                index: 1,
+                state,
+                comp_props: DropdownToggleProps::default(),
+            }
+            CompPreviewSelector::<DropdownContentProps> {
+                index: 2,
+                state,
+                comp_props: DropdownContentProps::default(),
+            }
         )
     }
 }

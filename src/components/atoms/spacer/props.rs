@@ -2,7 +2,7 @@ use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Default, Clone, PartialEq, Props, UiComp)]
 pub struct SpacerProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -11,7 +11,5 @@ pub struct SpacerProps {
 pub fn Spacer(mut props: SpacerProps) -> Element {
     props.update_class_attribute();
 
-    rsx!(
-        div { ..props.attributes }
-    )
+    rsx!(div { ..props.attributes })
 }

@@ -65,7 +65,7 @@ impl IntoAttributeValue for DropdownState {
     }
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct DropdownProps {
     /// Corresponds to the time in ms it takes for the toggle to close itself if not active, 0 disable this feature
     #[props(default = 100)]
@@ -75,6 +75,16 @@ pub struct DropdownProps {
     attributes: Vec<Attribute>,
 
     children: Element,
+}
+
+impl std::default::Default for DropdownProps {
+    fn default() -> Self {
+        Self {
+            closing_delay_ms: 100,
+            attributes: Vec::<Attribute>::default(),
+            children: rsx! {},
+        }
+    }
 }
 
 /// Usage:
@@ -96,24 +106,33 @@ pub fn Dropdown(mut props: DropdownProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        div { ..props.attributes, "data-state": state.read().into_value(), {props.children} }
+        div { "data-state": state.read().into_value(), ..props.attributes, {props.children} }
         if state.read().get_is_active() {
             div {
                 class: "fixed top-0 left-0 w-full h-full bg-transparent",
                 onclick: move |_event| {
                     state.write().close();
-                }
+                },
             }
         }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct DropdownToggleProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 
     children: Element,
+}
+
+impl std::default::Default for DropdownToggleProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            children: rsx! {},
+        }
+    }
 }
 
 pub fn DropdownToggle(mut props: DropdownToggleProps) -> Element {
@@ -137,18 +156,18 @@ pub fn DropdownToggle(mut props: DropdownToggleProps) -> Element {
 
     rsx!(
         div {
-            ..props.attributes,
             role: "button",
             "data-state": state.read().into_value(),
             onclick,
             onmouseleave,
             onmouseenter,
-            { props.children }
+            ..props.attributes,
+            {props.children}
         }
     )
 }
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct DropdownContentProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -157,6 +176,16 @@ pub struct DropdownContentProps {
     pub animation: ReadOnlySignal<Animation>,
 
     children: Element,
+}
+
+impl std::default::Default for DropdownContentProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            animation: ReadOnlySignal::<Animation>::default(),
+            children: rsx! {},
+        }
+    }
 }
 
 pub fn DropdownContent(mut props: DropdownContentProps) -> Element {
@@ -172,13 +201,12 @@ pub fn DropdownContent(mut props: DropdownContentProps) -> Element {
         on_mouse_enter(state);
     };
 
-
     rsx!(
         div {
-            ..props.attributes,
             "data-state": state.read().into_value(),
             onmouseleave,
             onmouseenter,
+            ..props.attributes,
             {props.children}
         }
     )

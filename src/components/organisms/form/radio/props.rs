@@ -2,7 +2,7 @@ use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Default, Clone, PartialEq, Props, UiComp)]
 pub struct RadioProps {
     #[props(extends = input, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -25,10 +25,10 @@ pub fn Radio(mut props: RadioProps) -> Element {
 
     rsx!(
         input {
-            ..props.attributes,
             r#type: "radio",
             checked: props.checked,
-            oninput
+            oninput,
+            ..props.attributes,
         }
     )
 }

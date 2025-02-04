@@ -2,7 +2,7 @@ use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Default, Clone, PartialEq, Props, UiComp)]
 pub struct CheckboxProps {
     #[props(extends = input, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -25,10 +25,10 @@ pub fn Checkbox(mut props: CheckboxProps) -> Element {
 
     rsx!(
         input {
-            ..props.attributes,
             r#type: "checkbox",
+            oninput,
             checked: props.checked,
-            oninput
+            ..props.attributes,
         }
     )
 }

@@ -28,7 +28,7 @@ impl DemoComponent for AccordionProps {
 
         rsx!(
             Accordion { class: state.read()[&0].get_class(),
-                AccordionItem { 
+                AccordionItem {
                     AccordionTrigger { id: "accordion-1", "Products" }
                     AccordionContent {
                         class: state.read()[&1].get_class(),
@@ -37,7 +37,7 @@ impl DemoComponent for AccordionProps {
                         p { "Check out our latest products!" }
                     }
                 }
-                AccordionItem { 
+                AccordionItem {
                     AccordionTrigger { id: "accordion-2", "Services" }
                     AccordionContent {
                         class: state.read()[&2].get_class(),
@@ -46,7 +46,7 @@ impl DemoComponent for AccordionProps {
                         p { "Discover our range of services." }
                     }
                 }
-                AccordionItem { 
+                AccordionItem {
                     AccordionTrigger { id: "accordion-3", "Testimonials" }
                     AccordionContent {
                         class: state.read()[&3].get_class(),
@@ -66,9 +66,21 @@ impl DemoComponent for AccordionProps {
 
         rsx!(
             CompPreviewSelector::<AccordionProps> { index: 0, state, comp_props: AccordionProps::default() }
-            CompPreviewSelector::<AccordionContentProps> { index: 1, state, comp_props: AccordionContentProps::default() }
-            CompPreviewSelector::<AccordionContentProps> { index: 2, state, comp_props: AccordionContentProps::default() }
-            CompPreviewSelector::<AccordionContentProps> { index: 3, state, comp_props: AccordionContentProps::default() }
+            CompPreviewSelector::<AccordionContentProps> {
+                index: 1,
+                state,
+                comp_props: AccordionContentProps::default(),
+            }
+            CompPreviewSelector::<AccordionContentProps> {
+                index: 2,
+                state,
+                comp_props: AccordionContentProps::default(),
+            }
+            CompPreviewSelector::<AccordionContentProps> {
+                index: 3,
+                state,
+                comp_props: AccordionContentProps::default(),
+            }
         )
     }
 }

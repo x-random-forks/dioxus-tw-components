@@ -37,6 +37,10 @@ pub trait Class {
     fn orientation(&self) -> Option<&'static str> {
         None
     }
+
+    fn side(&self) -> Option<&'static str> {
+        None
+    }
 }
 
 pub trait BuildClass: Class {
@@ -66,6 +70,11 @@ pub trait BuildClass: Class {
         if let Some(orientation) = self.orientation() {
             class.push(' ');
             class.push_str(orientation);
+        }
+
+        if let Some(side) = self.side() {
+            class.push(' ');
+            class.push_str(side);
         }
 
         tw_merge!(class)
@@ -118,6 +127,12 @@ pub trait BuildClass: Class {
     }
 
     fn set_orientation(&mut self, _orientation: Orientation) {}
+
+    fn has_side(&self) -> bool {
+        self.side().is_some()
+    }
+
+    fn set_side(&mut self, _side: Side) {}
 }
 
 #[derive(Default, Debug, Clone, Copy, PartialEq)]
@@ -255,6 +270,40 @@ impl std::fmt::Display for Animation {
             Animation::None => "None",
             Animation::Light => "Light",
             Animation::Full => "Full",
+        };
+        f.write_str(s)
+    }
+}
+
+#[derive(Default, Clone, Copy, PartialEq)]
+pub enum Side {
+    Top,
+    Bottom,
+    Left,
+    #[default]
+    Right,
+}
+
+impl FromStr for Side {
+    type Err = &'static str;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s.to_lowercase().as_str() {
+            "top" => Ok(Side::Top),
+            "bottom" => Ok(Side::Bottom),
+            "left" => Ok(Side::Left),
+            _ => Ok(Side::Right),
+        }
+    }
+}
+
+impl std::fmt::Display for Side {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let s = match self {
+            Side::Top => "Top",
+            Side::Bottom => "Bottom",
+            Side::Left => "Left",
+            Side::Right => "Right",
         };
         f.write_str(s)
     }

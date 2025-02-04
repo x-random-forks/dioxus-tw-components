@@ -3,7 +3,7 @@ use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 use dioxus_core::AttributeValue;
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Default, Clone, PartialEq, Props, UiComp)]
 pub struct ToggleProps {
     #[props(extends = button, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -36,13 +36,13 @@ pub fn Toggle(mut props: ToggleProps) -> Element {
 
     rsx!(
         button {
-            ..props.attributes,
             "data-state": match interior_sig() {
                 true => AttributeValue::Text("active".to_string()),
                 false => AttributeValue::Text("inactive".to_string()),
             },
             r#type: "button",
-            onclick
+            onclick,
+            ..props.attributes,
         }
     )
 }

@@ -1,8 +1,8 @@
+use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
-use crate::attributes::*;
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Default, Clone, PartialEq, Props, UiComp)]
 pub struct PlaceholderProps {
     #[props(extends = div, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -16,7 +16,5 @@ pub struct PlaceholderProps {
 pub fn Placeholder(mut props: PlaceholderProps) -> Element {
     props.update_class_attribute();
 
-    rsx!(
-        div { ..props.attributes }
-    )
+    rsx!(div { ..props.attributes })
 }

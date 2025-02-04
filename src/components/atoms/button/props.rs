@@ -1,9 +1,9 @@
-use dioxus::prelude::*;
-use dioxus_components_macro::UiComp;
 use super::ButtonVariant;
 use crate::attributes::*;
+use dioxus::prelude::*;
+use dioxus_components_macro::UiComp;
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct ButtonProps {
     #[props(extends = button, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -29,6 +29,23 @@ pub struct ButtonProps {
     children: Element,
 }
 
+impl std::default::Default for ButtonProps {
+    fn default() -> Self {
+        Self {
+            attributes: Vec::<Attribute>::default(),
+            color: ReadOnlySignal::<Color>::default(),
+            size: ReadOnlySignal::<Size>::default(),
+            variant: ReadOnlySignal::<ButtonVariant>::default(),
+            animation: ReadOnlySignal::<Animation>::default(),
+            onclick: EventHandler::<MouseEvent>::default(),
+            onmouseenter: EventHandler::<MouseEvent>::default(),
+            onmouseleave: EventHandler::<MouseEvent>::default(),
+            onfocus: EventHandler::<FocusEvent>::default(),
+            children: rsx! {},
+        }
+    }
+}
+
 pub fn Button(mut props: ButtonProps) -> Element {
     props.update_class_attribute();
 
@@ -39,11 +56,11 @@ pub fn Button(mut props: ButtonProps) -> Element {
 
     rsx!(
         button {
-            ..props.attributes,
             onclick,
             onmouseenter,
             onmouseleave,
             onfocus,
+            ..props.attributes,
             {props.children}
         }
     )

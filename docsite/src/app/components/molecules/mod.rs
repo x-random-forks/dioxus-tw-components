@@ -7,6 +7,7 @@ pub mod lightswitch;
 pub mod modal;
 pub mod progressbar;
 pub mod scrollable;
+pub mod sidepanel;
 pub mod sortedtable;
 pub mod table;
 pub mod tabs;

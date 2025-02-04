@@ -27,7 +27,11 @@ impl DemoComponent for HoverCardProps {
 
         rsx!(
             HoverCard { id: "hover-card-demo", class: state.read()[&0].get_class(),
-                HoverCardTrigger { id: "hover-card-trigger-demo", class: state.read()[&1].get_class(), "Hover me" }
+                HoverCardTrigger {
+                    id: "hover-card-trigger-demo",
+                    class: state.read()[&1].get_class(),
+                    "Hover me"
+                }
                 HoverCardContent {
                     id: "hover-card-content-demo",
                     class: state.read()[&2].get_class(),
@@ -43,8 +47,16 @@ impl DemoComponent for HoverCardProps {
 
         rsx!(
             CompPreviewSelector::<HoverCardProps> { index: 0, state, comp_props: HoverCardProps::default() }
-            CompPreviewSelector::<HoverCardTriggerProps> { index: 1, state, comp_props: HoverCardTriggerProps::default() }
-            CompPreviewSelector::<HoverCardContentProps> { index: 2, state, comp_props: HoverCardContentProps::default() }
+            CompPreviewSelector::<HoverCardTriggerProps> {
+                index: 1,
+                state,
+                comp_props: HoverCardTriggerProps::default(),
+            }
+            CompPreviewSelector::<HoverCardContentProps> {
+                index: 2,
+                state,
+                comp_props: HoverCardContentProps::default(),
+            }
         )
     }
 }

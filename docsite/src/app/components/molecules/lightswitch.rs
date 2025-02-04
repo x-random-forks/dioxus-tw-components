@@ -32,7 +32,11 @@ impl DemoComponent for LightSwitchProps {
         let state = use_context::<Signal<HashPreview>>();
 
         rsx!(
-            CompPreviewSelector::<LightSwitchProps> { index: 0, state, comp_props: LightSwitchProps::default() }
+            CompPreviewSelector::<LightSwitchProps> {
+                index: 0,
+                state,
+                comp_props: LightSwitchProps::default(),
+            }
         )
     }
 }

@@ -2,7 +2,7 @@ use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 
-#[derive(Clone, Default, PartialEq, Props, UiComp)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct MainTemplateProps {
     #[props(extends = header, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -14,7 +14,7 @@ pub fn MainTemplate(mut props: MainTemplateProps) -> Element {
     props.update_class_attribute();
 
     rsx!(
-        div { ..props.attributes, { props.children } }
+        div { ..props.attributes,{props.children} }
     )
 }
 

@@ -17,14 +17,14 @@ pub fn PreviewFull<T: DemoComponent + Default + 'static>() -> Element {
 }
 
 #[component]
-fn PreviewDemo<T: DemoComponent + Default>() -> Element {
+fn PreviewDemo<T: DemoComponent + Default + 'static>() -> Element {
     rsx!(
         section { class: "w-full space-y-2",
             h2 { id: "preview-title", class: "sr-only", {T::to_string(&T::default())} }
             div { id: "preview-header", class: "text-foreground/50 font-medium",
                 {T::comp_introduction()}
             }
-            PreviewWindow { 
+            PreviewWindow {
                 PreviewWindowComponent { {T::BuildCompPreview()} }
                 PreviewWindowSelectors { {T::BuildCompSelectors()} }
             }
@@ -43,16 +43,35 @@ pub fn CompPreviewSelector<T: BuildClass + std::cmp::PartialEq + 'static>(
         div { class: "flex flex-row space-x-4",
             ClassSelector { state, index }
             if comp_props.has_color() {
-                Selector { state, index, selector_type: SelectorType::Color }
+                Selector {
+                    state,
+                    index,
+                    selector_type: SelectorType::Color,
+                }
             }
             if comp_props.has_size() {
                 Selector { state, index, selector_type: SelectorType::Size }
             }
             if comp_props.has_animation() {
-                Selector { state, index, selector_type: SelectorType::Animation }
+                Selector {
+                    state,
+                    index,
+                    selector_type: SelectorType::Animation,
+                }
             }
             if comp_props.has_orientation() {
-                Selector { state, index, selector_type: SelectorType::Orientation }
+                Selector {
+                    state,
+                    index,
+                    selector_type: SelectorType::Orientation,
+                }
+            }
+            if comp_props.has_side() {
+                Selector {
+                    state,
+                    index,
+                    selector_type: SelectorType::Side,
+                }
             }
         }
     )
@@ -69,7 +88,7 @@ pub fn ClassSelector(state: Signal<HashPreview>, index: i32) -> Element {
                     if let Some(field_preview) = state.write().get_mut(&index) {
                         field_preview.set_class(event.data().value());
                     }
-                }
+                },
             }
         }
     )
@@ -81,6 +100,7 @@ pub enum SelectorType {
     Size,
     Animation,
     Orientation,
+    Side,
 }
 
 impl SelectorType {
@@ -93,6 +113,10 @@ impl SelectorType {
                 .map(|a| a.to_string())
                 .collect(),
             SelectorType::Orientation => Orientation::into_vec()
+                .iter()
+                .map(|s| s.to_string())
+                .collect(),
+            SelectorType::Side => Side::into_vec()
                 .iter()
                 .map(|s| s.to_string())
                 .collect(),
@@ -112,6 +136,9 @@ impl SelectorType {
             }
             SelectorType::Orientation => {
                 field_preview.set_orientation(Orientation::from_str(value).unwrap_or_default());
+            }
+            SelectorType::Side => {
+                field_preview.set_side(Side::from_str(value).unwrap_or_default());
             }
         }
     }
@@ -134,6 +161,9 @@ impl std::fmt::Display for SelectorType {
                 }
                 SelectorType::Orientation => {
                     "Orientation"
+                }
+                SelectorType::Side => {
+                    "Side"
                 }
             }
         )
@@ -187,7 +217,7 @@ pub fn PreviewWindow(children: Element) -> Element {
         div {
             id: "preview-window",
             class: "p-4 min-h-96 border border-border rounded-global-radius flex flex-col items-center space-y-8",
-            { children }
+            {children}
         }
     )
 }
@@ -219,6 +249,7 @@ pub struct FieldPreview {
     size: Size,
     animation: Animation,
     orientation: Orientation,
+    side: Side,
 }
 
 impl FieldPreview {
@@ -270,5 +301,13 @@ impl FieldPreview {
     pub fn orientation(mut self, orientation: Orientation) -> Self {
         self.orientation = orientation;
         self
+    }
+
+    pub fn get_side(&self) -> Side {
+        self.side.clone()
+    }
+
+    pub fn set_side(&mut self, side: Side) {
+        self.side = side;
     }
 }

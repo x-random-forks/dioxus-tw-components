@@ -28,6 +28,11 @@ pub use progressbar::{ProgressBar, ProgressBarInner, ProgressLabel};
 pub mod scrollable;
 pub use scrollable::Scrollable;
 
+pub mod sidepanel;
+pub use sidepanel::{
+    SidePanel, SidePanelBackground, SidePanelClose, SidePanelContent, SidePanelTrigger,
+};
+
 pub mod table;
 pub use table::{
     Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow,
