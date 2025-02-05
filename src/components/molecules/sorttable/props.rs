@@ -310,7 +310,9 @@ pub fn SortTable<T: std::clone::Clone + std::cmp::PartialEq + ToTableData>(
                                 state.write().set_sorted_col_index(index);
                             },
                             {head.to_string()}
-                            if !non_sortable_columns.read().contains(&index) && state.read().get_sorted_col_index() == index {
+                            if !non_sortable_columns.read().contains(&index)
+                                && state.read().get_sorted_col_index() == index
+                            {
                                 svg {
                                     xmlns: "http://www.w3.org/2000/svg",
                                     view_box: "0 0 124 124",

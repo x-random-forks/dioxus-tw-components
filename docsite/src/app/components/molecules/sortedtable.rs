@@ -17,9 +17,6 @@ pub fn SortedTablePage() -> Element {
             row_class: "bg-red-100",
             cell_class: "border border-green-300",
         }
-        //SortTable::<Row> {
-        //    data: vec_rows,
-        //}
     )
 }
 
