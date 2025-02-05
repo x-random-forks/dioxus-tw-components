@@ -1,13 +1,13 @@
 use dioxus::prelude::*;
-use dioxus_components::molecules::sorttable::{KeyType, SortTable, TableData, ToTableData};
+use dioxus_components::molecules::sorttable::{KeyType, SortTable, Sortable, ToTableData};
 
 #[component]
-pub fn SortedTablePage<K: TableData + Clone + 'static>() -> Element {
+pub fn SortedTablePage() -> Element {
     let vec_user = UserTab::get_10_users();
 
     rsx!(
         "Sorted Table"
-        SortTable::<UserTab, K> { data: vec_user }
+        SortTable::<UserTab> { data: vec_user }
     )
 }
 
@@ -16,7 +16,14 @@ struct TestUser {
     name: String,
     age: u32,
 }
-impl TableData for TestUser {}
+impl Sortable for TestUser {
+    fn to_sortable(&self) -> KeyType {
+        KeyType::UnsignedInteger(self.age.into())
+    }
+    fn clone_box(&self) -> Box<dyn Sortable> {
+        Box::new(self.clone())
+    }
+}
 impl std::fmt::Display for TestUser {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{} ({})", self.name, self.age)
@@ -28,7 +35,14 @@ struct TestProject {
     slug: String,
     id: u64,
 }
-impl TableData for TestProject {}
+impl Sortable for TestProject {
+    fn to_sortable(&self) -> KeyType {
+        KeyType::UnsignedInteger(self.id.into())
+    }
+    fn clone_box(&self) -> Box<dyn Sortable> {
+        Box::new(self.clone())
+    }
+}
 impl std::fmt::Display for TestProject {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{} ({})", self.slug, self.id)
@@ -55,11 +69,11 @@ impl ToTableData for UserTab {
     fn headers_to_strings() -> Vec<impl ToString> {
         vec![
             "login", "status", "exam2", "exam3", "exam4", "exam5", "exam6", "libft", "gnl",
-            "printf", "user",
+            "printf", "user", "project",
         ]
     }
 
-    fn to_keytype<T: TableData>(&self) -> Vec<KeyType<T>> {
+    fn to_keytype(&self) -> Vec<KeyType> {
         vec![
             KeyType::String(self.login.to_string()),
             KeyType::String(self.status.to_string()),
@@ -71,8 +85,8 @@ impl ToTableData for UserTab {
             KeyType::UnsignedInteger(self.libft.into()),
             KeyType::UnsignedInteger(self.gnl.into()),
             KeyType::UnsignedInteger(self.printf.into()),
-            KeyType::Object(self.user),
-            KeyType::Object(self.project),
+            KeyType::Object(Box::new(self.user.clone())),
+            KeyType::Object(Box::new(self.project.clone())),
         ]
     }
 }
