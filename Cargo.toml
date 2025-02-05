@@ -16,6 +16,7 @@ theme = []
 
 [dependencies]
 
+sorttable-macro = { path = "./sorttable-macro" }
 dioxus-components-macro = { path = "./dioxus-components-macro" }
 log = "0.4.22"
 dioxus = { version = "0.6.2", features = ["web"] }

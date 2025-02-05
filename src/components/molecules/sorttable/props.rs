@@ -4,7 +4,7 @@ use tailwind_fuse::tw_merge;
 
 pub trait Sortable: ToString + Clonable {
     fn to_sortable(&self) -> KeyType {
-        KeyType::String(self.to_string())
+        KeyType::String(self.to_string(), true)
     }
 }
 
@@ -32,91 +32,93 @@ pub trait ToTableData {
 // Used to change the sorting type of the data (eg if a field is number we will not sort the same way as string)
 #[derive(Clone)]
 pub enum KeyType {
-    String(String),
-    Integer(i128),
-    UnsignedInteger(u128),
-    Object(Box<dyn Sortable>),
+    String(String, bool),
+    Integer(i128, bool),
+    UnsignedInteger(u128, bool),
+    Object(Box<dyn Sortable>, bool),
 }
 
 impl From<&str> for KeyType {
     fn from(str: &str) -> Self {
-        KeyType::String(str.to_string())
+        KeyType::String(str.to_string(), true)
     }
 }
 
 impl From<String> for KeyType {
     fn from(str: String) -> Self {
-        KeyType::String(str)
+        KeyType::String(str, true)
     }
 }
 
 impl From<i128> for KeyType {
     fn from(nb: i128) -> Self {
-        KeyType::Integer(nb)
+        KeyType::Integer(nb, true)
     }
 }
 
 impl From<u128> for KeyType {
     fn from(nb: u128) -> Self {
-        KeyType::UnsignedInteger(nb)
+        KeyType::UnsignedInteger(nb, true)
     }
 }
 
 impl From<i64> for KeyType {
     fn from(nb: i64) -> Self {
-        KeyType::Integer(nb.into())
+        KeyType::Integer(nb.into(), true)
     }
 }
 
 impl From<u64> for KeyType {
     fn from(nb: u64) -> Self {
-        KeyType::UnsignedInteger(nb.into())
+        KeyType::UnsignedInteger(nb.into(), true)
     }
 }
 
 impl From<i32> for KeyType {
     fn from(nb: i32) -> Self {
-        KeyType::Integer(nb.into())
+        KeyType::Integer(nb.into(), true)
     }
 }
 
 impl From<u32> for KeyType {
     fn from(nb: u32) -> Self {
-        KeyType::UnsignedInteger(nb.into())
+        KeyType::UnsignedInteger(nb.into(), true)
     }
 }
 
 impl From<i16> for KeyType {
     fn from(nb: i16) -> Self {
-        KeyType::Integer(nb.into())
+        KeyType::Integer(nb.into(), true)
     }
 }
 
 impl From<u16> for KeyType {
     fn from(nb: u16) -> Self {
-        KeyType::UnsignedInteger(nb.into())
+        KeyType::UnsignedInteger(nb.into(), true)
     }
 }
 
 impl From<i8> for KeyType {
     fn from(nb: i8) -> Self {
-        KeyType::Integer(nb.into())
+        KeyType::Integer(nb.into(), true)
     }
 }
 
 impl From<u8> for KeyType {
     fn from(nb: u8) -> Self {
-        KeyType::UnsignedInteger(nb.into())
+        KeyType::UnsignedInteger(nb.into(), true)
     }
 }
 
 impl PartialEq for KeyType {
     fn eq(&self, other: &Self) -> bool {
         match (self, other) {
-            (KeyType::String(a), KeyType::String(b)) => a == b,
-            (KeyType::Integer(a), KeyType::Integer(b)) => a == b,
-            (KeyType::UnsignedInteger(a), KeyType::UnsignedInteger(b)) => a == b,
-            (KeyType::Object(a), KeyType::Object(b)) => a.to_sortable() == b.to_sortable(),
+            (KeyType::String(a, true), KeyType::String(b, true)) => a == b,
+            (KeyType::Integer(a, true), KeyType::Integer(b, true)) => a == b,
+            (KeyType::UnsignedInteger(a, true), KeyType::UnsignedInteger(b, true)) => a == b,
+            (KeyType::Object(a, true), KeyType::Object(b, true)) => {
+                a.to_sortable() == b.to_sortable()
+            }
             _ => false,
         }
     }
@@ -127,10 +129,12 @@ impl Eq for KeyType {}
 impl PartialOrd for KeyType {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
         match (self, other) {
-            (KeyType::String(a), KeyType::String(b)) => a.partial_cmp(b),
-            (KeyType::Integer(a), KeyType::Integer(b)) => a.partial_cmp(b),
-            (KeyType::UnsignedInteger(a), KeyType::UnsignedInteger(b)) => a.partial_cmp(b),
-            (KeyType::Object(a), KeyType::Object(b)) => {
+            (KeyType::String(a, true), KeyType::String(b, true)) => a.partial_cmp(b),
+            (KeyType::Integer(a, true), KeyType::Integer(b, true)) => a.partial_cmp(b),
+            (KeyType::UnsignedInteger(a, true), KeyType::UnsignedInteger(b, true)) => {
+                a.partial_cmp(b)
+            }
+            (KeyType::Object(a, true), KeyType::Object(b, true)) => {
                 a.to_sortable().partial_cmp(&b.to_sortable())
             }
             _ => None,
@@ -141,10 +145,12 @@ impl PartialOrd for KeyType {
 impl Ord for KeyType {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
         match (self, other) {
-            (KeyType::String(a), KeyType::String(b)) => a.cmp(b),
-            (KeyType::Integer(a), KeyType::Integer(b)) => a.cmp(b),
-            (KeyType::UnsignedInteger(a), KeyType::UnsignedInteger(b)) => a.cmp(b),
-            (KeyType::Object(a), KeyType::Object(b)) => a.to_sortable().cmp(&b.to_sortable()),
+            (KeyType::String(a, true), KeyType::String(b, true)) => a.cmp(b),
+            (KeyType::Integer(a, true), KeyType::Integer(b, true)) => a.cmp(b),
+            (KeyType::UnsignedInteger(a, true), KeyType::UnsignedInteger(b, true)) => a.cmp(b),
+            (KeyType::Object(a, true), KeyType::Object(b, true)) => {
+                a.to_sortable().cmp(&b.to_sortable())
+            }
             _ => std::cmp::Ordering::Equal,
         }
     }
@@ -153,16 +159,16 @@ impl Ord for KeyType {
 impl std::fmt::Display for KeyType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            KeyType::String(str) => {
+            KeyType::String(str, _) => {
                 write!(f, "{str}")
             }
-            KeyType::Integer(nb) => {
+            KeyType::Integer(nb, _) => {
                 write!(f, "{nb}")
             }
-            KeyType::UnsignedInteger(nb) => {
+            KeyType::UnsignedInteger(nb, _) => {
                 write!(f, "{nb}")
             }
-            KeyType::Object(obj) => {
+            KeyType::Object(obj, _) => {
                 write!(f, "{}", obj.to_string())
             }
         }
@@ -182,9 +188,6 @@ pub struct SortTableProps<T: 'static + std::clone::Clone + std::cmp::PartialEq +
 
     #[props(optional, into)]
     cell_class: Option<String>,
-
-    #[props(optional, default)]
-    non_sortable_columns: ReadOnlySignal<Vec<usize>>,
 
     data: Vec<T>,
 
@@ -243,7 +246,7 @@ where
 pub fn SortTable<T: std::clone::Clone + std::cmp::PartialEq + ToTableData>(
     props: SortTableProps<T>,
 ) -> Element {
-    let mut state = use_context_provider(|| Signal::new(SortTableState::<T>::new(props.data)));
+    let mut state = use_signal(|| SortTableState::<T>::new(props.data));
 
     let header_class = match props.header_class {
         Some(header_class) => tw_merge!(
@@ -263,6 +266,25 @@ pub fn SortTable<T: std::clone::Clone + std::cmp::PartialEq + ToTableData>(
         None => String::new(),
     };
 
+    let non_sortable_columns = use_memo(move || {
+        let binding = state.read();
+        let Some(first_row) = binding.data.first() else {
+            return Vec::new();
+        };
+        first_row
+            .to_keytype()
+            .iter()
+            .enumerate()
+            .filter_map(|(index, keytype)| match keytype {
+                KeyType::String(_, false) => Some(index),
+                KeyType::Integer(_, false) => Some(index),
+                KeyType::UnsignedInteger(_, false) => Some(index),
+                KeyType::Object(_, false) => Some(index),
+                _ => None,
+            })
+            .collect()
+    });
+
     rsx!(
         Table {
             TableHeader {
@@ -271,7 +293,7 @@ pub fn SortTable<T: std::clone::Clone + std::cmp::PartialEq + ToTableData>(
                         TableHead {
                             class: "{header_class}",
                             onclick: move |_| {
-                                if props.non_sortable_columns.read().contains(&index) {
+                                if non_sortable_columns.read().contains(&index) {
                                     return;
                                 }
                                 let sorted_col_index = state.read().get_sorted_col_index();
@@ -288,7 +310,7 @@ pub fn SortTable<T: std::clone::Clone + std::cmp::PartialEq + ToTableData>(
                                 state.write().set_sorted_col_index(index);
                             },
                             {head.to_string()}
-                            if !props.non_sortable_columns.read().contains(&index) && state.read().get_sorted_col_index() == index {
+                            if !non_sortable_columns.read().contains(&index) && state.read().get_sorted_col_index() == index {
                                 svg {
                                     xmlns: "http://www.w3.org/2000/svg",
                                     view_box: "0 0 124 124",
