@@ -18,10 +18,7 @@ struct TestUser {
 }
 impl Sortable for TestUser {
     fn to_sortable(&self) -> KeyType {
-        KeyType::UnsignedInteger(self.age.into())
-    }
-    fn clone_box(&self) -> Box<dyn Sortable> {
-        Box::new(self.clone())
+        self.age.into()
     }
 }
 impl std::fmt::Display for TestUser {
@@ -37,10 +34,7 @@ struct TestProject {
 }
 impl Sortable for TestProject {
     fn to_sortable(&self) -> KeyType {
-        KeyType::UnsignedInteger(self.id.into())
-    }
-    fn clone_box(&self) -> Box<dyn Sortable> {
-        Box::new(self.clone())
+        self.id.into()
     }
 }
 impl std::fmt::Display for TestProject {
@@ -75,16 +69,16 @@ impl ToTableData for UserTab {
 
     fn to_keytype(&self) -> Vec<KeyType> {
         vec![
-            KeyType::String(self.login.to_string()),
-            KeyType::String(self.status.to_string()),
-            KeyType::UnsignedInteger(self.exam2.into()),
-            KeyType::UnsignedInteger(self.exam3.into()),
-            KeyType::UnsignedInteger(self.exam4.into()),
-            KeyType::UnsignedInteger(self.exam5.into()),
-            KeyType::UnsignedInteger(self.exam6.into()),
-            KeyType::UnsignedInteger(self.libft.into()),
-            KeyType::UnsignedInteger(self.gnl.into()),
-            KeyType::UnsignedInteger(self.printf.into()),
+            self.login.into(),
+            self.status.into(),
+            self.exam2.into(),
+            self.exam3.into(),
+            self.exam4.into(),
+            self.exam5.into(),
+            self.exam6.into(),
+            self.libft.into(),
+            self.gnl.into(),
+            self.printf.into(),
             KeyType::Object(Box::new(self.user.clone())),
             KeyType::Object(Box::new(self.project.clone())),
         ]

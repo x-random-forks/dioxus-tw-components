@@ -1,11 +1,26 @@
 use crate::prelude::*;
 use dioxus::prelude::*;
 
-pub trait Sortable: ToString {
+pub trait Sortable: ToString + Clonable {
     fn to_sortable(&self) -> KeyType {
         KeyType::String(self.to_string())
     }
+}
+
+impl Clone for Box<dyn Sortable> {
+    fn clone(&self) -> Self {
+        self.clone_box()
+    }
+}
+
+pub trait Clonable {
     fn clone_box(&self) -> Box<dyn Sortable>;
+}
+
+impl<T: Clone + Sortable + 'static> Clonable for T {
+    fn clone_box(&self) -> Box<dyn Sortable> {
+        Box::new(self.clone())
+    }
 }
 
 pub trait ToTableData {
@@ -22,9 +37,75 @@ pub enum KeyType {
     Object(Box<dyn Sortable>),
 }
 
-impl Clone for Box<dyn Sortable> {
-    fn clone(&self) -> Self {
-        self.clone_box()
+impl From<&str> for KeyType {
+    fn from(str: &str) -> Self {
+        KeyType::String(str.to_string())
+    }
+}
+
+impl From<String> for KeyType {
+    fn from(str: String) -> Self {
+        KeyType::String(str)
+    }
+}
+
+impl From<i128> for KeyType {
+    fn from(nb: i128) -> Self {
+        KeyType::Integer(nb)
+    }
+}
+
+impl From<u128> for KeyType {
+    fn from(nb: u128) -> Self {
+        KeyType::UnsignedInteger(nb)
+    }
+}
+
+impl From<i64> for KeyType {
+    fn from(nb: i64) -> Self {
+        KeyType::Integer(nb.into())
+    }
+}
+
+impl From<u64> for KeyType {
+    fn from(nb: u64) -> Self {
+        KeyType::UnsignedInteger(nb.into())
+    }
+}
+
+impl From<i32> for KeyType {
+    fn from(nb: i32) -> Self {
+        KeyType::Integer(nb.into())
+    }
+}
+
+impl From<u32> for KeyType {
+    fn from(nb: u32) -> Self {
+        KeyType::UnsignedInteger(nb.into())
+    }
+}
+
+impl From<i16> for KeyType {
+    fn from(nb: i16) -> Self {
+        KeyType::Integer(nb.into())
+    }
+}
+
+impl From<u16> for KeyType {
+    fn from(nb: u16) -> Self {
+        KeyType::UnsignedInteger(nb.into())
+    }
+}
+
+impl From<i8> for KeyType {
+    fn from(nb: i8) -> Self {
+        KeyType::Integer(nb.into())
+    }
+}
+
+impl From<u8> for KeyType {
+    fn from(nb: u8) -> Self {
+        KeyType::UnsignedInteger(nb.into())
     }
 }
 
