@@ -31,13 +31,14 @@ impl DemoComponent for Toast {
         rsx!(
             Button {
                 onclick: move |_| {
-                    toast.title("Title")
-                            .description(rsx! {
-                                div { "Content" }
-                            })
-                            .color(state.read()[&0].get_color())
-                            .animation(state.read()[&0].get_animation())
-                            .render();
+                    toast
+                        .title("Title")
+                        .description(rsx! {
+                            div { "Content" }
+                        })
+                        .color(state.read()[&0].get_color())
+                        .animation(state.read()[&0].get_animation())
+                        .render();
                 },
                 "Toasting"
             }

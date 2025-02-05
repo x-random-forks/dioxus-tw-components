@@ -1,5 +1,6 @@
 use crate::prelude::*;
 use dioxus::prelude::*;
+use tailwind_fuse::tw_merge;
 
 pub trait Sortable: ToString + Clonable {
     fn to_sortable(&self) -> KeyType {
@@ -173,6 +174,18 @@ pub struct SortTableProps<T: 'static + std::clone::Clone + std::cmp::PartialEq +
     #[props(extends = caption, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 
+    #[props(optional, into)]
+    header_class: Option<String>,
+
+    #[props(optional, into)]
+    row_class: Option<String>,
+
+    #[props(optional, into)]
+    cell_class: Option<String>,
+
+    #[props(optional, default)]
+    non_sortable_columns: ReadOnlySignal<Vec<usize>>,
+
     data: Vec<T>,
 
     children: Element,
@@ -232,46 +245,69 @@ pub fn SortTable<T: std::clone::Clone + std::cmp::PartialEq + ToTableData>(
 ) -> Element {
     let mut state = use_context_provider(|| Signal::new(SortTableState::<T>::new(props.data)));
 
+    let header_class = match props.header_class {
+        Some(header_class) => tw_merge!(
+            "select-none cursor-pointer space-x-2 relative",
+            header_class
+        ),
+        None => "select-none cursor-pointer space-x-2 relative".to_string(),
+    };
+
+    let row_class = match props.row_class {
+        Some(row_class) => row_class.to_string(),
+        None => String::new(),
+    };
+
+    let cell_class = match props.cell_class {
+        Some(cell_class) => cell_class.to_string(),
+        None => String::new(),
+    };
+
     rsx!(
         Table {
-            TableHeader { TableRow {
-                for (index , head) in T::headers_to_strings().iter().enumerate() {
-                    TableHead {
-                        class: "select-none cursor-pointer space-x-2 relative",
-                        onclick: move |_| {
-                            let sorted_col_index = state.read().get_sorted_col_index();
-                            if sorted_col_index == index {
-                                state.write().reverse_data();
-                                state.write().toggle_sort_ascending();
-                            } else {
-                                sort_table_keytype(
-                                    &mut state.write().data,
-                                    |t: &T| t.to_keytype()[index].clone(),
-                                );
-                                state.write().set_sort_ascending(true);
-                            }
-                            state.write().set_sorted_col_index(index);
-                        },
-                        {head.to_string()},
-                        if state.read().get_sorted_col_index() == index {
-                            svg {
-                                xmlns: "http://www.w3.org/2000/svg",
-                                view_box: "0 0 124 124",
-                                width: "12",
-                                height: "12",
-                                class: "fill-foreground inline ml-1 transition-all",
-                                style: if state.read().get_sort_ascending() { "transform: rotate(-180deg)" },
-                                path { d: "M66.18,29.742c-2.301-2.3-6.101-2.3-8.401,0l-56,56c-3.8,3.801-1.1,10.2,4.2,10.2h112c5.3,0,8-6.399,4.2-10.2L66.18,29.742   z" }
+            TableHeader {
+                TableRow {
+                    for (index , head) in T::headers_to_strings().iter().enumerate() {
+                        TableHead {
+                            class: "{header_class}",
+                            onclick: move |_| {
+                                if props.non_sortable_columns.read().contains(&index) {
+                                    return;
+                                }
+                                let sorted_col_index = state.read().get_sorted_col_index();
+                                if sorted_col_index == index {
+                                    state.write().reverse_data();
+                                    state.write().toggle_sort_ascending();
+                                } else {
+                                    sort_table_keytype(
+                                        &mut state.write().data,
+                                        |t: &T| t.to_keytype()[index].clone(),
+                                    );
+                                    state.write().set_sort_ascending(true);
+                                }
+                                state.write().set_sorted_col_index(index);
+                            },
+                            {head.to_string()}
+                            if !props.non_sortable_columns.read().contains(&index) && state.read().get_sorted_col_index() == index {
+                                svg {
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    view_box: "0 0 124 124",
+                                    width: "12",
+                                    height: "12",
+                                    class: "fill-foreground inline ml-1 transition-all",
+                                    style: if state.read().get_sort_ascending() { "transform: rotate(-180deg)" },
+                                    path { d: "M66.18,29.742c-2.301-2.3-6.101-2.3-8.401,0l-56,56c-3.8,3.801-1.1,10.2,4.2,10.2h112c5.3,0,8-6.399,4.2-10.2L66.18,29.742   z" }
+                                }
                             }
                         }
                     }
                 }
-            } }
+            }
             TableBody {
                 for data in state.read().data.iter() {
-                    TableRow {
+                    TableRow { class: "{row_class}",
                         for field in data.to_keytype().into_iter() {
-                            TableCell { {field.to_string()} }
+                            TableCell { class: "{cell_class}", {field.to_string()} }
                         }
                     }
                 }

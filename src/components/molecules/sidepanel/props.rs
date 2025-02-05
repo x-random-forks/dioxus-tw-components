@@ -47,7 +47,9 @@ impl std::default::Default for SidePanelProps {
 pub fn SidePanel(props: SidePanelProps) -> Element {
     use_context_provider(|| Signal::new(SidePanelState::new(props.is_active)));
 
-    rsx!({ props.children })
+    rsx!(
+        {props.children}
+    )
 }
 
 #[derive(Clone, PartialEq, Props, UiComp)]

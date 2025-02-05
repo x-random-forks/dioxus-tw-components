@@ -67,11 +67,7 @@ pub fn CompPreviewSelector<T: BuildClass + std::cmp::PartialEq + 'static>(
                 }
             }
             if comp_props.has_side() {
-                Selector {
-                    state,
-                    index,
-                    selector_type: SelectorType::Side,
-                }
+                Selector { state, index, selector_type: SelectorType::Side }
             }
         }
     )

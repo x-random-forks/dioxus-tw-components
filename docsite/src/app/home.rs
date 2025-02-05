@@ -26,8 +26,7 @@ pub fn HomePage() -> Element {
                             }
                         }
                         div { class: "pt-8 lg:pt-16 text-[1em] flex flex-row space-x-4 mx-auto lg:mx-0 justify-center lg:justify-start",
-                            Link {
-                                to: "/components/button",
+                            Link { to: "/components/button",
                                 Button {
                                     color: Color::Default,
                                     size: Size::Lg,
@@ -35,8 +34,7 @@ pub fn HomePage() -> Element {
                                     "Explore"
                                 }
                             }
-                            Link {
-                                to: "https://github.com/42Angouleme/dioxus-components",
+                            Link { to: "https://github.com/42Angouleme/dioxus-components",
                                 Button {
                                     color: Color::Default,
                                     variant: ButtonVariant::Outline,
@@ -59,8 +57,12 @@ pub fn HomePage() -> Element {
                     Carousel { class: "w-[75%]", is_circular: true,
                         CarouselTrigger { next: false }
                         CarouselWindow {
-                            CarouselContent { id: "home-components-preview", class: "align-middle",
-                                CarouselItem { item_key: 0, class: "bg-gradient-to-r from-foreground/10 to-foreground/20",
+                            CarouselContent {
+                                id: "home-components-preview",
+                                class: "align-middle",
+                                CarouselItem {
+                                    item_key: 0,
+                                    class: "bg-gradient-to-r from-foreground/10 to-foreground/20",
                                     div { class: "flex flex-row h-[6.5rem] items-center justify-center",
                                         div { class: "flex flex-grow items-center justify-center basis 1/3",
                                             Button { "Button" }
@@ -73,42 +75,43 @@ pub fn HomePage() -> Element {
                                         }
                                     }
                                 }
-                                CarouselItem { item_key: 1, class: "bg-gradient-to-r from-foreground/20 via-foreground/10 to-foreground/20",
+                                CarouselItem {
+                                    item_key: 1,
+                                    class: "bg-gradient-to-r from-foreground/20 via-foreground/10 to-foreground/20",
                                     div { class: "flex flex-row h-[6.5rem] items-center justify-center",
                                         div { class: "flex flex-grow items-center justify-center basis 1/3",
                                             Dropdown { id: "dropdown-preview-home",
-                                                DropdownToggle {
-                                                    id: "dropdown-toggle-preview-home",
+                                                DropdownToggle { id: "dropdown-toggle-preview-home",
                                                     "Dropdown"
                                                 }
-                                                DropdownContent {
-                                                    id: "dropdown-content-preview-home",
+                                                DropdownContent { id: "dropdown-content-preview-home",
                                                     div { "Content" }
                                                 }
                                             }
                                         }
                                         div { class: "flex flex-grow items-center justify-center basis 1/3",
-                                            LightSwitch { class: "px-4 py-2 text-sm font-medium bg-background rounded-global-radius whitespace-nowrap hover:bg-accent hover:text-accent-foreground cursor-pointer p-1 rounded-global-radius hover:bg-foreground/40 active:bg-foreground/60",
-                                                onclick: move |_| {}
+                                            LightSwitch {
+                                                class: "px-4 py-2 text-sm font-medium bg-background rounded-global-radius whitespace-nowrap hover:bg-accent hover:text-accent-foreground cursor-pointer p-1 rounded-global-radius hover:bg-foreground/40 active:bg-foreground/60",
+                                                onclick: move |_| {},
                                             }
                                         }
                                         div { class: "flex flex-grow items-center justify-center basis 1/3",
                                             HoverCard { id: "hover-card-preview-home",
-                                                HoverCardTrigger {
-                                                    id: "hover-card-trigger-preview-home",
+                                                HoverCardTrigger { id: "hover-card-trigger-preview-home",
                                                     div { class: "px-4 py-2 text-sm font-medium bg-background border border-input rounded-global-radius whitespace-nowrap hover:bg-accent hover:text-accent-foreground",
                                                         "Hover me"
                                                     }
                                                 }
-                                                HoverCardContent {
-                                                    id: "hover-card-content-preview-home",
+                                                HoverCardContent { id: "hover-card-content-preview-home",
                                                     div { "Content" }
                                                 }
                                             }
                                         }
                                     }
                                 }
-                                CarouselItem { item_key: 2, class: "bg-gradient-to-r from-foreground/20 to-foreground/10",
+                                CarouselItem {
+                                    item_key: 2,
+                                    class: "bg-gradient-to-r from-foreground/20 to-foreground/10",
                                     div { class: "flex flex-row h-[6.5rem] items-center justify-center",
                                         div { class: "flex flex-grow items-center justify-center basis 1/3",
                                             ButtonGroup {
@@ -149,7 +152,7 @@ pub fn HomePage() -> Element {
                 fill: "none",
                 class: "stroke-foreground fixed right-14",
                 stroke_width: 1,
-                stroke_linecap: "round", 
+                stroke_linecap: "round",
                 stroke_linejoin: "round",
                 path { d: "M7 7L17 17M17 17V7M17 17H7" }
             }

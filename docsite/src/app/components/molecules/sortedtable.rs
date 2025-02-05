@@ -4,10 +4,21 @@ use dioxus_components::molecules::sorttable::{KeyType, SortTable, Sortable, ToTa
 #[component]
 pub fn SortedTablePage() -> Element {
     let vec_user = UserTab::get_10_users();
+    let vec_rows = Row::get_5();
 
     rsx!(
         "Sorted Table"
-        SortTable::<UserTab> { data: vec_user }
+        SortTable::<UserTab> {
+            data: vec_user,
+            header_class: "bg-blue-300 text-white",
+            row_class: "bg-red-100",
+            cell_class: "border border-green-300",
+            non_sortable_columns: vec![0],
+        }
+        SortTable::<Row> {
+            data: vec_rows,
+            non_sortable_columns: vec![0],
+        }
     )
 }
 
@@ -40,6 +51,74 @@ impl Sortable for TestProject {
 impl std::fmt::Display for TestProject {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{} ({})", self.slug, self.id)
+    }
+}
+
+#[derive(PartialEq, Clone, Debug)]
+struct Row(String, u32, u64, TestUser);
+impl ToTableData for Row {
+    fn headers_to_strings() -> Vec<impl ToString> {
+        vec!["name", "age", "id", "user"]
+    }
+
+    fn to_keytype(&self) -> Vec<KeyType> {
+        vec![
+            self.0.clone().into(),
+            self.1.into(),
+            self.2.into(),
+            KeyType::Object(Box::new(self.3.clone())),
+        ]
+    }
+}
+impl Row {
+    pub fn get_5() -> Vec<Row> {
+        vec![
+            Row(
+                "John".to_string(),
+                25,
+                1,
+                TestUser {
+                    name: "John".to_string(),
+                    age: 25,
+                },
+            ),
+            Row(
+                "Jane".to_string(),
+                23,
+                2,
+                TestUser {
+                    name: "Jane".to_string(),
+                    age: 23,
+                },
+            ),
+            Row(
+                "Alice".to_string(),
+                27,
+                3,
+                TestUser {
+                    name: "Alice".to_string(),
+                    age: 27,
+                },
+            ),
+            Row(
+                "Bob".to_string(),
+                26,
+                4,
+                TestUser {
+                    name: "Bob".to_string(),
+                    age: 26,
+                },
+            ),
+            Row(
+                "Eve".to_string(),
+                24,
+                5,
+                TestUser {
+                    name: "Eve".to_string(),
+                    age: 24,
+                },
+            ),
+        ]
     }
 }
 
