@@ -92,8 +92,14 @@ fn impl_row_derive(input: DeriveInput) -> TokenStream {
 
             let field_type = mtype.to_token_stream().to_string();
             let nosort = quote::format_ident!("{}", !row_attr.nosort);
+            let element_sort = quote::format_ident!("{}", false);
 
             match field_type.as_str() {
+                "Element" => {
+                    quote::quote! {
+                        KeyType::Element(self.#name.clone(), #element_sort)
+                    }
+                }
                 "String" | "& str" | "& 'static str" => {
                     quote::quote! {
                         KeyType::String(self.#name.to_string(), #nosort)
@@ -138,7 +144,7 @@ fn impl_row_derive(input: DeriveInput) -> TokenStream {
             let field_type = mtype.to_token_stream().to_string();
             match field_type.as_str() {
                 "String" | "& str" | "& 'static str" | "i8" | "i16" | "i32" | "i64" | "i128"
-                | "u8" | "u16" | "u32" | "u64" | "u128" => {
+                | "u8" | "u16" | "u32" | "u64" | "u128" | "Element" => {
                     quote::quote! {}
                 }
                 _ => match row_attr.sort {

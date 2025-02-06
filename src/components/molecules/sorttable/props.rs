@@ -1,5 +1,7 @@
+use crate::attributes::*;
 use crate::prelude::*;
 use dioxus::prelude::*;
+use dioxus_components_macro::UiComp;
 use tailwind_fuse::tw_merge;
 
 pub trait Sortable: ToString + Clonable {
@@ -32,6 +34,7 @@ pub trait ToTableData {
 // Used to change the sorting type of the data (eg if a field is number we will not sort the same way as string)
 #[derive(Clone)]
 pub enum KeyType {
+    Element(Element, bool),
     String(String, bool),
     Integer(i128, bool),
     UnsignedInteger(u128, bool),
@@ -171,11 +174,12 @@ impl std::fmt::Display for KeyType {
             KeyType::Object(obj, _) => {
                 write!(f, "{}", obj.to_string())
             }
+            _ => write!(f, ""),
         }
     }
 }
 
-#[derive(Clone, PartialEq, Props)]
+#[derive(Clone, PartialEq, Props, UiComp)]
 pub struct SortTableProps<T: 'static + std::clone::Clone + std::cmp::PartialEq + ToTableData> {
     #[props(extends = caption, extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
@@ -241,8 +245,6 @@ where
     data.sort_by_key(key_extractor);
 }
 
-// TODO Find a way to add the derive UiComp to the component
-// Need to edit the dioxus_components_macro crate
 pub fn SortTable<T: std::clone::Clone + std::cmp::PartialEq + ToTableData>(
     props: SortTableProps<T>,
 ) -> Element {
@@ -277,6 +279,7 @@ pub fn SortTable<T: std::clone::Clone + std::cmp::PartialEq + ToTableData>(
             .enumerate()
             .filter_map(|(index, keytype)| match keytype {
                 KeyType::String(_, false) => Some(index),
+                KeyType::Element(_, _) => Some(index),
                 KeyType::Integer(_, false) => Some(index),
                 KeyType::UnsignedInteger(_, false) => Some(index),
                 KeyType::Object(_, false) => Some(index),
@@ -331,7 +334,11 @@ pub fn SortTable<T: std::clone::Clone + std::cmp::PartialEq + ToTableData>(
                 for data in state.read().data.iter() {
                     TableRow { class: "{row_class}",
                         for field in data.to_keytype().into_iter() {
-                            TableCell { class: "{cell_class}", {field.to_string()} }
+                            if let KeyType::Element(element, _) = field {
+                                TableCell { class: "{cell_class}", {element} }
+                            } else {
+                                TableCell { class: "{cell_class}", {field.to_string()} }
+                            }
                         }
                     }
                 }

@@ -7,7 +7,6 @@ use dioxus_components::{
 #[component]
 pub fn SortedTablePage() -> Element {
     let vec_user = UserTab::get_10_users();
-    //let vec_rows = Row::get_5();
 
     rsx!(
         "Sorted Table"
@@ -44,68 +43,10 @@ impl std::fmt::Display for TestProject {
     }
 }
 
-//#[derive(PartialEq, Clone, Debug, Row)]
-//struct Row {
-//    name: String,
-//    age: u32,
-//    id: u64,
-//    user: TestUser,
-//}
-//
-//impl Row {
-//    pub fn get_5() -> Vec<Row> {
-//        vec![
-//            Row {
-//                name: "John".to_string(),
-//                age: 25,
-//                id: 1,
-//                user: TestUser {
-//                    name: "John".to_string(),
-//                    age: 25,
-//                },
-//            },
-//            Row {
-//                name: "Jane".to_string(),
-//                age: 23,
-//                id: 2,
-//                user: TestUser {
-//                    name: "Jane".to_string(),
-//                    age: 23,
-//                },
-//            },
-//            Row {
-//                name: "Alice".to_string(),
-//                age: 27,
-//                id: 3,
-//                user: TestUser {
-//                    name: "Alice".to_string(),
-//                    age: 27,
-//                },
-//            },
-//            Row {
-//                name: "Bob".to_string(),
-//                age: 26,
-//                id: 4,
-//                user: TestUser {
-//                    name: "Bob".to_string(),
-//                    age: 26,
-//                },
-//            },
-//            Row {
-//                name: "Eve".to_string(),
-//                age: 24,
-//                id: 5,
-//                user: TestUser {
-//                    name: "Eve".to_string(),
-//                    age: 24,
-//                },
-//            },
-//        ]
-//    }
-//}
-
 #[derive(PartialEq, Clone, Debug, Row)]
 struct UserTab {
+    #[row(header = "pp")]
+    photo: Element,
     #[row(header = "username")]
     login: &'static str,
     #[row(nosort, header = "user_status")]
@@ -128,6 +69,7 @@ impl UserTab {
     fn get_10_users() -> Vec<UserTab> {
         vec![
             UserTab {
+                photo: rsx! { img { src: "https://imgs.search.brave.com/qBizHqeYVCfOzw9Jv60VJJAYxYvMaTfWIACzH-D0UJA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNjE1/NTgyNDAyL2ZyL3Bo/b3RvL21lZXJrYXQt/Y2F0LmpwZz9zPTYx/Mng2MTImdz0wJms9/MjAmYz1admJYbVp4/dUE5c3Nyc3JfT2JT/Vko2TWtVS0IySkg1/ZmRGRlFUdmc5bFMw/PQ" } },
                 login: "user1",
                 status: "active",
                 exam2: 85,
@@ -148,6 +90,7 @@ impl UserTab {
                 },
             },
             UserTab {
+                photo: rsx! { img { src: "https://imgs.search.brave.com/qBizHqeYVCfOzw9Jv60VJJAYxYvMaTfWIACzH-D0UJA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNjE1/NTgyNDAyL2ZyL3Bo/b3RvL21lZXJrYXQt/Y2F0LmpwZz9zPTYx/Mng2MTImdz0wJms9/MjAmYz1admJYbVp4/dUE5c3Nyc3JfT2JT/Vko2TWtVS0IySkg1/ZmRGRlFUdmc5bFMw/PQ" } },
                 login: "user2",
                 status: "inactive",
                 exam2: 78,
@@ -168,6 +111,7 @@ impl UserTab {
                 },
             },
             UserTab {
+                photo: rsx! { img { src: "https://imgs.search.brave.com/qBizHqeYVCfOzw9Jv60VJJAYxYvMaTfWIACzH-D0UJA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNjE1/NTgyNDAyL2ZyL3Bo/b3RvL21lZXJrYXQt/Y2F0LmpwZz9zPTYx/Mng2MTImdz0wJms9/MjAmYz1admJYbVp4/dUE5c3Nyc3JfT2JT/Vko2TWtVS0IySkg1/ZmRGRlFUdmc5bFMw/PQ" } },
                 login: "user3",
                 status: "active",
                 exam2: 95,
@@ -188,6 +132,7 @@ impl UserTab {
                 },
             },
             UserTab {
+                photo: rsx! { img { src: "https://imgs.search.brave.com/qBizHqeYVCfOzw9Jv60VJJAYxYvMaTfWIACzH-D0UJA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNjE1/NTgyNDAyL2ZyL3Bo/b3RvL21lZXJrYXQt/Y2F0LmpwZz9zPTYx/Mng2MTImdz0wJms9/MjAmYz1admJYbVp4/dUE5c3Nyc3JfT2JT/Vko2TWtVS0IySkg1/ZmRGRlFUdmc5bFMw/PQ" } },
                 login: "user4",
                 status: "active",
                 exam2: 88,
@@ -208,6 +153,7 @@ impl UserTab {
                 },
             },
             UserTab {
+                photo: rsx! { img { src: "https://imgs.search.brave.com/qBizHqeYVCfOzw9Jv60VJJAYxYvMaTfWIACzH-D0UJA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNjE1/NTgyNDAyL2ZyL3Bo/b3RvL21lZXJrYXQt/Y2F0LmpwZz9zPTYx/Mng2MTImdz0wJms9/MjAmYz1admJYbVp4/dUE5c3Nyc3JfT2JT/Vko2TWtVS0IySkg1/ZmRGRlFUdmc5bFMw/PQ" } },
                 login: "user5",
                 status: "inactive",
                 exam2: 75,
@@ -228,6 +174,7 @@ impl UserTab {
                 },
             },
             UserTab {
+                photo: rsx! { img { src: "https://imgs.search.brave.com/qBizHqeYVCfOzw9Jv60VJJAYxYvMaTfWIACzH-D0UJA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNjE1/NTgyNDAyL2ZyL3Bo/b3RvL21lZXJrYXQt/Y2F0LmpwZz9zPTYx/Mng2MTImdz0wJms9/MjAmYz1admJYbVp4/dUE5c3Nyc3JfT2JT/Vko2TWtVS0IySkg1/ZmRGRlFUdmc5bFMw/PQ" } },
                 login: "user6",
                 status: "active",
                 exam2: 92,
@@ -248,6 +195,7 @@ impl UserTab {
                 },
             },
             UserTab {
+                photo: rsx! { img { src: "https://imgs.search.brave.com/qBizHqeYVCfOzw9Jv60VJJAYxYvMaTfWIACzH-D0UJA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNjE1/NTgyNDAyL2ZyL3Bo/b3RvL21lZXJrYXQt/Y2F0LmpwZz9zPTYx/Mng2MTImdz0wJms9/MjAmYz1admJYbVp4/dUE5c3Nyc3JfT2JT/Vko2TWtVS0IySkg1/ZmRGRlFUdmc5bFMw/PQ" } },
                 login: "user7",
                 status: "active",
                 exam2: 89,
@@ -268,6 +216,7 @@ impl UserTab {
                 },
             },
             UserTab {
+                photo: rsx! { img { src: "https://imgs.search.brave.com/qBizHqeYVCfOzw9Jv60VJJAYxYvMaTfWIACzH-D0UJA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNjE1/NTgyNDAyL2ZyL3Bo/b3RvL21lZXJrYXQt/Y2F0LmpwZz9zPTYx/Mng2MTImdz0wJms9/MjAmYz1admJYbVp4/dUE5c3Nyc3JfT2JT/Vko2TWtVS0IySkg1/ZmRGRlFUdmc5bFMw/PQ" } },
                 login: "user8",
                 status: "inactive",
                 exam2: 72,
@@ -288,6 +237,7 @@ impl UserTab {
                 },
             },
             UserTab {
+                photo: rsx! { img { src: "https://imgs.search.brave.com/qBizHqeYVCfOzw9Jv60VJJAYxYvMaTfWIACzH-D0UJA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNjE1/NTgyNDAyL2ZyL3Bo/b3RvL21lZXJrYXQt/Y2F0LmpwZz9zPTYx/Mng2MTImdz0wJms9/MjAmYz1admJYbVp4/dUE5c3Nyc3JfT2JT/Vko2TWtVS0IySkg1/ZmRGRlFUdmc5bFMw/PQ" } },
                 login: "user9",
                 status: "active",
                 exam2: 97,
@@ -308,6 +258,7 @@ impl UserTab {
                 },
             },
             UserTab {
+                photo: rsx! { img { src: "https://imgs.search.brave.com/qBizHqeYVCfOzw9Jv60VJJAYxYvMaTfWIACzH-D0UJA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNjE1/NTgyNDAyL2ZyL3Bo/b3RvL21lZXJrYXQt/Y2F0LmpwZz9zPTYx/Mng2MTImdz0wJms9/MjAmYz1admJYbVp4/dUE5c3Nyc3JfT2JT/Vko2TWtVS0IySkg1/ZmRGRlFUdmc5bFMw/PQ" } },
                 login: "user10",
                 status: "active",
                 exam2: 87,
