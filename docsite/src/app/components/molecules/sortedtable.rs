@@ -10,9 +10,8 @@ pub fn SortedTablePage() -> Element {
     let vec_rows = RowTest::get_4_rows();
 
     rsx! {
-        h4 {class: "h4", "Sorted Table"}
-        div {
-            class: "flex flex-col gap-8",
+        h4 { class: "h4", "Sorted Table" }
+        div { class: "flex flex-col gap-8",
             SortTable::<UserTab> {
                 data: vec_user,
                 header_class: "bg-blue-300 text-white",

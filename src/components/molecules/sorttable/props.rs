@@ -181,7 +181,7 @@ impl std::fmt::Display for KeyType {
 
 #[derive(Clone, PartialEq, Props, UiComp)]
 pub struct SortTableProps<T: 'static + std::clone::Clone + std::cmp::PartialEq + ToTableData> {
-    #[props(extends = caption, extends = GlobalAttributes)]
+    #[props(extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 
     #[props(optional, into)]
@@ -194,8 +194,6 @@ pub struct SortTableProps<T: 'static + std::clone::Clone + std::cmp::PartialEq +
     cell_class: Option<String>,
 
     data: Vec<T>,
-
-    children: Element,
 }
 
 pub struct SortTableState<T: ToTableData> {
@@ -246,8 +244,9 @@ where
 }
 
 pub fn SortTable<T: std::clone::Clone + std::cmp::PartialEq + ToTableData>(
-    props: SortTableProps<T>,
+    mut props: SortTableProps<T>,
 ) -> Element {
+    props.update_class_attribute();
     let mut state = use_signal(|| SortTableState::<T>::new(props.data.clone()));
     use_effect(move || {
         state.set(SortTableState::<T>::new(props.data.clone()));
@@ -291,8 +290,8 @@ pub fn SortTable<T: std::clone::Clone + std::cmp::PartialEq + ToTableData>(
             .collect()
     });
 
-    rsx!(
-        Table {
+    rsx! {
+        table {..props.attributes,
             TableHeader {
                 TableRow {
                     for (index , head) in T::headers_to_strings().iter().enumerate() {
@@ -347,5 +346,5 @@ pub fn SortTable<T: std::clone::Clone + std::cmp::PartialEq + ToTableData>(
                 }
             }
         }
-    )
+    }
 }
