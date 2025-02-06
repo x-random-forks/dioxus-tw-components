@@ -7,14 +7,23 @@ use dioxus_components::{
 #[component]
 pub fn SortedTablePage() -> Element {
     let vec_user = UserTab::get_10_users();
+    let vec_rows = RowTest::get_4_rows();
 
     rsx!(
         "Sorted Table"
-        SortTable::<UserTab> {
-            data: vec_user,
-            header_class: "bg-blue-300 text-white",
-            row_class: "bg-red-100",
-            cell_class: "border border-green-300",
+        div { class: "flex flex-col gap-8",
+            SortTable::<UserTab> {
+                data: vec_user,
+                header_class: "bg-blue-300 text-white",
+                row_class: "bg-red-100",
+                cell_class: "border border-green-300",
+            }
+            SortTable::<RowTest> {
+                data: vec_rows,
+                header_class: "bg-blue-300 text-white",
+                row_class: "bg-red-100",
+                cell_class: "border border-green-300",
+            }
         }
     )
 }
@@ -276,6 +285,75 @@ impl UserTab {
                 project: TestProject {
                     slug: "project10".to_string(),
                     id: 10,
+                },
+            },
+        ]
+    }
+}
+
+#[derive(PartialEq, Clone, Debug)]
+struct RowTest {
+    photo: Element,
+    user: TestUser,
+    project: TestProject,
+}
+impl ToTableData for RowTest {
+    fn headers_to_strings() -> Vec<impl ToString> {
+        vec!["pp", "user", "uid"]
+    }
+    fn to_keytype(&self) -> Vec<KeyType> {
+        vec![
+            KeyType::Element(self.photo.clone(), false),
+            KeyType::String(self.user.to_string(), true),
+            KeyType::String(self.project.to_string(), true),
+        ]
+    }
+}
+impl RowTest {
+    pub fn get_4_rows() -> Vec<RowTest> {
+        vec![
+            RowTest {
+                photo: rsx! { img { src: "https://imgs.search.brave.com/qBizHqeYVCfOzw9Jv60VJJAYxYvMaTfWIACzH-D0UJA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNjE1/NTgyNDAyL2ZyL3Bo/b3RvL21lZXJrYXQt/Y2F0LmpwZz9zPTYx/Mng2MTImdz0wJms9/MjAmYz1admJYbVp4/dUE5c3Nyc3JfT2JT/Vko2TWtVS0IySkg1/ZmRGRlFUdmc5bFMw/PQ" } },
+                user: TestUser {
+                    name: "John".to_string(),
+                    age: 25,
+                },
+                project: TestProject {
+                    slug: "project1".to_string(),
+                    id: 1,
+                },
+            },
+            RowTest {
+                photo: rsx! { img { src: "https://imgs.search.brave.com/qBizHqeYVCfOzw9Jv60VJJAYxYvMaTfWIACzH-D0UJA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNjE1/NTgyNDAyL2ZyL3Bo/b3RvL21lZXJrYXQt/Y2F0LmpwZz9zPTYx/Mng2MTImdz0wJms9/MjAmYz1admJYbVp4/dUE5c3Nyc3JfT2JT/Vko2TWtVS0IySkg1/ZmRGRlFUdmc5bFMw/PQ" } },
+                user: TestUser {
+                    name: "John".to_string(),
+                    age: 25,
+                },
+                project: TestProject {
+                    slug: "project1".to_string(),
+                    id: 1,
+                },
+            },
+            RowTest {
+                photo: rsx! { img { src: "https://imgs.search.brave.com/qBizHqeYVCfOzw9Jv60VJJAYxYvMaTfWIACzH-D0UJA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNjE1/NTgyNDAyL2ZyL3Bo/b3RvL21lZXJrYXQt/Y2F0LmpwZz9zPTYx/Mng2MTImdz0wJms9/MjAmYz1admJYbVp4/dUE5c3Nyc3JfT2JT/Vko2TWtVS0IySkg1/ZmRGRlFUdmc5bFMw/PQ" } },
+                user: TestUser {
+                    name: "John".to_string(),
+                    age: 25,
+                },
+                project: TestProject {
+                    slug: "project1".to_string(),
+                    id: 1,
+                },
+            },
+            RowTest {
+                photo: rsx! { img { src: "https://imgs.search.brave.com/qBizHqeYVCfOzw9Jv60VJJAYxYvMaTfWIACzH-D0UJA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNjE1/NTgyNDAyL2ZyL3Bo/b3RvL21lZXJrYXQt/Y2F0LmpwZz9zPTYx/Mng2MTImdz0wJms9/MjAmYz1admJYbVp4/dUE5c3Nyc3JfT2JT/Vko2TWtVS0IySkg1/ZmRGRlFUdmc5bFMw/PQ" } },
+                user: TestUser {
+                    name: "John".to_string(),
+                    age: 25,
+                },
+                project: TestProject {
+                    slug: "project1".to_string(),
+                    id: 1,
                 },
             },
         ]
