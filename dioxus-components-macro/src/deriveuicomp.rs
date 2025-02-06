@@ -23,21 +23,22 @@ pub fn impl_my_derive(ast: &syn::DeriveInput) -> TokenStream {
 fn derive_traits(
     struct_name: &Ident,
     fields: &Fields,
-    struct_generic: &Generics,
+    struct_generics: &Generics,
 ) -> Vec<proc_macro2::TokenStream> {
-    let buildclass_trait = build_buildclass_trait(struct_name, fields, struct_generic);
+    let buildclass_trait = build_buildclass_trait(struct_name, fields, struct_generics);
 
-    let haschildren_trait = build_haschildren_trait(struct_name, fields, struct_generic);
+    let haschildren_trait = build_haschildren_trait(struct_name, fields, struct_generics);
 
+    let (impl_generics, ty_generics, where_clause) = struct_generics.split_for_impl();
     let uicomp_trait = quote! {
-        impl #struct_generic UiComp for #struct_name #struct_generic {}
+        impl #impl_generics UiComp for #struct_name #ty_generics #where_clause {}
     };
 
     // Get the name without "Props" to impl Display with
     let name = struct_name.to_string().replace("Props", "");
 
     let display_trait = quote! {
-        impl #struct_generic std::fmt::Display for #struct_name #struct_generic {
+        impl #impl_generics std::fmt::Display for #struct_name #ty_generics #where_clause {
             fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 f.write_str(#name)
             }
@@ -55,7 +56,7 @@ fn derive_traits(
 fn build_buildclass_trait(
     struct_name: &Ident,
     fields: &Fields,
-    struct_generic: &Generics,
+    struct_generics: &Generics,
 ) -> proc_macro2::TokenStream {
     // Search for "attributes" in the fields of the struct
     let search_attributes = fields.iter().find(|field| {
@@ -65,11 +66,12 @@ fn build_buildclass_trait(
             false
         }
     });
+    let (impl_generics, ty_generics, where_clause) = struct_generics.split_for_impl();
 
     // If "attributes" is found return the vec as mut in BuildClass Trait
     if search_attributes.is_some() {
         quote! {
-            impl #struct_generic BuildClass for #struct_name #struct_generic {
+            impl #impl_generics BuildClass for #struct_name #ty_generics #where_clause {
                 fn get_attributes(&mut self) -> Option<&mut Vec<Attribute>> {
                     Some(&mut self.attributes)
                 }
@@ -77,7 +79,7 @@ fn build_buildclass_trait(
         }
     } else {
         quote! {
-            impl #struct_generic BuildClass for #struct_name #struct_generic {}
+            impl #impl_generics BuildClass for #struct_name #ty_generics #where_clause {}
         }
     }
 }
@@ -85,7 +87,7 @@ fn build_buildclass_trait(
 fn build_haschildren_trait(
     struct_name: &Ident,
     fields: &Fields,
-    struct_generic: &Generics,
+    struct_generics: &Generics,
 ) -> proc_macro2::TokenStream {
     // Search for "children" in the fields of the struct
     let search_attributes = fields.iter().find(|field| {
@@ -95,11 +97,12 @@ fn build_haschildren_trait(
             false
         }
     });
+    let (impl_generics, ty_generics, where_clause) = struct_generics.split_for_impl();
 
     // impl has_children as true and set_children accordingly else let the default definition of both
     if search_attributes.is_some() {
         quote! {
-            impl #struct_generic HasChildren for #struct_name #struct_generic {
+            impl #impl_generics HasChildren for #struct_name #ty_generics #where_clause {
                 fn has_children(&self) -> bool {
                     true
                 }
@@ -111,7 +114,7 @@ fn build_haschildren_trait(
         }
     } else {
         quote! {
-            impl #struct_generic HasChildren for #struct_name #struct_generic {}
+            impl #impl_generics HasChildren for #struct_name #ty_generics #where_clause {}
         }
     }
 }
