@@ -248,7 +248,10 @@ where
 pub fn SortTable<T: std::clone::Clone + std::cmp::PartialEq + ToTableData>(
     props: SortTableProps<T>,
 ) -> Element {
-    let mut state = use_signal(|| SortTableState::<T>::new(props.data));
+    let mut state = use_signal(|| SortTableState::<T>::new(props.data.clone()));
+    use_effect(move || {
+        state.set(SortTableState::<T>::new(props.data.clone()));
+    });
 
     let header_class = match props.header_class {
         Some(header_class) => tw_merge!(
