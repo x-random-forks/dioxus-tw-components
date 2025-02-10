@@ -36,17 +36,25 @@ impl ToTableData for SortableRow {
 #[derive(Clone, PartialEq)]
 pub struct SortableCell {
     content: Element,
+    style: String,
     sort_by: KeyType,
 }
 impl SortableCell {
     pub fn new(content: Element) -> Self {
         SortableCell {
             content,
+            style: String::new(),
             sort_by: KeyType::None,
         }
     }
+
     pub fn sort_by(mut self, sort_by: KeyType) -> Self {
         self.sort_by = sort_by;
+        self
+    }
+
+    pub fn style(mut self, style: impl ToString) -> Self {
+        self.style = style.to_string();
         self
     }
 }
@@ -379,7 +387,9 @@ pub fn SortTable(mut props: SortTableProps) -> Element {
                 for data in state.read().data.iter() {
                     TableRow { class: "{row_class}",
                         for field in data.iter() {
-                            TableCell { class: "{cell_class}", {field.content.clone()} }
+                            TableCell {
+                                class: format!("{}", tw_merge!(&cell_class, &field.style)),
+                                {field.content.clone()} }
                         }
                     }
                 }
