@@ -10,9 +10,7 @@ pub fn PlaceholderPage() -> Element {
         Signal::new(hash)
     });
 
-    rsx!(
-        PreviewFull::<PlaceholderProps> {}
-    )
+    rsx!(PreviewFull::<PlaceholderProps> {})
 }
 
 impl DemoComponent for PlaceholderProps {
@@ -23,24 +21,20 @@ impl DemoComponent for PlaceholderProps {
     fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
-        rsx!(
-            Placeholder {
-                class: state.read()[&0].get_class(),
-                color: state.read()[&0].get_color(),
-                animation: state.read()[&0].get_animation(),
-            }
-        )
+        rsx!(Placeholder {
+            class: state.read()[&0].get_class(),
+            color: state.read()[&0].get_color(),
+            animation: state.read()[&0].get_animation(),
+        })
     }
 
     fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
-        rsx!(
-            CompPreviewSelector::<PlaceholderProps> {
-                index: 0,
-                state,
-                comp_props: PlaceholderProps::default(),
-            }
-        )
+        rsx!(CompPreviewSelector::<PlaceholderProps> {
+            index: 0,
+            state,
+            comp_props: PlaceholderProps::default(),
+        })
     }
 }

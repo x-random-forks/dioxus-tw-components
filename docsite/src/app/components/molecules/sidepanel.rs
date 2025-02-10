@@ -12,9 +12,7 @@ pub fn SidePanelPage() -> Element {
         Signal::new(hash)
     });
 
-    rsx!(
-        PreviewFull::<SidePanelProps> {}
-    )
+    rsx!(PreviewFull::<SidePanelProps> {})
 }
 
 impl DemoComponent for SidePanelProps {

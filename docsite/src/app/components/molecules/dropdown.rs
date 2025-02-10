@@ -12,9 +12,7 @@ pub fn DropdownPage() -> Element {
         Signal::new(hash)
     });
 
-    rsx!(
-        PreviewFull::<DropdownProps> {}
-    )
+    rsx!(PreviewFull::<DropdownProps> {})
 }
 
 impl DemoComponent for DropdownProps {

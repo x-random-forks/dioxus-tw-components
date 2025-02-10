@@ -1,12 +1,10 @@
-use crate::{
-    attributes::*,
-    hooks::{use_document, use_window},
-};
+use crate::attributes::*;
 use chrono::{DateTime, Local, TimeDelta};
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 use dioxus_core::AttributeValue;
-use dioxus_elements::geometry::euclid::Rect;
+
+#[cfg(target_arch = "wasm32")]
 use gloo_timers::future::TimeoutFuture;
 
 #[derive(Clone, Debug)]
@@ -108,13 +106,29 @@ pub fn HoverCard(mut props: HoverCardProps) -> Element {
         let closing_delay_ms = state.read().closing_delay_ms;
 
         spawn(async move {
-            TimeoutFuture::new(
-                closing_delay_ms
-                    .num_milliseconds()
-                    .try_into()
-                    .unwrap_or_default(),
-            )
-            .await;
+            #[cfg(target_arch = "wasm32")]
+            {
+                TimeoutFuture::new(
+                    closing_delay_ms
+                        .num_milliseconds()
+                        .try_into()
+                        .unwrap_or_default(),
+                )
+                .await;
+            }
+            #[cfg(not(target_arch = "wasm32"))]
+            {
+                let _ = tokio::time::timeout(
+                    std::time::Duration::from_millis(
+                        closing_delay_ms
+                            .num_milliseconds()
+                            .try_into()
+                            .unwrap_or_default(),
+                    ),
+                    async {},
+                )
+                .await;
+            }
 
             let is_hovered = state.read().get_is_hovered();
 
@@ -190,9 +204,6 @@ pub struct HoverCardContentProps {
     #[props(optional, default)]
     pub animation: ReadOnlySignal<Animation>,
 
-    #[props(default = true)]
-    pub apply_position: bool,
-
     children: Element,
 }
 
@@ -201,7 +212,6 @@ impl std::default::Default for HoverCardContentProps {
         Self {
             attributes: Vec::<Attribute>::default(),
             animation: ReadOnlySignal::<Animation>::default(),
-            apply_position: true,
             children: rsx! {},
         }
     }
@@ -212,47 +222,9 @@ pub fn HoverCardContent(mut props: HoverCardContentProps) -> Element {
 
     props.update_class_attribute();
 
-    let mut body_width = use_signal(|| 0);
-
-    // Get the body width
-    use_effect(move || {
-        if let Ok(window) = use_window() {
-            let document = use_document(&window).unwrap();
-            let a = document.body().unwrap();
-            body_width.set(a.client_width())
-        }
-    });
-
-    let mut rect_sig = use_signal(Rect::default);
-
-    // Retrieve the hover content rect
-    let onmounted = move |event: MountedEvent| async move {
-        let rect = event.get_client_rect().await;
-        rect_sig.set(rect.unwrap());
-    };
-
-    // Css property to position the hover content
-    let mut position = use_signal(|| String::from(""));
-
-    use_effect(move || {
-        let rect = rect_sig();
-        let body_width = body_width();
-
-        // Place the content to fit inside the screen
-        if rect.origin.x < 0. {
-            position.set("left: 0px;".to_string())
-        } else if (rect.origin.x + rect.size.width) as u32 as i32 > body_width {
-            position.set("right: 0px;".to_string())
-        } else {
-            position.set("left: 50%; translate: -50%;".to_string())
-        }
-    });
-
     rsx!(
         div {
-            style: if props.apply_position { position },
             "data-state": state.into_value(),
-            onmounted,
             ..props.attributes,
             {props.children}
         }

@@ -3,6 +3,8 @@ use chrono::{DateTime, Local, TimeDelta};
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 use dioxus_core::AttributeValue;
+
+#[cfg(target_arch = "wasm32")]
 use gloo_timers::future::TimeoutFuture;
 
 #[derive(Clone, Copy)]
@@ -222,13 +224,29 @@ fn on_mouse_leave(mut state: Signal<DropdownState>) {
         }
         state.write().set_is_hovered(false);
 
-        TimeoutFuture::new(
-            closing_delay
-                .num_milliseconds()
-                .try_into()
-                .unwrap_or_default(),
-        )
-        .await;
+        #[cfg(target_arch = "wasm32")]
+        {
+            TimeoutFuture::new(
+                closing_delay
+                    .num_milliseconds()
+                    .try_into()
+                    .unwrap_or_default(),
+            )
+            .await;
+        }
+        #[cfg(not(target_arch = "wasm32"))]
+        {
+            let _ = tokio::time::timeout(
+                std::time::Duration::from_millis(
+                    closing_delay
+                        .num_milliseconds()
+                        .try_into()
+                        .unwrap_or_default(),
+                ),
+                async {},
+            )
+            .await;
+        }
 
         let is_hovered = state.read().get_is_hovered();
 

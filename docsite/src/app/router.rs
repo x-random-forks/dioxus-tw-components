@@ -1,7 +1,7 @@
-use dioxus::prelude::*;
+use super::components::*;
 use super::home::HomePage;
 use super::layout::Layout;
-use super::components::*;
+use dioxus::prelude::*;
 use dioxus_components::atoms::Separator;
 
 #[derive(Routable, Clone)]

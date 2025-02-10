@@ -1,11 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::{
-    attributes::*,
-    atoms::*,
-    molecules::*,
-    organisms::*,
-    theme::*
-};
+use dioxus_components::{atoms::*, attributes::*, molecules::*, organisms::*, theme::*};
 
 #[component]
 pub fn HomePage() -> Element {
@@ -149,7 +143,7 @@ pub fn HomePage() -> Element {
                 fill: "none",
                 class: "stroke-foreground fixed right-14",
                 stroke_width: 1,
-                stroke_linecap: "round", 
+                stroke_linecap: "round",
                 stroke_linejoin: "round",
                 path { d: "M7 7L17 17M17 17V7M17 17H7" }
             }

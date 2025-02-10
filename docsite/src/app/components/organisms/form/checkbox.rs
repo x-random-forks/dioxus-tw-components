@@ -12,9 +12,7 @@ pub fn CheckboxPage() -> Element {
         Signal::new(hash)
     });
 
-    rsx!(
-        PreviewFull::<CheckboxProps> {}
-    )
+    rsx!(PreviewFull::<CheckboxProps> {})
 }
 
 impl DemoComponent for CheckboxProps {
@@ -44,14 +42,12 @@ impl DemoComponent for CheckboxProps {
     fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
-        rsx!(
-            for index in 0..3 {
-                CompPreviewSelector::<CheckboxProps> {
-                    index,
-                    state,
-                    comp_props: CheckboxProps::default(),
-                }
+        rsx!(for index in 0..3 {
+            CompPreviewSelector::<CheckboxProps> {
+                index,
+                state,
+                comp_props: CheckboxProps::default(),
             }
-        )
+        })
     }
 }

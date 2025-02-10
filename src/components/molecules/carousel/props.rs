@@ -1,18 +1,18 @@
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 use dioxus_core::AttributeValue;
-use web_sys::wasm_bindgen::JsValue;
+use std::rc::Rc;
 
-use crate::{attributes::*, hooks::use_element_scroll_width};
+use crate::attributes::*;
 
 struct CarouselState {
     is_circular: bool,
     carousel_size: u32,
     // Use a key there so we can just +1 or -1 instead of having a vec
     current_item_key: u32,
-    content_id: String,
     content_width: i32,
     current_translation: i32,
+    content_data: Option<Rc<MountedData>>,
 }
 
 impl CarouselState {
@@ -22,7 +22,7 @@ impl CarouselState {
             is_circular,
             carousel_size: 0,
             content_width: 0,
-            content_id: String::from(""),
+            content_data: None,
             current_translation: 0,
         }
     }
@@ -31,24 +31,8 @@ impl CarouselState {
         self.carousel_size += 1;
     }
 
-    fn set_content_size(&mut self, scroll_width: Result<i32, JsValue>) {
-        match scroll_width {
-            Ok(width) => {
-                self.content_width = width;
-            }
-            Err(e) => {
-                self.content_width = 0;
-                log::error!(
-                    "Failed to get element width: {:?}, setting it to {}",
-                    e,
-                    self.content_width
-                );
-                log::error!(
-                    "Is the id of the CarouselContent set and correct? {:?}",
-                    self.content_id
-                );
-            }
-        }
+    fn set_content_size(&mut self, scroll_width: i32) {
+        self.content_width = scroll_width;
     }
 
     fn go_to_next_item(&mut self) {
@@ -63,8 +47,8 @@ impl CarouselState {
         self.current_item_key = item_key;
     }
 
-    fn set_content_id(&mut self, id: String) {
-        self.content_id = id;
+    fn set_content_element(&mut self, data: Option<Rc<MountedData>>) {
+        self.content_data = data;
     }
 
     fn is_active_to_attr_value(&self, key: u32) -> AttributeValue {
@@ -195,19 +179,6 @@ pub fn CarouselContent(mut props: CarouselContentProps) -> Element {
 
     props.update_class_attribute();
 
-    let onmounted = move |_| async move {
-        // Useful when default item is not the first one
-        carousel_state
-            .write()
-            .set_content_size(use_element_scroll_width(&props.id.read()));
-
-        carousel_state.write().translate();
-
-        carousel_state
-            .write()
-            .set_content_id(props.id.read().clone());
-    };
-
     let style = use_memo(move || {
         format!(
             "transform: translateX(-{}px)",
@@ -216,7 +187,23 @@ pub fn CarouselContent(mut props: CarouselContentProps) -> Element {
     });
 
     rsx!(
-        div { style, id: props.id, onmounted, ..props.attributes, {props.children} }
+        div {
+            style,
+            id: props.id,
+            onmounted: move |element| async move {
+                carousel_state.write().set_content_element(Some(element.data()));
+                carousel_state
+                    .write()
+                    .set_content_size(match element.data().get_scroll_size().await {
+                        Ok(size) => size.width as i32,
+                        Err(_) => 0
+                    });
+
+                carousel_state.write().translate();
+            },
+            ..props.attributes,
+            {props.children}
+        }
     )
 }
 
@@ -274,12 +261,17 @@ pub fn CarouselTrigger(mut props: CarouselTriggerProps) -> Element {
 
     props.update_class_attribute();
 
-    let onclick = move |_| {
-        let content_id = carousel_state.read().content_id.clone();
+    let onclick = move |_| async move {
+        let content_data = carousel_state.read().content_data.clone();
 
-        carousel_state
-            .write()
-            .set_content_size(use_element_scroll_width(&content_id));
+        if let Some(data) = content_data {
+            carousel_state
+                .write()
+                .set_content_size(match data.get_scroll_size().await {
+                    Ok(size) => size.width as i32,
+                    Err(_) => 0,
+                });
+        }
 
         scroll_carousel(props.next, carousel_state);
 
