@@ -1,9 +1,7 @@
 use super::props::*;
 use crate::attributes::*;
 
-impl<T: 'static + std::clone::Clone + std::cmp::PartialEq + ToTableData> Class
-    for SortTableProps<T>
-{
+impl Class for SortTableProps {
     fn base(&self) -> &'static str {
         "w-full caption-bottom text-sm text-foreground bg-background"
     }
