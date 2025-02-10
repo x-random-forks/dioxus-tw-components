@@ -14,7 +14,5 @@ pub struct SeparatorProps {
 pub fn Separator(mut props: SeparatorProps) -> Element {
     props.update_class_attribute();
 
-    rsx!(
-        div { ..props.attributes }
-    )
+    rsx!(div { ..props.attributes })
 }
