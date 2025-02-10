@@ -180,8 +180,8 @@ impl PartialOrd for KeyType {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
         match (self, other) {
             (KeyType::String(a), KeyType::String(b)) => a.partial_cmp(b),
-            (KeyType::Integer(a), KeyType::Integer(b)) => a.partial_cmp(b),
-            (KeyType::UnsignedInteger(a), KeyType::UnsignedInteger(b)) => a.partial_cmp(b),
+            (KeyType::Integer(a), KeyType::Integer(b)) => b.partial_cmp(a),
+            (KeyType::UnsignedInteger(a), KeyType::UnsignedInteger(b)) => b.partial_cmp(a),
             (KeyType::Object(a), KeyType::Object(b)) => {
                 a.to_sortable().partial_cmp(&b.to_sortable())
             }
@@ -194,8 +194,8 @@ impl Ord for KeyType {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
         match (self, other) {
             (KeyType::String(a), KeyType::String(b)) => a.cmp(b),
-            (KeyType::Integer(a), KeyType::Integer(b)) => a.cmp(b),
-            (KeyType::UnsignedInteger(a), KeyType::UnsignedInteger(b)) => a.cmp(b),
+            (KeyType::Integer(a), KeyType::Integer(b)) => b.cmp(a),
+            (KeyType::UnsignedInteger(a), KeyType::UnsignedInteger(b)) => b.cmp(a),
             (KeyType::Object(a), KeyType::Object(b)) => a.to_sortable().cmp(&b.to_sortable()),
             _ => std::cmp::Ordering::Equal,
         }
