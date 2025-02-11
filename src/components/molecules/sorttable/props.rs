@@ -312,11 +312,8 @@ pub fn SortTable(mut props: SortTableProps) -> Element {
     });
 
     let header_class = match props.header_class {
-        Some(header_class) => tw_merge!(
-            "select-none cursor-pointer space-x-2 relative",
-            header_class
-        ),
-        None => "select-none cursor-pointer space-x-2 relative".to_string(),
+        Some(header_class) => tw_merge!("select-none cursor-pointer", header_class),
+        None => "select-none cursor-pointer".to_string(),
     };
 
     let row_class = match props.row_class {
@@ -360,7 +357,7 @@ pub fn SortTable(mut props: SortTableProps) -> Element {
                                 }
                                 state.write().set_sorted_col_index(index);
                             },
-                            div { class: "flex flex-row items-center justify-between",
+                            div { class: "flex flex-row items-center justify-between space-x-1",
                                 p { {head.to_string()} }
                                 if state
                                     .read()
