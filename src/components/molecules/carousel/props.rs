@@ -255,19 +255,7 @@ pub fn CarouselTrigger(mut props: CarouselTriggerProps) -> Element {
     props.update_class_attribute();
 
     let onclick = move |_| async move {
-        let content_data = carousel_state.read().content_data.clone();
-
-        if let Some(data) = content_data {
-            carousel_state
-                .write()
-                .set_content_size(match data.get_scroll_size().await {
-                    Ok(size) => size.width as i32,
-                    Err(_) => 0,
-                });
-        }
-
         scroll_carousel(props.next, carousel_state);
-
         carousel_state.write().translate();
     };
 
