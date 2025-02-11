@@ -186,15 +186,7 @@ impl Eq for KeyType {}
 
 impl PartialOrd for KeyType {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        match (self, other) {
-            (KeyType::String(a), KeyType::String(b)) => a.partial_cmp(b),
-            (KeyType::Integer(a), KeyType::Integer(b)) => b.partial_cmp(a),
-            (KeyType::UnsignedInteger(a), KeyType::UnsignedInteger(b)) => b.partial_cmp(a),
-            (KeyType::Object(a), KeyType::Object(b)) => {
-                a.to_sortable().partial_cmp(&b.to_sortable())
-            }
-            _ => None,
-        }
+        Some(self.cmp(other))
     }
 }
 
@@ -320,7 +312,7 @@ impl SortTableState {
     }
 }
 
-fn sort_table_keytype<F>(data: &mut Vec<SortableRow>, key_extractor: F)
+fn sort_table_keytype<F>(data: &mut [SortableRow], key_extractor: F)
 where
     F: Fn(&SortableRow) -> KeyType,
 {
