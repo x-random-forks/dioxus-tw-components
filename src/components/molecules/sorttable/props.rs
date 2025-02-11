@@ -247,6 +247,11 @@ pub struct SortTableProps {
     #[props(optional, into)]
     cell_class: Option<String>,
 
+    /// The default sort column (header name)
+    /// If not set, the first column will be sorted
+    #[props(optional, into)]
+    default_sort: Option<String>,
+
     headers: Vec<String>,
 
     data: Vec<SortableRow>,
@@ -292,6 +297,27 @@ impl SortTableState {
     pub fn get_sort_ascending(&self) -> bool {
         self.sort_ascending
     }
+
+    /// Set the default sort column
+    ///
+    /// If the column is not found, the first column will be sorted
+    ///
+    /// Else, the column will be sorted
+    pub fn set_default_sort(mut self, default_sorted_column: Option<String>) -> Self {
+        if let Some(default_sorted_column) = default_sorted_column {
+            if let Some(index) = self
+                .headers
+                .iter()
+                .position(|header| header == &default_sorted_column)
+            {
+                self.sorted_col_index = index;
+                sort_table_keytype(&mut self.data, |t: &SortableRow| {
+                    t.to_keytype()[index].clone()
+                });
+            }
+        }
+        self
+    }
 }
 
 fn sort_table_keytype<F>(data: &mut Vec<SortableRow>, key_extractor: F)
@@ -303,12 +329,15 @@ where
 
 pub fn SortTable(mut props: SortTableProps) -> Element {
     props.update_class_attribute();
-    let mut state = use_signal(|| SortTableState::new(props.headers.clone(), props.data.clone()));
+    let mut state = use_signal(|| {
+        SortTableState::new(props.headers.clone(), props.data.clone())
+            .set_default_sort(props.default_sort.clone())
+    });
     use_effect(move || {
-        state.set(SortTableState::new(
-            props.headers.clone(),
-            props.data.clone(),
-        ));
+        state.set(
+            SortTableState::new(props.headers.clone(), props.data.clone())
+                .set_default_sort(props.default_sort.clone()),
+        );
     });
 
     let header_class = match props.header_class {
