@@ -1,5 +1,8 @@
 use dioxus::prelude::*;
-use dioxus_components::{atoms::{Button, Separator}, form::*};
+use dioxus_components::{
+    atoms::{Button, Separator},
+    form::*,
+};
 use formlist::FormListProps;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
@@ -12,9 +15,7 @@ pub fn FormListPage() -> Element {
         Signal::new(hash)
     });
 
-    rsx!(
-        PreviewFull::<FormListProps> {}
-    )
+    rsx!(PreviewFull::<FormListProps> {})
 }
 
 impl DemoComponent for FormListProps {

@@ -1,5 +1,4 @@
 use crate::attributes::*;
-use crate::hooks::use_element_scroll_height;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 use dioxus_core::AttributeValue;
@@ -230,23 +229,6 @@ pub fn AccordionContent(mut props: AccordionContentProps) -> Element {
 
     props.update_class_attribute();
 
-    let onmounted = move |_| async move {
-        if props.animation == Animation::None {
-            elem_height.set("auto".to_string());
-            return;
-        }
-
-        match use_element_scroll_height(&props.id.read()) {
-            Ok(height) => {
-                elem_height.set(format!("{}px", height));
-            }
-            Err(e) => {
-                log::error!("AccordionContent: Failed to get element height(id probably not set): setting it to auto: {:?}", e);
-                elem_height.set("auto".to_string());
-            }
-        }
-    };
-
     let state = use_context::<Signal<AccordionState>>();
 
     let final_height = match state.read().is_active(&props.id.read()) {
@@ -256,7 +238,20 @@ pub fn AccordionContent(mut props: AccordionContentProps) -> Element {
 
     rsx!(
         div {
-            onmounted,
+            onmounted: move |element| async move {
+                if props.animation == Animation::None {
+                    elem_height.set("auto".to_string());
+                    return;
+                }
+
+                elem_height.set(match element.data().get_scroll_size().await {
+                    Ok(size) => format!("{}px", size.height),
+                    Err(e) => {
+                        log::error!("AccordionContent: Failed to get element height(id probably not set): setting it to auto: {:?}", e);
+                        "auto".to_string()
+                    }
+                });
+            },
             "data-state": state.read().is_active_to_attr_value(props.id.read().to_string()),
             id: props.id,
             height: final_height,

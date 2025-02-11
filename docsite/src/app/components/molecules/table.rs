@@ -12,9 +12,7 @@ pub fn TablePage() -> Element {
         Signal::new(hash)
     });
 
-    rsx!(
-        PreviewFull::<TableProps> {}
-    )
+    rsx!(PreviewFull::<TableProps> {})
 }
 
 impl DemoComponent for TableProps {

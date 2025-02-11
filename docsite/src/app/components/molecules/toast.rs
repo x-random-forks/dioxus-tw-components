@@ -13,9 +13,7 @@ pub fn ToastPage() -> Element {
         Signal::new(hash)
     });
 
-    rsx!(
-        PreviewFull::<Toast> {}
-    )
+    rsx!(PreviewFull::<Toast> {})
 }
 
 impl DemoComponent for Toast {
@@ -47,8 +45,10 @@ impl DemoComponent for Toast {
     fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
-        rsx!(
-            CompPreviewSelector::<Toast> { index: 0, state, comp_props: Toast::default() }
-        )
+        rsx!(CompPreviewSelector::<Toast> {
+            index: 0,
+            state,
+            comp_props: Toast::default()
+        })
     }
 }

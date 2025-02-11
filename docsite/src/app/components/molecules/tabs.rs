@@ -10,9 +10,7 @@ pub fn TabsPage() -> Element {
         Signal::new(hash)
     });
 
-    rsx!(
-        PreviewFull::<TabsProps> {}
-    )
+    rsx!(PreviewFull::<TabsProps> {})
 }
 
 impl DemoComponent for TabsProps {
@@ -55,9 +53,11 @@ impl DemoComponent for TabsProps {
     fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
-        rsx!(
-            CompPreviewSelector::<TabsProps> { index: 0, state, comp_props: TabsProps::default() }
-        )
+        rsx!(CompPreviewSelector::<TabsProps> {
+            index: 0,
+            state,
+            comp_props: TabsProps::default()
+        })
     }
 }
 

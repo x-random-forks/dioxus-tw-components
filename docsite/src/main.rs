@@ -1,7 +1,7 @@
 #![allow(non_snake_case)]
 
-use dioxus::prelude::*;
 use ::manganis;
+use dioxus::prelude::*;
 
 mod app;
 

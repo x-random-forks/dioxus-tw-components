@@ -12,9 +12,7 @@ pub fn RadioPage() -> Element {
         Signal::new(hash)
     });
 
-    rsx!(
-        PreviewFull::<RadioProps> {}
-    )
+    rsx!(PreviewFull::<RadioProps> {})
 }
 
 impl DemoComponent for RadioProps {
@@ -44,10 +42,12 @@ impl DemoComponent for RadioProps {
     fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
-        rsx!(
-            for index in 0..3 {
-                CompPreviewSelector::<RadioProps> { index, state, comp_props: RadioProps::default() }
+        rsx!(for index in 0..3 {
+            CompPreviewSelector::<RadioProps> {
+                index,
+                state,
+                comp_props: RadioProps::default(),
             }
-        )
+        })
     }
 }

@@ -116,10 +116,7 @@ impl SelectorType {
                 .iter()
                 .map(|s| s.to_string())
                 .collect(),
-            SelectorType::Side => Side::into_vec()
-                .iter()
-                .map(|s| s.to_string())
-                .collect(),
+            SelectorType::Side => Side::into_vec().iter().map(|s| s.to_string()).collect(),
         }
     }
 

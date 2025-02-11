@@ -10,9 +10,7 @@ pub fn ButtonPage() -> Element {
         Signal::new(hash)
     });
 
-    rsx!(
-        PreviewFull::<ButtonProps> {}
-    )
+    rsx!(PreviewFull::<ButtonProps> {})
 }
 
 impl DemoComponent for ButtonProps {
@@ -22,7 +20,7 @@ impl DemoComponent for ButtonProps {
 
     fn BuildCompPreview() -> Element {
         let state = use_context::<Signal<HashPreview>>();
-        
+
         rsx!(
             Button {
                 class: state.read()[&0].get_class(),
@@ -37,8 +35,10 @@ impl DemoComponent for ButtonProps {
     fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
-        rsx!(
-            CompPreviewSelector::<ButtonProps> { index: 0, state, comp_props: ButtonProps::default() }
-        )
+        rsx!(CompPreviewSelector::<ButtonProps> {
+            index: 0,
+            state,
+            comp_props: ButtonProps::default()
+        })
     }
 }

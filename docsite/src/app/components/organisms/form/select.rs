@@ -10,9 +10,7 @@ pub fn SelectPage() -> Element {
         Signal::new(hash)
     });
 
-    rsx!(
-        PreviewFull::<SelectGroupProps> {}
-    )
+    rsx!(PreviewFull::<SelectGroupProps> {})
 }
 
 impl DemoComponent for SelectGroupProps {
@@ -37,12 +35,10 @@ impl DemoComponent for SelectGroupProps {
     fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
-        rsx!(
-            CompPreviewSelector::<SelectGroupProps> {
-                index: 0,
-                state,
-                comp_props: SelectGroupProps::default(),
-            }
-        )
+        rsx!(CompPreviewSelector::<SelectGroupProps> {
+            index: 0,
+            state,
+            comp_props: SelectGroupProps::default(),
+        })
     }
 }
