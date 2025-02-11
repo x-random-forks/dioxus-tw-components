@@ -1,7 +1,6 @@
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 use dioxus_core::AttributeValue;
-use std::rc::Rc;
 
 use crate::attributes::*;
 
