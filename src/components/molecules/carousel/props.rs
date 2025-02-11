@@ -12,7 +12,6 @@ struct CarouselState {
     current_item_key: u32,
     content_width: i32,
     current_translation: i32,
-    content_data: Option<Rc<MountedData>>,
 }
 
 impl CarouselState {
@@ -22,7 +21,6 @@ impl CarouselState {
             is_circular,
             carousel_size: 0,
             content_width: 0,
-            content_data: None,
             current_translation: 0,
         }
     }
@@ -45,10 +43,6 @@ impl CarouselState {
 
     fn go_to_item(&mut self, item_key: u32) {
         self.current_item_key = item_key;
-    }
-
-    fn set_content_element(&mut self, data: Option<Rc<MountedData>>) {
-        self.content_data = data;
     }
 
     fn is_active_to_attr_value(&self, key: u32) -> AttributeValue {
@@ -191,7 +185,6 @@ pub fn CarouselContent(mut props: CarouselContentProps) -> Element {
             style,
             id: props.id,
             onmounted: move |element| async move {
-                carousel_state.write().set_content_element(Some(element.data()));
                 carousel_state
                     .write()
                     .set_content_size(match element.data().get_scroll_size().await {
