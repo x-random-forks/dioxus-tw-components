@@ -5,8 +5,6 @@ use dioxus::prelude::*;
 
 #[component]
 pub fn ThemePicker() -> Element {
-    let is_open = use_signal(|| false);
-
     rsx! {
         SidePanel {
             MiniPicker {}

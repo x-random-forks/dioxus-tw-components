@@ -1,7 +1,6 @@
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 use dioxus_core::AttributeValue;
-use log::info;
 
 use crate::attributes::*;
 
@@ -53,9 +52,7 @@ impl CarouselState {
     }
 
     fn translate(&mut self) {
-        self.set_current_translation(
-            self.current_item_key as i32 * self.content_width as i32,
-        )
+        self.set_current_translation(self.current_item_key as i32 * self.content_width)
     }
 
     fn set_current_translation(&mut self, translation: i32) {
