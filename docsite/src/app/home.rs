@@ -1,11 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::{
-    attributes::*,
-    atoms::*,
-    molecules::*,
-    organisms::*,
-    theme::*
-};
+use dioxus_components::{atoms::*, attributes::*, molecules::*, organisms::*, theme::*};
 
 #[component]
 pub fn HomePage() -> Element {

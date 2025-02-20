@@ -13,9 +13,7 @@ pub fn AccordionPage() -> Element {
         Signal::new(hash)
     });
 
-    rsx!(
-        PreviewFull::<AccordionProps> {}
-    )
+    rsx!(PreviewFull::<AccordionProps> {})
 }
 
 impl DemoComponent for AccordionProps {

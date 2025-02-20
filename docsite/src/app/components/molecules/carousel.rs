@@ -23,9 +23,7 @@ pub fn CarouselPage() -> Element {
         Signal::new(hash)
     });
 
-    rsx!(
-        PreviewFull::<CarouselProps> {}
-    )
+    rsx!(PreviewFull::<CarouselProps> {})
 }
 
 impl DemoComponent for CarouselProps {

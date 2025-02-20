@@ -12,9 +12,7 @@ pub fn ModalPage() -> Element {
         Signal::new(hash)
     });
 
-    rsx!(
-        PreviewFull::<ModalProps> {}
-    )
+    rsx!(PreviewFull::<ModalProps> {})
 }
 
 impl DemoComponent for ModalProps {

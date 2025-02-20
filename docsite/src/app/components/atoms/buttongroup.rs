@@ -1,5 +1,7 @@
 use dioxus::prelude::*;
-use dioxus_components::atoms::buttongroup::{ButtonGroup, ButtonGroupItem, ButtonGroupItemProps, ButtonGroupProps};
+use dioxus_components::atoms::buttongroup::{
+    ButtonGroup, ButtonGroupItem, ButtonGroupItemProps, ButtonGroupProps,
+};
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
@@ -10,9 +12,7 @@ pub fn ButtonGroupPage() -> Element {
         Signal::new(hash)
     });
 
-    rsx!(
-        PreviewFull::<ButtonGroupProps> {}
-    )
+    rsx!(PreviewFull::<ButtonGroupProps> {})
 }
 
 impl DemoComponent for ButtonGroupProps {
@@ -33,18 +33,16 @@ impl DemoComponent for ButtonGroupProps {
                 ButtonGroupItem { "Button 2" }
                 ButtonGroupItem { "Button 3" }
             }
-        )        
+        )
     }
 
     fn BuildCompSelectors() -> Element {
         let state = use_context::<Signal<HashPreview>>();
 
-        rsx!(
-            CompPreviewSelector::<ButtonGroupProps> {
-                index: 0,
-                state,
-                comp_props: ButtonGroupProps::default(),
-            }
-        )
+        rsx!(CompPreviewSelector::<ButtonGroupProps> {
+            index: 0,
+            state,
+            comp_props: ButtonGroupProps::default(),
+        })
     }
 }

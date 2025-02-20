@@ -12,9 +12,7 @@ pub fn BreadcrumbPage() -> Element {
         Signal::new(hash)
     });
 
-    rsx!(
-        PreviewFull::<BreadcrumbProps> {}
-    )
+    rsx!(PreviewFull::<BreadcrumbProps> {})
 }
 
 impl DemoComponent for BreadcrumbProps {

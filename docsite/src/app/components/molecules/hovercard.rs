@@ -12,9 +12,7 @@ pub fn HoverCardPage() -> Element {
         Signal::new(hash)
     });
 
-    rsx!(
-        PreviewFull::<HoverCardProps> {}
-    )
+    rsx!(PreviewFull::<HoverCardProps> {})
 }
 
 impl DemoComponent for HoverCardProps {

@@ -12,9 +12,7 @@ pub fn ProgressBarPage() -> Element {
         Signal::new(hash)
     });
 
-    rsx!(
-        PreviewFull::<ProgressBarProps> {}
-    )
+    rsx!(PreviewFull::<ProgressBarProps> {})
 }
 
 impl DemoComponent for ProgressBarProps {
