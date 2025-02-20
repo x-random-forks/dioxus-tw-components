@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::molecules::progressbar::*;
+use dioxus_tw_components::molecules::progressbar::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 

@@ -1,6 +1,6 @@
 use chrono::Datelike;
 use dioxus::prelude::*;
-use dioxus_components::{atoms::Separator, molecules::Navbar, templates::HeaderTemplate};
+use dioxus_tw_components::{atoms::Separator, molecules::Navbar, templates::HeaderTemplate};
 
 use crate::app::router::Route;
 

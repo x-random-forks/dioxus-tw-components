@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::form::checkbox::*;
+use dioxus_tw_components::form::checkbox::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 

@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::atoms::Separator;
+use dioxus_tw_components::atoms::Separator;
 
 use crate::app::router::Route;
 

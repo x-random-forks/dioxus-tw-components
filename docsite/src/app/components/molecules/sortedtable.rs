@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::molecules::table::*;
+use dioxus_tw_components::molecules::table::*;
 
 pub struct TestState<T: ToTableData> {
     data: Vec<T>,

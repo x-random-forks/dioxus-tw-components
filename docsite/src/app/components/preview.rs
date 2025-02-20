@@ -1,7 +1,7 @@
 use std::{collections::HashMap, str::FromStr};
 
 use dioxus::prelude::*;
-use dioxus_components::{
+use dioxus_tw_components::{
     attributes::*,
     form::{Input, SelectGroup, SelectItem, SelectPlaceholder},
 };

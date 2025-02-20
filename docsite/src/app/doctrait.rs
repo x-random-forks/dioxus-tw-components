@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::{
+use dioxus_tw_components::{
     atoms::ButtonVariant,
     attributes::{Animation, Color, Orientation, Side, Size},
 };

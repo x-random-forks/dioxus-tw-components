@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::form::radio::*;
+use dioxus_tw_components::form::radio::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 

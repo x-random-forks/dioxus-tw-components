@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::molecules::breadcrumb::*;
+use dioxus_tw_components::molecules::breadcrumb::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 

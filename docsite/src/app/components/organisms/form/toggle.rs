@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::form::toggle::*;
+use dioxus_tw_components::form::toggle::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
