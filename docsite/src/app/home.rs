@@ -7,7 +7,7 @@ pub fn HomePage() -> Element {
     let current_theme = theme_manager.read().current_theme;
 
     rsx!(
-        section { class: "w-full mx-auto flex flex-col justify-between items-center flex-1 px-4",
+        section { class: "w-full mx-auto flex flex-col justify-between items-center flex-1 px-4 mb-16",
             div { class: "flex w-full max-w-screen-xl flex-col text-cente gap-2 justify-evenly",
                 div { class: "flex flex-col-reverse lg:flex-row items-center justify-end lg:justify-between lg:flex-1 flex-none",
                     div { class: "text-center lg:text-left lg:flex-1",
@@ -16,7 +16,7 @@ pub fn HomePage() -> Element {
                         }
                         h3 { class: "text-[1.25em] font-light text-ghdarkmetal max-w-screen-sm md:max-w-screen-md md:text-left text-center flex flex-col",
                             span { class: "max-w-screen-md leading-loose",
-                                "A simple but highly customizable and efficient components library for Dioxus 0.6 based on TailwindCSS 3."
+                                "A simple but highly customizable and efficient cross-platform components library for Dioxus 0.6 based on TailwindCSS 3."
                             }
                         }
                         div { class: "pt-8 lg:pt-16 text-[1em] flex flex-row space-x-4 mx-auto lg:mx-0 justify-center lg:justify-start",
@@ -49,7 +49,7 @@ pub fn HomePage() -> Element {
                         }
                     }
                 }
-                div { class: "flex mt-20 items-center justify-center",
+                div { class: "hidden sm:flex mt-20 items-center justify-center",
                     Carousel { class: "w-[75%]", is_circular: true,
                         CarouselTrigger { next: false }
                         CarouselWindow {
@@ -130,23 +130,93 @@ pub fn HomePage() -> Element {
                         CarouselTrigger { next: true }
                     }
                 }
+
+                div { class: "flex sm:hidden mt-20 items-center justify-center",
+                    Carousel { class: "w-11/12", is_circular: true,
+                        CarouselTrigger { next: false }
+                        CarouselWindow {
+                            CarouselContent { id: "home-components-preview", class: "align-middle",
+                                CarouselItem { item_key: 0, class: "bg-gradient-to-r from-foreground/10 to-foreground/20 flex flex-grow items-center justify-center",
+                                    Button { "Button" }
+                                }
+                                CarouselItem { item_key: 1, class: "bg-gradient-to-r from-foreground/20 to-foreground/10 flex flex-grow items-center justify-center",
+                                    Toggle {}
+                                }
+                                CarouselItem { item_key: 2, class: "bg-gradient-to-r from-foreground/10 to-foreground/20 flex flex-grow items-center justify-center",
+                                    Slider { class: "w-24" }
+                                }
+                                CarouselItem { item_key: 3, class: "bg-gradient-to-r from-foreground/20 to-foreground/10 flex flex-grow items-center justify-center",
+                                    Dropdown { id: "dropdown-preview-home",
+                                        DropdownToggle {
+                                            id: "dropdown-toggle-preview-home",
+                                            "Dropdown"
+                                        }
+                                        DropdownContent {
+                                            id: "dropdown-content-preview-home",
+                                            div { "Content" }
+                                        }
+                                    }
+                                }
+                                CarouselItem { item_key: 4, class: "bg-gradient-to-r from-foreground/10 to-foreground/20 flex flex-grow items-center justify-center",
+                                    LightSwitch { class: "px-4 py-2 text-sm font-medium bg-background rounded-global-radius whitespace-nowrap hover:bg-accent hover:text-accent-foreground cursor-pointer p-1 rounded-global-radius hover:bg-foreground/40 active:bg-foreground/60",
+                                        onclick: move |_| {}
+                                    }
+                                }
+                                CarouselItem { item_key: 5, class: "bg-gradient-to-r from-foreground/20 to-foreground/10 flex flex-grow items-center justify-center",
+                                    HoverCard { id: "hover-card-preview-home",
+                                        HoverCardTrigger {
+                                            id: "hover-card-trigger-preview-home",
+                                            div { class: "px-4 py-2 text-sm font-medium bg-background border border-input rounded-global-radius whitespace-nowrap hover:bg-accent hover:text-accent-foreground",
+                                                "Hover me"
+                                            }
+                                        }
+                                        HoverCardContent {
+                                            id: "hover-card-content-preview-home",
+                                            div { "Content" }
+                                        }
+                                    }
+                                }
+                                CarouselItem { item_key: 6, class: "bg-gradient-to-r from-foreground/10 to-foreground/20 flex flex-grow items-center justify-center",
+                                    ButtonGroup {
+                                        ButtonGroupItem { "1" }
+                                        ButtonGroupItem { "2" }
+                                        ButtonGroupItem { "3" }
+                                    }
+                                }
+                                CarouselItem { item_key: 7, class: "bg-gradient-to-r from-foreground/20 to-foreground/10 flex flex-grow items-center justify-center",
+                                    Placeholder {}
+                                }
+                                CarouselItem { item_key: 8, class: "bg-gradient-to-r from-foreground/10 to-foreground/20 flex flex-grow items-center justify-center",
+                                    SelectGroup { class: "w-24",
+                                        SelectPlaceholder { "Select" }
+                                        SelectLabel { label: "Label 1" }
+                                        SelectItem { "Option 1" }
+                                        SelectItem { "Option 2" }
+                                        SelectItem { "Option 3" }
+                                    }
+                                }
+                            }
+                        }
+                        CarouselTrigger { next: true }
+                    }
+                }
             }
         }
-        div { class: "fixed italic right-0 top-[15%] pr-20 text-center",
-            p { "With a theme" }
-            p { "customizer !" }
+        div { class: "hidden sm:block fixed italic right-0 top-[52%] pr-20 text-center",
             svg {
                 xmlns: "http://www.w3.org/2000/svg",
                 view_box: "0 0 24 24",
                 width: 35,
                 height: 35,
                 fill: "none",
-                class: "stroke-foreground fixed right-14",
+                class: "stroke-foreground fixed right-12 -mt-6 -rotate-90",
                 stroke_width: 1,
                 stroke_linecap: "round",
                 stroke_linejoin: "round",
                 path { d: "M7 7L17 17M17 17V7M17 17H7" }
             }
+            p { "With a theme" }
+            p { "customizer !" }
         }
     )
 }

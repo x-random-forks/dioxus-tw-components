@@ -36,7 +36,7 @@ pub fn SideBarComponent() -> Element {
         "Toggle",
     ];
 
-    rsx!(
+    rsx! {
         div {
             id: "component-div",
             class: "container grid grid-cols-[220px_minmax(0,1fr)] space-x-10 mb-12",
@@ -55,5 +55,5 @@ pub fn SideBarComponent() -> Element {
             }
             div { id: "component-main", class: "max-w-screen-lg", Outlet::<Route> {} }
         }
-    )
+    }
 }
