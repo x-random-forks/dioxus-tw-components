@@ -33,6 +33,9 @@ pub use sidepanel::{
     SidePanel, SidePanelBackground, SidePanelClose, SidePanelContent, SidePanelTrigger,
 };
 
+pub mod sorttable;
+pub use sorttable::SortTable;
+
 pub mod table;
 pub use table::{
     Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow,

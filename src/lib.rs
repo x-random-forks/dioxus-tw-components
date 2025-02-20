@@ -14,6 +14,8 @@ pub mod prelude;
 #[cfg(feature = "theme")]
 pub mod theme;
 
+pub use sorttable_macro::Row;
+
 pub struct LibState {
     last_click_coordinates: Coordinates,
 }

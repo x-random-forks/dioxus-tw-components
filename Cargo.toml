@@ -16,11 +16,12 @@ theme = []
 
 [dependencies]
 
+sorttable-macro = { path = "./sorttable-macro" }
 dioxus-components-macro = { path = "./dioxus-components-macro" }
-log = "0.4.25"
+log = "0.4.22"
 dioxus = { version = "0.6.3", features = ["web"] }
-dioxus-logger = "0.4.1"
-manganis = "0.2.2"
+dioxus-logger = "0.6.2"
+manganis = "0.6.2"
 console = "0.15.10"
 tailwind_fuse = { version = "0.3.2", features = ["variant"] }
 

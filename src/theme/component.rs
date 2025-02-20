@@ -249,7 +249,7 @@ fn MiniPicker(mut is_open: Signal<bool>) -> Element {
                     } else {
                         theme_manager.write().current_theme = 0
                     }
-                }
+                },
             }
         }
     )

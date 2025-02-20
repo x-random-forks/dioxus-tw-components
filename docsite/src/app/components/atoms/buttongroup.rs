@@ -29,15 +29,9 @@ impl DemoComponent for ButtonGroupProps {
                 color: state.read()[&0].get_color(),
                 size: state.read()[&0].get_size(),
                 animation: state.read()[&0].get_animation(),
-                ButtonGroupItem {
-                    "Button 1"
-                }
-                ButtonGroupItem {
-                    "Button 2"
-                }
-                ButtonGroupItem {
-                    "Button 3"
-                }
+                ButtonGroupItem { "Button 1" }
+                ButtonGroupItem { "Button 2" }
+                ButtonGroupItem { "Button 3" }
             }
         )
     }
