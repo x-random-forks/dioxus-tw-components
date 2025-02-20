@@ -63,6 +63,31 @@ Current components we are working on :
 
 * Sort Table
 
+## Disclaimer
+
+This repository contains an experimental component library for Dioxus, derived from our internal work and needs.
+We are sharing it with the community as-is, so you can explore, adapt, and build upon our work.
+
+Please note:
+
+* Not production ready:
+    * This library is provided for experimental and educational purposes only. It is not designed for production use.
+
+* Community-driven evolution:
+    * We are offering it to the community as a starting point. Feel free to fork, modify, and enhance it in your own repositories.
+
+* Limited maintenance commitment:
+    * We commit to reviewing any pull requests related to bugs, improvements, and component additions until July 2025.
+After that date, we are not guaranteeing to manage or support any future developments in this library.
+
+* No major development planned:
+    * We do not intend to invest significant further development in this project.
+
+* Respecting the official ecosystem:
+    * Our goal is not to compete with the upcoming official Dioxus component library. We fully support the evolution of the Dioxus ecosystem and see our contribution as complementary and a helping hand.
+
+We hope that this initiative serves as a useful resource and inspiration for your projects!
+
 ## License
 
 This project is licensed under either the [MIT license](https://github.com/42Angouleme/dioxus-components/blob/main/LICENSE-MIT) or the [Apache-2 License](https://github.com/42Angouleme/dioxus-components/blob/main/LICENSE-APACHE).
