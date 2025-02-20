@@ -1,19 +1,16 @@
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
-
-# <p class="material-icons" style="font-size: 32px; vertical-align: sub;">dashboard</p> Dioxus Tailwind Components [![Main CI](https://github.com/42Angouleme/dioxus-components/actions/workflows/mail.yml/badge.svg)](https://github.com/42Angouleme/dioxus-components/actions/workflows/mail.yml)
+# Dioxus Tailwind Components [![Main CI](https://github.com/42Angouleme/dioxus-components/actions/workflows/mail.yml/badge.svg)](https://github.com/42Angouleme/dioxus-components/actions/workflows/mail.yml)
 
 A simple but highly customizable and efficient cross-platform components library for Dioxus 0.6 based on Tailwind 3.
 
-## <p class="material-icons" style="vertical-align: sub;">format_list_bulleted</p> List of available components
+## List of available components
 
 Here's a non exhaustive list of all currently available components. They are divided in 3 categories based on their complexity.
 
-<div style="width: full; display: flex; flex-direction: row; gap: 10px; justify-content: space-evenly">
 <details>
-    <summary style="font-weight: bold; font-size: 1.25em; text-align: center;">
-        <p class="material-icons" style="vertical-align: sub;">workspaces</p> Atoms
+    <summary>
+        Atoms
     </summary>
-    <table style="width:100%; text-align: center;">
+    <table>
         <tr><td>Button</td></tr>
         <tr><td>Button Group</td></tr>
         <tr><td>Placeholder</td></tr>
@@ -23,10 +20,10 @@ Here's a non exhaustive list of all currently available components. They are div
 </details>
 
 <details>
-    <summary style="font-weight: bold; font-size: 1.25em; text-align: center;">
-        <p class="material-icons" style="vertical-align: sub;">grain</p> Molecules
+    <summary>
+        Molecules
     </summary>
-    <table style="width:100%; text-align: center;">
+    <table>
         <tr><td>Accordion</td></tr>
         <tr><td>Breadcumb</td></tr>
         <tr><td>Carousel</td></tr>
@@ -45,10 +42,10 @@ Here's a non exhaustive list of all currently available components. They are div
 </details>
 
 <details>
-    <summary style="font-weight: bold; font-size: 1.25em; text-align: center;">
-        <p class="material-icons" style="vertical-align: sub;">lens_blur</p> Organisms
+    <summary>
+        Organisms
     </summary>
-    <table style="width:100%; text-align: center;">
+    <table>
         <tr><td>Checkbox</td></tr>
         <tr><td>FormList</td></tr>
         <tr><td>Input</td></tr>
@@ -59,15 +56,14 @@ Here's a non exhaustive list of all currently available components. They are div
         <tr><td>Toggle</td></tr>
     </table>
 </details>
-</div>
 
-## <p class="material-icons" style="vertical-align: sub;">schedule</p> Coming soon
+## Coming soon
 
 Current components we are working on :
 
 * Sort Table
 
-## <p class="material-icons" style="vertical-align: sub;">description</p> License
+## License
 
 This project is licensed under either the [MIT license](https://github.com/42Angouleme/dioxus-components/blob/main/LICENSE-MIT) or the [Apache-2 License](https://github.com/42Angouleme/dioxus-components/blob/main/LICENSE-APACHE).
 
