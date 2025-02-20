@@ -1,42 +1,17 @@
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
 
-<style>
-    icon {
-        font-family: 'Material Icons';
-        font-weight: normal;
-        font-style: normal;
-        font-size: 24px;  /* Preferred icon size */
-        display: inline-block;
-        line-height: 1;
-        text-transform: none;
-        letter-spacing: normal;
-        word-wrap: normal;
-        white-space: nowrap;
-        direction: ltr;
-        vertical-align: sub;
-        /* Support for all WebKit browsers. */
-        -webkit-font-smoothing: antialiased;
-        /* Support for Safari and Chrome. */
-        text-rendering: optimizeLegibility;
-        /* Support for Firefox. */
-        -moz-osx-font-smoothing: grayscale;
-        /* Support for IE. */
-        font-feature-settings: 'liga';
-    }
-</style>
-
-# <icon style="font-size: 32px">dashboard</icon> Dioxus Tailwind Components [![Main CI](https://github.com/42Angouleme/dioxus-components/actions/workflows/mail.yml/badge.svg)](https://github.com/42Angouleme/dioxus-components/actions/workflows/mail.yml)
+# <p class="material-icons" style="font-size: 32px; vertical-align: sub;">dashboard</p> Dioxus Tailwind Components [![Main CI](https://github.com/42Angouleme/dioxus-components/actions/workflows/mail.yml/badge.svg)](https://github.com/42Angouleme/dioxus-components/actions/workflows/mail.yml)
 
 A simple but highly customizable and efficient cross-platform components library for Dioxus 0.6 based on Tailwind 3.
 
-## <icon>format_list_bulleted</icon> List of available components
+## <p class="material-icons" style="vertical-align: sub;">format_list_bulleted</p> List of available components
 
 Here's a non exhaustive list of all currently available components. They are divided in 3 categories based on their complexity.
 
 <div style="width: full; display: flex; flex-direction: row; gap: 10px; justify-content: space-evenly">
 <details>
     <summary style="font-weight: bold; font-size: 1.25em; text-align: center;">
-        <icon>workspaces</icon> Atoms
+        <p class="material-icons" style="vertical-align: sub;">workspaces</p> Atoms
     </summary>
     <table style="width:100%; text-align: center;">
         <tr><td>Button</td></tr>
@@ -49,7 +24,7 @@ Here's a non exhaustive list of all currently available components. They are div
 
 <details>
     <summary style="font-weight: bold; font-size: 1.25em; text-align: center;">
-        <icon>grain</icon> Molecules
+        <p class="material-icons" style="vertical-align: sub;">grain</p> Molecules
     </summary>
     <table style="width:100%; text-align: center;">
         <tr><td>Accordion</td></tr>
@@ -71,7 +46,7 @@ Here's a non exhaustive list of all currently available components. They are div
 
 <details>
     <summary style="font-weight: bold; font-size: 1.25em; text-align: center;">
-        <icon>lens_blur</icon> Organisms
+        <p class="material-icons" style="vertical-align: sub;">lens_blur</p> Organisms
     </summary>
     <table style="width:100%; text-align: center;">
         <tr><td>Checkbox</td></tr>
@@ -86,13 +61,13 @@ Here's a non exhaustive list of all currently available components. They are div
 </details>
 </div>
 
-## <icon>schedule</icon> Coming soon
+## <p class="material-icons" style="vertical-align: sub;">schedule</p> Coming soon
 
 Current components we are working on :
 
 * Sort Table
 
-## <icon>description</icon> License
+## <p class="material-icons" style="vertical-align: sub;">description</p> License
 
 This project is licensed under either the [MIT license](https://github.com/42Angouleme/dioxus-components/blob/main/LICENSE-MIT) or the [Apache-2 License](https://github.com/42Angouleme/dioxus-components/blob/main/LICENSE-APACHE).
 
