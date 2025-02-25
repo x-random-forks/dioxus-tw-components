@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 use dioxus_core::AttributeValue;
 
-use crate::attributes::*;
+use crate::{attributes::*, components::atoms::icon::*};
 
 struct CarouselState {
     is_circular: bool,
@@ -52,9 +52,7 @@ impl CarouselState {
     }
 
     fn translate(&mut self) {
-        self.set_current_translation(
-            self.current_item_key as i32 * self.content_width / self.carousel_size.max(1) as i32,
-        )
+        self.set_current_translation(self.current_item_key as i32 * self.content_width)
     }
 
     fn set_current_translation(&mut self, translation: i32) {
@@ -112,9 +110,9 @@ pub fn Carousel(mut props: CarouselProps) -> Element {
 
     props.update_class_attribute();
 
-    rsx!(
+    rsx! {
         div { ..props.attributes,{props.children} }
-    )
+    }
 }
 
 #[derive(Clone, PartialEq, Props, UiComp)]
@@ -137,9 +135,9 @@ impl std::default::Default for CarouselWindowProps {
 pub fn CarouselWindow(mut props: CarouselWindowProps) -> Element {
     props.update_class_attribute();
 
-    rsx!(
+    rsx! {
         div { ..props.attributes,{props.children} }
-    )
+    }
 }
 
 #[derive(Clone, PartialEq, Props, UiComp)]
@@ -179,24 +177,22 @@ pub fn CarouselContent(mut props: CarouselContentProps) -> Element {
         )
     });
 
-    rsx!(
+    rsx! {
         div {
             style,
             id: props.id,
-            onmounted: move |element| async move {
+            onresize: move |element| {
                 carousel_state
                     .write()
-                    .set_content_size(match element.data().get_scroll_size().await {
+                    .set_content_size(match element.data().get_content_box_size() {
                         Ok(size) => size.width as i32,
                         Err(_) => 0
                     });
-
-                carousel_state.write().translate();
             },
             ..props.attributes,
             {props.children}
         }
-    )
+    }
 }
 
 #[derive(Clone, PartialEq, Props, UiComp)]
@@ -229,14 +225,14 @@ pub fn CarouselItem(mut props: CarouselItemProps) -> Element {
         state.write().increment_carousel_size();
     };
 
-    rsx!(
+    rsx! {
         div {
             "data-state": state.read().is_active_to_attr_value(props.item_key),
             onmounted,
             ..props.attributes,
             {props.children}
         }
-    )
+    }
 }
 
 #[derive(Default, Clone, PartialEq, Props, UiComp)]
@@ -260,9 +256,9 @@ pub fn CarouselTrigger(mut props: CarouselTriggerProps) -> Element {
 
     let icon = get_next_prev_icons(props.next);
 
-    rsx!(
+    rsx! {
         button { onclick, ..props.attributes, {icon} }
-    )
+    }
 }
 
 fn scroll_carousel(next: bool, mut carousel_state: Signal<CarouselState>) {
@@ -285,26 +281,11 @@ fn scroll_carousel(next: bool, mut carousel_state: Signal<CarouselState>) {
 
 fn get_next_prev_icons(is_next: bool) -> Element {
     match is_next {
-        true => rsx!(
-            svg {
-                width: 24,
-                height: 24,
-                xmlns: "http://www.w3.org/2000/svg",
-                view_box: "0 0 512 512",
-                class: "fill-foreground",
-                path { d: "M294.6 135.1c-4.2-4.5-10.1-7.1-16.3-7.1C266 128 256 138 256 150.3V208H160c-17.7 0-32 14.3-32 32v32c0 17.7 14.3 32 32 32h96v57.7c0 12.3 10 22.3 22.3 22.3c6.2 0 12.1-2.6 16.3-7.1l99.9-107.1c3.5-3.8 5.5-8.7 5.5-13.8s-2-10.1-5.5-13.8L294.6 135.1z" }
-            }
-        ),
-        false => rsx!(
-            svg {
-                width: 24,
-                height: 24,
-                xmlns: "http://www.w3.org/2000/svg",
-                view_box: "0 0 512 512",
-                class: "fill-foreground",
-                transform: "scale(-1, 1)",
-                path { d: "M294.6 135.1c-4.2-4.5-10.1-7.1-16.3-7.1C266 128 256 138 256 150.3V208H160c-17.7 0-32 14.3-32 32v32c0 17.7 14.3 32 32 32h96v57.7c0 12.3 10 22.3 22.3 22.3c6.2 0 12.1-2.6 16.3-7.1l99.9-107.1c3.5-3.8 5.5-8.7 5.5-13.8s-2-10.1-5.5-13.8L294.6 135.1z" }
-            }
-        ),
+        true => rsx! {
+            Icon { icon: Icons::ChevronRight }
+        },
+        false => rsx! {
+            Icon { icon: Icons::ChevronLeft }
+        },
     }
 }

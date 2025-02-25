@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::atoms::buttongroup::{
+use dioxus_tw_components::atoms::buttongroup::{
     ButtonGroup, ButtonGroupItem, ButtonGroupItemProps, ButtonGroupProps,
 };
 

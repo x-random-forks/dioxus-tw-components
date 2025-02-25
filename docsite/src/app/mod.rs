@@ -5,7 +5,7 @@ pub mod layout;
 pub mod router;
 
 use dioxus::prelude::*;
-use dioxus_components::prelude::*;
+use dioxus_tw_components::prelude::*;
 
 use crate::app::router::Route;
 

@@ -1,6 +1,6 @@
 use chrono::Datelike;
 use dioxus::prelude::*;
-use dioxus_components::{atoms::Separator, molecules::Navbar, templates::HeaderTemplate};
+use dioxus_tw_components::{atoms::Separator, molecules::Navbar, templates::HeaderTemplate};
 
 use crate::app::router::Route;
 
@@ -12,12 +12,10 @@ pub fn Layout() -> Element {
                 Navbar {
                     div { class: "flex flex-1 space-x-2 items-center ml-6",
                         Link { class: "mr-6", to: "/",
-                            div { class: "font-bold", "Dioxus Lib Comp" }
+                            div { class: "font-bold", "Dioxus Components" }
                         }
-                        ul { class: "text-sm list-none flex space-x-2",
-                            li {
-                                Link { class: "anchor", to: "/components/button", "Components" }
-                            }
+                        Link { class: "anchor hidden sm:block", to: "/components/button",
+                            "Components"
                         }
                     }
                     div { class: "flex flex-1 items-center justify-end space-x-2 mr-6",

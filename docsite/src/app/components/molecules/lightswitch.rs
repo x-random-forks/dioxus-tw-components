@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::molecules::lightswitch::*;
+use dioxus_tw_components::molecules::lightswitch::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 

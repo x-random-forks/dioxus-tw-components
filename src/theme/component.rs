@@ -1,19 +1,19 @@
-use crate::molecules::lightswitch::LightSwitch;
 use crate::{prelude::*, theme::*};
 use dioxus::prelude::*;
 
 #[component]
 pub fn ThemePicker() -> Element {
-    let is_open = use_signal(|| false);
-
-    rsx!(
-        div {
-            class: "group fixed right-0 top-1/4 z-10 bg-background rounded-global-radius border border-border space-x-2 p-2 flex justify-between overflow-hidden",
-            "data-open": is_open(),
-            MiniPicker { is_open }
-            ColorPicker {}
+    rsx! {
+        SidePanel {
+            MiniPicker {}
+            SidePanelBackground { class: "opacity-15" }
+            SidePanelContent {
+                class: "h-full min-w-0 w-full sm:w-1/2 xl:w-1/3 p-0",
+                side: Side::Right,
+                ColorPicker {}
+            }
         }
-    )
+    }
 }
 
 #[component]
@@ -66,30 +66,29 @@ fn ColorPicker() -> Element {
         }
     };
 
-    rsx!(
-        div { class: "transition-all hidden group-data-[open=true]:block border-l pl-4",
-            div { class: "flex flex-col items-start pb-4 space-y-2",
-                Input {
-                    role: "button",
-                    id: "color-picker-input",
-                    r#type: "color",
-                    oninput,
-                }
-                p { class: "text-sm font-medium",
-                    "Selected: {theme_manager.read().themes[current_theme].name} {selected_color.read().to_string()}"
-                }
-                for (str , color) in theme_manager.read().themes[current_theme].colors.iter() {
-                    ColorSelector {
-                        color_str: str,
-                        color: color.clone(),
-                        selected_color,
-                    }
-                }
-                RadiusSelector {}
-                ButtonExport {}
+    rsx! {
+        SidePanelClose {}
+        div { class: "flex flex-col items-start h-full mt-14 py-auto pb-4 px-2 sm:px-4 space-y-2",
+            Input {
+                role: "button",
+                id: "color-picker-input",
+                r#type: "color",
+                oninput,
             }
+            p { class: "text-sm font-medium",
+                "Selected: {theme_manager.read().themes[current_theme].name} {selected_color.read().to_string()}"
+            }
+            for (str , color) in theme_manager.read().themes[current_theme].colors.iter() {
+                ColorSelector {
+                    color_str: str,
+                    color: color.clone(),
+                    selected_color,
+                }
+            }
+            RadiusSelector {}
+            ButtonExport {}
         }
-    )
+    }
 }
 
 #[component]
@@ -100,13 +99,13 @@ fn ColorSelector(
 ) -> Element {
     let content: Element = match color {
         ColorChoice::Simple(_) => {
-            rsx!(
+            rsx! {
                 ToggleDiv {
                     is_selected: selected_color() == format!("{}-foreground", color_str),
                     onclick: move |_| {
                         *selected_color.write() = format!("{}-foreground", color_str);
                     },
-                    SvgEyedropper {}
+                    Icon { icon: Icons::Colorize }
                 }
                 div { class: "bg-{color_str} grow flex items-center justify-center",
                     p {
@@ -115,7 +114,7 @@ fn ColorSelector(
                         "{color_str}"
                     }
                 }
-            )
+            }
         }
         ColorChoice::Duo(_, _) => {
             let bg = if &*color_str.read() == "background" {
@@ -136,7 +135,7 @@ fn ColorSelector(
                 selected_color() == format!("{}-foreground", color_str)
             };
 
-            rsx!(
+            rsx! {
                 ToggleDiv {
                     is_selected,
                     onclick: move |_| {
@@ -147,7 +146,7 @@ fn ColorSelector(
                             *selected_color.write() = format!("{}-foreground", color_str);
                         }
                     },
-                    SvgForeground {}
+                    Icon { icon: Icons::FlipToFront }
                 }
                 p { class: "{bg} {text} text-center text-sm font-bold grow flex items-center justify-center",
                     "{color_str}"
@@ -157,17 +156,17 @@ fn ColorSelector(
                     onclick: move |_| {
                         selected_color.write().clone_from(&*color_str.read());
                     },
-                    SvgBackground {}
+                    Icon { icon: Icons::FlipToBack }
                 }
-            )
+            }
         }
     };
 
-    rsx!(
+    rsx! {
         div { class: "w-full rounded-global-radius p-1 space-x-1 flex bg-backgroud text-foreground font-bold text-sm border border-border",
             {content}
         }
-    )
+    }
 }
 
 #[component]
@@ -189,7 +188,7 @@ fn ToggleDiv(is_selected: bool, onclick: EventHandler<MouseEvent>, children: Ele
         });
     };
 
-    rsx!(
+    rsx! {
         div {
             role: "button",
             class: "group rounded-global-radius p-1 transition-all data-[selected=true]:bg-accent active:bg-foreground/45",
@@ -197,7 +196,7 @@ fn ToggleDiv(is_selected: bool, onclick: EventHandler<MouseEvent>, children: Ele
             onclick,
             {children}
         }
-    )
+    }
 }
 
 #[component]
@@ -206,7 +205,7 @@ fn RadiusSelector() -> Element {
 
     let current_theme = theme_manager.read().current_theme;
 
-    rsx!(
+    rsx! {
         div { id: "radius-selector", class: "w-full",
             p { class: "text-sm font-medium", "Radius" }
             Input {
@@ -219,27 +218,19 @@ fn RadiusSelector() -> Element {
                 },
             }
         }
-    )
+    }
 }
 
 #[component]
-fn MiniPicker(mut is_open: Signal<bool>) -> Element {
+fn MiniPicker() -> Element {
     let mut theme_manager = use_context::<Signal<ThemeManager>>();
 
     let current_theme = theme_manager.read().current_theme;
 
-    rsx!(
-        div { class: "flex flex-col items-center space-y-2",
-            svg {
-                id: "open-theme-picker",
-                onclick: move |_| {
-                    *is_open.write() = !is_open();
-                },
-                role: "button",
-                xmlns: "http://www.w3.org/2000/svg",
-                view_box: "0 0 330 330",
-                class: "fill-foreground/70 size-4 transition-all duration-300 group-data-[open=false]:rotate-180",
-                path { d: "M165,0C74.019,0,0,74.019,0,165s74.019,165,165,165s165-74.019,165-165S255.981,0,165,0z M225.606,175.605  l-80,80.002C142.678,258.535,138.839,260,135,260s-7.678-1.464-10.606-4.394c-5.858-5.857-5.858-15.355,0-21.213l69.393-69.396  l-69.393-69.392c-5.858-5.857-5.858-15.355,0-21.213c5.857-5.858,15.355-5.858,21.213,0l80,79.998  c2.814,2.813,4.394,6.628,4.394,10.606C230,168.976,228.42,172.792,225.606,175.605z" }
+    rsx! {
+        div { class: "fixed right-0 bottom-1/2 rounded-global-radius border bg-background border-border flex flex-col p-2 items-center space-y-2",
+            SidePanelTrigger { class: "p-0 border-none shadow-none hover:bg-inherit bg-inherit",
+                Icon { icon: Icons::ChevronLeft }
             }
             LightSwitch {
                 class: "cursor-pointer p-1 rounded-global-radius hover:bg-foreground/40 active:bg-foreground/60",
@@ -252,12 +243,12 @@ fn MiniPicker(mut is_open: Signal<bool>) -> Element {
                 },
             }
         }
-    )
+    }
 }
 
 #[component]
 fn ButtonExport() -> Element {
-    rsx!(
+    rsx! {
         Modal {
             ModalTrigger { class: "w-full text-center", "Export Theme" }
             ModalBackground {}
@@ -270,7 +261,7 @@ fn ButtonExport() -> Element {
                 ThemeExport {}
             }
         }
-    )
+    }
 }
 
 #[component]
@@ -286,56 +277,4 @@ fn ThemeExport() -> Element {
             }
         }
     }
-}
-
-fn SvgForeground() -> Element {
-    rsx!(
-        svg {
-            xmlns: "http://www.w3.org/2000/svg",
-            view_box: "0 0 512 512",
-            class: "size-6 fill-foreground group-data-[selected=true]:fill-accent-foreground",
-            path { d: "M395.636,232.727c12.87,0,23.273-10.426,23.273-23.273c0-12.846-10.403-23.273-23.273-23.273h-23.273     c-12.87,0-23.273,10.426-23.273,23.273c0,12.847,10.403,23.273,23.273,23.273H395.636z" }
-            path { d: "M232.727,465.455h-23.273c-12.87,0-23.273,10.426-23.273,23.273S196.585,512,209.455,512h23.273     c12.87,0,23.273-10.426,23.273-23.273S245.597,465.455,232.727,465.455z" }
-            path { d: "M209.455,372.364c-12.87,0-23.273,10.426-23.273,23.273v23.273c0,12.847,10.403,23.273,23.273,23.273     c12.87,0,23.273-10.426,23.273-23.273v-23.273C232.727,382.79,222.324,372.364,209.455,372.364z" }
-            path { d: "M209.455,349.091c12.87,0,23.273-10.426,23.273-23.273h46.545h23.273c12.87,0,23.273-10.426,23.273-23.273v-69.818     v-23.273V23.273C325.818,10.426,315.415,0,302.545,0H23.273C10.403,0,0,10.426,0,23.273v279.273     c0,12.847,10.403,23.273,23.273,23.273h162.909C186.182,338.665,196.585,349.091,209.455,349.091z" }
-            path { d: "M325.818,465.455h-23.273c-12.87,0-23.273,10.426-23.273,23.273S289.676,512,302.545,512h23.273     c12.87,0,23.273-10.426,23.273-23.273S338.688,465.455,325.818,465.455z" }
-            path { d: "M488.727,256c-12.87,0-23.273,10.426-23.273,23.273v23.273c0,12.847,10.403,23.273,23.273,23.273     S512,315.392,512,302.545v-23.273C512,266.426,501.597,256,488.727,256z" }
-            path { d: "M488.727,349.091c-12.87,0-23.273,10.426-23.273,23.273v23.273c0,12.847,10.403,23.273,23.273,23.273     S512,408.483,512,395.636v-23.273C512,359.517,501.597,349.091,488.727,349.091z" }
-            path { d: "M488.727,442.182c-12.87,0-23.273,10.426-23.273,23.273v23.273c0,12.847,10.403,23.273,23.273,23.273     S512,501.574,512,488.727v-23.273C512,452.608,501.597,442.182,488.727,442.182z" }
-            path { d: "M418.909,465.455h-23.273c-12.87,0-23.273,10.426-23.273,23.273S382.767,512,395.636,512h23.273     c12.87,0,23.273-10.426,23.273-23.273S431.779,465.455,418.909,465.455z" }
-            path { d: "M488.727,232.727c12.87,0,23.273-10.426,23.273-23.273c0-12.846-10.403-23.273-23.273-23.273h-23.273     c-12.87,0-23.273,10.426-23.273,23.273c0,12.847,10.403,23.273,23.273,23.273H488.727z" }
-        }
-    )
-}
-
-fn SvgBackground() -> Element {
-    rsx!(
-        svg {
-            xmlns: "http://www.w3.org/2000/svg",
-            view_box: "0 0 512 512",
-            class: "size-6 fill-foreground rotate-180 group-data-[selected=true]:fill-accent-foreground",
-            path { d: "M384,469.333h-21.333c-11.797,0-21.333,9.557-21.333,21.333S350.869,512,362.667,512H384     c11.797,0,21.333-9.557,21.333-21.333S395.797,469.333,384,469.333z" }
-            path { d: "M149.333,426.667c11.797,0,21.333-9.557,21.333-21.333V384c0-11.776-9.536-21.333-21.333-21.333     C137.536,362.667,128,372.224,128,384v21.333C128,417.109,137.536,426.667,149.333,426.667z" }
-            path { d: "M170.667,469.333h-21.333c-11.797,0-21.333,9.557-21.333,21.333S137.536,512,149.333,512h21.333     c11.797,0,21.333-9.557,21.333-21.333S182.464,469.333,170.667,469.333z" }
-            path { d: "M277.333,469.333H256c-11.797,0-21.333,9.557-21.333,21.333S244.203,512,256,512h21.333     c11.797,0,21.333-9.557,21.333-21.333S289.131,469.333,277.333,469.333z" }
-            path { d: "M362.667,149.333c0-11.776-9.536-21.333-21.333-21.333H320c-11.797,0-21.333,9.557-21.333,21.333     s9.536,21.333,21.333,21.333h21.333C353.131,170.667,362.667,161.109,362.667,149.333z" }
-            path { d: "M490.667,384c-11.797,0-21.333,9.557-21.333,21.333v21.333c0,11.776,9.536,21.333,21.333,21.333S512,438.443,512,426.667     v-21.333C512,393.557,502.464,384,490.667,384z" }
-            path { d: "M490.667,277.333c-11.797,0-21.333,9.557-21.333,21.333V320c0,11.776,9.536,21.333,21.333,21.333S512,331.776,512,320     v-21.333C512,286.891,502.464,277.333,490.667,277.333z" }
-            path { d: "M490.667,170.667c-11.797,0-21.333,9.557-21.333,21.333v21.333c0,11.776,9.536,21.333,21.333,21.333     S512,225.109,512,213.333V192C512,180.224,502.464,170.667,490.667,170.667z" }
-            path { d: "M469.333,149.333c0-11.776-9.536-21.333-21.333-21.333h-21.333c-11.797,0-21.333,9.557-21.333,21.333     s9.536,21.333,21.333,21.333H448C459.797,170.667,469.333,161.109,469.333,149.333z" }
-            path { d: "M490.667,469.333h-21.333c-11.797,0-21.333,9.557-21.333,21.333S457.536,512,469.333,512h21.333     c11.797,0,21.333-9.557,21.333-21.333S502.464,469.333,490.667,469.333z" }
-            path { d: "M277.333,0h-256C9.536,0,0,9.557,0,21.333v256c0,11.776,9.536,21.333,21.333,21.333H128     c0,11.776,9.536,21.333,21.333,21.333c11.797,0,21.333-9.557,21.333-21.333v-21.333V192v-21.333h42.667h21.333h42.667     c11.797,0,21.333-9.557,21.333-21.333v-128C298.667,9.557,289.131,0,277.333,0z" }
-        }
-    )
-}
-
-fn SvgEyedropper() -> Element {
-    rsx!(
-        svg {
-            xmlns: "http://www.w3.org/2000/svg",
-            view_box: "0 0 24 24",
-            class: "size-6 fill-foreground group-data-[selected=true]:fill-accent-foreground",
-            path { d: "M20.453,8.936a1.961,1.961,0,0,1-2.772,2.772L12.292,6.319a1.961,1.961,0,0,1,2.772-2.772l.673.674a2.859,2.859,0,1,1,4.042,4.041ZM5.286,15.48A2.264,2.264,0,0,0,4.7,16.513,2.257,2.257,0,0,0,3.67,17.1,2.286,2.286,0,0,0,6.9,20.33,2.257,2.257,0,0,0,7.487,19.3a2.264,2.264,0,0,0,1.033-.584l6.67-6.67L11.956,8.81Z" }
-        }
-    )
 }

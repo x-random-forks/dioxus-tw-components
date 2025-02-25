@@ -1,4 +1,4 @@
-use crate::attributes::*;
+use crate::{attributes::*, components::atoms::icon::*};
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 use dioxus_core::AttributeValue;
@@ -125,7 +125,7 @@ pub struct AccordionTriggerProps {
     #[props(optional, default = false)]
     is_open: bool,
 
-    /// Decoration element that is displayed next to the trigger text, by default a chevron svg
+    /// Decoration element that is displayed next to the trigger text, by default a chevron
     #[props(optional, default = default_trigger_decoration())]
     trigger_decoration: Element,
 
@@ -172,7 +172,7 @@ pub fn AccordionTrigger(mut props: AccordionTriggerProps) -> Element {
         }
     };
 
-    rsx!(
+    rsx! {
         button {
             "data-state": state.read().is_active_to_attr_value(props.id.read().to_string()),
             onclick: button_closure,
@@ -181,20 +181,15 @@ pub fn AccordionTrigger(mut props: AccordionTriggerProps) -> Element {
             {props.children}
             {props.trigger_decoration}
         }
-    )
+    }
 }
 
 fn default_trigger_decoration() -> Element {
-    rsx!(
-        svg {
-            class: "fill-foreground/65 transition-transform transform duration-300 group-data-[state=active]:-rotate-180",
-            width: 12,
-            height: 12,
-            xmlns: "http://www.w3.org/2000/svg",
-            view_box: "0 0 512 512",
-            path { d: "M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z" }
+    rsx! {
+        Icon { class: "transition-transform transform duration-300 group-data-[state=active]:-rotate-180",
+            icon: Icons::ExpandMore
         }
-    )
+    }
 }
 
 #[derive(Clone, PartialEq, Props, UiComp)]

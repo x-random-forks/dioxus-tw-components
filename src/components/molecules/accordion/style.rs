@@ -16,7 +16,7 @@ impl Class for AccordionItemProps {
 
 impl Class for AccordionTriggerProps {
     fn base(&self) -> &'static str {
-        "flex items-center justify-between w-full font-medium text-foreground group hover:underline"
+        "flex items-center justify-between w-full font-medium text-foreground group"
     }
 }
 

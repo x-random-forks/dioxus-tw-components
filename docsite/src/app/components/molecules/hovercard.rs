@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::molecules::hovercard::*;
+use dioxus_tw_components::molecules::hovercard::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 

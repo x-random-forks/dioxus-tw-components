@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::{
+use dioxus_tw_components::{
     molecules::sorttable::{KeyType, SortTable, Sortable, SortableCell, SortableRow, ToTableData},
     Row,
 };

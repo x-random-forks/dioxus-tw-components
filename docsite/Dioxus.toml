@@ -13,6 +13,11 @@ out_dir = "dist"
 # resource (public) file folder
 asset_dir = "public"
 
+[bundle]
+
+identifier = "com.42Angouleme"
+publisher = "42Angouleme"
+
 [web.app]
 
 # HTML title tag content
