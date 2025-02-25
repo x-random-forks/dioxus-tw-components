@@ -4,7 +4,7 @@ use dioxus::prelude::*;
 
 impl Class for IconProps {
     fn base(&self) -> &'static str {
-        "text-foreground select-none hover:no-underline"
+        "select-none"
     }
 
     fn size(&self) -> Option<&'static str> {
