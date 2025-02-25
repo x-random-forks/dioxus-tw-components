@@ -1,5 +1,5 @@
 pub mod atoms;
-pub use atoms::{button::ButtonPage, buttongroup::ButtonGroupPage, placeholder::PlaceholderPage};
+pub use atoms::{button::ButtonPage, buttongroup::ButtonGroupPage, icon::IconPage, placeholder::PlaceholderPage};
 pub mod layout;
 pub use layout::SideBarComponent;
 
@@ -33,6 +33,7 @@ pub fn ComponentPage(name: String) -> Element {
             "accordion" => rsx!(AccordionPage {}),
             "button" => rsx!(ButtonPage {}),
             "buttongroup" => rsx!(ButtonGroupPage {}),
+            "icon" => rsx!(IconPage {}),
             "breadcrumb" => rsx!(BreadcrumbPage {}),
             "carousel" => rsx!(CarouselPage {}),
             "dropdown" => rsx!(DropdownPage {}),

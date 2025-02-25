@@ -1,4 +1,4 @@
-use crate::attributes::*;
+use crate::{attributes::*, components::atoms::icon::*};
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 use dioxus_core::AttributeValue;
@@ -105,8 +105,8 @@ impl std::default::Default for SidePanelCloseProps {
     }
 }
 
-/// Div to close the content side panel, by default it is a cross svg located at the top left corner of the side panel
-/// If you provide a children, it will be used instead of the default cross svg and no internal styling will be provided
+/// Div to close the content side panel, by default it is a cross located at the top left corner of the side panel
+/// If you provide a children, it will be used instead of the default cross and no internal styling will be provided
 pub fn SidePanelClose(mut props: SidePanelCloseProps) -> Element {
     let mut state = use_context::<Signal<SidePanelState>>();
 
@@ -124,12 +124,7 @@ pub fn SidePanelClose(mut props: SidePanelCloseProps) -> Element {
     rsx!(
         div { onclick, ..props.attributes,
             if !has_children {
-                svg {
-                    xmlns: "http://www.w3.org/2000/svg",
-                    view_box: "0 0 256 256",
-                    class: "size-[32px] fill-foreground/60 hover:fill-foreground",
-                    path { d: "M202.82861,197.17188a3.99991,3.99991,0,1,1-5.65722,5.65624L128,133.65723,58.82861,202.82812a3.99991,3.99991,0,0,1-5.65722-5.65624L122.343,128,53.17139,58.82812a3.99991,3.99991,0,0,1,5.65722-5.65624L128,122.34277l69.17139-69.17089a3.99991,3.99991,0,0,1,5.65722,5.65624L133.657,128Z" }
-                }
+                Icon { icon: Icons::Close }
             } else {
                 {props.children}
             }

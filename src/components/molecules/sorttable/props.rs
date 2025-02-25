@@ -388,14 +388,9 @@ pub fn SortTable(mut props: SortTableProps) -> Element {
                                         row.get(index).is_some_and(|cell| cell.sort_by != KeyType::None)
                                     }) && state.read().get_sorted_col_index() == index
                                 {
-                                    svg {
-                                        xmlns: "http://www.w3.org/2000/svg",
-                                        view_box: "0 0 124 124",
-                                        width: "12",
-                                        height: "12",
-                                        class: "fill-foreground transition-all",
-                                        style: if state.read().get_sort_ascending() { "transform: rotate(-180deg)" },
-                                        path { d: "M66.18,29.742c-2.301-2.3-6.101-2.3-8.401,0l-56,56c-3.8,3.801-1.1,10.2,4.2,10.2h112c5.3,0,8-6.399,4.2-10.2L66.18,29.742   z" }
+                                    Icon {
+                                        class: if state.read().get_sort_ascending() { "fill-foreground transition-all -rotate-180" } else { "fill-foreground transition-all" },
+                                        icon: Icons::ExpandMore
                                     }
                                 }
                             }
