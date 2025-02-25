@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::{atoms::Separator, attributes::Orientation, molecules::scrollable::*};
+use dioxus_tw_components::{atoms::Separator, attributes::Orientation, molecules::scrollable::*};
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 

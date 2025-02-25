@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::atoms::{placeholder::PlaceholderProps, Placeholder};
+use dioxus_tw_components::atoms::{placeholder::PlaceholderProps, Placeholder};
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 

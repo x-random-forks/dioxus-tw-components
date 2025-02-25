@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::{atoms::Separator, molecules::dropdown::*};
+use dioxus_tw_components::{atoms::Separator, molecules::dropdown::*};
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 

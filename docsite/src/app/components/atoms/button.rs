@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::atoms::{button::ButtonProps, Button};
+use dioxus_tw_components::atoms::{button::ButtonProps, Button};
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 

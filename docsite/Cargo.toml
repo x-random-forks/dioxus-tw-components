@@ -1,27 +1,27 @@
 [package]
-name = "dioxus_components_docsite"
+name = "dioxus_tw_components_docsite"
 version = "0.1.0"
 edition = "2021"
-authors = ["Louis Truchelut"]
+authors = ["Louis Truchelut", "kbz_8", "Ziale"]
 
 [[bin]]
 name = "dioxus_components_bin_docsite"
-authors = ["Louis Truchelut"]
+authors = ["Louis Truchelut", "kbz_8", "Ziale"]
 path = "src/docsite/main.rs"
 
 [dependencies]
 
 docsite-macro = { path = "./docsite-macro" }
-dioxus = { version = "0.6.2", features = ["web", "router"] }
+dioxus = { version = "0.6.3", features = ["web", "router"] }
 dioxus-logger = "0.4.1"
 manganis = "0.2.2"
 console_error_panic_hook = "0.1.7"
-log = "0.4.17"
+log = "0.4.25"
 tracing-wasm = "0.2.1"
-tracing = "0.1.40"
-console = "0.15.8"
+tracing = "0.1.41"
+console = "0.15.10"
 
-dioxus_components = { path = "../.", features = ["theme"] }
+dioxus-tw-components = { path = "../.", features = ["theme"] }
 chrono = "0.4.39"
 
 [workspace]

@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::molecules::sidepanel::*;
+use dioxus_tw_components::molecules::sidepanel::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 

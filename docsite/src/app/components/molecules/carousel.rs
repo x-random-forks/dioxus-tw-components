@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dioxus_components::molecules::carousel::*;
+use dioxus_tw_components::molecules::carousel::*;
 
 use crate::app::{components::preview::*, doctrait::DemoComponent};
 
