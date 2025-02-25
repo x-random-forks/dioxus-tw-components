@@ -1,4 +1,4 @@
-use crate::{attributes::*, hooks::use_unique_id, components::atoms::icon::*};
+use crate::{attributes::*, components::atoms::icon::*, hooks::use_unique_id};
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
 

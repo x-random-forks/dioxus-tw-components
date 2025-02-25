@@ -1,7 +1,7 @@
-use strum::Display;
 use crate::attributes::*;
 use dioxus::prelude::*;
 use dioxus_components_macro::UiComp;
+use strum::Display;
 
 #[derive(Default, Clone, PartialEq, Props, UiComp)]
 pub struct IconProps {
