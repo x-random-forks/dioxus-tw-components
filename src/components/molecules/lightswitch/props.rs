@@ -115,7 +115,7 @@ pub fn LightSwitch(mut props: LightSwitchProps) -> Element {
                     Some(p) => {
                         state.write().toggle();
                         p.call(e);
-                    },
+                    }
                     None => onclick(e),
                 }
             },

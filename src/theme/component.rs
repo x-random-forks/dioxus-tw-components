@@ -247,7 +247,7 @@ fn MiniPicker() -> Element {
                     } else {
                         theme_manager.write().current_theme = 0
                     }
-                }
+                },
             }
         }
     }

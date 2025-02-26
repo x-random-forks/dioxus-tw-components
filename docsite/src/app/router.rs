@@ -36,7 +36,9 @@ pub fn NotFound(route: Vec<String>) -> Element {
                     }
                     p {
                         "Please check the URL or go back to "
-                        Link { to: Route::HomePage {}, strong { "Home Page." } }
+                        Link { to: Route::HomePage {},
+                            strong { "Home Page." }
+                        }
                     }
                 }
             }

@@ -37,6 +37,8 @@ pub use crate::components::{atoms, molecules, organisms, templates};
 
 pub use crate::hooks;
 
+pub use sorttable_macro::Row;
+
 #[cfg(feature = "theme")]
 pub use crate::theme::{
     ColorChoice, ExportToCss, HslColor, RadiusCss, Theme, ThemeManager, ThemePicker, ToStyle,
