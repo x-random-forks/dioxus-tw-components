@@ -71,7 +71,7 @@ Then to link your tailwindcss compiler to dioxus tw components you must add this
 
 ```js
 // {process.env.HOME} is usually where the .cargo directory is. Should be replaced by the actual path if yours is not in home
-`${process.env.HOME}/.cargo/registry/src/**/dioxus-tw-component-[version or *]/src/**/*.{rs,html,css}`
+`${process.env.HOME}/.cargo/registry/src/**/dioxus-tw-components-[version or *]/src/**/*.{rs,html,css}`
 ```
 
 ### Local crate
