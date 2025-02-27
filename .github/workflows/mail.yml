@@ -50,10 +50,10 @@ jobs:
 
         - name: Prepare commit message for payload
           if: always()
+          env:
+            CLEANED_COMMIT_MSG: ${{ github.event.head_commit.message || github.event.pull_request.title }}
           run: |
             set -x
-            CLEANED_COMMIT_MSG="${{ github.event.head_commit.message || github.event.pull_request.title }}"
-            echo $(jq --version)
             CLEANED_COMMIT_MSG="$(jq -n --arg msg \"$CLEANED_COMMIT_MSG\" '[$msg]' | jq '.[0]')"
             echo "CLEANED_COMMIT_MSG=$CLEANED_COMMIT_MSG" >> $GITHUB_ENV
             echo "CLEANED_COMMIT_MSG=$CLEANED_COMMIT_MSG"
