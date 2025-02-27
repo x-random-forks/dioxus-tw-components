@@ -45,8 +45,15 @@ jobs:
           if: always()
           run: cargo audit
 
-        - name: Send custom JSON data to Slack workflow
+        - name: Prepare commit message for payload
           if: always()
+          run: |
+            CLEANED_COMMIT_MSG="${{ github.event.head_commit.message || github.event.pull_request.title }}"
+            CLEANED_COMMIT_MSG="jq -n --arg msg \"$CLEANED_COMMIT_MSG\"" '[$msg]' | jq '.[0]'
+            echo "CLEANED_COMMIT_MSG=$CLEANED_COMMIT_MSG" >> $GITHUB_ENV
+            echo "CLEANED_COMMIT_MSG=$CLEANED_COMMIT_MSG"
+
+        - name: Send custom JSON data to Slack workflow
           uses: slackapi/slack-github-action@v1.26.0
           with:
             payload: |
@@ -74,7 +81,7 @@ jobs:
                       },
                       {
                         "type": "mrkdwn",
-                        "text": "*Commit:* ${{ github.event.head_commit.message || github.event.pull_request.title }}"
+                        "text": "*Commit:* ${{ env.CLEANED_COMMIT_MSG }}"
                       }
                     ]
                   },
