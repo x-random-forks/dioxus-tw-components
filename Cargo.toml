@@ -18,8 +18,8 @@ path = "src/lib.rs"
 theme = []
 
 [dependencies]
-sorttable-macro = { path = "./sorttable-macro" }
-dioxus-components-macro = { path = "./dioxus-components-macro" }
+sorttable-macro = { version = "0.1.0", path = "./sorttable-macro" }
+dioxus-components-macro = { version = "0.1.0", path = "./dioxus-components-macro" }
 log = "0.4.22"
 dioxus = { version = "0.6.3", features = ["web"] }
 dioxus-logger = "0.6.2"
