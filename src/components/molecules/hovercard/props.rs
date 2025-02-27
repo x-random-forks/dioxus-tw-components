@@ -1,8 +1,8 @@
 use crate::attributes::*;
 use chrono::{DateTime, Local, TimeDelta};
 use dioxus::prelude::*;
-use dioxus_tw_components_macro::UiComp;
 use dioxus_core::AttributeValue;
+use dioxus_tw_components_macro::UiComp;
 
 #[cfg(target_arch = "wasm32")]
 use gloo_timers::future::TimeoutFuture;

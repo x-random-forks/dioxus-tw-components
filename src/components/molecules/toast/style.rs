@@ -25,7 +25,9 @@ impl Class for Toast {
 
     fn animation(&self) -> Option<&'static str> {
         Some(match self.animation {
-            Animation::Light | Animation::Full => "transition-all duration-150 data-[state=opening]:translate-y-full data-[state=open]:translate-y-0 data-[state=closing]:translate-x-full",
+            Animation::Light | Animation::Full => {
+                "transition-all duration-150 data-[state=opening]:translate-y-full data-[state=open]:translate-y-0 data-[state=closing]:translate-x-full"
+            }
             _ => "",
         })
     }

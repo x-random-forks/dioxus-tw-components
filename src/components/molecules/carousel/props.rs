@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
-use dioxus_tw_components_macro::UiComp;
 use dioxus_core::AttributeValue;
+use dioxus_tw_components_macro::UiComp;
 
 use crate::{attributes::*, components::atoms::icon::*};
 

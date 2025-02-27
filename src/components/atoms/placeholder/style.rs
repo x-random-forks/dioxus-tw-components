@@ -23,7 +23,9 @@ impl Class for PlaceholderProps {
         Some(match *self.animation.read() {
             Animation::None => "",
             Animation::Light => "animate-pulse",
-            Animation::Full => "relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/40 before:animate-[shimmer_2s_infinite]",
+            Animation::Full => {
+                "relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/40 before:animate-[shimmer_2s_infinite]"
+            }
         })
     }
 }

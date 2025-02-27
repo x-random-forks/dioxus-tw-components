@@ -5,7 +5,6 @@ pub use crate::components::atoms::{Button, ButtonVariant, Icon, Icons, Placehold
 pub use crate::components::molecules::LightSwitch;
 pub use crate::components::molecules::Navbar;
 pub use crate::components::molecules::Scrollable;
-pub use crate::components::molecules::{use_toast, Toast, ToastRenderer, Toaster};
 pub use crate::components::molecules::{
     Accordion, AccordionContent, AccordionItem, AccordionTrigger,
 };
@@ -26,6 +25,7 @@ pub use crate::components::molecules::{
     Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow,
 };
 pub use crate::components::molecules::{Tabs, TabsContent, TabsList, TabsTrigger};
+pub use crate::components::molecules::{Toast, ToastRenderer, Toaster, use_toast};
 
 pub use crate::components::organisms::form::{
     Checkbox, FormList, FormListContent, FormListCurrentSize, FormListMaxSize,

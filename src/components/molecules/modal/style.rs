@@ -26,7 +26,9 @@ impl Class for ModalContentProps {
     fn animation(&self) -> Option<&'static str> {
         Some(match *self.animation.read() {
             Animation::None => "",
-            Animation::Light | Animation::Full => "data-[state=inactive]:translate-y-full data-[state=inactive]:opacity-0 transition-all duration-300",
+            Animation::Light | Animation::Full => {
+                "data-[state=inactive]:translate-y-full data-[state=inactive]:opacity-0 transition-all duration-300"
+            }
         })
     }
 }
@@ -49,7 +51,9 @@ impl Class for ModalBackgroundProps {
     fn animation(&self) -> Option<&'static str> {
         Some(match *self.animation.read() {
             Animation::None => "",
-            Animation::Light | Animation::Full => "data-[state=inactive]:opacity-0 data-[state=inactive]:invisible transition-all duration-300",
+            Animation::Light | Animation::Full => {
+                "data-[state=inactive]:opacity-0 data-[state=inactive]:invisible transition-all duration-300"
+            }
         })
     }
 }

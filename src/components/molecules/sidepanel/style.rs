@@ -19,10 +19,18 @@ impl Class for SidePanelCloseProps {
 impl Class for SidePanelContentProps {
     fn base(&self) -> &'static str {
         match *self.side.read() {
-            Side::Top =>    "p-4 flex flex-col bottom-[100%] left-[50%]   z-50 min-w-96 bg-background border border-border rounded-global-radius fixed translate-x-[-50%]  translate-y-[100%]  data-[state=inactive]:invisible",
-            Side::Bottom => "p-4 flex flex-col top-[100%]    left-[50%]   z-50 min-w-96 bg-background border border-border rounded-global-radius fixed translate-x-[-50%]  translate-y-[-100%] data-[state=inactive]:invisible",
-            Side::Left =>   "p-4 flex flex-col top-[50%]     right-[100%] z-50 min-w-96 bg-background border border-border rounded-global-radius fixed translate-x-[100%]  translate-y-[-50%]  data-[state=inactive]:invisible",
-            Side::Right =>  "p-4 flex flex-col top-[50%]     left-[100%]  z-50 min-w-96 bg-background border border-border rounded-global-radius fixed translate-x-[-100%] translate-y-[-50%]  data-[state=inactive]:invisible",
+            Side::Top => {
+                "p-4 flex flex-col bottom-[100%] left-[50%]   z-50 min-w-96 bg-background border border-border rounded-global-radius fixed translate-x-[-50%]  translate-y-[100%]  data-[state=inactive]:invisible"
+            }
+            Side::Bottom => {
+                "p-4 flex flex-col top-[100%]    left-[50%]   z-50 min-w-96 bg-background border border-border rounded-global-radius fixed translate-x-[-50%]  translate-y-[-100%] data-[state=inactive]:invisible"
+            }
+            Side::Left => {
+                "p-4 flex flex-col top-[50%]     right-[100%] z-50 min-w-96 bg-background border border-border rounded-global-radius fixed translate-x-[100%]  translate-y-[-50%]  data-[state=inactive]:invisible"
+            }
+            Side::Right => {
+                "p-4 flex flex-col top-[50%]     left-[100%]  z-50 min-w-96 bg-background border border-border rounded-global-radius fixed translate-x-[-100%] translate-y-[-50%]  data-[state=inactive]:invisible"
+            }
         }
     }
 
@@ -61,7 +69,9 @@ impl Class for SidePanelBackgroundProps {
     fn animation(&self) -> Option<&'static str> {
         Some(match *self.animation.read() {
             Animation::None => "",
-            Animation::Light | Animation::Full => "data-[state=inactive]:opacity-0 data-[state=inactive]:invisible transition-all duration-300",
+            Animation::Light | Animation::Full => {
+                "data-[state=inactive]:opacity-0 data-[state=inactive]:invisible transition-all duration-300"
+            }
         })
     }
 }

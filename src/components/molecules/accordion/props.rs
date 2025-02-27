@@ -1,7 +1,7 @@
 use crate::{attributes::*, components::atoms::icon::*};
 use dioxus::prelude::*;
-use dioxus_tw_components_macro::UiComp;
 use dioxus_core::AttributeValue;
+use dioxus_tw_components_macro::UiComp;
 
 struct AccordionState {
     multi_open: bool,
