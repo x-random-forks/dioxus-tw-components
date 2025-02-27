@@ -1,10 +1,10 @@
-# Dioxus Tailwind Components [![Main CI](https://github.com/42Angouleme/dioxus-components/actions/workflows/mail.yml/badge.svg)](https://github.com/42Angouleme/dioxus-components/actions/workflows/mail.yml)
+# Dioxus Tailwind Components [![Main CI](https://github.com/42Angouleme/dioxus-tw-components/actions/workflows/mail.yml/badge.svg)](https://github.com/42Angouleme/dioxus-tw-components/actions/workflows/mail.yml)
 
 A simple but highly customizable and efficient cross-platform components library for Dioxus 0.6 based on TailwindCSS 3.
 
 ## List of available components
 
-Here's a non exhaustive list of all currently available components. They are divided in 3 categories based on their complexity.
+Here's a non exhaustive list of all currently available components. They are divided in 3 categories based on their complexity:
 
 <details>
     <summary>
@@ -62,34 +62,32 @@ Here's a non exhaustive list of all currently available components. They are div
 
 ### Public crate
 
-To add thie library to your dioxus project you can just run the following:
+To add this library to your Dioxus project, you can just run the following:
 ```bash
 cargo add dioxus-tw-components
 ```
 
-Then to link your tailwindcss compiler to dioxus tw components you must add this line to your tailwind config file:
-
+You then need to tell the Tailwind compiler where to find the Dioxus Tailwind Components. You can do so by adding this line to your tailwind configuration file:
 ```js
-// {process.env.HOME} is usually where the .cargo directory is. Should be replaced by the actual path if yours is not in home
+// {process.env.HOME} is usually where the .cargo directory is. This should be replaced by the actual path if yours is somewhere else.
 `${process.env.HOME}/.cargo/registry/src/**/dioxus-tw-components-[version or *]/src/**/*.{rs,html,css}`
 ```
 
 ### Local crate
 
-To add this library to your dioxus project as a local crate you may add this to your `Cargo.toml` file:
+If you want to use this library as a local crate, you can add this to your `Cargo.toml` file:
 ```ini
-dioxus-tw-components = { path = "path/to/dioxus-tw-components/directory" }
+dioxus-tw-components = { path = "path/to/dioxus-tw-components" }
 ```
 
-Then to link your tailwindcss compiler to dioxus tw components you must add this line to your tailwind config file:
-
+You then need to tell the Tailwind compiler where to find the Dioxus Tailwind Components. You can do so by adding this line to your tailwind configuration file:
 ```js
-"path/to/dioxus-tw-components/directory/src/**/*.{rs,html,css}"
+"path/to/dioxus-tw-components/src/**/*.{rs,html,css}"
 ```
 
 ### Boostrap the library
 
-To work properly the library should be launched at the begenning of your application:
+To work properly, the library needs to be launched at the beginning of your application:
 
 ```rust
 use dioxus::prelude::*;
@@ -102,18 +100,20 @@ fn main() {
 #[component]
 fn App() -> Element {
     rsx! {
-        DioxusTwComponentsBootstrap {} // Launches dioxus tw components. Some components may no work without this
-        /* Do stuff */
+        // Launches Dioxus Tailwind Components. Some components may not work without this.
+        DioxusTwComponentsBootstrap {}
+
+        // Rest of your application
     }
 }
 ```
 
 ### Input CSS
 
-Dioxus tw components uses special CSS variable names to style properly. You may add theses to your `input.css` file before feeding it to tailwindcss.
+Dioxus Tailwind Components uses special CSS variable names to style properly. You may add them to your `input.css` file before feeding it to tailwind:
 <details>
     <summary>
-        Here are what your `input.css` file should look like:
+        Example `input.css` file
     </summary>
 
 ```css
@@ -162,7 +162,6 @@ Dioxus tw components uses special CSS variable names to style properly. You may 
     .h2 {
         @apply text-2xl font-bold md:text-4xl;
     }
-
     .h3 {
         @apply text-2xl font-semibold md:text-3xl;
     }
@@ -191,8 +190,8 @@ Dioxus tw components uses special CSS variable names to style properly. You may 
 
 ## Docsite
 
-Dioxus tw components offers a [docsite](https://www.youtube.com/watch?v=dQw4w9WgXcQ) for you to showcase the components and experiment with them.
-Additionally you can use it to export custom themes to embed in your own projects.
+Dioxus Tailwind Components offers a [docsite](https://www.youtube.com/watch?v=dQw4w9WgXcQ) to showcase the components and experiment with them.
+Additionally, you can use it to export custom themes to embed in your own projects.
 
 ## Disclaimer
 
@@ -221,6 +220,6 @@ We hope that this initiative serves as a useful resource and inspiration for you
 
 ## License
 
-This project is licensed under either the [MIT license](https://github.com/42Angouleme/dioxus-components/blob/main/LICENSE-MIT) or the [Apache-2 License](https://github.com/42Angouleme/dioxus-components/blob/main/LICENSE-APACHE).
+This project is licensed under either the [MIT license](./LICENSE-MIT) or the [Apache-2 License](./LICENSE-APACHE).
 
-Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in Dioxus by you, shall be licensed as MIT or Apache-2, without any additional terms or conditions.
+Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in Dioxus Tailwind Components by you shall be licensed as MIT or Apache-2 without any additional terms or conditions.
