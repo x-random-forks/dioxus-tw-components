@@ -190,7 +190,7 @@ Dioxus Tailwind Components uses special CSS variable names to style properly. Yo
 
 ## Docsite
 
-Dioxus Tailwind Components offers a [docsite](https://www.youtube.com/watch?v=dQw4w9WgXcQ) to showcase the components and experiment with them.
+Dioxus Tailwind Components offers a [docsite](https://42angouleme.github.io/dioxus-tw-components-docsite) to showcase the components and experiment with them.
 Additionally, you can use it to export custom themes to embed in your own projects.
 
 ## Disclaimer
