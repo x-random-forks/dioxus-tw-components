@@ -7,6 +7,8 @@ pub mod attributes;
 mod components;
 pub use components::*;
 
+pub mod bootstrap;
+
 pub mod hooks;
 
 pub mod prelude;

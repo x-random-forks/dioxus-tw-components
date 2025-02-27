@@ -1,6 +1,6 @@
 # Dioxus Tailwind Components [![Main CI](https://github.com/42Angouleme/dioxus-components/actions/workflows/mail.yml/badge.svg)](https://github.com/42Angouleme/dioxus-components/actions/workflows/mail.yml)
 
-A simple but highly customizable and efficient cross-platform components library for Dioxus 0.6 based on Tailwind 3.
+A simple but highly customizable and efficient cross-platform components library for Dioxus 0.6 based on TailwindCSS 3.
 
 ## List of available components
 
@@ -13,6 +13,7 @@ Here's a non exhaustive list of all currently available components. They are div
     <table>
         <tr><td>Button</td></tr>
         <tr><td>Button Group</td></tr>
+        <tr><td>Icon</td></tr>
         <tr><td>Placeholder</td></tr>
         <tr><td>Separator</td></tr>
         <tr><td>Spacer</td></tr>
@@ -57,11 +58,141 @@ Here's a non exhaustive list of all currently available components. They are div
     </table>
 </details>
 
-## Coming soon
+## Getting started
 
-Current components we are working on :
+### Public crate
 
-* Sort Table
+To add thie library to your dioxus project you can just run the following:
+```bash
+cargo add dioxus-tw-components
+```
+
+Then to link your tailwindcss compiler to dioxus tw components you must add this line to your tailwind config file:
+
+```js
+// {process.env.HOME} is usually where the .cargo directory is. Should be replaced by the actual path if yours is not in home
+`${process.env.HOME}/.cargo/registry/src/**/dioxus-tw-components-[version or *]/src/**/*.{rs,html,css}`
+```
+
+### Local crate
+
+To add this library to your dioxus project as a local crate you may add this to your `Cargo.toml` file:
+```ini
+dioxus-tw-components = { path = "path/to/dioxus-tw-components/directory" }
+```
+
+Then to link your tailwindcss compiler to dioxus tw components you must add this line to your tailwind config file:
+
+```js
+"path/to/dioxus-tw-components/directory/src/**/*.{rs,html,css}"
+```
+
+### Boostrap the library
+
+To work properly the library should be launched at the begenning of your application:
+
+```rust
+use dioxus::prelude::*;
+use dioxus_tw_components::prelude::*;
+
+fn main() {
+    dioxus::launch(App);
+}
+
+#[component]
+fn App() -> Element {
+    rsx! {
+        DioxusTwComponentsBootstrap {} // Launches dioxus tw components. Some components may no work without this
+        /* Do stuff */
+    }
+}
+```
+
+### Input CSS
+
+Dioxus tw components uses special CSS variable names to style properly. You may add theses to your `input.css` file before feeding it to tailwindcss.
+<details>
+    <summary>
+        Here are what your `input.css` file should look like:
+    </summary>
+
+```css
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+
+@layer base {
+    :root {
+        --background: /* HSL color */;
+        --foreground: /* HSL color */;
+        --primary: /* HSL color */;
+        --primary-foreground: /* HSL color */;
+        --secondary: /* HSL color */;
+        --secondary-foreground: /* HSL color */;
+        --accent: /* HSL color */;
+        --accent-foreground: /* HSL color */;
+        --muted: /* HSL color */;
+        --muted-foreground: /* HSL color */;
+        --destructive: /* HSL color */;
+        --destructive-foreground: /* HSL color */;
+        --success: /* HSL color */;
+        --success-foreground: /* HSL color */;
+        --border: /* HSL color */;
+        --input: /* HSL color */;
+        --ring: /* HSL color */;
+        --global-shadow: /* Shadow data */;
+        --global-radius: /* Radius */;
+    }
+    .dark {
+        --background: /* HSL color */;
+        --foreground: /* HSL color */;
+        --primary: /* HSL color */;
+        --primary-foreground: /* HSL color */;
+        --secondary: /* HSL color */;
+        --secondary-foreground: /* HSL color */;
+        --accent: /* HSL color */;
+        --accent-foreground: /* HSL color */;
+        --border: /* HSL color */;
+        --input: /* HSL color */;
+        --ring: /* HSL color */;
+        --global-shadow: /* Shadow data */;
+    }
+    .h1 {
+        @apply text-4xl font-extrabold md:text-5xl;
+    }
+    .h2 {
+        @apply text-2xl font-bold md:text-4xl;
+    }
+
+    .h3 {
+        @apply text-2xl font-semibold md:text-3xl;
+    }
+    .h4 {
+        @apply text-xl font-semibold md:text-2xl;
+    }
+    .h5 {
+        @apply text-lg font-semibold md:text-xl;
+    }
+    .h6 {
+        @apply text-base font-semibold md:text-lg;
+    }
+    .paragraph {
+        @apply font-normal text-foreground;
+    }
+    .span {
+        @apply font-normal text-foreground;
+    }
+    .anchor {
+        @apply text-foreground/70 hover:text-foreground transition-colors cursor-pointer;
+    }
+}
+```
+
+</details>
+
+## Docsite
+
+Dioxus tw components offers a [docsite](https://www.youtube.com/watch?v=dQw4w9WgXcQ) for you to showcase the components and experiment with them.
+Additionally you can use it to export custom themes to embed in your own projects.
 
 ## Disclaimer
 

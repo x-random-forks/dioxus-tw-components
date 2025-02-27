@@ -37,6 +37,8 @@ pub use crate::components::{atoms, molecules, organisms, templates};
 
 pub use crate::hooks;
 
+pub use crate::bootstrap::{BootstrapConfig, DioxusTwComponentsBootstrap};
+
 pub use sorttable_macro::Row;
 
 #[cfg(feature = "theme")]

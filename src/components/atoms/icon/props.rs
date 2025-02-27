@@ -17,9 +17,6 @@ pub struct IconProps {
 pub fn Icon(mut props: IconProps) -> Element {
     props.update_class_attribute();
     rsx! {
-        document::Stylesheet {
-            href: "https://fonts.googleapis.com/icon?family=Material+Icons",
-        }
         p {
             style: "font-family: 'Material Icons';",
             ..props.attributes,
