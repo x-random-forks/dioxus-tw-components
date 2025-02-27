@@ -24,9 +24,8 @@ jobs:
           env:
             CLEANED_COMMIT_MSG: ${{ github.event.head_commit.message || github.event.pull_request.title }}
           run: |
-            CLEANED_COMMIT_MSG=$(export | grep CLEANED | cut -d= -f2- | tail -c+2 | xargs echo)
+            CLEANED_COMMIT_MSG=$(export | grep CLEANED_COMMIT_MSG | cut -d= -f2- | tail -c+2 | xargs echo)
             echo "CLEANED_COMMIT_MSG=$CLEANED_COMMIT_MSG" >> $GITHUB_ENV
-            echo "CLEANED_COMMIT_MSG=$CLEANED_COMMIT_MSG"
 
         # - name: Set up Rust
         #   uses: dtolnay/rust-toolchain@stable
