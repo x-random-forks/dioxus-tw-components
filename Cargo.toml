@@ -9,7 +9,7 @@ readme = "readme.md"
 repository = "https://github.com/42Angouleme/dioxus-components"
 keywords = ["dom", "gui", "dioxus", "components"]
 categories = ["gui", "wasm"]
-authors = ["Louis Truchelut", "kbz_8", "Ziale"]
+authors = ["Louis Truchelut", "kbz_8", "Ziale", "gpoblon"]
 
 [lib]
 
