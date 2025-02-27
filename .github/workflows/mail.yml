@@ -24,6 +24,7 @@ jobs:
           env:
             CLEANED_COMMIT_MSG: ${{ github.event.head_commit.message || github.event.pull_request.title }}
           run: |
+            echo $CLEANED_COMMIT_MSG
             set -x
             CLEANED_COMMIT_MSG="$(jq -n --arg msg \"$CLEANED_COMMIT_MSG\" '[$msg]' | jq '.[0]')"
             echo "CLEANED_COMMIT_MSG=$CLEANED_COMMIT_MSG" >> $GITHUB_ENV
