@@ -45,8 +45,24 @@ jobs:
           if: always()
           run: cargo audit
 
-        - name: Send custom JSON data to Slack workflow
+        - name: Prepare commit message for payload
           if: always()
+          env:
+            CLEANED_COMMIT_MSG: ${{ github.event.head_commit.message || github.event.pull_request.title }}
+          run: |
+            set -x
+            export | grep CLEANED_COMMIT_MSG
+            # Get the ansi-escaped message from bash's export builtin
+            CLEANED_COMMIT_MSG=$(export | grep CLEANED_COMMIT_MSG | cut -d= -f2- | sed -e 's/^\$//')
+            # The string will always be quoted, either via single quotes if it was ansi-escaped,
+            # or double quotes if it was not. Assigning the variable to itself will remove the quotes
+            # due to how the shell's parsing works.
+            CLEANED_COMMIT_MSG=$CLEANED_COMMIT_MSG
+            # Add the message to the environment variables for use in the next steps"
+            echo "CLEANED_COMMIT_MSG=$CLEANED_COMMIT_MSG" >> $GITHUB_ENV
+            set +x
+
+        - name: Send custom JSON data to Slack workflow
           uses: slackapi/slack-github-action@v1.26.0
           with:
             payload: |
@@ -74,7 +90,7 @@ jobs:
                       },
                       {
                         "type": "mrkdwn",
-                        "text": "*Commit:* ${{ github.event.head_commit.message || github.event.pull_request.title }}"
+                        "text": "*Commit:* ${{ env.CLEANED_COMMIT_MSG }}"
                       }
                     ]
                   },
@@ -92,3 +108,4 @@ jobs:
           env:
             SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CICD_WEBHOOK_URL }}
             SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+          if: env.SLACK_WEBHOOK_URL != null
