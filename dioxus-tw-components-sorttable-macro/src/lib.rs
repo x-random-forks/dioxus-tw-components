@@ -1,6 +1,6 @@
 use proc_macro::TokenStream;
-use quote::{quote, ToTokens};
-use syn::{parse_macro_input, DeriveInput};
+use quote::{ToTokens, quote};
+use syn::{DeriveInput, parse_macro_input};
 
 #[proc_macro_derive(Row, attributes(row))]
 pub fn derive_row(input: TokenStream) -> TokenStream {
