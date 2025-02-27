@@ -1,27 +1,23 @@
 [package]
-
 name = "dioxus-tw-components"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 license = "MIT OR Apache-2.0"
 description = "Components made for Dioxus using TailwindCSS 3."
-readme = "readme.md"
+readme = "README.md"
+homepage = "https://dioxuslabs.com"
 repository = "https://github.com/42Angouleme/dioxus-components"
-keywords = ["dom", "gui", "dioxus", "components"]
-categories = ["gui", "wasm"]
-authors = ["Louis Truchelut", "kbz_8", "Ziale", "gpoblon"]
+keywords = ["web", "desktop", "mobile", "gui", "wasm", "dioxus", "components"]
+authors = ["Louis Truchelut", "kbz_8", "Ziale", "gpoblon", "42Angouleme"]
 
 [lib]
-
 name = "dioxus_tw_components"
 path = "src/lib.rs"
 
 [features]
-
 theme = []
 
 [dependencies]
-
 sorttable-macro = { path = "./sorttable-macro" }
 dioxus-components-macro = { path = "./dioxus-components-macro" }
 log = "0.4.22"
