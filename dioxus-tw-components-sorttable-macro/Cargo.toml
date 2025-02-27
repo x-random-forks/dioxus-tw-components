@@ -2,6 +2,7 @@
 name = "dioxus-tw-components-sorttable-macro"
 version = "0.1.0"
 edition = "2024"
+description = "Macros used by dioxus-tw-components"
 authors = ["Ziale"]
 license = "MIT OR Apache-2.0"
 
