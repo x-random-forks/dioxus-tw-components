@@ -100,7 +100,7 @@ fn main() {
 #[component]
 fn App() -> Element {
     rsx! {
-        // Launches dioxus tw components. Some components may not work without this.
+        // Launches Dioxus Tailwind Components. Some components may not work without this.
         DioxusTwComponentsBootstrap {}
 
         // Rest of your application
@@ -162,7 +162,6 @@ Dioxus Tailwind Components uses special CSS variable names to style properly. Yo
     .h2 {
         @apply text-2xl font-bold md:text-4xl;
     }
-
     .h3 {
         @apply text-2xl font-semibold md:text-3xl;
     }
