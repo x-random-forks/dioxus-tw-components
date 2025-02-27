@@ -206,18 +206,7 @@ pub fn HomePage() -> Element {
             }
         }
         div { class: "hidden sm:block fixed italic right-0 top-[52%] pr-20 text-center",
-            svg {
-                xmlns: "http://www.w3.org/2000/svg",
-                view_box: "0 0 24 24",
-                width: 35,
-                height: 35,
-                fill: "none",
-                class: "stroke-foreground fixed right-12 -mt-6 -rotate-90",
-                stroke_width: 1,
-                stroke_linecap: "round",
-                stroke_linejoin: "round",
-                path { d: "M7 7L17 17M17 17V7M17 17H7" }
-            }
+            Icon { class: "fixed right-12 -mt-6", icon: Icons::CallMade }
             p { "With a theme" }
             p { "customizer !" }
         }

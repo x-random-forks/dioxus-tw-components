@@ -13,3 +13,6 @@ pub use separator::Separator;
 
 pub mod spacer;
 pub use spacer::Spacer;
+
+pub mod icon;
+pub use icon::{Icon, Icons};

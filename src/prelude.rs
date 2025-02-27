@@ -1,6 +1,6 @@
 pub use crate::attributes::{Animation, Color, Orientation, Side, Size};
 
-pub use crate::components::atoms::{Button, ButtonVariant, Placeholder, Separator};
+pub use crate::components::atoms::{Button, ButtonVariant, Icon, Icons, Placeholder, Separator};
 
 pub use crate::components::molecules::LightSwitch;
 pub use crate::components::molecules::Navbar;

@@ -9,6 +9,7 @@ pub fn SideBarComponent() -> Element {
     let components = vec![
         "Button",
         "Buttongroup",
+        "Icon",
         "Placeholder",
         "",
         "Accordion",
