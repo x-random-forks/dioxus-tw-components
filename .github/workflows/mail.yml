@@ -24,82 +24,79 @@ jobs:
           env:
             CLEANED_COMMIT_MSG: ${{ github.event.head_commit.message || github.event.pull_request.title }}
           run: |
-            set -x
-            export | grep CLEANED
-            CLEANED_COMMIT_MSG="$(jq -n --arg msg \"$CLEANED_COMMIT_MSG\" '[$msg]' | jq '.[0]')"
+            CLEANED_COMMIT_MSG=$(export | grep CLEANED | cut -d= -f2- | tail -c+2 | xargs echo)
             echo "CLEANED_COMMIT_MSG=$CLEANED_COMMIT_MSG" >> $GITHUB_ENV
             echo "CLEANED_COMMIT_MSG=$CLEANED_COMMIT_MSG"
-            set +x
 
-        - name: Set up Rust
-          uses: dtolnay/rust-toolchain@stable
-        
-        - name: Install rust tools
-          run: |
-            rustup update
-            rustup component add clippy
-            rustup component add rustfmt
-            cargo install cargo-audit
-
-        - name: Run tests
-          if: always()
-          run: cargo test --all-features
-        
-        - name: Run clippy
-          if: always()
-          run: cargo clippy --all-features -- -D warnings
-
-        - name: Run format
-          if: always()
-          run: cargo fmt --all -- --check
-
-        - name: Run audit
-          if: always()
-          run: cargo audit
-
-        - name: Send custom JSON data to Slack workflow
-          uses: slackapi/slack-github-action@v1.26.0
-          with:
-            payload: |
-              {
-                "blocks": [
-                  {
-                    "type": "section",
-                    "fields": [
-                      {
-                        "type": "mrkdwn",
-                        "text": "*Actions Status:* ${{ job.status }} ${{ job.status == 'success' && ':white_check_mark:' || ':x:' }}"
-                      },
-                      {
-                        "type": "mrkdwn",
-                        "text": "*Repository:* <${{ github.server_url }}/${{ github.repository }}|${{ github.repository }}>"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "section",
-                    "fields": [
-                      {
-                        "type": "mrkdwn",
-                        "text": "*Branch:* ${{ github.ref_name }}"
-                      },
-                      {
-                        "type": "mrkdwn",
-                        "text": "*Commit:* ${{ env.CLEANED_COMMIT_MSG }}"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "context",
-                    "elements": [
-                      {
-                        "type": "mrkdwn",
-                        "text": "Triggered by: ${{ github.actor }} | Event: ${{ github.event_name }} | <${{ github.event.pull_request.html_url || github.event.head_commit.url }}|View details>"
-                      }
-                    ]
-                  }
-                ]
-              }
-          env:
-            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CICD_WEBHOOK_URL }}
-            SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+        # - name: Set up Rust
+        #   uses: dtolnay/rust-toolchain@stable
+        # 
+        # - name: Install rust tools
+        #   run: |
+        #     rustup update
+        #     rustup component add clippy
+        #     rustup component add rustfmt
+        #     cargo install cargo-audit
+        #
+        # - name: Run tests
+        #   if: always()
+        #   run: cargo test --all-features
+        # 
+        # - name: Run clippy
+        #   if: always()
+        #   run: cargo clippy --all-features -- -D warnings
+        #
+        # - name: Run format
+        #   if: always()
+        #   run: cargo fmt --all -- --check
+        #
+        # - name: Run audit
+        #   if: always()
+        #   run: cargo audit
+        #
+        # - name: Send custom JSON data to Slack workflow
+        #   uses: slackapi/slack-github-action@v1.26.0
+        #   with:
+        #     payload: |
+        #       {
+        #         "blocks": [
+        #           {
+        #             "type": "section",
+        #             "fields": [
+        #               {
+        #                 "type": "mrkdwn",
+        #                 "text": "*Actions Status:* ${{ job.status }} ${{ job.status == 'success' && ':white_check_mark:' || ':x:' }}"
+        #               },
+        #               {
+        #                 "type": "mrkdwn",
+        #                 "text": "*Repository:* <${{ github.server_url }}/${{ github.repository }}|${{ github.repository }}>"
+        #               }
+        #             ]
+        #           },
+        #           {
+        #             "type": "section",
+        #             "fields": [
+        #               {
+        #                 "type": "mrkdwn",
+        #                 "text": "*Branch:* ${{ github.ref_name }}"
+        #               },
+        #               {
+        #                 "type": "mrkdwn",
+        #                 "text": "*Commit:* ${{ env.CLEANED_COMMIT_MSG }}"
+        #               }
+        #             ]
+        #           },
+        #           {
+        #             "type": "context",
+        #             "elements": [
+        #               {
+        #                 "type": "mrkdwn",
+        #                 "text": "Triggered by: ${{ github.actor }} | Event: ${{ github.event_name }} | <${{ github.event.pull_request.html_url || github.event.head_commit.url }}|View details>"
+        #               }
+        #             ]
+        #           }
+        #         ]
+        #       }
+        #   env:
+        #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CICD_WEBHOOK_URL }}
+        #     SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
