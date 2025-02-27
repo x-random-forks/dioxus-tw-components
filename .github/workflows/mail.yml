@@ -29,6 +29,9 @@ jobs:
             rustup component add rustfmt
             cargo install cargo-audit
 
+        - name: Check Rust cache hits
+          uses: Swatinem/rust-cache@v2
+
         - name: Run tests
           if: always()
           run: cargo test --all-features
@@ -49,7 +52,7 @@ jobs:
           if: always()
           run: |
             CLEANED_COMMIT_MSG="${{ github.event.head_commit.message || github.event.pull_request.title }}"
-            CLEANED_COMMIT_MSG="jq -n --arg msg \"$CLEANED_COMMIT_MSG\"" '[$msg]' | jq '.[0]'
+            CLEANED_COMMIT_MSG="$(jq -n --arg msg \"$CLEANED_COMMIT_MSG\" '[$msg]' | jq '.[0]')"
             echo "CLEANED_COMMIT_MSG=$CLEANED_COMMIT_MSG" >> $GITHUB_ENV
             echo "CLEANED_COMMIT_MSG=$CLEANED_COMMIT_MSG"
 
