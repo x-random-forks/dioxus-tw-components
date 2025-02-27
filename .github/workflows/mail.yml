@@ -19,6 +19,17 @@ jobs:
         - name: Checkout
           uses: actions/checkout@v4
 
+        - name: Prepare commit message for payload
+          if: always()
+          env:
+            CLEANED_COMMIT_MSG: ${{ github.event.head_commit.message || github.event.pull_request.title }}
+          run: |
+            set -x
+            CLEANED_COMMIT_MSG="$(jq -n --arg msg \"$CLEANED_COMMIT_MSG\" '[$msg]' | jq '.[0]')"
+            echo "CLEANED_COMMIT_MSG=$CLEANED_COMMIT_MSG" >> $GITHUB_ENV
+            echo "CLEANED_COMMIT_MSG=$CLEANED_COMMIT_MSG"
+            set +x
+
         - name: Set up Rust
           uses: dtolnay/rust-toolchain@stable
         
@@ -28,9 +39,6 @@ jobs:
             rustup component add clippy
             rustup component add rustfmt
             cargo install cargo-audit
-
-        - name: Check Rust cache hits
-          uses: Swatinem/rust-cache@v2
 
         - name: Run tests
           if: always()
@@ -47,17 +55,6 @@ jobs:
         - name: Run audit
           if: always()
           run: cargo audit
-
-        - name: Prepare commit message for payload
-          if: always()
-          env:
-            CLEANED_COMMIT_MSG: ${{ github.event.head_commit.message || github.event.pull_request.title }}
-          run: |
-            set -x
-            CLEANED_COMMIT_MSG="$(jq -n --arg msg \"$CLEANED_COMMIT_MSG\" '[$msg]' | jq '.[0]')"
-            echo "CLEANED_COMMIT_MSG=$CLEANED_COMMIT_MSG" >> $GITHUB_ENV
-            echo "CLEANED_COMMIT_MSG=$CLEANED_COMMIT_MSG"
-            set +x
 
         - name: Send custom JSON data to Slack workflow
           uses: slackapi/slack-github-action@v1.26.0
