@@ -1,10 +1,9 @@
 [package]
-name = "dioxus-components-macro"
+name = "dioxus-tw-components-macro"
 version = "0.1.0"
 edition = "2024"
 authors = ["Louis Truchelut"]
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+license = "MIT OR Apache-2.0"
 
 [lib]
 proc-macro = true

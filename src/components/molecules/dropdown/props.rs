@@ -1,7 +1,7 @@
 use crate::attributes::*;
 use chrono::{DateTime, Local, TimeDelta};
 use dioxus::prelude::*;
-use dioxus_components_macro::UiComp;
+use dioxus_tw_components_macro::UiComp;
 use dioxus_core::AttributeValue;
 
 #[cfg(target_arch = "wasm32")]

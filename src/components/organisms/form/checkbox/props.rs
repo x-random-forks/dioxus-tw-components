@@ -1,6 +1,6 @@
 use crate::attributes::*;
 use dioxus::prelude::*;
-use dioxus_components_macro::UiComp;
+use dioxus_tw_components_macro::UiComp;
 
 #[derive(Default, Clone, PartialEq, Props, UiComp)]
 pub struct CheckboxProps {

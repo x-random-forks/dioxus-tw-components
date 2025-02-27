@@ -1,6 +1,6 @@
 use crate::{attributes::*, components::atoms::icon::*, hooks::use_unique_id};
 use dioxus::prelude::*;
-use dioxus_components_macro::UiComp;
+use dioxus_tw_components_macro::UiComp;
 
 #[cfg(target_arch = "wasm32")]
 use gloo_timers::future::TimeoutFuture;
@@ -320,7 +320,7 @@ fn ToastView(mut state: Signal<ToasterState>, toast: ReadOnlySignal<Toast>) -> E
         state.set(ToasterState::default());
     });
 
-    rsx!(
+    rsx! {
         li {
             class,
             id: "{toast.read().id}",
@@ -329,9 +329,9 @@ fn ToastView(mut state: Signal<ToasterState>, toast: ReadOnlySignal<Toast>) -> E
             if toast.read().is_closable {
                 ToastClose { state, toast_state }
             }
-            {&toast.read().description}
+            {toast.read().description.clone()}
         }
-    )
+    }
 }
 
 /// Used to add a cross mark to manually close the Toast

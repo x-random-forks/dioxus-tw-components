@@ -39,7 +39,7 @@ pub use crate::hooks;
 
 pub use crate::bootstrap::{BootstrapConfig, DioxusTwComponentsBootstrap};
 
-pub use sorttable_macro::Row;
+pub use dioxus_tw_components_sorttable_macro::Row;
 
 #[cfg(feature = "theme")]
 pub use crate::theme::{

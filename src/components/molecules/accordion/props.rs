@@ -1,6 +1,6 @@
 use crate::{attributes::*, components::atoms::icon::*};
 use dioxus::prelude::*;
-use dioxus_components_macro::UiComp;
+use dioxus_tw_components_macro::UiComp;
 use dioxus_core::AttributeValue;
 
 struct AccordionState {

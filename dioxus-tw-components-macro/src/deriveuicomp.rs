@@ -14,10 +14,10 @@ pub fn impl_my_derive(ast: &syn::DeriveInput) -> TokenStream {
 
     let derived_traits = derive_traits(struct_name, struct_fields, struct_generic);
 
-    let gen = quote!(
+    let generate = quote!(
         #(#derived_traits)*
     );
-    gen.into()
+    generate.into()
 }
 
 fn derive_traits(

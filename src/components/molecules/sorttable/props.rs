@@ -1,7 +1,7 @@
 use crate::attributes::*;
 use crate::prelude::*;
 use dioxus::prelude::*;
-use dioxus_components_macro::UiComp;
+use dioxus_tw_components_macro::UiComp;
 use tailwind_fuse::tw_merge;
 
 #[derive(Clone, PartialEq)]
