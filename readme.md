@@ -13,6 +13,7 @@ Here's a non exhaustive list of all currently available components. They are div
     <table>
         <tr><td>Button</td></tr>
         <tr><td>Button Group</td></tr>
+        <tr><td>Icon</td></tr>
         <tr><td>Placeholder</td></tr>
         <tr><td>Separator</td></tr>
         <tr><td>Spacer</td></tr>
@@ -56,12 +57,6 @@ Here's a non exhaustive list of all currently available components. They are div
         <tr><td>Toggle</td></tr>
     </table>
 </details>
-
-## Coming soon
-
-Current components we are working on :
-
-* Sort Table
 
 ## Disclaimer
 
